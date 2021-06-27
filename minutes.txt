@@ -1,0 +1,15 @@
+Wednesday 12-2
+Discussed basic plan for the timeline for Milestone 1
+We discussed the specifics for epic and user stories Improve character; Facilitate character; Win game; Obstacles to winning
+Discussed questions we had on what to include in the user stories next tutorial
+Also discussed basic ideas on how we would implement the game with the ambiguities of the spec(example item degradation so prevent the character having all the equipment too early)
+
+Sunday 7-8
+Discussed what the plan was for completing Milestone 1
+Clarified what would be included in the user stories
+Discussed plans for the UI and gameplay mechanics
+Elliot would write the UML diagram
+Eddy making the wireframe
+Kevin completing the UI
+Hugo writing the timeline for milestone 1/2 and helping with UI and finish the stories
+Set up discord to help with communication
