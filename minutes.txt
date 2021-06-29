@@ -13,3 +13,18 @@ Eddy making the wireframe
 Kevin completing the UI
 Hugo writing the timeline for milestone 1/2 and helping with UI and finish the stories
 Set up discord to help with communication
+
+Tuesday 2.30-3.30
+Checked out Eddie's wireframes, discussed switching to bar health amount, including progress bar and level for weapons
+Discussed the layout of the UML diagram and possibility of having multiple weapons "boxes" to signify a reliance on weapons
+On opposite sides of the diagram.
+Discussed whether weapons levels should be able to be changed at the shop but decided it would undermine the benefit of picking up
+new weapons.
+Possibility of including stats in the inventory and the menu, enemies killed and time played
+Discussed mechanics of the trance allies difference to the barracks allies
+Discussed how shop overlay would appear on the screen
+Discussed how weapon level should appear on the overlay, whether it should be on the image; appear on the overlay when you hover the mouse over it; or if the specs should appear when you right click the shop.\
+Discussed the possibility of the number of laps till you can open the shop, this will appear seperate to the number of laps counter
+Discussed the movement of the mobs
+Discussed how turning zombies works with allied soldiers
+Discussed how the fight screen would look like in the UI
