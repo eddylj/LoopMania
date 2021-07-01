@@ -28,3 +28,10 @@ Discussed the possibility of the number of laps till you can open the shop, this
 Discussed the movement of the mobs
 Discussed how turning zombies works with allied soldiers
 Discussed how the fight screen would look like in the UI
+
+Thursday 7-
+Discussed adding weapon and armour interface
+Discussed using strategy pattern for different weapons
+Discussed the UML diagram and how allies work and how we will implement them
+Discussed the story points priorities and time taken and added that it for some of the story points
+Discussed adding a visual representation for the gamemode
