@@ -29,9 +29,18 @@ Discussed the movement of the mobs
 Discussed how turning zombies works with allied soldiers
 Discussed how the fight screen would look like in the UI
 
-Thursday 7-
-Discussed adding weapon and armour interface
-Discussed using strategy pattern for different weapons
-Discussed the UML diagram and how allies work and how we will implement them
-Discussed the story points priorities and time taken and added that it for some of the story points
-Discussed adding a visual representation for the gamemode
+Thursday 7-8:10
+Decided on final style for pause screen (displaying game mode and goals only when game is paused)
+Discussed how to draw item level on UI. 2 ideas that we came up with is overlaying text over the picture or just having 10 seperate pictures. Elliot emailed Matthew to ask about thais
+Added several interfaces to UML diagram (for weapon, armour and enemies). Kevin will take over from Elliot and make more changes before we submit
+Hugo and Elliot will take over from Kevin and tweak assumption criterias, as well as add story points and priorities to each user story
+Eddy is working on redesigning pause menu, relocating card inventory and adding levels to items
+Plan to meet up again on Friday (at about 3) for a final check to make sure everything is working
+Everyone is going to add assumptions, and then we'll add them all in a big dump to limit unnecessary commits
+Hugo will finalise the schedule for Milestone 2 based off the priorities of User Stories
+
+Friday 10-11
+We realised acceptance criteria need to be a lot more specific (e.g. show amount of gold dropped by enemies)
+Spent an hour deciding on health, damage, gold drops, experience drops and item scaling
+Went through forum to figure out why player could place vampire castle and zombie pits
+
