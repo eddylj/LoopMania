@@ -26,3 +26,4 @@
 * Maximum number of enemies character fights is uncapped
 * Buildings can’t be replaced after being put down
 * Buildings can only be placed on unoccupied tiles
+* Game will not save if you go back to main menu
