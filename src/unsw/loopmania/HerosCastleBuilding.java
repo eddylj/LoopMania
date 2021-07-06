@@ -2,12 +2,9 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-/**
- * a basic form of building in the world
- */
-public class VampireCastleBuilding extends StaticEntity implements BuildingOnCycle{
+public class HerosCastleBuilding extends StaticEntity implements BuildingOnCycle{
 
-    public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public HerosCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         //TODO Auto-generated constructor stub
     }
