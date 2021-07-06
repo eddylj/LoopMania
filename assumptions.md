@@ -28,3 +28,5 @@
 * Buildings can only be placed on unoccupied tiles
 * Game will not save if you go back to main menu
 * Character only has to be touching battle/support radius of enemies to trigger battle
+* Rare items can't be replaced (only sold)
+* Character can't buy rare items
