@@ -2,9 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-// import java.lang.Math.floor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
 
 public class SwordTest {
+    @Test
     public void StartWithSwordAndUnequipTest() {
         Character c = new Character();
         Equipment sword = new Sword(10);
@@ -15,6 +20,7 @@ public class SwordTest {
         assertEquals(0, c.getNumEquipped());
     }
 
+    @Test
     public void EquipLowerLevelSword() {
         List<Equipment> equipment = new ArrayList<Equipment>();
         Sword sword1 = new Sword(1);
@@ -31,6 +37,7 @@ public class SwordTest {
         assertEquals(sword1, c.getEquippedWeapon());
     }
 
+    @Test
     public void compareDamages() {
         Equipment sword = new Sword(1);
         int damage = sword.getDamage();
@@ -39,5 +46,18 @@ public class SwordTest {
             assertTrue(nextSword.getDamage() = Math.floor(damage * 1.1 + 0.5));
             damage = nextSword.getDamage();
         }
+    }
+
+    @Test
+    public void whackSomethingWithSwordTest() {
+        Equipment sword = new Sword(10);
+        List<Equipment> equipment = new ArrayList<Equipment>();
+        equipment.add(sword);
+        Enemy slug = new Slug();
+        List<Enemy> enemies = new ArrayList<Enemy>();
+        Character c = new Character(slug, enemies, equipment);
+        c.fight();
+        assertEquals(100, c.getHealth());
+        assertFalse(slug.shouldExist().get());
     }
 } 
