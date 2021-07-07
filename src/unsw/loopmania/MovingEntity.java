@@ -11,14 +11,16 @@ public abstract class MovingEntity extends Entity {
      * object holding position in the path
      */
     private PathPosition position;
+    private int health;
 
     /**
      * Create a moving entity which moves up and down the path in position
      * @param position represents the current position in the path
      */
-    public MovingEntity(PathPosition position) {
+    public MovingEntity(PathPosition position, int health) {
         super();
         this.position = position;
+        this.health = health;
     }
 
     /**
