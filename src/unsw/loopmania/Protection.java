@@ -1,6 +1,6 @@
 package unsw.loopmania;
 
-public class Protection extends StaticEntity{
+public abstract class Protection extends StaticEntity{
     private int level;
     private int goldAmount;
 

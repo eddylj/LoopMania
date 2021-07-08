@@ -3,7 +3,7 @@ package unsw.loopmania;
 /**
  * Base class for all weapons
  */
-public class Weapon extends StaticEntity {
+public abstract class Weapon extends StaticEntity {
     private int level;
     private int damage;
     private int price;
