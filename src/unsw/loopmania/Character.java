@@ -20,7 +20,7 @@ public class Character extends MovingEntity {
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
-        super(position);
+        super(position, 100);
         experience = 0;
         gold = 0;
         equippedWeapon = new Sword();

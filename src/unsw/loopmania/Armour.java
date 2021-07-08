@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Armour extends Protection {
     
     public Armour(int level, SimpleIntegerProperty x, SimpleIntegerProperty y) {

@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Protection extends StaticEntity{
     private int level;
     private int goldAmount;
