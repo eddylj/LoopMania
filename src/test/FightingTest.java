@@ -1,5 +1,15 @@
 package test;
 
+import unsw.loopmania.Enemy;
+import unsw.loopmania.Slug;
+import unsw.loopmania.Character;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Zombie;
+import unsw.loopmania.Sword;
+import unsw.loopmania.Helmet;
+import unsw.loopmania.Armour;
+import unsw.loopmania.Shield;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -74,21 +84,21 @@ public class FightingTest {
     @Test
     public void fightTwoZombiesWithBetterSwordTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
-        List<Equipment> equipment = new ArrayList<Equipment>;
+        List<Item> equipment = new ArrayList<Item>;
         Enemy zombie1 = new Zombie();
         Enemy zombie2 = new Zombie();
-        Equipment sword = new Sword(10);
+        Item sword = new Sword(10);
         equipment.add(sword);
         enemies.add(zombie2);
         Character c = new Character(zombie1, enemies, equipment);
         c.fight();
         assertEquals(46, c.getHealth());
-        assertFalse(vampire1.shouldExist().get());
-        assertFalse(vampire2.shouldExist().get());
+        assertFalse(zombie1.shouldExist().get());
+        assertFalse(zombie2.shouldExist().get());
     }
 
     @Test
-    public fightTwoVampiresTest() {
+    public void fightTwoVampiresTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
         Enemy vampire1 = new Vampire();
         Enemy vampire2 = new Vampire();
@@ -102,13 +112,13 @@ public class FightingTest {
     @Test
     public void fightTwoZombiesWithMaxGearTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
-        List<Equipment> equipment = new ArrayList<Equipment>;
+        List<Item> equipment = new ArrayList<Item>;
         Enemy vampire1 = new Vampire();
         Enemy vampire2 = new Vampire2();
-        Equipment sword = new Sword(10);
-        Equipment helmet = new Helmet(10);
-        Equipment armour = new Armour(10);
-        Equipment shield = new Shield(10);
+        Item sword = new Sword(10);
+        Item helmet = new Helmet(10);
+        Item armour = new Armour(10);
+        Item shield = new Shield(10);
         equipment.add(sword);
         equipment.add(helmet);
         equipment.add(armour);

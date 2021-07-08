@@ -1,6 +1,8 @@
 package test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Enemy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

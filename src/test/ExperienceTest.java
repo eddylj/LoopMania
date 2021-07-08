@@ -2,9 +2,18 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import unsw.loopmania.ZombiePitCard;
+import unsw.loopmania.Enemy;
+import unsw.loopmania.Slug;
+import unsw.loopmania.Character;
+import unsw.loopmania.Zombie;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Stake;
 
 public class ExperienceTest {
     @Test
