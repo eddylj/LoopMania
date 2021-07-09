@@ -7,6 +7,11 @@ public class Armour extends Protection {
     public Armour(int level, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(level, 400*(1+(level-1)*15/100), x, y);
     }
+    
+    public Armour(int level) {
+        super(level, 400*(1+(level-1)*15/100));
+    }
+
 
     @Override
     public int protect(int damage) {

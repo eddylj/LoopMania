@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
-interface Item {
+public interface Item {
     public int getPrice();
     public int getSellPrice();
+    public int getReplaceCost();
 }

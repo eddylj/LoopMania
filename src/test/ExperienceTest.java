@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import unsw.loopmania.ZombiePitCard;
 import unsw.loopmania.Enemy;
+import unsw.loopmania.HealthPotion;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Character;
 import unsw.loopmania.Zombie;
@@ -23,7 +24,7 @@ public class ExperienceTest {
         Character c = new Character(slug, enemies);
         assertEquals(0, c.getXP());
         c.fight();
-        AssertEquals(1, c.getXP());
+        assertEquals(1, c.getXP());
     }
     
     @Test
@@ -33,7 +34,7 @@ public class ExperienceTest {
         Character c = new Character(zombie, enemies);
         assertEquals(0, c.getXP());
         c.fight();
-        AssertEquals(2, c.getXP());
+        assertEquals(2, c.getXP());
     }
     @Test
     public void getExperienceFromVampireTest() {
@@ -42,7 +43,7 @@ public class ExperienceTest {
         Character c = new Character(vampire, enemies);
         assertEquals(0, c.getXP());
         c.fight();
-        AssertEquals(4, c.getXP());
+        assertEquals(4, c.getXP());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class ExperienceTest {
     public void getExperienceFromItemReplaceTest() {
         Character c = new Character();
         for (int i = 0; i < 10; i++) {
-            c.pickup(new Potion());
+            c.pickup(new HealthPotion());
         }
         assertEquals(0, c.getXP());
         c.pickup(new Stake(4));

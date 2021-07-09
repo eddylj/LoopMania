@@ -6,6 +6,10 @@ public class Zombie extends Enemy{
         super(position, 2, 2, 16, 250, 100);
     }
 
+    public Zombie() {
+        super(2, 2, 16, 250, 100);
+    }
+
     @Override
     public boolean attack (AlliedSoldier ally) {
         return true;

@@ -7,6 +7,11 @@ public class TrapCard extends StaticEntity implements Card {
     public TrapCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
+    
+    public TrapCard() {
+        super();
+    }
+
     @Override
     public boolean canBePlaced(PathTile PathTile) {
         // TODO Auto-generated method stub

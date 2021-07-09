@@ -1,5 +1,5 @@
-package unsw.loopmania;
+// package unsw.loopmania;
 
-public interface Factory {
-    public MobDrop generateLoot();
-}
+// public interface Factory {
+//     public  generateLoot();
+// }

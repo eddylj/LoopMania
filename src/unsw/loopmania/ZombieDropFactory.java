@@ -1,11 +1,11 @@
-package unsw.loopmania;
+// package unsw.loopmania;
 
-public class ZombieDropFactory implements Factory{
+// public class ZombieDropFactory implements Factory{
 
-    @Override
-    public MobDrop generateLoot() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+//     @Override
+//     public MobDrop generateLoot() {
+//         // TODO Auto-generated method stub
+//         return null;
+//     }
     
-}
+// }

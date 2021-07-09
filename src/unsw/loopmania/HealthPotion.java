@@ -1,6 +1,8 @@
 package unsw.loopmania;
 
-public class HealthPotion extends StaticEntity {
+import javafx.beans.property.SimpleIntegerProperty;
+
+public class HealthPotion extends StaticEntity implements Item{
     
     /**
      * The class of health potion
@@ -11,11 +13,33 @@ public class HealthPotion extends StaticEntity {
         super(x,y);
     }
 
+    public HealthPotion() {
+        super();
+    }
+
     /**
      * Will heal the given character
      * @param character
      */
     public void heal(Character character) {
 
+    }
+
+    @Override
+    public int getPrice() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getSellPrice() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getReplaceCost() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

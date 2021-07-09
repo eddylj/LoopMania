@@ -9,6 +9,7 @@ public class Enemy extends MovingEntity {
     private int attackDamage;
     private int goldAmount;
     private int allyTurnCount;
+    private int health;
 
     public Enemy (PathPosition position, int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health) {
         super(position, health);
@@ -16,6 +17,18 @@ public class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
+    }
+
+    public Enemy (int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health) {
+        super(health);
+        this.battleRadius = battleRadius;
+        this.supportRadius = supportRadius;
+        this.attackDamage  = attackDamage;
+        this.goldAmount = goldAmount;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     /**

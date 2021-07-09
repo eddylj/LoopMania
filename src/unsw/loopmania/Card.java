@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -14,4 +15,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 // }
 public interface Card {
     boolean canBePlaced(PathTile PathTile);
+    public int getX();
+    public int getY();
+    public void destroy();
+    public IntegerProperty x();
+    public IntegerProperty y();
 }

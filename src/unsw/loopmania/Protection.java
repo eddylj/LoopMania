@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Protection extends StaticEntity{
+public class Protection extends StaticEntity implements Item{
     private int level;
     private int goldAmount;
 
@@ -12,6 +12,12 @@ public class Protection extends StaticEntity{
         this.goldAmount = goldAmount;
     }
 
+    public Protection(int level, int price) {
+        super();
+        this.level = level;
+        this.goldAmount = price;
+    }
+
     /**
      * Given the damage being inflicted on the character and will return the amount
      * of damage that will be inflicted after the reduction from the protection
@@ -19,6 +25,24 @@ public class Protection extends StaticEntity{
      * @return the damage after the reduction from protection has been applied
      */
     public int protect(int damage) {
+        return 0;
+    }
+
+    @Override
+    public int getPrice() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getSellPrice() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getReplaceCost() {
+        // TODO Auto-generated method stub
         return 0;
     }
 }

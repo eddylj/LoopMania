@@ -8,6 +8,10 @@ public class CampfireCard extends StaticEntity implements Card {
         super(x, y);
     }
     
+    public CampfireCard() {
+        super();
+    }
+    
     @Override
     public boolean canBePlaced(PathTile PathTile) {
         // TODO Auto-generated method stub

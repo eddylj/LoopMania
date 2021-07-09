@@ -20,6 +20,10 @@ public abstract class StaticEntity extends Entity {
         this.y = y;
     }
 
+    public StaticEntity() {
+        super();
+    }
+
     public IntegerProperty x() {
         return x;
     }

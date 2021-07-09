@@ -8,6 +8,10 @@ public class Vampire extends Enemy {
         super(position, 2, 3, 18, 500, 150);
     }
 
+    public Vampire() {
+        super(2, 3, 18, 500, 150);
+    }
+
     @Override
     public boolean attack (Character character) {
         return true;

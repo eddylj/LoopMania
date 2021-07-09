@@ -23,6 +23,11 @@ public abstract class MovingEntity extends Entity {
         this.health = health;
     }
 
+    public MovingEntity(int health) {
+        super();
+        this.health = health;
+    }
+
     /**
      * move clockwise through the path
      */

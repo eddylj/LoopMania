@@ -5,40 +5,49 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.Test;
 import unsw.loopmania.Character;
+import unsw.loopmania.Item;
 import unsw.loopmania.Sword;
-import unsw.loopmania.Equipment;
+import unsw.loopmania.Armour;
+import unsw.loopmania.Helmet;
+import unsw.loopmania.Shield;
+import unsw.loopmania.HealthPotion;
+
+// import unsw.loopmania.OneRing;
+import unsw.loopmania.Stake;
+import unsw.loopmania.Staff;
 
 public class InventoryTest {
     @Test
     public void PickUpDifferentItemsTest() {
         Character c = new Character();
-        Equipment sword = new Sword(1);
-        Equipment armour = new Armour(2);
-        Equipment helmet = new Helmet(3);
-        Equipment shield = new Shield(4);
-        Equipment potion = new Potion();
-        Equipment oneRing = new OneRing(6);
-        Equipment stake = new Stake(7);
-        Equipment staff = new Staff(8);
-        Equipment sword2 = new Sword(9);
-        Equipment helmet2 = new Helmet(9);
-        Equipment potion2 = new Potion();
-        Equipment sword3 = new Sword(1);
+        Item sword = new Sword(1);
+        Item armour = new Armour(2);
+        Item helmet = new Helmet(3);
+        Item shield = new Shield(4);
+        Item potion = new HealthPotion();
+        Item healthpotion = new HealthPotion();
+        // Item oneRing = new OneRing(6);
+        Item stake = new Stake(7);
+        Item staff = new Staff(8);
+        Item sword2 = new Sword(9);
+        Item helmet2 = new Helmet(9);
+        Item potion2 = new HealthPotion();
+        Item sword3 = new Sword(1);
         assertEquals(0, c.numEquipmentInInventory());
-        c.pickUp(sword);
+        c.pickup(sword);
         assertEquals(1, c.numEquipmentInInventory());
-        c.pickUp(helmet);
-        c.pickUp(armour);
-        c.pickUp(shield);
-        c.pickUp(potion);
+        c.pickup(helmet);
+        c.pickup(armour);
+        c.pickup(shield);
+        c.pickup(potion);
         assertEquals(5, c.numEquipmentInInventory());
-        c.pickUp(oneRing);
-        c.pickUp(stake);
-        c.pickUp(staff);
-        c.pickUp(sword2);
-        c.pickUp(helmet2);
-        c.pickUp(potion2);
-        c.pickUp(sword3);
+        c.pickup(healthpotion);
+        c.pickup(stake);
+        c.pickup(staff);
+        c.pickup(sword2);
+        c.pickup(helmet2);
+        c.pickup(potion2);
+        c.pickup(sword3);
         assertEquals(12, c.numEquipmentInInventory());
     }
     @Test

@@ -12,6 +12,15 @@ import org.junit.Test;
 import unsw.loopmania.CampfireCard;
 import unsw.loopmania.TrapCard;
 import unsw.loopmania.VampireCastleCard;
+import unsw.loopmania.Item;
+import unsw.loopmania.Sword;
+import unsw.loopmania.Shield;
+import unsw.loopmania.Helmet;
+import unsw.loopmania.Enemy;
+import unsw.loopmania.Slug;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Zombie;
+import unsw.loopmania.Character;
 
 public class GoldTest {
     @Test
@@ -21,7 +30,7 @@ public class GoldTest {
         Character c = new Character(slug, enemies);
         assertEquals(0, c.getGold());
         c.fight();
-        assertEquals(100, c.GetGold());
+        assertEquals(100, c.getGold());
     }
     
     @Test
@@ -31,7 +40,7 @@ public class GoldTest {
         Character c = new Character(vampire, enemies);
         assertEquals(0, c.getGold());
         c.fight();
-        assertEquals(500, c.GetGold());
+        assertEquals(500, c.getGold());
     }
     @Test
     public void GetGoldFromZombieTest() {
@@ -40,7 +49,7 @@ public class GoldTest {
         Character c = new Character(zombie, enemies);
         assertEquals(0, c.getGold());
         c.fight();
-        assertEquals(250, c.GetGold());
+        assertEquals(250, c.getGold());
     }
 
     @Test
@@ -67,7 +76,7 @@ public class GoldTest {
         Character c = new Character(equipment);
         Item sword = new Sword(1);
         assertEquals(0, c.getGold());
-        c.pickUp(sword);
+        c.pickup(sword);
         assertEquals(shield.getReplaceCost(), c.getGold());
     }
 
@@ -80,7 +89,7 @@ public class GoldTest {
         assertEquals(0, c.getGold());
         c.pickup(new CampfireCard());
         assertTrue(300 <= c.getGold() && c.getGold() <= 400);
-        c.pickup(new VampireCastleCard())
+        c.pickup(new VampireCastleCard());
         assertTrue(600 <= c.getGold() && c.getGold() <= 800);
     }
 }
