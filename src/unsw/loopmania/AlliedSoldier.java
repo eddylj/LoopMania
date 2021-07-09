@@ -2,11 +2,9 @@ package unsw.loopmania;
 
 public class AlliedSoldier {
     private int health;
-    private int turnNumber;
 
-    public AlliedSoldier(int turnNumber) {
+    public AlliedSoldier() {
         health = 30;
-        this.turnNumber = turnNumber;
     }
 
     /**
@@ -16,6 +14,10 @@ public class AlliedSoldier {
      */
     public boolean attack(Enemy enemy) {
         return true;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     /**

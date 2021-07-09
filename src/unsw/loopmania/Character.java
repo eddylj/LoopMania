@@ -44,7 +44,7 @@ public class Character extends MovingEntity {
     }
 
     public int getGold() {
-        return 0;
+        return gold;
     }
 
     public void loseHealth(int health){
@@ -75,7 +75,10 @@ public class Character extends MovingEntity {
         return null;
     }
 
-    public int getNumEquipmentInInventory() {
+    public void gainAlliedSoldier(AlliedSoldier ally) {
+
+    }
+    public int numAlliedSoldiers() {
         return 0;
     }
 
