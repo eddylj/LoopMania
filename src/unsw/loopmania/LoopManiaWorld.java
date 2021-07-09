@@ -83,6 +83,12 @@ public class LoopManiaWorld {
         return height;
     }
 
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
+        copy.addAll(orderedPath);
+        return copy;
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity out of the file
      * @param character the character
@@ -347,5 +353,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(cardNodeX);
 
         return newBuilding;
+    }
+
+    public Enemy spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        return null;
+    }
+
+    public Enemy spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        return null;
+    }
+
+    public Enemy spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        return null;
     }
 }

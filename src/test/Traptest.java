@@ -1,5 +1,4 @@
 package test;
-package test;
 import unsw.loopmania.Character;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Enemy;
@@ -19,6 +18,6 @@ public class Traptest {
         TrapBuilding t = new TrapBuilding();
         Enemy slug = new Slug();
         t.activate(slug);
-        assert(slug.getHealth() < 50)
+        assert(slug.getHealth() < 50);
     }
 }

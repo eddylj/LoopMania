@@ -3,11 +3,18 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.util.Pair;
+import org.javatuples.Pair;
 
 public class worldStateHelper {
-    
+    LoopManiaWorld world;
 
+    public worldStateHelper(LoopManiaWorld w) {
+        world = w;
+    }
+
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        return world.getOrderedPath();
+    }
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * @return list of the enemies to be displayed on screen
