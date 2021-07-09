@@ -20,7 +20,7 @@ public class VillageTest {
         Character c = new Character(slug, enemies);
         c.fight();
         VillageBuilding v = new VillageBuilding();
-        v.heal();
+        v.heal(); //maybe some other method
         assertEquals(100, c.getHealth());
     }
     
