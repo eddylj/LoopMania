@@ -1,4 +1,7 @@
 package test;
+import unsw.loopmania.BarracksBuilding;
+import unsw.loopmania.BonusDamageStrategy;
+import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.Character;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Enemy;
@@ -11,6 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
 public class CampfireTest {
+    CampfireBuilding f = new BarracksBuilding();
+    Character c = new Character();
+    f.applybuff();
+    BonusDamageStrategy b = c.getBonusDamageStrategy();
+
+    assertTrue(b instanceof CampfireState);
     
 }
