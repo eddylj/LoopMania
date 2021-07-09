@@ -53,9 +53,11 @@ public class StakeTest {
         c.unequip(sword);
         c.pickup(stake);
         Enemy slug = new Slug();
+        assertEquals(slug.getHealth(), 50);
         c.attack(slug);
-        assertEquals(slug.getHealth(), 40);
+        assertEquals(slug.getHealth(), 30);
         Enemy vampire = new Vampire();
+        assertEquals(150, vampire.getHealth());
         c.attack(vampire);
         assertEquals(100, vampire.getHealth());
     }
