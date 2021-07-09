@@ -3,7 +3,7 @@ package unsw.loopmania;
 import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
 import java.util.Random;
 
-public class Enemy extends MovingEntity {
+public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
     private int attackDamage;
