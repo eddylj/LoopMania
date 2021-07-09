@@ -193,6 +193,10 @@ public class Character extends MovingEntity {
     }
 
     public void attack(Enemy enemy) {
+
+    }
+    
+    public void takeDamage(int damage) {
         
     }
 
