@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Potion extends StaticEntity implements Item {
     
     public Potion(SimpleIntegerProperty x, SimpleIntegerProperty y) {

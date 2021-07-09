@@ -32,8 +32,26 @@ public class BattleMediator {
         }
         return defeatedEnemies;
     }
-
-    public void killEnemy(Enemy e) {
-        e.destroy();
+    /**
+     * spawn a card in the world and return the card entity
+     * @return a card to be spawned in the controller as a JavaFX node
+     */
+    public VampireCastleCard loadVampireCard(){
+        // if adding more cards than have, remove the first card...
+        if (cardEntities.size() >= getWidth()){
+            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
+            removeCard(0);
+        }
+        VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        cardEntities.add(vampireCastleCard);
+        return vampireCastleCard;
+    }
+    /**
+     * kill an enemy
+     * @param enemy enemy to be killed
+     */
+    private void killEnemy(Enemy enemy){
+        enemy.destroy();
+        enemies.remove(enemy);
     }
 }
