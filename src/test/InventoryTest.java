@@ -60,4 +60,16 @@ public class InventoryTest {
         c.equip(new Sword(1));
         assertEquals(15, c.numEquipmentInInventory());
     }
+
+    @Test
+    public void EquipItemTest() {
+        Character c = new Character();
+        Item armour = new Armour(1);
+        assertEquals(0, c.numEquipmentInInventory());
+        c.pickup(armour);
+        assertEquals(1, c.numEquipmentInInventory());
+        c.equip(armour);
+        assertEquals(0, c.numEquipmentInInventory());
+
+    }
 }
