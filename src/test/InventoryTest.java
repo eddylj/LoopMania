@@ -64,11 +64,11 @@ public class InventoryTest {
     @Test
     public void EquipItemTest() {
         Character c = new Character();
-        Item sword = new Sword(2);
+        Item armour = new Armour(1);
         assertEquals(0, c.numEquipmentInInventory());
-        c.pickup(sword);
+        c.pickup(armour);
         assertEquals(1, c.numEquipmentInInventory());
-        c.equip(sword);
+        c.equip(armour);
         assertEquals(0, c.numEquipmentInInventory());
 
     }

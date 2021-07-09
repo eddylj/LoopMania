@@ -192,6 +192,10 @@ public class Character extends MovingEntity {
         }
     }
 
+    public void attack(Enemy enemy) {
+        
+    }
+
     public Integer numEquipmentInInventory() {
         return null;
     }

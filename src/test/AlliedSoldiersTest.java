@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
-import unsw.loopmania.Item;
 import unsw.loopmania.Slug;
-import unsw.loopmania.Sword;
 import unsw.loopmania.AlliedSoldier;
 
 public class AlliedSoldiersTest {
