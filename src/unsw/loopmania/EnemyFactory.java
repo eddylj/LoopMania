@@ -3,14 +3,18 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class EnemyFactory {
-    public static Slug createSlug(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Enemy create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
+        return null;
+    }
+
+    public Slug createSlug(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return null;
     }
     
-    public static Zombie createZombie(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Zombie createZombie(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return null;
     }
-    public static Vampire createVampire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Vampire createVampire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return null;
     }
 }

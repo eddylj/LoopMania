@@ -3,26 +3,35 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class itemFactory {
-    public static Sword createSword(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+
+    public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type, int level) {
+        return null;
+    }
+
+    public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         return null;
     }
     
-    public static Stake createStake(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    public Sword createSword(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return null;
     }
-    public static Staff createStaff(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    
+    public Stake createStake(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return null;
     }
-    public static Helmet createHelmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    public Staff createStaff(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return null;
     }
-    public static Armour createArmour(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    public Helmet createHelmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return null;
     }
-    public static Shield createShield(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    public Armour createArmour(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return null;
     }
-    public static HealthPotion createHealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Shield createShield(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+        return null;
+    }
+    public HealthPotion createHealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return null;
     }
 

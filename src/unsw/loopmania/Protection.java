@@ -28,6 +28,10 @@ public class Protection extends StaticEntity implements Item{
         return 0;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public int getPrice() {
         // TODO Auto-generated method stub

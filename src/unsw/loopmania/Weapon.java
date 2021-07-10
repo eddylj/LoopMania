@@ -47,6 +47,10 @@ public abstract class Weapon extends StaticEntity implements Item{
         return 0;
     }
 
+    public int getLevel() {
+        return 0;
+    }
+
     @Override
     public int getPrice() {
         return 0;
