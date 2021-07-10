@@ -9,6 +9,7 @@ import java.util.List;
 public class Character extends MovingEntity {
     private int experience;
     private int gold;
+    private int cycles;
     private Item equippedWeapon;
     private Item equippedHelmet;
     private Item equippedShield;
@@ -25,6 +26,7 @@ public class Character extends MovingEntity {
         super(position, 100);
         experience = 0;
         gold = 0;
+        cycles = 0;
         equippedWeapon = new Sword(1);
         equippedHelmet = null;
         equippedShield = null;
@@ -47,6 +49,10 @@ public class Character extends MovingEntity {
         return gold;
     }
 
+    public int getCycles() {
+        return cycles;
+    }
+
     public void loseHealth(int health){
 
     }
@@ -60,6 +66,10 @@ public class Character extends MovingEntity {
     }
 
     public void gainXP(int amount) {
+
+    }
+
+    public void gainCycle(int amount) {
 
     }
 

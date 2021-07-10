@@ -40,7 +40,7 @@ public class LoopManiaWorld {
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
-    private List<Enemy> enemies;
+    private static List<Enemy> enemies;
 
     // TODO = expand the range of cards
     private List<Card> cardEntities;
@@ -87,6 +87,10 @@ public class LoopManiaWorld {
         List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
         copy.addAll(orderedPath);
         return copy;
+    }
+    
+    public static List<Enemy> getEnemies() {
+        return enemies;
     }
 
     /**
