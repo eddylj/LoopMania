@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Helmet extends Protection {
     
-    public Helmet(int level, SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, 400*(1+(level-1)*15/100), x, y);
     }
     
