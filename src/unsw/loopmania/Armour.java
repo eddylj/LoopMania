@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Armour extends Protection {
     
-    public Armour(int level, SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, 400*(1+(level-1)*15/100), x, y);
     }
     

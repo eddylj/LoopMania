@@ -9,7 +9,6 @@ public abstract class Enemy extends MovingEntity {
     private int attackDamage;
     private int goldAmount;
     private int allyTurnCount;
-    private int health;
 
     public Enemy (PathPosition position, int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health) {
         super(position, health);
