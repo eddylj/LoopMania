@@ -33,46 +33,17 @@ public class BuildingTest {
 
     @Test
     public void BuildingPlacementTest() {
+        //NOT SURE HOW TO DO
 
     }
-    @Test
-    public void MaxCardsTest() {
 
-    }
-    @Test
-    public void ZombieBuildingTest() {
 
-    }
-    @Test
-    public void ZombieBuildingSpawnTest() {
 
-    }
-    @Test
-    public void VampireBuildingTest() {
-
-    }
-    @Test
-    public void VampireBuildingSpawnTest() {
-
-    }
     @Test
     public void EnemySpawnOnOcuppiedTileTest() {
+        //NOT SURE HOW TO DO
 
-    }
-    @Test
-    public void TowerTest() {
 
-    }
-    @Test
-    public void BarracksTest() {
 
-    }
-    @Test
-    public void MaxAlliedSoldierTest() {
 
-    }
-    @Test
-    public void VillageTest() {
-
-    }
 }

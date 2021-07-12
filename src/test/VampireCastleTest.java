@@ -17,30 +17,13 @@ import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
 public class VampireCastleTest {
     @Test
-    public void VampireCastleSpawnTest() {
-        VampireCastleBuilding vampireCastle = new VampireCastleBuilding();
-        vampireCastle.spawnVampire();
-        Vampire vampire = new Vampire();
-        assertTrue(LoopManiaWorld.getEnemies().size() == 1 || LoopManiaWorld.getEnemies().size() == 2);
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy instanceof Vampire);
-        }
-    }
+    public void VampireBuildingTest() {
 
-    @Test
-    public void VampireCastlePositionTest() {
-        SimpleIntegerProperty x = new SimpleIntegerProperty(0);
-        SimpleIntegerProperty y = new SimpleIntegerProperty(0);
-        VampireCastleBuilding vampireCastle = new VampireCastleBuilding(x, y);
-        vampireCastle.spawnVampire();
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
-            assertTrue(enemy.getY() == y.get() || enemy.getY() - 1 == y.get() || enemy.getY() + 1 == y.get());
-        }
     }
-
     @Test
-    public void VampireCastleCycleTest() {
+    public void VampireBuildingSpawnTest() {
+
+    }
     
     }
 }
