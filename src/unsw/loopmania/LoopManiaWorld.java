@@ -1,8 +1,10 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.LoggingPermission;
 
 import org.javatuples.Pair;
 
@@ -19,6 +21,8 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+
+    public int seed;
 
     /**
      * width of the world in GridPane cells
@@ -37,7 +41,7 @@ public class LoopManiaWorld {
 
     private Character character;
 
-    // TODO = add more lists for other entities, for equipped inventory items, etc...
+//    / / TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
     private static List<Enemy> enemies;
@@ -45,11 +49,14 @@ public class LoopManiaWorld {
     // TODO = expand the range of cards
     private List<Card> cardEntities;
 
+    private List<BuildingOnCycle> cycleBuildings;
+    private List<BuildingOnMove> moveBuildings;
+
     // TODO = expand the range of items
     private List<Entity> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    // private List<VampireCastleBuilding> buildingEntities;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -72,7 +79,29 @@ public class LoopManiaWorld {
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
-        buildingEntities = new ArrayList<>();
+        this.seed = (int)System.currentTimeMillis();
+        // buildingEntities = new ArrayList<>();
+    }
+
+    /**
+     * create the world (constructor)
+     * 
+     * @param width width of world in number of cells
+     * @param height height of world in number of cells
+     * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
+     * @param seed seed determining random pattern behaviour for testing
+     */
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, int seed) {
+        this.width = width;
+        this.height = height;
+        nonSpecifiedEntities = new ArrayList<>();
+        character = null;
+        enemies = new ArrayList<>();
+        cardEntities = new ArrayList<>();
+        unequippedInventoryItems = new ArrayList<>();
+        this.orderedPath = orderedPath;
+        this.seed = seed;
+        // buildingEntities = new ArrayList<>();
     }
 
     public int getWidth() {
@@ -109,6 +138,99 @@ public class LoopManiaWorld {
         // for adding non-specific entities (ones without another dedicated list)
         // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
         nonSpecifiedEntities.add(entity);
+    }
+
+    private int getNumInPath(Pair<Integer, Integer> tile) {
+        for (int i = 0; i < orderedPath.size(); i++) {
+            if (tile.equals(orderedPath.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean empty(Pair<Integer, Integer> p) {
+        for (Enemy e : enemies) {
+            if (e.getX() == p.getValue0() && e.getY() == p.getValue1()) {
+                return false;
+            }
+        }
+        if (character.getX() == p.getValue0() && character.getY() == p.getValue1()) {
+            return false;
+        }
+        return true;
+    }
+
+    private List<Pair<Integer, Integer>> getAdjacentPathTiles(StaticEntity b) {
+        List<Pair<Integer, Integer>> adjacent = new ArrayList<Pair<Integer, Integer>>();
+        for (Pair<Integer, Integer> p : orderedPath) {
+            if (!empty(p)) continue;
+
+            // If path is above building
+            if (p.getValue0() == b.getX() && p.getValue1() == b.getY() - 1) {
+                adjacent.add(p);
+            }
+            // If path is below building
+            else if (p.getValue0() == b.getX() && p.getValue1() == b.getY() + 1) {
+                adjacent.add(p);
+            }
+            // If path is left of building
+            else if (p.getValue0() == b.getX() - 1 && p.getValue1() == b.getY()) {
+                adjacent.add(p);
+            }
+            // If path is right of building
+            else if (p.getValue0() == b.getX() + 1 && p.getValue1() == b.getY()) {
+                adjacent.add(p);
+            }
+        }
+        return adjacent;
+    }
+
+    private int generateNumberOfEnemies(BuildingOnCycle b, Random rand) {
+        int num = rand.nextInt(100);
+        int spawn1 = b.getChanceOfSpawning1();
+        int spawn2 = spawn1 + b.getChanceOfSpawning2();
+        if (num <= spawn1) {
+            return 1;
+        }
+        else if (num <= spawn2) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
+
+    private List<Pair<Integer, Integer>> getAllEmptyTiles() {
+        List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
+        for (Pair<Integer, Integer> p : orderedPath) {
+            if (empty(p)) tiles.add(p);
+        }
+        return tiles;
+    }
+
+    public void SpawnEnemiesOnCycle() {
+        Random rand = new Random(seed);
+        
+        // For each building, figure out how many/where to spawn enemies then spawn them
+        for (BuildingOnCycle b : cycleBuildings) {
+            // adjacent contains every PathTile touching building b
+            List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
+            int numSpawn = Integer.max(generateNumberOfEnemies(b, rand), adjacent.size());
+            for (int i = 0; i < numSpawn; i++) {
+                int tile = rand.nextInt(100) % adjacent.size();
+                int positioninPath = getNumInPath(adjacent.get(tile));
+                Enemy e = b.spawnEnemy(new PathPosition(positioninPath, orderedPath));
+                adjacent.remove(tile);
+                enemies.add(e);
+            }
+        }
+        // Spawn 2 slugs every cycle
+        List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
+        for (int i = 0; i < 2; i++) {
+            int position = rand.nextInt(100) % emptyTiles.size();
+            spawnSlug(position, emptyTiles);
+        }
     }
 
     /**
@@ -359,15 +481,19 @@ public class LoopManiaWorld {
         return newBuilding;
     }
 
-    public Enemy spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        return null;
+    public void spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        EnemyFactory e = new EnemyFactory();
+        Enemy slug =  e.create(new PathPosition(i, orderedPath2), "Slug");
+        enemies.add(slug);
     }
-
-    public Enemy spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        return null;
+    public void spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        EnemyFactory e = new EnemyFactory();
+        Enemy vampire =  e.create(new PathPosition(i, orderedPath2), "Vampire");
+        enemies.add(vampire);
     }
-
-    public Enemy spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        return null;
+    public void spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
+        EnemyFactory e = new EnemyFactory();
+        Enemy zombie =  e.create(new PathPosition(i, orderedPath2), "Zombie");
+        enemies.add(zombie);
     }
 }
