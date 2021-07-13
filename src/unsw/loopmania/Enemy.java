@@ -30,21 +30,15 @@ public abstract class Enemy extends MovingEntity {
         return health;
     }
 
-    /**
-     * Will subtract the given damage from the enemy 
-     * @param attackDamage attack damage given to the enemy
-     * @return returns true if the enemy died
-     */
-    public boolean damage (int attackDamage) {
-        return true;
-    }
+
     /**
      * Enemy attacks the character given
      * @param character
      * @return boolean if the character was killed returns true
      */
-    public boolean attack (Character character) {
-        return true;
+
+    public void attack (Character c) {
+        c.takeDamage(attackDamage);
     }
 
     /**
@@ -52,8 +46,8 @@ public abstract class Enemy extends MovingEntity {
      * @param ally
      * @return boolean if the ally was killed returns true
      */
-    public boolean attack (AlliedSoldier ally) {
-        return true;
+    public void attack (AlliedSoldier ally, BattleRunner mediator) {
+        ally.takeDamage(attackDamage);
     }
 
     /**
@@ -65,13 +59,13 @@ public abstract class Enemy extends MovingEntity {
         return gold;
     }
 
-    /**
-     * Will stop the enemy doing damage for the given number of turns
-     * @param turnNumber
-     */
-    public void convert(int turnNumber) {
+    // /**
+    //  * Will stop the enemy doing damage for the given number of turns
+    //  * @param turnNumber
+    //  */
+    // public void convert(int turnNumber) {
 
-    }
+    // }
 
     /**
      * move the enemy
