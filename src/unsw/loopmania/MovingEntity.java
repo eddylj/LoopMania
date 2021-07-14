@@ -61,8 +61,8 @@ public abstract class MovingEntity extends Entity {
      * Takes health off entity for damage taken
      * @param attackdamage amount of damage to be taken
      */
-    public void takeDamage(int attackDamage) {
-        health -= attackDamage;
+    public void takeDamage(double attackDamage) {
+        health -= ((int)attackDamage);
     }
 
 

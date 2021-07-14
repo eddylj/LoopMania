@@ -10,7 +10,7 @@ public class Vampire extends Enemy {
 
     public Vampire (PathPosition position) {
         super(position, 2, 3, 18, 500, 150);
-        super.setType("Vampire");
+        super.setType("vampire");
         Strategy = new VampireNormal();
             
     
@@ -18,7 +18,7 @@ public class Vampire extends Enemy {
 
     public Vampire() {
         super(2, 3, 18, 500, 150);
-        super.setType("Vampire");
+        super.setType("vampire");
         Strategy = new VampireNormal();
 
     }
@@ -29,7 +29,7 @@ public class Vampire extends Enemy {
         this.Strategy = Strategy;
     }
     @Override
-    public void attack (Hero h, BattleRunner b) {
+    public void attack (Hero h) {
         Strategy.attack(h, this);
     }
 

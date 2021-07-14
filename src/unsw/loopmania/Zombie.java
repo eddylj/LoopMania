@@ -1,6 +1,6 @@
+
 package unsw.loopmania;
 
-import java.util.Random;
 
 public class Zombie extends Enemy {
     
@@ -17,16 +17,11 @@ public class Zombie extends Enemy {
 
 
 
-    @Override
-    public void attack(Character c) {
-        c.takeDamage(this.getAttackDamage());
-    }
 
     @Override
     public void attack(Hero h, BattleRunner b) {
         if (h instanceof AlliedSoldier) {
-            Random r = new Random();
-            int randomInt = r.nextInt(100);
+            int randomInt = LoopManiaWorld.getRandNum(100);
             if (randomInt >= 0 && randomInt <= 9) {
                 h.setHealth(0);
                 b.convertAllyZombie((AlliedSoldier)h);

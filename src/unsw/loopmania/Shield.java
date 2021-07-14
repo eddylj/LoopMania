@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Shield extends Protection {
@@ -15,10 +17,14 @@ public class Shield extends Protection {
     }
 
     @Override
-    public double protect(int damage) {
+    public double protect(double damage) {
         //Will implement the chance to fully block the damage
-        
-        return 0;
+        Random r = new Random();
+        int randomInt = r.nextInt(100);
+        if (randomInt < blockChance) {
+            return 0;
+        }
+        return damage;
     }
     
 }

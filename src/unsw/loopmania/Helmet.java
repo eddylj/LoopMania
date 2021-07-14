@@ -20,12 +20,12 @@ public class Helmet extends Protection {
 
 
     @Override
-    public int protect(int damage) {
+    public double protect(double damage) {
         //Will implement the drop by the scalar value
         return damage - damageReduction;
     }
 
-    public double calcAttackDamage(int Attackdamage) {
+    public double calcAttackDamage(double Attackdamage) {
 
         return Attackdamage * (1- debuff*0.01);
     }

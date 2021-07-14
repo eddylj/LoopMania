@@ -5,7 +5,7 @@ public class Slug extends Enemy{
 
     public Slug (PathPosition position) {
         super(position, 1, 1, 10, 100, 50);
-        super.setType("Slug");
+        super.setType("slug");
     }
 
 

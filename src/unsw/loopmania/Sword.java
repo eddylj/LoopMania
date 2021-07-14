@@ -14,4 +14,5 @@ public class Sword extends Weapon {
     public Sword(int level) {
         super(level, 350*(1+(level-1)*15/100), 35*(1+(level-1)/10));
     }
+    
 }

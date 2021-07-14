@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public abstract class Weapon extends StaticEntity implements Item{
     public int level;
-    public int damage;
+    public double damage;
     public int price;
 
     /**
@@ -39,11 +39,9 @@ public abstract class Weapon extends StaticEntity implements Item{
      * @param enemy that is being attacked
      * @return boolean that is true if the enemy was killed
      */
-    public boolean dealDamage(Enemy enemy) {
-        return true;
-    }
 
-    public int getDamage() {
+
+    public double getDamage() {
         return 0;
     }
 

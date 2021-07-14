@@ -24,7 +24,7 @@ public abstract class Protection extends StaticEntity implements Item{
      * @param damage the total damage being given
      * @return the damage after the reduction from protection has been applied
      */
-    public double protect(int damage) {
+    public double protect(double damage) {
         return damage;
     }
 

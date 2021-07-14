@@ -17,7 +17,7 @@ public class Armour extends Protection {
 
 
     @Override
-    public double protect(int damage) {
+    public double protect(double damage) {
         //Will implement the percentage reduction
         return damage * 1 - damageReduction;
     }

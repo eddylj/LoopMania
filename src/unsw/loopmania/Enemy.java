@@ -39,8 +39,8 @@ public abstract class Enemy extends MovingEntity {
      * @return boolean if the character was killed returns true
      */
 
-    public void attack (Character c) {
-        c.takeDamage(attackDamage);
+    public void attack (Hero h) {
+        h.takeDamage(attackDamage);
     }
 
     public void attack(Hero h, BattleRunner b) {
@@ -52,9 +52,7 @@ public abstract class Enemy extends MovingEntity {
      * @param ally
      * @return boolean if the ally was killed returns true
      */
-    public void attack (AlliedSoldier ally, BattleRunner mediator) {
-        ally.takeDamage(attackDamage);
-    }
+
 
     /**
      * Returns the gold that the enemy drops when they die
@@ -62,7 +60,7 @@ public abstract class Enemy extends MovingEntity {
      * @return
      */
     public int getGold(int gold) {
-        return gold;
+        return goldAmount;
     }
 
     public int getBattleRadius() {
@@ -72,7 +70,6 @@ public abstract class Enemy extends MovingEntity {
     public int getAttackDamage() {
         return this.attackDamage;
     }
-
 
 
     public int getSupportRadius() {

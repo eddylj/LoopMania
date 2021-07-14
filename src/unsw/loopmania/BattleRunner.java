@@ -14,11 +14,10 @@ public class BattleRunner {
     private ArrayList<TowerBuilding> towers;
     private Random rand;
 
-    public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies, Random rand) {
+    public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies) {
         this.character = c;
         this.enemies = enemies;
         this.allies = allies;
-        this.rand = rand;
     }
 
 
@@ -28,37 +27,45 @@ public class BattleRunner {
      * run the expected battles in the world, based on current world state
      * @return boolean if battle is won or lost
      */
-    public boolean runBattle() {
-        while (!enemies.isEmpty()) {
+    public ArrayList<Enemy> runBattle() {
+        while (!character.isDead()) {
             runHeroAttacks();
             runEnemyAttacks();
-            if (character.isDead()) {
-                return;
-            }
         }
-        return true;
+        return defeatedEnemies;
     }
 
-    private int getRandomNum() {
-
+    public int getRandNum(int range) {
+        return rand.nextInt(range);
     }
+
     private void revivecharacter(Character c) {
         c.setHealth(100);
     }
 
     public void convertAllyZombie(AlliedSoldier a) {
         EnemyFactory f = new EnemyFactory();
-        Enemy z =  f.create("Zombie");
+        Enemy z =  f.create("zombie");
         enemies.add(z);
         Collections.sort(enemies, new EnemyComparator());
     }
 
-
+    public void convertEnemyAlly(Enemy enemy,int cycle) {
+        enemies.remove(enemy);
+        HeroFactory a = new HeroFactory();
+        convertedEnemy c = (convertedEnemy) a.create(enemy, cycle);
+        allies.add(0, ((AlliedSoldier)c));
+        
+    }
     public void runEnemyAttacks() {
         for (Enemy e : enemies) {
             if (!allies.isEmpty()) {
                 AlliedSoldier a = allies.get(0);
-                e.attack(a, this);
+                if (e instanceof Zombie) {
+                    e.attack(a, this);
+                } else {
+                    e.attack(a);
+                }
                 if (a.isDead()) {
                     killAlly(a);
                 }
@@ -76,23 +83,28 @@ public class BattleRunner {
             if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
                 t.attack(e);
-                if (e.isDead()){
-                    killEnemy(e);
-                }
+                postFight(e);
             }
         }
         for (AlliedSoldier a : allies) {
             if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
                 a.attack(e);
-                if (e.isDead()){
-                    killEnemy(e);
-                }
+                postFight(e);
             }
         }
         if (!enemies.isEmpty()) {
             Enemy e = enemies.get(0);
-            character.attack(e);
+            character.attack(e, this);
+            postFight(e);
+        }
+    
+    }
+
+    private void postFight(Enemy e){
+        if (e.isDead()){
+            killEnemy(e);
+            defeatedEnemies.add(e);
         }
     }
 
@@ -165,6 +177,11 @@ public class BattleRunner {
         }
         return defeatedEnemies;
     }
+
+
+
+
+
 
 
 
