@@ -46,7 +46,7 @@ public class FactoryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Sword", "Helmet", "Armour", "Shield", "Stake", "Staff"})
+    @ValueSource(strings = {"sword", "helmet", "armour", "shield", "stake", "staff"})
     public void itemFactoryLevelTest(String input) {
         itemFactory f = new itemFactory();
         Random rand = new Random();
@@ -59,25 +59,25 @@ public class FactoryTest {
     @Test
     public void itemFactoryRegularTest() {
         itemFactory f = new itemFactory();
-        Item potion = f.create(x, y, "Potion");
-        Item potion2 = f.create(x, y, "Potion");
+        Item potion = f.create(x, y, "healthpotion");
+        Item potion2 = f.create(x, y, "healthpotion");
         assertNotEquals(potion, potion2);
     }
 
     @Test
     public void EnemyFactoryTest() {
         EnemyFactory e = new EnemyFactory();
-        Enemy slug = e.create(new PathPosition(0, createPath()), "Slug");
+        Enemy slug = e.create(new PathPosition(0, createPath()), "slug");
         System.err.println(slug.getHealth());
         assertEquals(slug.getHealth(), 50);
-        Enemy vampire = e.create(new PathPosition(1, createPath()), "Vampire");
+        Enemy vampire = e.create(new PathPosition(1, createPath()), "vampire");
         assertEquals(vampire.getHealth(), 150);
-        Enemy zombie = e.create(new PathPosition(2, createPath()), "Zombie");
+        Enemy zombie = e.create(new PathPosition(2, createPath()), "zombie");
         assertEquals(zombie.getHealth(), 100);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Campfire", "Barracks", "Tower", "Trap", "VampireCastle", "ZombiePit", "Village"})
+    @ValueSource(strings = {"campfire", "barracks", "tower", "trap", "vampirecastle", "zombiepit", "village"})
     public void CardFactoryTest(String input) {
         CardFactory c = new CardFactory();
         Card card = c.create(x, y, input);

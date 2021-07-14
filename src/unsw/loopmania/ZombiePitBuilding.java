@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class ZombiePitBuilding extends StaticEntity implements BuildingOnCycle{
+public class ZombiePitBuilding extends StaticEntity implements Building, BuildingOnCycle{
 
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

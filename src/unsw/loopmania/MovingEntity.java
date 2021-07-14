@@ -28,6 +28,10 @@ public abstract class MovingEntity extends Entity {
         this.health = health;
     }
 
+    public PathPosition getPosition() {
+        return position;
+    }
+
     /**
      * move clockwise through the path
      */

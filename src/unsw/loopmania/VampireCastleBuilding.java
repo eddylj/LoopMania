@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * a basic form of building in the world
  */
-public class VampireCastleBuilding extends StaticEntity implements BuildingOnCycle{
+public class VampireCastleBuilding extends StaticEntity implements Building, BuildingOnCycle{
 
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

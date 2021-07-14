@@ -7,25 +7,25 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class CardFactory {
     //"Campfire", "Barracks", "Tower", "Trap", "VampireCastle", "ZombiePit", "Village"}
     public Card create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
-        if (type.equals("Campfire")) {
+        if (type.equals("campfire")) {
             return createCampfire(x, y);
         }
-        else if (type.equals("Barracks")) {
+        else if (type.equals("barracks")) {
             return createBarracks(x, y);
         }
-        else if (type.equals("Tower")) {
+        else if (type.equals("tower")) {
             return createTower(x, y);
         }
-        else if (type.equals("Trap")) {
+        else if (type.equals("trap")) {
             return createTrap(x, y);
         }
-        else if (type.equals("VampireCastle")) {
+        else if (type.equals("vampirecastle")) {
             return createVampireCastle(x, y);
         }
-        else if (type.equals("ZombiePit")) {
+        else if (type.equals("zombiepit")) {
             return createZombiePit(x, y);
         }
-        else if (type.equals("Village")) {
+        else if (type.equals("village")) {
             return createVillage(x, y);
         }
         else {

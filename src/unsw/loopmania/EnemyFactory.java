@@ -4,13 +4,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class EnemyFactory {
     public Enemy create(PathPosition path, String type) {
-        if (type.equals("Slug")) {
+        if (type.equals("slug")) {
             return createSlug(path);
         }
-        else if (type.equals("Zombie")) {
+        else if (type.equals("zombie")) {
             return createZombie(path);
         }
-        else if (type.equals("Vampire")) {
+        else if (type.equals("vampire")) {
             return createVampire(path);
         }
         else {
