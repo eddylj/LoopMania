@@ -24,8 +24,8 @@ public class PotionTest {
         assertEquals(100, c.getHealth());
         c.takeDamage(10);
         assertEquals(90, c.getHealth());
-        //Potion potionType = potion;
-        //potionType.heal(c);
+        Potion potionType = (Potion)potion;
+        potionType.heal(c);
         assertEquals(94, c.getHealth());
     }
 
@@ -39,8 +39,8 @@ public class PotionTest {
         assertEquals(100, c.getHealth());
         c.takeDamage(20);
         assertEquals(90, c.getHealth());
-        //Potion potionType = potion;
-        //potionType.heal(c);
+        Potion potionType = (Potion)potion;
+        potionType.heal(c);
         assertEquals(88, c.getHealth());
     }
 
