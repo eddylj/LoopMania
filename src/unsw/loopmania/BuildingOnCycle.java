@@ -3,5 +3,7 @@ package unsw.loopmania;
 public interface BuildingOnCycle {
     public void updateOnCycle();
 
-    public void spawnEnemy(PathPosition pathPosition);
+    public Enemy spawnEnemy(PathPosition pathPosition);
+    public int getChanceOfSpawning1();
+    public int getChanceOfSpawning2();
 }

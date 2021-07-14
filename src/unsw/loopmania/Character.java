@@ -18,6 +18,8 @@ public class Character extends MovingEntity implements Hero {
     private List<Card> cards;
     private List<Item> stored;
     private BonusDamageStrategy applyBuffs;
+    private Enemy attackingEnemy;
+    private CharacterStats stats;
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -31,6 +33,7 @@ public class Character extends MovingEntity implements Hero {
         cards = new ArrayList<Card>();
         stored = new ArrayList<Item>();
         applyBuffs = new NormalState();
+        stats = new CharacterStats();
     }
 
     public void takeDamage(double damage){
@@ -94,6 +97,22 @@ public class Character extends MovingEntity implements Hero {
         return false;
     }
 
+    public int getHighestLevel(Item item) {
+        return stats.getHighest(item.getType());
+    }
+
+    public int getHighestLevel(String item) {
+        return stats.getHighest(item);
+    }
+
+    public void updateHighest(Item item) {
+        stats.updateHighest(item);
+    }
+
+    public void restoreHealth(int health) {
+
+    }
+
     public void setHealth(int i) {
     }
 
@@ -114,9 +133,6 @@ public class Character extends MovingEntity implements Hero {
         return null;
     }
 
-    public Integer getHighestLevel(Item sword) {
-        return null;
-    }
 
     public void unequip(Item sword) {
     }
@@ -141,9 +157,6 @@ public class Character extends MovingEntity implements Hero {
 
     }
 
-    public Item getHighestLevelEquipment(Item item) {
-        return null;
-    }
 
     public void buyItem (Item equipment) {
 

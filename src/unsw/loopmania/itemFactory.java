@@ -5,22 +5,22 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class itemFactory {
     //"Sword", "Helmet", "Armour", "Shield", "Stake", "Staff"
     public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type, int level) {
-        if (type.equals("Sword")) {
+        if (type.equals("sword")) {
             return createSword(x, y, level);
         }
-        else if (type.equals("Helmet")) {
+        else if (type.equals("helmet")) {
             return createHelmet(x, y, level);
         }
-        else if (type.equals("Armour")) {
+        else if (type.equals("armour")) {
             return createArmour(x, y, level);
         }
-        else if (type.equals("Shield")) {
+        else if (type.equals("shield")) {
             return createShield(x, y, level);
         }
-        else if (type.equals("Stake")) {
+        else if (type.equals("stake")) {
             return createStake(x, y, level);
         }
-        else if (type.equals("Staff")) {
+        else if (type.equals("staff")) {
             return createStaff(x, y, level);
         }
         else {
@@ -29,7 +29,7 @@ public class itemFactory {
     }
 
     public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
-        if (type.equals("Potion")) {
+        if (type.equals("healthpotion")) {
             return createHealthPotion(x, y);
         }
         else {

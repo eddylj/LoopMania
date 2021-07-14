@@ -6,10 +6,12 @@ public class TowerCard extends StaticEntity implements Card {
 
     public TowerCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("tower");
     }
     
     public TowerCard() {
         super();
+        super.setType("tower");
     }
 
     @Override

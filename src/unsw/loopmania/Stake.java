@@ -7,11 +7,13 @@ public class Stake extends Weapon{
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(x, y, level, 350*(1+(level-1)*15/100), 20*(1+(level-1)/10));
         critAttack = 50*(1+(level-1)/10);
+        super.setType("stake");
     }
 
     public Stake(int level) {
         super(level, 350*(1+(level-1)*15/100), 20*(1+(level-1)/10));
         critAttack = 50*(1+(level-1)/10);
+        super.setType("stake");
     }
 
 

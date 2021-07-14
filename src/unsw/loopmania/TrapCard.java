@@ -6,10 +6,12 @@ public class TrapCard extends StaticEntity implements Card {
 
     public TrapCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("trap");
     }
     
     public TrapCard() {
         super();
+        super.setType("trap");
     }
 
     @Override

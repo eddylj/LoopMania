@@ -10,12 +10,14 @@ public class Helmet extends Protection {
         super(level, 400*(1+(level-1)*15/100), x, y);
         debuff = 10 - level;
         damageReduction += level;
+        super.setType("helmet");
     }
     
     public Helmet(int level) {
         super(level, 400*(1+(level-1)*15/100));
         debuff = 10 - level;
         damageReduction += level;
+        super.setType("helmet");
     }
 
 
