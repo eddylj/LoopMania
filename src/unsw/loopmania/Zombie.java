@@ -15,17 +15,7 @@ public class Zombie extends Enemy {
 
     }
 
-    @Override
-    public void attack(AlliedSoldier a, BattleRunner b) {
-        Random r = new Random();
-        int randomInt = r.nextInt(100);
-        if (randomInt >= 0 && randomInt <= 9) {
-            a.setHealth(0);
-            b.convertAllyZombie(a);
-        } else {
-            a.takeDamage(this.getAttackDamage());
-        }
-    }
+
 
     @Override
     public void attack(Character c) {

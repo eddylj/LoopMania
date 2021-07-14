@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class BattleRunner {
     private Character character;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> defeatedEnemies;
     private ArrayList<AlliedSoldier> allies;
     private ArrayList<TowerBuilding> towers;
+    private Random rand;
 
-    public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies) {
+    public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies, Random rand) {
         this.character = c;
         this.enemies = enemies;
         this.allies = allies;
+        this.rand = rand;
     }
 
 
@@ -29,12 +33,15 @@ public class BattleRunner {
             runHeroAttacks();
             runEnemyAttacks();
             if (character.isDead()) {
-                return false;
+                return;
             }
         }
         return true;
     }
 
+    private int getRandomNum() {
+
+    }
     private void revivecharacter(Character c) {
         c.setHealth(100);
     }

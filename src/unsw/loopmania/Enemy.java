@@ -7,7 +7,7 @@ public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
 
-    private String type;
+
     private int attackDamage;
     private int goldAmount;
     private int allyTurnCount;
@@ -95,10 +95,5 @@ public abstract class Enemy extends MovingEntity {
         }
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-    public String getType() {
-        return type;
-    }
+
 }
