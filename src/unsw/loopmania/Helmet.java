@@ -3,20 +3,31 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Helmet extends Protection {
+    private int damageReduction = 3;
+    private double debuff;
     
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, 400*(1+(level-1)*15/100), x, y);
+        debuff = 10 - level;
+        damageReduction += level;
     }
     
     public Helmet(int level) {
         super(level, 400*(1+(level-1)*15/100));
+        debuff = 10 - level;
+        damageReduction += level;
     }
 
 
     @Override
     public int protect(int damage) {
         //Will implement the drop by the scalar value
-        return 0;
+        return damage - damageReduction;
+    }
+
+    public double calcAttackDamage(int Attackdamage) {
+
+        return Attackdamage * (1- debuff*0.01);
     }
     
 }

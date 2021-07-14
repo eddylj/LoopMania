@@ -14,12 +14,9 @@ public class Character extends MovingEntity implements Hero{
     private Item equippedHelmet;
     private Item equippedShield;
     private Item equippedArmour;
-    private List<Enemy> enemies;
     private List<Card> cards;
     private List<Item> stored;
-    private List<AlliedSoldier> alliedSoldiers;
     private BonusDamageStrategy applyBuffs;
-    private Enemy attackingEnemy;
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -30,10 +27,8 @@ public class Character extends MovingEntity implements Hero{
         equippedWeapon = new Sword(1);
         equippedHelmet = null;
         equippedShield = null;
-        enemies = new ArrayList<Enemy>();
         cards = new ArrayList<Card>();
         stored = new ArrayList<Item>();
-        alliedSoldiers = new ArrayList<AlliedSoldier>();
         applyBuffs = new NormalState();
     }
 
@@ -81,20 +76,6 @@ public class Character extends MovingEntity implements Hero{
 
     }
 
-    public List<Enemy> getEnemies() {
-        return null;
-    }
-
-    public void gainAlliedSoldier(AlliedSoldier ally) {
-
-    }
-    public int numAlliedSoldiers() {
-        return 0;
-    }
-
-    public void fight() {
-
-    }
 
     public void sellItem(Item i) {
 
