@@ -1,25 +1,39 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 public class Vampire extends Enemy {
 
-    private int critTurns;
-    
+
+
+    private VampireAttackStrategy Strategy;
+
     public Vampire (PathPosition position) {
         super(position, 2, 3, 18, 500, 150);
+        super.setType("Vampire");
+        Strategy = new VampireNormal();
+            
+    
     }
 
     public Vampire() {
         super(2, 3, 18, 500, 150);
+        super.setType("Vampire");
+        Strategy = new VampireNormal();
+
     }
 
+
+
+    public void setStrategy(VampireAttackStrategy Strategy) {
+        this.Strategy = Strategy;
+    }
     @Override
-    public boolean attack (Character character) {
-        return true;
+    public void attack (Hero h, BattleRunner b) {
+        Strategy.attack(h, this);
     }
 
-    @Override
-    public boolean attack (AlliedSoldier ally) {
-        return true;
-    }
+
+
     
 }

@@ -17,6 +17,20 @@ public class EnemyFactory {
             return null;
         }
     }
+    public Enemy create(String type) {
+        if (type.equals("Slug")) {
+            return createSlug();
+        }
+        else if (type.equals("Zombie")) {
+            return createZombie();
+        }
+        else if (type.equals("Vampire")) {
+            return createVampire();
+        }
+        else {
+            return null;
+        }
+    }
 
     private Slug createSlug(PathPosition path) {
         return new Slug(path);
@@ -27,5 +41,16 @@ public class EnemyFactory {
     }
     private Vampire createVampire(PathPosition path) {
         return new Vampire(path);
+    }
+
+    private Slug createSlug() {
+        return new Slug();
+    }
+    
+    private Zombie createZombie() {
+        return new Zombie();
+    }
+    private Vampire createVampire() {
+        return new Vampire();
     }
 }

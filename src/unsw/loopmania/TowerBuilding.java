@@ -14,5 +14,8 @@ public class TowerBuilding extends StaticEntity implements BuildingOnMove{
         // TODO Auto-generated method stub
         
     }
+
+    public void attack(Enemy e) {
+    }
     
 }

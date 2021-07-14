@@ -57,4 +57,23 @@ public abstract class MovingEntity extends Entity {
     public int getY() {
         return y().get();
     }
+    /**
+     * Takes health off entity for damage taken
+     * @param attackdamage amount of damage to be taken
+     */
+    public void takeDamage(int attackDamage) {
+        health -= attackDamage;
+    }
+
+
+    /**
+     * Checks if movnign entity is dead
+     * @return boolean for if entity health is <= 0
+     */
+    public boolean isDead() {
+        if (health <= 0) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,6 +1,6 @@
 package unsw.loopmania;
 
-public class AlliedSoldier {
+public class AlliedSoldier implements Hero{
     private int health;
     private int attackDamage;
 
@@ -20,6 +20,9 @@ public class AlliedSoldier {
 
     public int getHealth() {
         return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     /**

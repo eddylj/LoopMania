@@ -6,6 +6,8 @@ import java.util.Random;
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
+
+    private String type;
     private int attackDamage;
     private int goldAmount;
     private int allyTurnCount;
@@ -41,6 +43,10 @@ public abstract class Enemy extends MovingEntity {
         c.takeDamage(attackDamage);
     }
 
+    public void attack(Hero h, BattleRunner b) {
+        h.takeDamage(attackDamage);
+        
+    }
     /**
      * Enemy attacks the ally given
      * @param ally
@@ -59,13 +65,20 @@ public abstract class Enemy extends MovingEntity {
         return gold;
     }
 
-    // /**
-    //  * Will stop the enemy doing damage for the given number of turns
-    //  * @param turnNumber
-    //  */
-    // public void convert(int turnNumber) {
+    public int getBattleRadius() {
+        return this.battleRadius;
+    }
 
-    // }
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+
+
+
+    public int getSupportRadius() {
+        return this.supportRadius;
+    }
+
 
     /**
      * move the enemy
@@ -80,5 +93,12 @@ public abstract class Enemy extends MovingEntity {
         else if (directionChoice == 1){
             moveDownPath();
         }
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return type;
     }
 }

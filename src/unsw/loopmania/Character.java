@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * represents the main character in the backend of the game world
  */
-public class Character extends MovingEntity {
+public class Character extends MovingEntity implements Hero{
     private int experience;
     private int gold;
     private int cycles;
@@ -323,5 +323,12 @@ public class Character extends MovingEntity {
             }
         }
         return null;
+    }
+
+    public boolean hasring() {
+        return false;
+    }
+
+    public void setHealth(int i) {
     }
 }

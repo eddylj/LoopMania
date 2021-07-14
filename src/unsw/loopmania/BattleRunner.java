@@ -1,12 +1,15 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BattleRunner {
     private Character character;
     private ArrayList<Enemy> enemies;
     private ArrayList<AlliedSoldier> allies;
+    private ArrayList<TowerBuilding> towers;
 
     public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies) {
         this.character = c;
@@ -22,9 +25,27 @@ public class BattleRunner {
      * @return boolean if battle is won or lost
      */
     public boolean runBattle() {
-        
+        while (!enemies.isEmpty()) {
+            runHeroAttacks();
+            runEnemyAttacks();
+            if (character.isDead()) {
+                return false;
+            }
+        }
         return true;
     }
+
+    private void revivecharacter(Character c) {
+        c.setHealth(100);
+    }
+
+    public void convertAllyZombie(AlliedSoldier a) {
+        EnemyFactory f = new EnemyFactory();
+        Enemy z =  f.create("Zombie");
+        enemies.add(z);
+        Collections.sort(enemies, new EnemyComparator());
+    }
+
 
     public void runEnemyAttacks() {
         for (Enemy e : enemies) {
@@ -34,14 +55,27 @@ public class BattleRunner {
                 if (a.isDead()) {
                     killAlly(a);
                 }
-            } else {
-                e.attack(character);
+            } 
+            else {
+                e.attack(character, this);
+                if (character.isDead() && character.hasring()) {
+                    revivecharacter(character);
+                }
             }
         }
     }
     public void runHeroAttacks() {
-        if (!allies.isEmpty()) {
-            for (AlliedSoldier a : allies) {
+        for (TowerBuilding t : towers) {
+            if (!enemies.isEmpty()) {
+                Enemy e = enemies.get(0);
+                t.attack(e);
+                if (e.isDead()){
+                    killEnemy(e);
+                }
+            }
+        }
+        for (AlliedSoldier a : allies) {
+            if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
                 a.attack(e);
                 if (e.isDead()){
@@ -49,40 +83,51 @@ public class BattleRunner {
                 }
             }
         }
-        Enemy e = enemies.get(0);
-        character.attack(e);
+        if (!enemies.isEmpty()) {
+            Enemy e = enemies.get(0);
+            character.attack(e);
+        }
     }
 
-
+    /**
+     * kill an enemy
+     * @param enemy enemy to be killed
+     */
     private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
     }
 
-
+    /**
+     * kill an ally
+     * @param enemy enemy to be killed
+     */
     public void killAlly(AlliedSoldier ally) {
         allies.remove(ally);
     }
 
-    /**
-     * spawn a card in the world and return the card entity
-     * @return a card to be spawned in the controller as a JavaFX node
-     */
-    public VampireCastleCard loadVampireCard(){
-        // if adding more cards than have, remove the first card...
-        if (cardEntities.size() >= getWidth()){
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
-            removeCard(0);
-        }
-        VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(vampireCastleCard);
-        return vampireCastleCard;
-    }
-    /**
-     * kill an enemy
-     * @param enemy enemy to be killed
-     */
 
+
+    class EnemyComparator implements Comparator<Enemy> {
+  
+        // override the compare() method
+        public int compare(Enemy e1, Enemy e2) {
+            String t1 = e1.getType();
+            String t2 = e2.getType();
+            if (t1.equals(t2)) {
+                return 0;
+            }
+            else if (t1.equals("Vampire"))
+                return 1;
+            else if (t2.equals("Vampire"))
+                return -1;
+            else if (t1.equals("Zombie"))
+                return 1;
+            else if (t1.equals("Zombie"))
+                return -1;
+            return 0;
+        }
+    }
 
 
 
@@ -113,4 +158,9 @@ public class BattleRunner {
         }
         return defeatedEnemies;
     }
+
+
+
+
+
 }
