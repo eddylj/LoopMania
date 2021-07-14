@@ -23,7 +23,7 @@ public abstract class Entity {
      * This is why we don't have to track which JavaFX node corresponds to which backend entity explicitly! (for example, in a Hashmap)
      */
     private BooleanProperty shouldExist;
-
+    private String type;
     /**
      * create an Entity
      * this constructor should be called for subclass Entities
