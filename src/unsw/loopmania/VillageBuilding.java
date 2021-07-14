@@ -6,6 +6,7 @@ public class VillageBuilding extends StaticEntity implements Building, BuildingO
 
     public VillageBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("village");
         //TODO Auto-generated constructor stub
     }
 

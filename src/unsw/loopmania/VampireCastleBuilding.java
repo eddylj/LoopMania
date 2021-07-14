@@ -9,6 +9,7 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
 
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+		super.setType("vampirecastle");
         //TODO Auto-generated constructor stub
     }
 
@@ -17,5 +18,21 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
         // TODO Auto-generated method stub
         
     }
+
+	@Override
+	public Enemy spawnEnemy(PathPosition pathPosition) {
+        EnemyFactory ef = new EnemyFactory();
+        return ef.create(pathPosition, "vampire");
+	}
+
+	@Override
+	public int getChanceOfSpawning1() {
+		return 60;
+	}
+
+	@Override
+	public int getChanceOfSpawning2() {
+		return 40;
+	}
     
 }

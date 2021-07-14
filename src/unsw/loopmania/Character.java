@@ -20,6 +20,7 @@ public class Character extends MovingEntity {
     private List<AlliedSoldier> alliedSoldiers;
     private BonusDamageStrategy applyBuffs;
     private Enemy attackingEnemy;
+    private CharacterStats stats;
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -35,6 +36,7 @@ public class Character extends MovingEntity {
         stored = new ArrayList<Item>();
         alliedSoldiers = new ArrayList<AlliedSoldier>();
         applyBuffs = new NormalState();
+        stats = new CharacterStats();
     }
 
     public int getHealth() {
@@ -55,6 +57,18 @@ public class Character extends MovingEntity {
 
     public void loseHealth(int health){
 
+    }
+
+    public int getHighestLevel(Item item) {
+        return stats.getHighest(item.getType());
+    }
+
+    public int getHighestLevel(String item) {
+        return stats.getHighest(item);
+    }
+
+    public void updateHighest(Item item) {
+        stats.updateHighest(item);
     }
 
     public void restoreHealth(int health) {
@@ -120,6 +134,7 @@ public class Character extends MovingEntity {
         stored = new ArrayList<Item>();
         alliedSoldiers = new ArrayList<AlliedSoldier>();
         applyBuffs = new NormalState();
+        stats = new CharacterStats();
     }
 
     public Character(Enemy attacker, List<Enemy> supporting) {
@@ -138,6 +153,7 @@ public class Character extends MovingEntity {
             enemies.add(e);
         }
         attackingEnemy = attacker;
+        stats = new CharacterStats();
     }
     
     public Character(Enemy attacker, List<Enemy> supporting, List<Item> equipment) {
@@ -171,6 +187,7 @@ public class Character extends MovingEntity {
                 equippedArmour = i;
             }
         }
+        stats = new CharacterStats();
     }
 
     public Character(List<Item> equipment) {
@@ -200,6 +217,7 @@ public class Character extends MovingEntity {
                 equippedArmour = i;
             }
         }
+        stats = new CharacterStats();
     }
 
     public void attack(Enemy enemy) {

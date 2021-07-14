@@ -6,6 +6,7 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
 
     public CampfireBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("campfire");
         //TODO Auto-generated constructor stub
     }
 

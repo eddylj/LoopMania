@@ -6,10 +6,12 @@ public class Helmet extends Protection {
     
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, 400*(1+(level-1)*15/100), x, y);
+        super.setType("helmet");
     }
     
     public Helmet(int level) {
         super(level, 400*(1+(level-1)*15/100));
+        super.setType("helmet");
     }
 
 

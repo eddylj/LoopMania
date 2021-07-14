@@ -6,6 +6,7 @@ public class VillageCard extends StaticEntity implements Card {
 
     public VillageCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("village");
     }
     @Override
     public boolean canBePlaced(PathTile PathTile) {

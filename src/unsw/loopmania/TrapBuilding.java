@@ -6,6 +6,7 @@ public class TrapBuilding extends StaticEntity implements Building, BuildingOnMo
 
     public TrapBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("trap");
         //TODO Auto-generated constructor stub
     }
 

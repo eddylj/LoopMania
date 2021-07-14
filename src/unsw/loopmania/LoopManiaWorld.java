@@ -98,6 +98,7 @@ public class LoopManiaWorld {
     private Character character;
 
     private IntegerProperty aliveSoldiers;
+    private List<AlliedSoldier> soldiers;
 
 //    / / TODO = add more lists for other entities, for equipped inventory items, etc...
 
@@ -188,6 +189,7 @@ public class LoopManiaWorld {
         slugCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
         zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
         zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
+        soldiers = new ArrayList<AlliedSoldier>();
     }
 
     public int getWidth() {
@@ -225,46 +227,144 @@ public class LoopManiaWorld {
         moveEnemies();
         List<Enemy> deadEnemies = checkForFight();
         processEnemyLoot(deadEnemies);
-        checkPlayerWin();
-        checkPlayerLoss();
+        if (checkPlayerWin()) {
+
+        }
+        else if (checkPlayerLoss()) {
+
+        }
         updateAlliedSoldierAmount();
     }
 
-    private void checkForFight() {
+    private List<Enemy> checkForFight() {
         List<Enemy> attacking = new ArrayList<Enemy>();
-        List<Enemy> supporting = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
             int supportRadius = e.getSupportRadius();
-            int attackRadius = e.getAttackRadius();
             double distance = Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2);
-            if (distance < attackRadius) {
+            if (distance < supportRadius) {
                 attacking.add(e);
             }
-            else if (distance < supportRadius) {
-                supporting.add(e);
+        }
+        List<TowerBuilding> towers = getInRangeTowers();
+        BattleRunner b = new BattleRunner(character, attacking, soldiers, towers);
+        return b.runBattle();
+    }
+
+    private List<TowerBuilding> getInRangeTowers() {
+        List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
+        for (BuildingOnMove b : moveBuildings) {
+            StaticEntity building = (StaticEntity)b;
+            double distance = Math.pow((character.getX()-building.getX()), 2) +  Math.pow((character.getY()-building.getY()), 2);
+
+            if (b.getType().equals("tower") && distance < 3) {
+                towers.add((TowerBuilding)b);
             }
         }
-        BattleRunner b = new BattleRunner()
+        return towers;
+    }
+
+    private boolean checkPlayerWin() {
+        return false; // need some json parser stuff here :(
+    }
+
+    private boolean checkPlayerLoss() {
+        return character.getHealth() <= 0;
+    }
+
+    private void updateAlliedSoldierAmount() {
+        for (AlliedSoldier s : soldiers) {
+            if (s.getHealth() <= 0) {
+                soldiers.remove(s);
+            }
+        }
+        aliveSoldiers.set(soldiers.size()); // observer pattern wooo
     }
 
     private void processEnemyLoot(List<Enemy> deadEnemies) {
         for (Enemy e : enemies) {
-
+            if (e instanceof Slug) {
+                getLoot((Slug)e);
+            }
+            else if (e instanceof Zombie) {
+                getLoot((Zombie)e);
+            }
+            else if (e instanceof Vampire) {
+                getLoot((Vampire)e);
+            }
         }
     }
 
     private void getLoot(Slug slug) {
         int num = rand.nextInt(100);
         // slug drops item better than current
-        if (num < 5) {
+        if (num < 15) {
             String itemType = itemList[rand.nextInt(100) % itemList.length];
-            Item item = null;
             if (itemType.equals("healthpotion")) {
-                item = iF.create()
+                addUnequippedItem(itemType, 0);
             }
-            int currentBest = character.getHighestLevel(itemType);
-            Item 
+            else if (num < 5) {
+                int level = getHighestLevel(itemType) + 1;
+                addUnequippedItem(itemType, level);
+            }
+            else {
+                int level = getHighestLevel(itemType);
+                addUnequippedItem(itemType, level);
+            }
         }
+        else if (num < 20) {
+            String cardType = slugCards[rand.nextInt(100) % slugCards.length];
+            loadCard(cardType);
+        }
+    }
+
+    private void getLoot(Zombie zombie) {
+        int num = rand.nextInt(100);
+        // slug drops item better than current
+        if (num < 20) {
+            String itemType = itemList[rand.nextInt(100) % itemList.length];
+            if (itemType.equals("healthpotion")) {
+                addUnequippedItem(itemType, 0);
+            }
+            else if (num < 10) {
+                int level = getHighestLevel(itemType) + 1;
+                addUnequippedItem(itemType, level);
+            }
+            else {
+                int level = getHighestLevel(itemType);
+                addUnequippedItem(itemType, level);
+            }
+        }
+        else if (num < 25) {
+            String cardType = zombieCards[rand.nextInt(100) % zombieCards.length];
+            loadCard(cardType);
+        }
+    }
+
+    private void getLoot(Vampire vampire) {
+        int num = rand.nextInt(100);
+        // slug drops item better than current
+        if (num < 30) { // INCRAESE BY 5 WHEN RARE ITEMS ARE ADDED
+            String itemType = itemList[rand.nextInt(100) % itemList.length];
+            if (itemType.equals("healthpotion")) {
+                addUnequippedItem(itemType, 0);
+            }
+            else if (num < 20) {
+                int level = getHighestLevel(itemType) + 1;
+                addUnequippedItem(itemType, level);
+            }
+            else {
+                int level = getHighestLevel(itemType);
+                addUnequippedItem(itemType, level);
+            }
+        }
+        else if (num < 25) {
+            String cardType = vampireCards[rand.nextInt(100) % vampireCards.length];
+            loadCard(cardType);
+        }
+    }
+
+    private int getHighestLevel(String itemType) {
+        return character.getHighestLevel(itemType);
     }
 
     /**
@@ -472,13 +572,20 @@ public class LoopManiaWorld {
         if (firstAvailableSlot == null){
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
         // now we insert the new sword, as we know we have at least made a slot available...
         itemFactory f = new itemFactory();
-        Item item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
+        Item item = null;
+        if (type.equals("healthpotion")) {
+            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+        }
+        else {
+            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
+        }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
         return item;
@@ -497,7 +604,7 @@ public class LoopManiaWorld {
     /**
      * run moves which occur with every tick without needing to spawn anything immediately
      */
-    public void runTickMoves(){
+    public void runTickMoves(){ // DEAD GONE GOODBYE
         character.moveDownPath();
         moveEnemies();
     }
@@ -539,6 +646,8 @@ public class LoopManiaWorld {
     private void removeItemByPositionInUnequippedInventoryItems(int index){
         Item item = unequippedInventoryItems.get(index);
         // item.destroy();
+        // int goldAmount = item.getReplaceCost();
+        character.gainGold(item.getReplaceCost());
         unequippedInventoryItems.remove(index);
     }
 
@@ -591,7 +700,8 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
-    private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(){
+    // ! SHOULD BE UNUSED I THINK
+    private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(){ 
         // TODO = modify this
         
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
@@ -642,9 +752,10 @@ public class LoopManiaWorld {
                 break;
             }
         }
+
         
         // now spawn building
-        Building newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+        Building newBuilding = cF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), card.getType());
         // buildingEntities.add(newBuilding);
         addBuilding(newBuilding);
 

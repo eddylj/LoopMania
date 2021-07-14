@@ -11,10 +11,12 @@ public class HealthPotion extends StaticEntity implements Item{
      */
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
+        super.setType("healthpotion");
     }
 
     public HealthPotion() {
         super();
+        super.setType("healthpotion");
     }
 
     /**

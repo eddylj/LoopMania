@@ -6,6 +6,7 @@ public class TowerBuilding extends StaticEntity implements Building, BuildingOnM
 
     public TowerBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("tower");
         //TODO Auto-generated constructor stub
     }
 

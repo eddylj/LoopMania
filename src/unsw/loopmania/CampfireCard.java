@@ -6,10 +6,12 @@ public class CampfireCard extends StaticEntity implements Card {
 
     public CampfireCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("campfire");
     }
     
     public CampfireCard() {
         super();
+        super.setType("campfire");
     }
     
     @Override

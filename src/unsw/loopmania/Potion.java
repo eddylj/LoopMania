@@ -6,9 +6,12 @@ public class Potion extends StaticEntity implements Item {
     
     public Potion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
+        super.setType("healthpotion");
     }
 
     public Potion() {
+        super();
+        super.setType("healthpotion");
     }
 
     public void heal(Character character) {

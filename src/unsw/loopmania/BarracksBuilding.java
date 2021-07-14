@@ -6,6 +6,7 @@ public class BarracksBuilding extends StaticEntity implements Building, Building
 
     public BarracksBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+        super.setType("barracks");
         //TODO Auto-generated constructor stub
     }
 
