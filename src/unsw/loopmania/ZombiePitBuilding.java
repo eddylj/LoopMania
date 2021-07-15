@@ -10,12 +10,6 @@ public class ZombiePitBuilding extends StaticEntity implements Building, Buildin
         //TODO Auto-generated constructor stub
     }
 
-    @Override
-    public void updateOnCycle() {
-        // TODO Auto-generated method stub
-        
-    }
-
 	@Override
 	public Enemy spawnEnemy(PathPosition pathPosition) {
         EnemyFactory ef = new EnemyFactory();
@@ -23,13 +17,19 @@ public class ZombiePitBuilding extends StaticEntity implements Building, Buildin
 	}
 
 	@Override
-	public int getChanceOfSpawning1() {
-		return 30;
-	}
-
-	@Override
-	public int getChanceOfSpawning2() {
-		return 60;
-	}
+	public int generateNumberOfEnemies() {
+        int num = LoopManiaWorld.getRandNum();
+        int spawn1 = 30;
+        int spawn2 = spawn1 + 60;
+        if (num <= spawn1) {
+            return 1;
+        }
+        else if (num <= spawn2) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
     
 }

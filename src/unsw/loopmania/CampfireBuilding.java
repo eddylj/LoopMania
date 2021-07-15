@@ -11,9 +11,27 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
     }
 
     @Override
-    public void updateOnMove() {
+    public void updateOnMove(MovingEntity character) {
         // TODO Auto-generated method stub
+        if (super.getX() == character.getX() && super.getY() == character.getY()) {
+            applybuff((Character) character);
+        } else {
+            removeBuff((Character) character);
+        }
+        
         
     }
+
+    @Override
+    public String getType() {
+        return super.getType();
+    }
     
+    public void applybuff(Character character) {
+        character.setBonusDamageStrategy(new CampfireState());
+    }
+
+    public void removeBuff(Character character) {
+        character.setBonusDamageStrategy(new NormalState());
+    }
 }

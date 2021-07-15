@@ -13,12 +13,6 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
         //TODO Auto-generated constructor stub
     }
 
-    @Override
-    public void updateOnCycle() {
-        // TODO Auto-generated method stub
-        
-    }
-
 	@Override
 	public Enemy spawnEnemy(PathPosition pathPosition) {
         EnemyFactory ef = new EnemyFactory();
@@ -26,13 +20,15 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
 	}
 
 	@Override
-	public int getChanceOfSpawning1() {
-		return 60;
-	}
-
-	@Override
-	public int getChanceOfSpawning2() {
-		return 40;
-	}
+	public int generateNumberOfEnemies() {
+        int num = LoopManiaWorld.getRandNum();
+        int spawn1 = 60;
+        if (num <= spawn1) {
+            return 1;
+        }
+        else {
+            return 2;
+        }
+    }
     
 }

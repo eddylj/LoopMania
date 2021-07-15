@@ -11,11 +11,24 @@ public class TowerBuilding extends StaticEntity implements Building, BuildingOnM
     }
 
     @Override
-    public void updateOnMove() {
+    public void updateOnMove(MovingEntity enemy) {
+        enemy.takeDamage(4);
         // TODO Auto-generated method stub
         
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
+    public boolean range(Character character) {
+        double distance = Math.pow((character.getX()-building.getX()), 2) +  Math.pow((character.getY()-building.getY()), 2);
+        if (distance < 3) {
+            return true;
+        }
+        return false;
+    }
     public void attack(Enemy e) {
     }
     

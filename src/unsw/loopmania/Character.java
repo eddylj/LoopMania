@@ -175,6 +175,14 @@ public class Character extends MovingEntity implements Hero {
         
     }
 
+    public BonusDamageStrategy getBonusDamageStrategy() {
+        return applyBuffs;
+    }
+
+    public void setBonusDamageStrategy(BonusDamageStrategy buff) {
+        applyBuffs = buff;
+    }
+
     // public Character() {
     //     super(100);
     //     experience = 0;

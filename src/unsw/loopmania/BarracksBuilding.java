@@ -11,7 +11,7 @@ public class BarracksBuilding extends StaticEntity implements Building, Building
     }
 
     @Override
-    public void updateOnMove() {
+    public void updateOnMove(MovingEntity character) {
         // TODO Auto-generated method stub
         
     }

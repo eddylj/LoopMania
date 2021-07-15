@@ -6,9 +6,8 @@ public class CampfireState implements BonusDamageStrategy{
     }
 
     @Override
-    public int ApplyBonusDamge(int damage) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int ApplyBonusDamge(int damage) {    
+        return damage*2;
     }
     
 }

@@ -18,7 +18,7 @@ import org.junit.Test;
 public class CampfireTest {
     CampfireBuilding f = new BarracksBuilding();
     Character c = new Character();
-    f.applybuff();
+    f.applybuff(c);
     BonusDamageStrategy b = c.getBonusDamageStrategy();
 
     assertTrue(b instanceof CampfireState);

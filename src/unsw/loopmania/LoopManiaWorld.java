@@ -253,11 +253,13 @@ public class LoopManiaWorld {
     private List<TowerBuilding> getInRangeTowers() {
         List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
         for (BuildingOnMove b : moveBuildings) {
-            StaticEntity building = (StaticEntity)b;
-            double distance = Math.pow((character.getX()-building.getX()), 2) +  Math.pow((character.getY()-building.getY()), 2);
 
-            if (b.getType().equals("tower") && distance < 3) {
-                towers.add((TowerBuilding)b);
+
+            if (b.getType().equals("tower")) {
+                TowerBuilding tower = (TowerBuilding) b;
+                if (tower.range(character)) {
+                    towers.add(tower);
+                }
             }
         }
         return towers;
@@ -423,20 +425,6 @@ public class LoopManiaWorld {
         return adjacent;
     }
 
-    private int generateNumberOfEnemies(BuildingOnCycle b) {
-        int num = rand.nextInt(100);
-        int spawn1 = b.getChanceOfSpawning1();
-        int spawn2 = spawn1 + b.getChanceOfSpawning2();
-        if (num <= spawn1) {
-            return 1;
-        }
-        else if (num <= spawn2) {
-            return 2;
-        }
-        else {
-            return 3;
-        }
-    }
 
     private List<Pair<Integer, Integer>> getAllEmptyTiles() {
         List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
@@ -452,7 +440,7 @@ public class LoopManiaWorld {
         for (BuildingOnCycle b : cycleBuildings) {
             // adjacent contains every PathTile touching building b
             List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
-            int numSpawn = Integer.max(generateNumberOfEnemies(b), adjacent.size());
+            int numSpawn = Integer.max(b.generateNumberOfEnemies(), adjacent.size());
             for (int i = 0; i < numSpawn; i++) {
                 int tile = rand.nextInt(100) % adjacent.size();
                 int positioninPath = getNumInPath(adjacent.get(tile));
