@@ -98,7 +98,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public int getHighestLevel(Item item) {
-        return stats.getHighest(item.getType());
+        return stats.getHighest(((StaticEntity)item).getType());
     }
 
     public int getHighestLevel(String item) {
@@ -114,12 +114,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void setHealth(int i) {
-    }
-
-    public void restoreHealth(int health) {
-
-    }
- 
+    } 
     
 
     public Integer numEquipmentInInventory() {

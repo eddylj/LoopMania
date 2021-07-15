@@ -8,16 +8,17 @@ import java.util.Random;
 
 public class BattleRunner {
     private Character character;
-    private ArrayList<Enemy> enemies;
+    private List<Enemy> enemies;
     private ArrayList<Enemy> defeatedEnemies;
-    private ArrayList<AlliedSoldier> allies;
-    private ArrayList<TowerBuilding> towers;
+    private List<AlliedSoldier> allies;
+    private List<TowerBuilding> towers;
     private Random rand;
 
-    public BattleRunner(Character c, ArrayList<Enemy> enemies, ArrayList<AlliedSoldier> allies) {
+    public BattleRunner(Character c, List<Enemy> enemies, List<AlliedSoldier> allies, List<TowerBuilding> towers) {
         this.character = c;
         this.enemies = enemies;
         this.allies = allies;
+        this.towers = towers;
     }
 
 

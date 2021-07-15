@@ -6,24 +6,28 @@ import org.json.JSONObject;
 public class GoalCalculator {
     private JSONObject json;
     private Character character;
+    private Composite checker;
 
     public GoalCalculator(JSONObject json, Character character) {
         this.json = json;
         this.character = character;
+        this.checker = winCondition(json);
+    }
+
+    public Composite getChecker() {
+        return checker;
     }
 
     // obj: CompositeAnd(CompositeLeaf(100, character, "cycles"), CompositeOr(CompositeLeaf(123456, character, "experience"), CompositeLeaf(900000, character, "gold")))
     public boolean checkWinCondition() {
-        Composite obj =  winCondition(json);
-        return obj.getValue();
+        // Composite obj =  winCondition(json);
+        return checker.getValue();
     }
 
-    // should this be recursive?
     public Composite winCondition(JSONObject json) {
         if (json.has("quantity")) {
             Composite leaf = new CompositeLeaf((int)json.get("quantity"), character, (String)json.get("goal"));
             return leaf;
-            //return leaf.getValue();
         }
         else {
             JSONArray subgoals = json.getJSONArray("subgoals");

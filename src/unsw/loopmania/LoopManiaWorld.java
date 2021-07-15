@@ -91,7 +91,8 @@ public class LoopManiaWorld {
      */
     private int height;
 
-    private JSONObject goals;
+    private JSONObject json;
+    private Composite winChecker;
 
     /**
      * generic entitites - i.e. those which don't have dedicated fields
@@ -152,7 +153,9 @@ public class LoopManiaWorld {
         iF = new itemFactory();
         eF = new EnemyFactory();
         cF = new CardFactory();
-        this.goals = goals;
+        this.json = goals;
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
         fillEntityLists();
         // buildingEntities = new ArrayList<>();
     }
@@ -179,7 +182,10 @@ public class LoopManiaWorld {
         iF = new itemFactory();
         eF = new EnemyFactory();
         cF = new CardFactory();
-        this.goals = goals;
+        this.json = goals;
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
+
         fillEntityLists();
         // buildingEntities = new ArrayList<>();
     }
@@ -261,7 +267,7 @@ public class LoopManiaWorld {
             StaticEntity building = (StaticEntity)b;
             double distance = Math.pow((character.getX()-building.getX()), 2) +  Math.pow((character.getY()-building.getY()), 2);
 
-            if (b.getType().equals("tower") && distance < 3) {
+            if (((StaticEntity)b).getType().equals("tower") && distance < 3) {
                 towers.add((TowerBuilding)b);
             }
         }
@@ -269,7 +275,7 @@ public class LoopManiaWorld {
     }
 
     private boolean checkPlayerWin() {
-        return false; // need some json parser stuff here :(
+        return winChecker.getValue();
     }
 
     private boolean checkPlayerLoss() {
