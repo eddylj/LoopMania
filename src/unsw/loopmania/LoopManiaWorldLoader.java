@@ -27,6 +27,7 @@ public abstract class LoopManiaWorldLoader {
     private JSONObject json;
 
     public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
+        System.err.println(filename);
         json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
     }
 
@@ -40,7 +41,9 @@ public abstract class LoopManiaWorldLoader {
         // path variable is collection of coordinates with directions of path taken...
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
 
-        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
+        JSONObject goals = json.getJSONObject("goal-condition");
+
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, goals);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 

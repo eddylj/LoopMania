@@ -1,5 +1,17 @@
 package test;
 
+import unsw.loopmania.Enemy;
+import unsw.loopmania.Slug;
+import unsw.loopmania.Character;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Zombie;
+import unsw.loopmania.Sword;
+import unsw.loopmania.Helmet;
+import unsw.loopmania.Armour;
+import unsw.loopmania.Shield;
+import unsw.loopmania.Item;
+
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -51,7 +63,7 @@ public class FightingTest {
         Character c = new Character(slug1, enemies);
         assertEquals(100, c.getHealth());
         c.fight();
-        AssertEquals(50, c.getHealth());
+        assertEquals(50, c.getHealth());
         assertFalse(slug1.shouldExist().get());
         assertFalse(slug2.shouldExist().get());
     }
@@ -65,7 +77,7 @@ public class FightingTest {
         Character c = new Character(zombie1, enemies);
         assertEquals(100, c.getHealth());
         c.fight();
-        AssertEquals(0, c.getHealth());
+        assertEquals(0, c.getHealth());
         assertFalse(zombie1.shouldExist().get());
         assertTrue(zombie2.shouldExist().get());
         assertEquals(100, zombie2.getHealth());
@@ -74,21 +86,21 @@ public class FightingTest {
     @Test
     public void fightTwoZombiesWithBetterSwordTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
-        List<Equipment> equipment = new ArrayList<Equipment>;
+        List<Item> equipment = new ArrayList<Item>();
         Enemy zombie1 = new Zombie();
         Enemy zombie2 = new Zombie();
-        Equipment sword = new Sword(10);
+        Item sword = new Sword(10);
         equipment.add(sword);
         enemies.add(zombie2);
         Character c = new Character(zombie1, enemies, equipment);
         c.fight();
         assertEquals(46, c.getHealth());
-        assertFalse(vampire1.shouldExist().get());
-        assertFalse(vampire2.shouldExist().get());
+        assertFalse(zombie1.shouldExist().get());
+        assertFalse(zombie2.shouldExist().get());
     }
 
     @Test
-    public fightTwoVampiresTest() {
+    public void fightTwoVampiresTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
         Enemy vampire1 = new Vampire();
         Enemy vampire2 = new Vampire();
@@ -96,19 +108,19 @@ public class FightingTest {
         Character c = new Character(vampire1, enemies);
         assertEquals(100, c.getHealth());
         c.fight();
-        AssertEquals(0, c.getHealth());
+        assertEquals(0, c.getHealth());
     }
 
     @Test
     public void fightTwoZombiesWithMaxGearTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
-        List<Equipment> equipment = new ArrayList<Equipment>;
+        List<Item> equipment = new ArrayList<Item>();
         Enemy vampire1 = new Vampire();
-        Enemy vampire2 = new Vampire2();
-        Equipment sword = new Sword(10);
-        Equipment helmet = new Helmet(10);
-        Equipment armour = new Armour(10);
-        Equipment shield = new Shield(10);
+        Enemy vampire2 = new Vampire();
+        Item sword = new Sword(10);
+        Item helmet = new Helmet(10);
+        Item armour = new Armour(10);
+        Item shield = new Shield(10);
         equipment.add(sword);
         equipment.add(helmet);
         equipment.add(armour);
@@ -168,7 +180,7 @@ public class FightingTest {
     @Test
     public void fightThreeSlugsWithHelmet() {
         List<Enemy> enemies = new ArrayList<Enemy>();
-        List<Equipment> equipment = new ArrayList<Equipment>();
+        List<Item> equipment = new ArrayList<Item>();
         equipment.add(new Helmet(1));
         Enemy slug1 = new Slug();
         Enemy slug2 = new Slug();
