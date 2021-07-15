@@ -17,6 +17,10 @@ public class Armour extends Protection {
         super.setType("armour");
     }
 
+    public double getDamageReduction() {
+        return damageReduction;
+    }
+
     @Override
     public double protect(double damage) {
         //Will implement the percentage reduction

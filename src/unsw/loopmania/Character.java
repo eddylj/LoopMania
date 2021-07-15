@@ -98,6 +98,10 @@ public class Character extends MovingEntity implements Hero {
         return cycles;
     }
 
+    public int getAlliedSoldierCount() {
+        return aliveSoldiers.get();
+    }
+
     public void loseHealth(double damage){
         health -= (int)damage;
     }

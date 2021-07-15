@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Test;
 
 import org.javatuples.Pair;
+import org.json.JSONObject;
 
 import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
@@ -23,8 +24,16 @@ import unsw.loopmania.MovingEntity;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.PathTile;
 import unsw.loopmania.VampireCastleBuilding;
-import unsw.loopmania.worldStateHelper;
+
 public class MovingIntegrationTest {
+    private JSONObject goals;
+    
+    public MovingIntegrationTest() {
+        goals = new JSONObject();
+        goals.put("goal", "gold");
+        goals.put("quantity", 1000);
+    }
+
     private List<Pair<Integer, Integer>> createPath() {
         List<Pair<Integer, Integer>> l = new ArrayList<Pair<Integer, Integer>>();
         l.add(new Pair<Integer, Integer>(0, 0));

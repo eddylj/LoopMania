@@ -27,11 +27,11 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
         return super.getType();
     }
     
-    public void applybuff(Character character) {
+    private void applybuff(Character character) {
         character.setBonusDamageStrategy(new CampfireState());
     }
 
-    public void removeBuff(Character character) {
+    private void removeBuff(Character character) {
         character.setBonusDamageStrategy(new NormalState());
     }
 }
