@@ -17,10 +17,7 @@ public class Character extends MovingEntity implements Hero {
     private Item equippedHelmet;
     private Item equippedShield;
     private Item equippedArmour;
-    private List<Card> cards;
-    private List<Item> stored;
     private BonusDamageStrategy applyBuffs;
-    private Enemy attackingEnemy;
     private CharacterStats stats;
     private SimpleIntegerProperty aliveSoldiers;
     private List<AlliedSoldier> soldiers;
@@ -87,7 +84,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public int getXP() {
-        return 0;
+        return experience;
     }
 
     public int getGold() {
@@ -208,104 +205,5 @@ public class Character extends MovingEntity implements Hero {
     public List<AlliedSoldier> getAlliedSoldiers() {
         return soldiers;
     }
-
-    // public Character() {
-    //     super(100);
-    //     experience = 0;
-    //     gold = 0;
-    //     equippedWeapon = new Sword(1);
-    //     equippedHelmet = null;
-    //     equippedShield = null;
-    //     enemies = new ArrayList<Enemy>();
-    //     cards = new ArrayList<Card>();
-    //     stored = new ArrayList<Item>();
-    //     alliedSoldiers = new ArrayList<AlliedSoldier>();
-    //     applyBuffs = new NormalState();
-    // }
-
-    // public Character(Enemy attacker, List<Enemy> supporting) {
-    //     super(100);
-    //     experience = 0;
-    //     gold = 0;
-    //     equippedWeapon = new Sword(1);
-    //     equippedHelmet = null;
-    //     equippedShield = null;
-    //     enemies = new ArrayList<Enemy>();
-    //     cards = new ArrayList<Card>();
-    //     stored = new ArrayList<Item>();
-    //     alliedSoldiers = new ArrayList<AlliedSoldier>();
-    //     applyBuffs = new NormalState();
-    //     for (Enemy e : supporting) {
-    //         enemies.add(e);
-    //     }
-    //     attackingEnemy = attacker;
-    // }
-    
-    // public Character(Enemy attacker, List<Enemy> supporting, List<Item> equipment) {
-    //     super(100);
-    //     experience = 0;
-    //     gold = 0;
-    //     equippedWeapon = new Sword(1);
-    //     equippedHelmet = null;
-    //     equippedShield = null;
-    //     equippedArmour = null;
-    //     enemies = new ArrayList<Enemy>();
-    //     cards = new ArrayList<Card>();
-    //     stored = new ArrayList<Item>();
-    //     alliedSoldiers = new ArrayList<AlliedSoldier>();
-    //     applyBuffs = new NormalState();
-    //     for (Enemy e : supporting) {
-    //         enemies.add(e);
-    //     }
-    //     attackingEnemy = attacker;
-    //     for (Item i : equipment) {
-    //         if (i instanceof Weapon) {
-    //             equippedWeapon = i;
-    //         }
-    //         else if (i instanceof Helmet) {
-    //             equippedHelmet = i;
-    //         }
-    //         else if (i instanceof Shield) {
-    //             equippedShield = i;
-    //         }
-    //         else if (i instanceof Armour) {
-    //             equippedArmour = i;
-    //         }
-    //     }
-    // }
-
-    // public Character(List<Item> equipment) {
-    //     super(100);
-    //     experience = 0;
-    //     gold = 0;
-    //     equippedWeapon = new Sword(1);
-    //     equippedHelmet = null;
-    //     equippedShield = null;
-    //     equippedArmour = null;
-    //     enemies = new ArrayList<Enemy>();
-    //     cards = new ArrayList<Card>();
-    //     stored = new ArrayList<Item>();
-    //     alliedSoldiers = new ArrayList<AlliedSoldier>();
-    //     applyBuffs = new NormalState();
-    //     for (Item i : equipment) {
-    //         if (i instanceof Weapon) {
-    //             equippedWeapon = i;
-    //         }
-    //         else if (i instanceof Helmet) {
-    //             equippedHelmet = i;
-    //         }
-    //         else if (i instanceof Shield) {
-    //             equippedShield = i;
-    //         }
-    //         else if (i instanceof Armour) {
-    //             equippedArmour = i;
-    //         }
-    //     }
-    // }
-
-    
-
-
-
 
 }

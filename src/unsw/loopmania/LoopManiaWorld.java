@@ -1,50 +1,3 @@
-/**
- * Functions in this file
- * Constructor 1 (random seed)
- * Constructor 2 (set seed)
- * GetRandNum
- * FillEntityList
- * getWidth
- * getHeight
- * getOrderedPath
- * getEnemies
- * getRand
- * setCharacter
- * tick
- * checkforfight
- * processEnemyloot
- * getLoot (slug)
- * addEntity
- * getNumInPath
- * empty
- * getAdjacentPathTiles
- * GenerateNumOfenemies
- * getAllEnemyTiles
- * spawnEnemiesOnCycle
- * possiblySpawnEnemies
- * killEnemy
- * runBattles
- * loadVampireCard
- * loadCard
- * removeCard
- * addUnequippedItem
- * removeUnequippedInventoryItemByCoordinates
- * runTickMoves
- * removeUnequippedInventoryItem
- * convertItemtoStaticEntity
- * getUnequippedInventoryItemEntityByCoordinates
- * removeItemByPositionInUnequippedInventoryItems
- * getFirstAvailableSlotForItem
- * shiftCardsDownFromXCoordinate
- * moveEnemies
- * moveEnemy (slug)
- * PossiblyGetSpawnPosition
- * addBuilding
- * convertCardToBuildingByCoordinates
- * spawnSlug
- * spawnVampire
- * spawnZombie
- */
 
 package unsw.loopmania;
 
@@ -53,10 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.LoggingPermission;
-
 import org.javatuples.Pair;
 import org.json.JSONObject;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -67,78 +18,33 @@ import javafx.beans.property.SimpleIntegerProperty;
  * entity can occupy the same square.
  */
 public class LoopManiaWorld {
-    // TODO = add additional backend functionality
-
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
-
     public static int seed;
-
     private static Random rand;
-
     private itemFactory iF;
     private CardFactory cF;
     private EnemyFactory eF;
     private BuildingFactory bF;
-    // private BuildingFactory bf;
-
-    /**
-     * width of the world in GridPane cells
-     */
     private int width;
-
-    /**
-     * height of the world in GridPane cells
-     */
     private int height;
-
     private JSONObject json;
     private Composite winChecker;
-
-    /**
-     * generic entitites - i.e. those which don't have dedicated fields
-     */
     private List<Entity> nonSpecifiedEntities;
-
     private Character character;
-
     private Pair<Integer, Integer> heroCastlePosition;
-
-//    / / TODO = add more lists for other entities, for equipped inventory items, etc...
-
-    // TODO = expand the range of enemies
     private static List<Enemy> enemies;
-
-    // TODO = expand the range of cards
     private List<Card> cardEntities;
-
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
-
-    // TODO = expand the range of items
     private List<Item> unequippedInventoryItems;
-
     private String[] itemList;
     private String[] cardList;
-
     private String[] slugCards; // slugs can't drop vampire castles
     private String[] zombieCards; //     
     private String[] vampireCards; // 
-    // TODO = expand the range of buildings
-    // private List<VampireCastleBuilding> buildingEntities;
-
-    /**
-     * list of x,y coordinate pairs in the order by which moving entities traverse them
-     */
     private List<Pair<Integer, Integer>> orderedPath;
 
-    /**
-     * create the world (constructor)
-     * 
-     * @param width width of world in number of cells
-     * @param height height of world in number of cells
-     * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
-     */
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
         this.width = width;
         this.height = height;
@@ -158,17 +64,8 @@ public class LoopManiaWorld {
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
         fillEntityLists();
-        // buildingEntities = new ArrayList<>();
     }
 
-    /**
-     * create the world (constructor)
-     * 
-     * @param width width of world in number of cells
-     * @param height height of world in number of cells
-     * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
-     * @param seed seed determining random pattern behaviour for testing
-     */
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
         this.width = width;
         this.height = height;
@@ -187,9 +84,7 @@ public class LoopManiaWorld {
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
-
         fillEntityLists();
-        // buildingEntities = new ArrayList<>();
     }
 
     public static int getRandNum() {
@@ -249,7 +144,6 @@ public class LoopManiaWorld {
         return deadEnemies;
     }
 
-
     public void cleanUpFight() {
         if (checkPlayerWin()) {
 
@@ -266,7 +160,6 @@ public class LoopManiaWorld {
             SpawnEnemiesOnCycle(newEnemies);
         }
     }
-
 
     private List<Enemy> checkForFight() {
         List<Enemy> attacking = new ArrayList<Enemy>();
@@ -651,7 +544,6 @@ public class LoopManiaWorld {
             moveBuildings.add((BuildingOnMove)b);
         }
     }
-
 
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
