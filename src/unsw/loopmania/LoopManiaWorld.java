@@ -161,6 +161,7 @@ public class LoopManiaWorld {
         winChecker = goal.getChecker();
         fillEntityLists();
         placeHerosCastle();
+        spawn2slugs();
         // buildingEntities = new ArrayList<>();
     }
 
@@ -194,6 +195,7 @@ public class LoopManiaWorld {
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         placeHerosCastle();
         fillEntityLists();
+        spawn2slugs();
         // buildingEntities = new ArrayList<>();
     }
     
@@ -203,6 +205,14 @@ public class LoopManiaWorld {
         SimpleIntegerProperty y = new SimpleIntegerProperty(start.getValue1());
         BuildingOnMove castle = new HerosCastleBuilding(x, y);
         moveBuildings.add(castle);
+    }
+
+    public void spawn2slugs() {
+        int pos1 = rand.nextInt(100) % orderedPath.size();
+        int pos2 = rand.nextInt(100) % orderedPath.size();
+        if (pos1 == pos2) pos2 += 1;
+        spawnSlug(pos1, orderedPath);
+        spawnSlug(pos2, orderedPath);
     }
     public static int getRandNum() {
         return LoopManiaWorld.rand.nextInt(100);
@@ -230,7 +240,7 @@ public class LoopManiaWorld {
         return copy;
     }
     
-    public static List<Enemy> getEnemies() {
+    public List<Enemy> getEnemies() {
         return enemies;
     }
 
@@ -445,9 +455,11 @@ public class LoopManiaWorld {
     }
 
     private boolean empty(Pair<Integer, Integer> p) {
-        for (Enemy e : enemies) {
-            if (e.getX() == p.getValue0() && e.getY() == p.getValue1()) {
-                return false;
+        if (!enemies.isEmpty()) {
+            for (Enemy e : enemies) {
+                if (e.getX() == p.getValue0() && e.getY() == p.getValue1()) {
+                    return false;
+                }
             }
         }
         if (character.getX() == p.getValue0() && character.getY() == p.getValue1()) {
@@ -745,6 +757,7 @@ public class LoopManiaWorld {
         }
         for (Enemy e : enemies){
             e.move();
+            System.out.println(e.getType());
             checkBuildingActions(e);
         }
     }
@@ -834,18 +847,18 @@ public class LoopManiaWorld {
 
     public Slug spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
         EnemyFactory e = new EnemyFactory();
-        Enemy slug =  e.create(new PathPosition(i, orderedPath2), "Slug");
+        Enemy slug =  e.create(new PathPosition(i, orderedPath2), "slug");
         enemies.add(slug);
         return (Slug)slug;
     }
     public void spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
         EnemyFactory e = new EnemyFactory();
-        Enemy vampire =  e.create(new PathPosition(i, orderedPath2), "Vampire");
+        Enemy vampire =  e.create(new PathPosition(i, orderedPath2), "vampire");
         enemies.add(vampire);
     }
     public void spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
         EnemyFactory e = new EnemyFactory();
-        Enemy zombie =  e.create(new PathPosition(i, orderedPath2), "Zombie");
+        Enemy zombie =  e.create(new PathPosition(i, orderedPath2), "zombie");
         enemies.add(zombie);
     }
 }

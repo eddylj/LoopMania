@@ -227,6 +227,10 @@ public class LoopManiaWorldController {
             onLoad((Building)b);
         }
 
+        for (Enemy e : world.getEnemies()) {
+            onLoad(e);
+        }
+
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
@@ -245,7 +249,7 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
-            
+
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
