@@ -160,6 +160,7 @@ public class LoopManiaWorld {
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
         fillEntityLists();
+        placeHerosCastle();
         // buildingEntities = new ArrayList<>();
     }
 
@@ -191,11 +192,18 @@ public class LoopManiaWorld {
         winChecker = goal.getChecker();
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
-
+        placeHerosCastle();
         fillEntityLists();
         // buildingEntities = new ArrayList<>();
     }
-
+    
+    public void placeHerosCastle() {
+        Pair<Integer, Integer> start = orderedPath.get(0);
+        SimpleIntegerProperty x = new SimpleIntegerProperty(start.getValue0());
+        SimpleIntegerProperty y = new SimpleIntegerProperty(start.getValue1());
+        BuildingOnMove castle = new HerosCastleBuilding(x, y);
+        moveBuildings.add(castle);
+    }
     public static int getRandNum() {
         return LoopManiaWorld.rand.nextInt(100);
     }
@@ -228,6 +236,14 @@ public class LoopManiaWorld {
 
     public Random getRand() {
         return rand;
+    }
+
+    public List<BuildingOnMove> getMoveBuildings() {
+        return moveBuildings;
+    }
+
+    public List<BuildingOnCycle> getCycleBuildings() {
+        return cycleBuildings;
     }
 
     /**
@@ -724,7 +740,10 @@ public class LoopManiaWorld {
      */
     private void moveEnemies() {
         // TODO = expand to more types of enemy
-        for (Enemy e: enemies){
+        if (enemies.isEmpty()) {
+            return;
+        }
+        for (Enemy e : enemies){
             e.move();
             checkBuildingActions(e);
         }
