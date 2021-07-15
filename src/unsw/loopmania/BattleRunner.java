@@ -29,7 +29,7 @@ public class BattleRunner {
      * @return boolean if battle is won or lost
      */
     public ArrayList<Enemy> runBattle() {
-        while (!character.isDead()) {
+        while (!character.isDead() && !enemies.isEmpty()) {
             runHeroAttacks();
             runEnemyAttacks();
         }

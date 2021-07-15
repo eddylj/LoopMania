@@ -18,15 +18,6 @@ import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
 public class ZombiePitTest {
     @Test
-<<<<<<< HEAD
-    public void ZombieBuildingTest() {
-
-    }
-    @Test
-    public void ZombieBuildingSpawnTest() {
-
-    }
-=======
     public void ZombiePitSpawnTest() {
         ZombiePitBuilding zombiePit = new ZombiePitBuilding();
         zombiePit.spawnZombie();
@@ -50,7 +41,6 @@ public class ZombiePitTest {
     }
 
     public void ZombiePitCycleTest() {
->>>>>>> vampire and zombie building and shop cycle tests
     
     }
 

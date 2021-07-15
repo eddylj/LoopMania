@@ -21,6 +21,7 @@ public class AlliedSoldier implements Hero{
     public int getHealth() {
         return health;
     }
+
     public void setHealth(int health) {
         this.health = health;
     }
@@ -30,7 +31,7 @@ public class AlliedSoldier implements Hero{
      * @param attackDamage attack damage given to the ally
      * @return returns true if the ally died
      */
-    public void takeDamage(int attackDamage) {
+    public void takeDamage(double attackDamage) {
         health -= attackDamage;
     }
 

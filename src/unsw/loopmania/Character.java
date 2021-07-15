@@ -28,7 +28,7 @@ public class Character extends MovingEntity implements Hero {
         experience = 0;
         gold = 0;
         cycles = 0;
-        equippedWeapon = new Sword(1);
+        equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
         cards = new ArrayList<Card>();
@@ -59,7 +59,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void attack(Enemy enemy, BattleRunner b) {
-        double newDamage = 0;
+        double newDamage = 5;
         if (equippedWeapon instanceof Sword) {
             newDamage = ((Weapon)equippedWeapon).getDamage();
         }
