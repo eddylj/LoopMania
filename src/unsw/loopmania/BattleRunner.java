@@ -34,6 +34,14 @@ public class BattleRunner {
             System.out.println("hi");
             runHeroAttacks();
             runEnemyAttacks();
+            if (!enemies.isEmpty()) {
+                System.out.println(String.format("%s has %d health", enemies.get(0).getType(), enemies.get(0).getHealth()));
+                
+            }
+            else {
+                System.out.println("All enemies are dead");
+            }
+            System.out.println(String.format("Character has %d health", character.getHealth()));
         }
         return defeatedEnemies;
     }
@@ -118,6 +126,7 @@ public class BattleRunner {
     private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
+        System.out.println("Enemy has died");
     }
 
     /**

@@ -36,6 +36,7 @@ public class Character extends MovingEntity implements Hero {
         applyBuffs = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
+        aliveSoldiers = new SimpleIntegerProperty(0);
     }
 
     public List<AlliedSoldier> getSoldiers() {

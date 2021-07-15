@@ -63,8 +63,6 @@ public class LoopManiaWorld {
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         this.json = goals;
-        GoalCalculator goal = new GoalCalculator(json, character);
-        winChecker = goal.getChecker();
         fillEntityLists();
         placeHerosCastle();
         spawn2slugs();
@@ -88,7 +86,7 @@ public class LoopManiaWorld {
         bF = new BuildingFactory();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
-        winChecker = goal.getChecker();
+        
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         placeHerosCastle();
@@ -142,6 +140,10 @@ public class LoopManiaWorld {
         return enemies;
     }
 
+    public List<Item> getItems() {
+        return unequippedInventoryItems;
+    }
+
     public Random getRand() {
         return rand;
     }
@@ -161,6 +163,9 @@ public class LoopManiaWorld {
     public void setCharacter(Character character) {
         this.character = character;
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
+        addUnequippedItem("sword", 1);
     }
 
     public List<Enemy> moveEntities() {
@@ -179,12 +184,16 @@ public class LoopManiaWorld {
 
     public void cleanUpFight() {
         if (checkPlayerWin()) {
-
+            System.out.println("GAME HAS BEEN WON");
         }
         else if (checkPlayerLoss()) {
-
+            System.out.println("GAME HAS BEEN LOST");
         }
         character.updateAlliedSoldierAmount();
+    }
+
+    public void KillEnemy(Enemy e) {
+        enemies.remove(e);
     }
 
     public void triggerCycleActions(List<Enemy> newEnemies) {
@@ -198,11 +207,13 @@ public class LoopManiaWorld {
         List<Enemy> attacking = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
             int supportRadius = e.getSupportRadius();
-            double distance = Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2);
-            if (distance < supportRadius) {
+            double distance = Math.sqrt(Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2));
+            System.out.println(String.format("%s distance is %f. Supp radius is %d", e.getType(), distance, supportRadius));
+            if (distance <= supportRadius) {
                 attacking.add(e);
             }
         }
+        System.out.println(String.format("Attacking enemies: %d", attacking.size()));
         List<TowerBuilding> towers = getInRangeTowers();
         BattleRunner b = new BattleRunner(character, attacking, character.getSoldiers(), towers);
         return b.runBattle();
