@@ -28,7 +28,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
+
 import java.util.EnumMap;
+
+import static org.junit.jupiter.api.DynamicTest.stream;
 
 import java.io.File;
 import java.io.IOException;
@@ -232,15 +236,19 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+            System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
             }
+            System.out.println("tick2!");
             List<Enemy> defeatedEnemies = world.fight();
+            System.out.println("hello?");
             // List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
+            System.out.println("tick3!");
             // List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);

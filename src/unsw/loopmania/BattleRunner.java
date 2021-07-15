@@ -19,6 +19,7 @@ public class BattleRunner {
         this.enemies = enemies;
         this.allies = allies;
         this.towers = towers;
+        defeatedEnemies = new ArrayList<Enemy>();
     }
 
 
@@ -29,7 +30,8 @@ public class BattleRunner {
      * @return boolean if battle is won or lost
      */
     public ArrayList<Enemy> runBattle() {
-        while (!character.isDead()) {
+        while (!character.isDead() && !enemies.isEmpty()) {
+            System.out.println("hi");
             runHeroAttacks();
             runEnemyAttacks();
         }
