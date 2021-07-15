@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class HerosCastleBuilding extends StaticEntity implements BuildingOnMove{
+public class HerosCastleBuilding extends StaticEntity implements BuildingOnMove, Building{
 
     public HerosCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
