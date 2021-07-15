@@ -242,7 +242,6 @@ public class LoopManiaWorld {
         moveEnemies();
         triggerCycleActions(newEnemies);
         return newEnemies;
-        // triggerBuildingActions();
     }
 
     public List<Enemy> fight() {
@@ -250,10 +249,6 @@ public class LoopManiaWorld {
         return deadEnemies;
     }
 
-    // public List<StaticEntity> processLoot(List<Enemy> deadEnemies) {
-    //     List<StaticEntity> items = processEnemyLoot(deadEnemies);
-    //     return items;
-    // }
 
     public void cleanUpFight() {
         if (checkPlayerWin()) {
@@ -471,7 +466,6 @@ public class LoopManiaWorld {
     }
 
     public void SpawnEnemiesOnCycle(List<Enemy> newEnemies) {
-        
         // For each building, figure out how many/where to spawn enemies then spawn them
         for (BuildingOnCycle b : cycleBuildings) {
             // adjacent contains every PathTile touching building b
@@ -494,71 +488,6 @@ public class LoopManiaWorld {
         }
     }
 
-    /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
-     */
-    // public List<Enemy> possiblySpawnEnemies(){
-    //     // TODO = expand this very basic version
-    //     Pair<Integer, Integer> pos = possiblyGetEnemySpawnPosition();
-    //     List<Enemy> spawningEnemies = new ArrayList<>();
-    //     if (pos != null){
-    //         int indexInPath = orderedPath.indexOf(pos);
-    //         Enemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
-    //         enemies.add(enemy);
-    //         spawningEnemies.add(enemy);
-    //     }
-    //     return spawningEnemies;
-    // }
-
-    // /**
-    //  * kill an enemy
-    //  * @param enemy enemy to be killed
-    //  */
-    // private void killEnemy(Enemy enemy){
-    //     enemy.destroy();
-    //     enemies.remove(enemy);
-    // }
-
-    /**
-     * run the expected battles in the world, based on current world state
-     * @return list of enemies which have been killed
-     */
-    // public List<Enemy> runBattles() {
-    //     // TODO = modify this - currently the character automatically wins all battles without any damage!
-    //     List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-    //     for (Enemy e: enemies){
-    //         // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-    //         // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-    //         if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-    //             // fight...
-    //             defeatedEnemies.add(e);
-    //         }
-    //     }
-    //     for (Enemy e: defeatedEnemies){
-    //         // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-    //         // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-    //         // due to mutating list we're iterating over
-    //         killEnemy(e);
-    //     }
-    //     return defeatedEnemies;
-    // }
-
-    /**
-     * spawn a card in the world and return the card entity
-     * @return a card to be spawned in the controller as a JavaFX node
-     */
-    public VampireCastleCard loadVampireCard(){
-        // if adding more cards than have, remove the first card...
-        // if (cardEntities.size() >= getWidth()){
-        //     // TODO = give some cash/experience/item rewards for the discarding of the oldest card
-        //     removeCard(0);
-        // }
-        // VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        // cardEntities.add(vampireCastleCard);
-        // return vampireCastleCard;
-        return null;
-    }
 
     public StaticEntity loadCard(String type) {
         // if adding more cards than have, remove the first card...
@@ -627,14 +556,6 @@ public class LoopManiaWorld {
     }
 
     /**
-     * run moves which occur with every tick without needing to spawn anything immediately
-     */
-    public void runTickMoves(){ // DEAD GONE GOODBYE
-        character.moveDownPath();
-        moveEnemies();
-    }
-
-    /**
      * remove an item from the unequipped inventory
      * @param item item to be removed
      */
@@ -676,15 +597,6 @@ public class LoopManiaWorld {
         unequippedInventoryItems.remove(index);
     }
 
-    // /**
-    //  * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
-    //  * @param index index from 0 to length-1
-    //  */
-    // private void removeItemByPositionInUnequippedInventoryItems(int index){
-    //     Entity item = unequippedInventoryItems.get(index);
-    //     item.destroy();
-    //     unequippedInventoryItems.remove(index);
-    // }
 
     /**
      * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
@@ -719,7 +631,6 @@ public class LoopManiaWorld {
      * move all enemies
      */
     private void moveEnemies() {
-        // TODO = expand to more types of enemy
         for (Enemy e: enemies){
             e.move();
             checkBuildingActions(e);
@@ -732,43 +643,6 @@ public class LoopManiaWorld {
         }
     }
 
-    private void moveEnemy(Slug slug) {
-        PathPosition currentPos = slug.getPosition();
-        int position = currentPos.getPositionInPath();
-
-    }
-
-    /**
-     * get a randomly generated position which could be used to spawn an enemy
-     * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
-     */
-    // // ! SHOULD BE UNUSED I THINK
-    // private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(){ 
-    //     // TODO = modify this
-        
-    //     // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
-    //     Random rand = new Random();
-    //     int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-    //     // TODO = change based on spec
-    //     if ((choice == 0) && (enemies.size() < 2)){
-    //         List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-    //         int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
-    //         // inclusive start and exclusive end of range of positions not allowed
-    //         int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
-    //         int endNotAllowed = (indexPosition + 3)%orderedPath.size();
-    //         // note terminating condition has to be != rather than < since wrap around...
-    //         for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
-    //             orderedPathSpawnCandidates.add(orderedPath.get(i));
-    //         }
-
-    //         // choose random choice
-    //         Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
-
-    //         return spawnPosition;
-    //     }
-    //     return null;
-    // }
-
     private void addBuilding(Building b) {
         if (b instanceof BuildingOnCycle) {
             cycleBuildings.add((BuildingOnCycle)b);
@@ -778,13 +652,7 @@ public class LoopManiaWorld {
         }
     }
 
-    /**
-     * remove a card by its x, y coordinates
-     * @param cardNodeX x index from 0 to width-1 of card to be removed
-     * @param cardNodeY y index from 0 to height-1 of card to be removed
-     * @param buildingNodeX x index from 0 to width-1 of building to be added
-     * @param buildingNodeY y index from 0 to height-1 of building to be added
-     */
+
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
         Card card = null;
@@ -794,8 +662,6 @@ public class LoopManiaWorld {
                 break;
             }
         }
-
-        
         // now spawn building
         Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
         // buildingEntities.add(newBuilding);
@@ -815,14 +681,5 @@ public class LoopManiaWorld {
         enemies.add(slug);
         return (Slug)slug;
     }
-    public void spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        EnemyFactory e = new EnemyFactory();
-        Enemy vampire =  e.create(new PathPosition(i, orderedPath2), "Vampire");
-        enemies.add(vampire);
-    }
-    public void spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        EnemyFactory e = new EnemyFactory();
-        Enemy zombie =  e.create(new PathPosition(i, orderedPath2), "Zombie");
-        enemies.add(zombie);
-    }
+
 }
