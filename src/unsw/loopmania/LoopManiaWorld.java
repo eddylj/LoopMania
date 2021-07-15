@@ -55,6 +55,7 @@ import java.util.Random;
 import java.util.logging.LoggingPermission;
 
 import org.javatuples.Pair;
+import org.json.JSONObject;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -89,6 +90,9 @@ public class LoopManiaWorld {
      * height of the world in GridPane cells
      */
     private int height;
+
+    private JSONObject json;
+    private Composite winChecker;
 
     /**
      * generic entitites - i.e. those which don't have dedicated fields
@@ -132,7 +136,7 @@ public class LoopManiaWorld {
      * @param height height of world in number of cells
      * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
      */
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
         this.width = width;
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
@@ -146,6 +150,9 @@ public class LoopManiaWorld {
         iF = new itemFactory();
         eF = new EnemyFactory();
         cF = new CardFactory();
+        this.json = goals;
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
         fillEntityLists();
         // buildingEntities = new ArrayList<>();
     }
@@ -158,7 +165,7 @@ public class LoopManiaWorld {
      * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
      * @param seed seed determining random pattern behaviour for testing
      */
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, int seed) {
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
         this.width = width;
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
@@ -172,6 +179,10 @@ public class LoopManiaWorld {
         iF = new itemFactory();
         eF = new EnemyFactory();
         cF = new CardFactory();
+        this.json = goals;
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
+
         fillEntityLists();
         // buildingEntities = new ArrayList<>();
     }
@@ -262,7 +273,7 @@ public class LoopManiaWorld {
     }
 
     private boolean checkPlayerWin() {
-        return false; // need some json parser stuff here :(
+        return winChecker.getValue();
     }
 
     private boolean checkPlayerLoss() {
