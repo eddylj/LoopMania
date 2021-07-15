@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * represents the main character in the backend of the game world
  */
@@ -20,7 +22,7 @@ public class Character extends MovingEntity implements Hero {
     private BonusDamageStrategy applyBuffs;
     private Enemy attackingEnemy;
     private CharacterStats stats;
-    private IntegerProperty aliveSoldiers;
+    private SimpleIntegerProperty aliveSoldiers;
     private List<AlliedSoldier> soldiers;
 
     // TODO = potentially implement relationships between this class and other classes
@@ -37,6 +39,10 @@ public class Character extends MovingEntity implements Hero {
         applyBuffs = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
+    }
+
+    public List<AlliedSoldier> getSoldiers() {
+        return soldiers;
     }
 
     public void takeDamage(double damage){
@@ -151,7 +157,7 @@ public class Character extends MovingEntity implements Hero {
 
     }
 
-    public void gainCycle(int amount) {
+    public void gainCycle() {
 
     }
 

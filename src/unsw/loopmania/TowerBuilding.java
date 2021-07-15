@@ -23,7 +23,7 @@ public class TowerBuilding extends StaticEntity implements Building, BuildingOnM
     }
 
     public boolean range(Character character) {
-        double distance = Math.pow((character.getX()-building.getX()), 2) +  Math.pow((character.getY()-building.getY()), 2);
+        double distance = Math.pow((character.getX()-getX()), 2) +  Math.pow((character.getY()-getY()), 2);
         if (distance < 3) {
             return true;
         }

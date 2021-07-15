@@ -37,7 +37,7 @@ public class CharacterStats {
     }
 
     public void updateHighest(Item item) {
-        String type = item.getType();
+        String type = ((StaticEntity)item).getType();
         if (type.equals("sword")) {
             sword += 1;
         }

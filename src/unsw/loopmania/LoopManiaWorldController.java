@@ -232,12 +232,16 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
-            world.runTickMoves();
-            List<Enemy> defeatedEnemies = world.runBattles();
+            List<Enemy> newEnemies = world.moveEntities();
+            for (Enemy newEnemy: newEnemies){
+                onLoad(newEnemy);
+            }
+            List<Enemy> defeatedEnemies = world.fight();
+            // List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            List<Enemy> newEnemies = world.possiblySpawnEnemies();
+            // List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
             }
@@ -284,12 +288,12 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadSword(){
-        // TODO = load more types of weapon
-        // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword(1);
-        onLoad(sword);
-    }
+    // private void loadSword(){
+    //     // TODO = load more types of weapon
+    //     // start by getting first available coordinates
+    //     Sword sword = world.addUnequippedSword(1);
+    //     onLoad(sword);
+    // }
 
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
@@ -299,9 +303,32 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadSword();
-        loadVampireCard();
+        StaticEntity item = world.processEnemyLoot(enemy);
+        if (item instanceof Card) {
+            loadCard((Card)item);
+        }
+        else {
+            loadItem((Item)item);
+        }
+        // loadSword();
+        // loadVampireCard();
     }
+
+    /**
+     * load a sword from the world, and pair it with an image in the GUI
+     */
+    private void loadItem(Item item){
+        // TODO = load more types of weapon
+        // start by getting first available coordinates
+        // Sword sword = world.addUnequippedSword(1);
+        onLoad(item);
+    }
+
+    private void loadCard(Card card) {
+        onLoad(card);
+    }
+
+
 
     /**
      * load a vampire castle card into the GUI.
@@ -309,14 +336,16 @@ public class LoopManiaWorldController {
      * and load the image into the cards GridPane.
      * @param vampireCastleCard
      */
-    private void onLoad(VampireCastleCard vampireCastleCard) {
-        ImageView view = new ImageView(vampireCastleCardImage);
+    private void onLoad(Card card) {
+        // ImageView view = new ImageView(vampireCastleCardImage);
+        String imageName = String.format("src/images/%scard.png", ((StaticEntity)card).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
 
         // FROM https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
         // note target setOnDragOver and setOnDragEntered defined in initialize method
         addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
 
-        addEntity(vampireCastleCard, view);
+        addEntity((Entity)card, view);
         cards.getChildren().add(view);
     }
 
@@ -326,10 +355,11 @@ public class LoopManiaWorldController {
      * and load the image into the unequippedInventory GridPane.
      * @param sword
      */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
+    private void onLoad(Item item) {
+        // ImageView view = new ImageView(swordImage);
+        ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
+        addEntity((Entity)item, view);
         unequippedInventory.getChildren().add(view);
     }
 
@@ -338,7 +368,9 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(basicEnemyImage);
+        // ImageView view = new ImageView(basicEnemyImage);
+        String imageName = String.format("src/images/%s.png", ((MovingEntity)enemy).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
@@ -348,8 +380,10 @@ public class LoopManiaWorldController {
      * @param building
      */
     private void onLoad(Building building){
-        ImageView view = new ImageView(basicBuildingImage);
-        addEntity(building, view);
+        // ImageView view = new ImageView(basicBuildingImage);
+        String imageName = String.format("src/images/%sbuilding.png", ((StaticEntity)building).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
+        addEntity((Entity)building, view);
         squares.getChildren().add(view);
     }
 
@@ -476,7 +510,7 @@ public class LoopManiaWorldController {
      * @param buildingNodeY the y coordinate of the drop location for the card, where the building will spawn, from 0 to height-1
      * @return building entity returned from the world
      */
-    private VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
     }
 

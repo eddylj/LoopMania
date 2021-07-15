@@ -79,6 +79,7 @@ public class LoopManiaWorld {
     private itemFactory iF;
     private CardFactory cF;
     private EnemyFactory eF;
+    private BuildingFactory bF;
     // private BuildingFactory bf;
 
     /**
@@ -100,6 +101,8 @@ public class LoopManiaWorld {
     private List<Entity> nonSpecifiedEntities;
 
     private Character character;
+
+    private Pair<Integer, Integer> heroCastlePosition;
 
 //    / / TODO = add more lists for other entities, for equipped inventory items, etc...
 
@@ -149,6 +152,7 @@ public class LoopManiaWorld {
         LoopManiaWorld.rand = new Random(seed);
         iF = new itemFactory();
         eF = new EnemyFactory();
+        bF = new BuildingFactory();
         cF = new CardFactory();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
@@ -179,6 +183,7 @@ public class LoopManiaWorld {
         iF = new itemFactory();
         eF = new EnemyFactory();
         cF = new CardFactory();
+        bF = new BuildingFactory();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
@@ -227,13 +232,30 @@ public class LoopManiaWorld {
      */
     public void setCharacter(Character character) {
         this.character = character;
+        heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
     }
 
-    public void tick() {
+    public List<Enemy> moveEntities() {
+        List<Enemy> newEnemies = new ArrayList<Enemy>();
         character.moveDownPath();
+        checkBuildingActions(character);
         moveEnemies();
+        triggerCycleActions(newEnemies);
+        return newEnemies;
+        // triggerBuildingActions();
+    }
+
+    public List<Enemy> fight() {
         List<Enemy> deadEnemies = checkForFight();
-        processEnemyLoot(deadEnemies);
+        return deadEnemies;
+    }
+
+    // public List<StaticEntity> processLoot(List<Enemy> deadEnemies) {
+    //     List<StaticEntity> items = processEnemyLoot(deadEnemies);
+    //     return items;
+    // }
+
+    public void cleanUpFight() {
         if (checkPlayerWin()) {
 
         }
@@ -242,6 +264,14 @@ public class LoopManiaWorld {
         }
         character.updateAlliedSoldierAmount();
     }
+
+    public void triggerCycleActions(List<Enemy> newEnemies) {
+        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
+        if (characterPos.equals(heroCastlePosition)) {
+            SpawnEnemiesOnCycle(newEnemies);
+        }
+    }
+
 
     private List<Enemy> checkForFight() {
         List<Enemy> attacking = new ArrayList<Enemy>();
@@ -253,7 +283,7 @@ public class LoopManiaWorld {
             }
         }
         List<TowerBuilding> towers = getInRangeTowers();
-        BattleRunner b = new BattleRunner(character, attacking, soldiers, towers);
+        BattleRunner b = new BattleRunner(character, attacking, character.getSoldiers(), towers);
         return b.runBattle();
     }
 
@@ -280,87 +310,95 @@ public class LoopManiaWorld {
         return character.getHealth() <= 0;
     }
 
-    private void processEnemyLoot(List<Enemy> deadEnemies) {
+    public StaticEntity processEnemyLoot(Enemy deadEnemy) {
         for (Enemy e : enemies) {
             if (e instanceof Slug) {
-                getLoot((Slug)e);
+                return getLoot((Slug)e);
             }
             else if (e instanceof Zombie) {
-                getLoot((Zombie)e);
+                return getLoot((Zombie)e);
             }
             else if (e instanceof Vampire) {
-                getLoot((Vampire)e);
+                return getLoot((Vampire)e);
             }
         }
+        return null;
     }
 
-    private void getLoot(Slug slug) {
+    private StaticEntity getLoot(Slug slug) {
         int num = rand.nextInt(100);
+        StaticEntity item = null;
         // slug drops item better than current
         if (num < 15) {
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                addUnequippedItem(itemType, 0);
+                item = addUnequippedItem(itemType, 0);
+
             }
             else if (num < 5) {
                 int level = getHighestLevel(itemType) + 1;
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
         }
         else if (num < 20) {
             String cardType = slugCards[rand.nextInt(100) % slugCards.length];
-            loadCard(cardType);
+            item = loadCard(cardType);
         }
+        return item;
     }
 
-    private void getLoot(Zombie zombie) {
+    private StaticEntity getLoot(Zombie zombie) {
         int num = rand.nextInt(100);
+        StaticEntity item = null;
         // slug drops item better than current
         if (num < 20) {
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                addUnequippedItem(itemType, 0);
+                item = addUnequippedItem(itemType, 0);
             }
             else if (num < 10) {
                 int level = getHighestLevel(itemType) + 1;
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
         }
         else if (num < 25) {
             String cardType = zombieCards[rand.nextInt(100) % zombieCards.length];
-            loadCard(cardType);
+            item = loadCard(cardType);
         }
+        return item;
     }
 
-    private void getLoot(Vampire vampire) {
+    private StaticEntity getLoot(Vampire vampire) {
         int num = rand.nextInt(100);
+        StaticEntity item = null;
         // slug drops item better than current
         if (num < 30) { // INCRAESE BY 5 WHEN RARE ITEMS ARE ADDED
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                addUnequippedItem(itemType, 0);
+                item = addUnequippedItem(itemType, 0);
             }
             else if (num < 20) {
                 int level = getHighestLevel(itemType) + 1;
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                addUnequippedItem(itemType, level);
+                item = addUnequippedItem(itemType, level);
             }
         }
         else if (num < 25) {
             String cardType = vampireCards[rand.nextInt(100) % vampireCards.length];
-            loadCard(cardType);
+            item = loadCard(cardType);
         }
+        return item;
     }
 
     private int getHighestLevel(String itemType) {
@@ -432,7 +470,7 @@ public class LoopManiaWorld {
         return tiles;
     }
 
-    public void SpawnEnemiesOnCycle() {
+    public void SpawnEnemiesOnCycle(List<Enemy> newEnemies) {
         
         // For each building, figure out how many/where to spawn enemies then spawn them
         for (BuildingOnCycle b : cycleBuildings) {
@@ -445,13 +483,14 @@ public class LoopManiaWorld {
                 Enemy e = b.spawnEnemy(new PathPosition(positioninPath, orderedPath));
                 adjacent.remove(tile);
                 enemies.add(e);
+                newEnemies.add(e);
             }
         }
         // Spawn 2 slugs every cycle
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
         for (int i = 0; i < 2; i++) {
             int position = rand.nextInt(100) % emptyTiles.size();
-            spawnSlug(position, emptyTiles);
+            newEnemies.add(spawnSlug(position, emptyTiles));
         }
     }
 
@@ -485,25 +524,25 @@ public class LoopManiaWorld {
      * run the expected battles in the world, based on current world state
      * @return list of enemies which have been killed
      */
-    public List<Enemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-        for (Enemy e: enemies){
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-                // fight...
-                defeatedEnemies.add(e);
-            }
-        }
-        for (Enemy e: defeatedEnemies){
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-            // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
-        }
-        return defeatedEnemies;
-    }
+    // public List<Enemy> runBattles() {
+    //     // TODO = modify this - currently the character automatically wins all battles without any damage!
+    //     List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+    //     for (Enemy e: enemies){
+    //         // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+    //         // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
+    //         if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+    //             // fight...
+    //             defeatedEnemies.add(e);
+    //         }
+    //     }
+    //     for (Enemy e: defeatedEnemies){
+    //         // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
+    //         // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
+    //         // due to mutating list we're iterating over
+    //         killEnemy(e);
+    //     }
+    //     return defeatedEnemies;
+    // }
 
     /**
      * spawn a card in the world and return the card entity
@@ -521,7 +560,7 @@ public class LoopManiaWorld {
         return null;
     }
 
-    public Card loadCard(String type) {
+    public StaticEntity loadCard(String type) {
         // if adding more cards than have, remove the first card...
         if (cardEntities.size() >= getWidth()){
             int gold = rand.nextInt(100) + 1;
@@ -533,7 +572,7 @@ public class LoopManiaWorld {
         // Card card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         Card card = cf.create(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0), type);
         cardEntities.add(card);
-        return card;
+        return (StaticEntity)card;
     }
 
     /**
@@ -552,7 +591,7 @@ public class LoopManiaWorld {
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
      */
-    public Item addUnequippedItem (String type, int level){
+    public StaticEntity addUnequippedItem (String type, int level){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
@@ -574,7 +613,7 @@ public class LoopManiaWorld {
         }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
-        return item;
+        return (StaticEntity)item;
     }
 
     /**
@@ -631,13 +670,13 @@ public class LoopManiaWorld {
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index){
         Item item = unequippedInventoryItems.get(index);
-        // item.destroy();
+        ((StaticEntity)item).destroy();
         // int goldAmount = item.getReplaceCost();
         character.gainGold(item.getReplaceCost());
         unequippedInventoryItems.remove(index);
     }
 
-    /**
+    // /**
     //  * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
     //  * @param index index from 0 to length-1
     //  */
@@ -647,22 +686,22 @@ public class LoopManiaWorld {
     //     unequippedInventoryItems.remove(index);
     // }
 
-    // /**
-    //  * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
-    //  * @return x,y coordinate pair
-    //  */
-    // private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
-    //     // first available slot for an item...
-    //     // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
-    //     for (int y=0; y<unequippedInventoryHeight; y++){
-    //         for (int x=0; x<unequippedInventoryWidth; x++){
-    //             if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
-    //                 return new Pair<Integer, Integer>(x, y);
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
+    /**
+     * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
+     * @return x,y coordinate pair
+     */
+    private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
+        // first available slot for an item...
+        // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
+        for (int y=0; y<unequippedInventoryHeight; y++){
+            for (int x=0; x<unequippedInventoryWidth; x++){
+                if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
+                    return new Pair<Integer, Integer>(x, y);
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * shift card coordinates down starting from x coordinate
@@ -683,6 +722,13 @@ public class LoopManiaWorld {
         // TODO = expand to more types of enemy
         for (Enemy e: enemies){
             e.move();
+            checkBuildingActions(e);
+        }
+    }
+
+    public void checkBuildingActions(MovingEntity e) {
+        for (BuildingOnMove b : moveBuildings) {
+            b.updateOnMove(e);
         }
     }
 
@@ -696,9 +742,9 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
-    // ! SHOULD BE UNUSED I THINK
-    private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(){ 
-        // TODO = modify this
+    // // ! SHOULD BE UNUSED I THINK
+    // private Pair<Integer, Integer> possiblyGetEnemySpawnPosition(){ 
+    //     // TODO = modify this
         
     //     // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
     //     Random rand = new Random();
@@ -751,7 +797,7 @@ public class LoopManiaWorld {
 
         
         // now spawn building
-        Building newBuilding = cF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), card.getType());
+        Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
         // buildingEntities.add(newBuilding);
         addBuilding(newBuilding);
 
@@ -763,10 +809,11 @@ public class LoopManiaWorld {
         return newBuilding;
     }
 
-    public void spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
+    public Slug spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
         EnemyFactory e = new EnemyFactory();
         Enemy slug =  e.create(new PathPosition(i, orderedPath2), "Slug");
         enemies.add(slug);
+        return (Slug)slug;
     }
     public void spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
         EnemyFactory e = new EnemyFactory();

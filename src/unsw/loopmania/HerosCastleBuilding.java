@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class HerosCastleBuilding extends StaticEntity implements BuildingOnCycle{
+public class HerosCastleBuilding extends StaticEntity implements BuildingOnMove{
 
     public HerosCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
@@ -10,9 +10,15 @@ public class HerosCastleBuilding extends StaticEntity implements BuildingOnCycle
     }
 
     @Override
-    public void updateOnCycle() {
+    public void updateOnMove(MovingEntity movingEntity) {
         // TODO Auto-generated method stub
         
     }
+
+    // @Override
+    // public void updateOnCycle() {
+    //     // TODO Auto-generated method stub
+        
+    // }
     
 }

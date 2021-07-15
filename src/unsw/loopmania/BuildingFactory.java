@@ -1,12 +1,10 @@
 package unsw.loopmania;
 
-import org.junit.jupiter.api.DisplayNameGenerator.Simple;
-
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class CardFactory {
+public class BuildingFactory {
     //"Campfire", "Barracks", "Tower", "Trap", "VampireCastle", "ZombiePit", "Village"}
-    public Card create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
+    public Building create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         if (type.equals("campfire")) {
             return createCampfire(x, y);
         }
@@ -33,37 +31,37 @@ public class CardFactory {
         }
     }
 
-    public CampfireCard createCampfire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public CampfireBuilding createCampfire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new CampfireCard(x, y);
+        return new CampfireBuilding(x, y);
     }
     
-    public BarracksCard createBarracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public BarracksBuilding createBarracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new BarracksCard(x, y);
+        return new BarracksBuilding(x, y);
     }
     
-    public TowerCard createTower(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public TowerBuilding createTower(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new TowerCard(x, y);
+        return new TowerBuilding(x, y);
     }
     
-    public TrapCard createTrap(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public TrapBuilding createTrap(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new TrapCard(x, y);
+        return new TrapBuilding(x, y);
     }
     
-    public VampireCastleCard createVampireCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        return new VampireCastleCard(x, y);
+    public VampireCastleBuilding createVampireCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new VampireCastleBuilding(x, y);
     }
     
-    public VillageCard createVillage(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public VillageBuilding createVillage(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new VillageCard(x, y);
+        return new VillageBuilding(x, y);
     }
     
-    public ZombiePitCard createZombiePit(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public ZombiePitBuilding createZombiePit(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
-        return new ZombiePitCard(x, y);
+        return new ZombiePitBuilding(x, y);
     }
 }

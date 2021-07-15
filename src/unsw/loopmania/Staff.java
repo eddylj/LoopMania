@@ -24,6 +24,8 @@ public class Staff extends Weapon{
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
             b.convertEnemyAlly(enemy, cycle);
+            return true;
         }
+        return false;
     }
 } 
