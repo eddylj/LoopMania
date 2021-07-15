@@ -570,11 +570,7 @@ public class LoopManiaWorld {
      * move all enemies
      */
     private void moveEnemies() {
-        // TODO = expand to more types of enemy
-        if (enemies.isEmpty()) {
-            return;
-        }
-        for (Enemy e : enemies){
+        for (Enemy e: enemies){
             e.move();
             System.out.println(e.getType());
             checkBuildingActions(e);
@@ -623,15 +619,5 @@ public class LoopManiaWorld {
         Enemy slug =  e.create(new PathPosition(i, orderedPath2), "slug");
         enemies.add(slug);
         return (Slug)slug;
-    }
-    public void spawnVampire(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        EnemyFactory e = new EnemyFactory();
-        Enemy vampire =  e.create(new PathPosition(i, orderedPath2), "vampire");
-        enemies.add(vampire);
-    }
-    public void spawnZombie(int i, List<Pair<Integer, Integer>> orderedPath2) {
-        EnemyFactory e = new EnemyFactory();
-        Enemy zombie =  e.create(new PathPosition(i, orderedPath2), "zombie");
-        enemies.add(zombie);
     }
 }
