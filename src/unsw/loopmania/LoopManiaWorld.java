@@ -64,9 +64,6 @@ public class LoopManiaWorld {
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         this.json = goals;
         fillEntityLists();
-        placeHerosCastle();
-        spawn2slugs();
-        // buildingEntities = new ArrayList<>();
     }
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
@@ -86,13 +83,8 @@ public class LoopManiaWorld {
         bF = new BuildingFactory();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
-        
-        moveBuildings = new ArrayList<BuildingOnMove>();
-        cycleBuildings = new ArrayList<BuildingOnCycle>();
-        placeHerosCastle();
+        winChecker = goal.getChecker();
         fillEntityLists();
-        spawn2slugs();
-        // buildingEntities = new ArrayList<>();
     }
     
     public void placeHerosCastle() {
