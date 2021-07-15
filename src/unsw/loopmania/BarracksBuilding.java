@@ -13,7 +13,10 @@ public class BarracksBuilding extends StaticEntity implements Building, Building
     @Override
     public void updateOnMove(MovingEntity character) {
         // TODO Auto-generated method stub
-        
+        if (character.getX() == super.getX() && character.getY() == super.getY()) {
+            Character c = (Character) character;
+            c.addAlliedSoldier(new AlliedSoldier(c.getCycles()));
+        }
     }
     
 }

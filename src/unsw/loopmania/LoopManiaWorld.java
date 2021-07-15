@@ -97,9 +97,6 @@ public class LoopManiaWorld {
 
     private Character character;
 
-    private IntegerProperty aliveSoldiers;
-    private List<AlliedSoldier> soldiers;
-
 //    / / TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -189,7 +186,6 @@ public class LoopManiaWorld {
         slugCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
         zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
         zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
-        soldiers = new ArrayList<AlliedSoldier>();
     }
 
     public int getWidth() {
@@ -233,7 +229,7 @@ public class LoopManiaWorld {
         else if (checkPlayerLoss()) {
 
         }
-        updateAlliedSoldierAmount();
+        character.updateAlliedSoldierAmount();
     }
 
     private List<Enemy> checkForFight() {
@@ -271,15 +267,6 @@ public class LoopManiaWorld {
 
     private boolean checkPlayerLoss() {
         return character.getHealth() <= 0;
-    }
-
-    private void updateAlliedSoldierAmount() {
-        for (AlliedSoldier s : soldiers) {
-            if (s.getHealth() <= 0) {
-                soldiers.remove(s);
-            }
-        }
-        aliveSoldiers.set(soldiers.size()); // observer pattern wooo
     }
 
     private void processEnemyLoot(List<Enemy> deadEnemies) {

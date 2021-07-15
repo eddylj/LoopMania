@@ -20,6 +20,8 @@ public class Character extends MovingEntity implements Hero {
     private BonusDamageStrategy applyBuffs;
     private Enemy attackingEnemy;
     private CharacterStats stats;
+    private IntegerProperty aliveSoldiers;
+    private List<AlliedSoldier> soldiers;
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -34,6 +36,7 @@ public class Character extends MovingEntity implements Hero {
         stored = new ArrayList<Item>();
         applyBuffs = new NormalState();
         stats = new CharacterStats();
+        soldiers = new ArrayList<AlliedSoldier>();
     }
 
     public void takeDamage(double damage){
@@ -181,6 +184,24 @@ public class Character extends MovingEntity implements Hero {
 
     public void setBonusDamageStrategy(BonusDamageStrategy buff) {
         applyBuffs = buff;
+    }
+
+    public void updateAlliedSoldierAmount() {
+        for (AlliedSoldier s : soldiers) {
+            if (s.getHealth() <= 0) {
+                soldiers.remove(s);
+            }
+        }
+        aliveSoldiers.set(soldiers.size()); // observer pattern wooo
+    }
+
+    public void addAlliedSoldier(AlliedSoldier soldier) {
+        if (aliveSoldiers.get() < 3) {
+            soldiers.add(soldier);
+        }
+    }
+    public List<AlliedSoldier> getAlliedSoldiers() {
+        return soldiers;
     }
 
     // public Character() {
