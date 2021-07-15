@@ -231,6 +231,10 @@ public class LoopManiaWorldController {
             onLoad(e);
         }
 
+        for (Item i : world.getItems()) {
+            onLoad(i);
+        }
+
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
@@ -255,6 +259,7 @@ public class LoopManiaWorldController {
             }
             System.out.println("tick2!");
             List<Enemy> defeatedEnemies = world.fight();
+            world.cleanUpFight();
             System.out.println("hello?");
             // List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e: defeatedEnemies){
@@ -323,12 +328,13 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        StaticEntity item = world.processEnemyLoot(enemy);
-        if (item instanceof Card) {
-            loadCard((Card)item);
+        world.KillEnemy(enemy);
+        StaticEntity loot = world.processEnemyLoot(enemy);
+        if (loot instanceof Card) {
+            loadCard((Card)loot);
         }
-        else {
-            loadItem((Item)item);
+        else if (loot instanceof Item) {
+            loadItem((Item)loot);
         }
         // loadSword();
         // loadVampireCard();
