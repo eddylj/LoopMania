@@ -85,7 +85,7 @@
                         <Image url="@../../images/shield_unequipped.png" />
                      </image>
                   </ImageView>
-                  <ImageView id="shieldCell" GridPane.columnIndex="3">
+                  <ImageView id="armourCell" GridPane.columnIndex="3">
                      <image>
                         <Image url="@../../images/empty_slot.png" />
                      </image>

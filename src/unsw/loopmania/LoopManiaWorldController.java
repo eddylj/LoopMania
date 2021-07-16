@@ -250,7 +250,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
 
@@ -302,15 +302,6 @@ public class LoopManiaWorldController {
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entityImages.add(view);
-    }
-
-    /**
-     * load a vampire card from the world, and pair it with an image in the GUI
-     */
-    private void loadVampireCard() {
-        // TODO = load more types of card
-        VampireCastleCard vampireCastleCard = world.loadVampireCard();
-        onLoad(vampireCastleCard);
     }
 
     /**
@@ -482,18 +473,21 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
                                 if (newPositionValid(item, node)) {
-                                    Item olditem = world.getUnequippedInventoryItemEntityByCoordinates(x, y);
-                                    // Put previously equipped item back in inventory (then overwrite it)
-                                    if (olditem != null) {
-                                        System.out.println(((StaticEntity)olditem).getType());
-                                        System.out.println("================\nuhoh\n---------------");
-                                        onLoad(olditem);
-                                    }
+                                    // Item olditem = world.getEquippedItemByCoordinates(x, y);
+                                    // // Put previously equipped item back in inventory (then overwrite it)
+                                    // if (olditem != null) {
+                                    //     System.out.println(((StaticEntity)olditem).getType());
+                                    //     System.out.println("================\nuhoh\n---------------");
+                                    //     itemFactory iF = new itemFactory();
+                                    //     reloadItem = iF.create()
+                                    //     onLoad();
+                                    // }
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     // System.out.println(String.format(draggableType.))
                                     // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
                                     removeItemByCoordinates(nodeX, nodeY);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    world.equipItem(item);
                                     System.out.println("Successfully dropped");
                                 }
                                 else {

@@ -180,7 +180,17 @@ public class LoopManiaWorld {
         checkBuildingActions(character);
         moveEnemies();
         triggerCycleActions(newEnemies);
+        updateEnemyList();
         return newEnemies;
+    }
+
+    public void updateEnemyList() {
+        for (int i = enemies.size() - 1; i >= 0; i++) {
+            Enemy e = enemies.get(i);
+            if (!e.shouldExist().get()) {
+                enemies.remove(i);
+            }
+        }
     }
 
     public List<Enemy> fight() {
@@ -497,6 +507,10 @@ public class LoopManiaWorld {
         return (StaticEntity)item;
     }
 
+    public void equipItem(Item i) {
+        character.equip(i);
+    }
+
     /**
      * remove an item by x,y coordinates
      * @param x x coordinate from 0 to width-1
@@ -537,11 +551,11 @@ public class LoopManiaWorld {
         return null;
     }
 
-    public Item getEquippedItem(int slot) {
-        if (slot == 0) {
-            return character.get
-        }
-    }
+    // public Item getEquippedItem(int slot) {
+    //     if (slot == 0) {
+    //         return character.get
+    //     }
+    // }
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
