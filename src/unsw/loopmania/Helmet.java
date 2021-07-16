@@ -3,7 +3,7 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Helmet extends Protection {
-    private int damageReduction = 3;
+    private int damageReduction = 4;
     private double debuff;
     
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {

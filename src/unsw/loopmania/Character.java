@@ -17,10 +17,11 @@ public class Character extends MovingEntity implements Hero {
     private Item equippedHelmet;
     private Item equippedShield;
     private Item equippedArmour;
-    private BonusDamageStrategy applyBuffs;
+    private BonusDamageStrategy appliedBuff;
     private CharacterStats stats;
     private SimpleIntegerProperty aliveSoldiers;
     private List<AlliedSoldier> soldiers;
+
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -33,7 +34,7 @@ public class Character extends MovingEntity implements Hero {
         equippedShield = null;
         List<Card> cards = new ArrayList<Card>();
         List<Item> stored = new ArrayList<Item>();
-        applyBuffs = new NormalState();
+        appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
         aliveSoldiers = new SimpleIntegerProperty(0);
@@ -48,15 +49,13 @@ public class Character extends MovingEntity implements Hero {
         equippedShield = null;
         List<Card> cards = new ArrayList<Card>();
         List<Item> stored = new ArrayList<Item>();
-        applyBuffs = new NormalState();
+        appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
         aliveSoldiers = new SimpleIntegerProperty(0);
     }
 
-    public List<AlliedSoldier> getSoldiers() {
-        return soldiers;
-    }
+
 
     public void takeDamage(double damage){
         double newDamage = damage;
@@ -65,11 +64,9 @@ public class Character extends MovingEntity implements Hero {
         }
         if (!Objects.isNull(equippedHelmet)) {
             newDamage = ((Protection) equippedHelmet).protect(damage);
-
         }
         if (!Objects.isNull(equippedArmour)) {
             newDamage = ((Protection) equippedArmour).protect(damage);
-
         }
         super.takeDamage(newDamage);
     }
@@ -95,115 +92,32 @@ public class Character extends MovingEntity implements Hero {
         enemy.takeDamage(newDamage);
     }
 
-    public int getHealth() {
-        return health;
-    }
 
-    public int getXP() {
-        return experience;
-    }
 
-    public int getGold() {
-        return gold;
-    }
 
-    public int getCycles() {
-        return cycles;
-    }
+    // STORE STUFF
+    //////////////////////////////////
+    public void sellItem(Item i) {
 
-    public int getAlliedSoldierCount() {
-        return aliveSoldiers.get();
     }
+    public void buyItem (Item equipment) {
 
-    public void loseHealth(double damage){
-        health -= (int)damage;
     }
+    ////////////////////////////////////////
+
+    // INVENTORY ITEM RELATED STUFF
+    ////////////////////////////////////
 
     public boolean hasring() {
         return false;
     }
 
-    public int getHighestLevel(Item item) {
-        return stats.getHighest(((StaticEntity)item).getType());
-    }
 
-    public int getHighestLevel(String item) {
-        return stats.getHighest(item);
-    }
-
-    public void updateHighest(Item item) {
-        stats.updateHighest(item);
-    }
-
-    public void restoreHealth(int health) {
-
-    }
-
-    public void setHealth(int i) {
-    } 
-    
-
-    public Integer numEquipmentInInventory() {
-        return null;
-    }
-
-    public void equip(Item i) {
-    }
-
-    public Integer getNumEquipped() {
-        return null;
-    }
+    ////////////////////////////////////    
 
 
-    public void unequip(Item sword) {
-    }
-
-    public Integer getNumStored() {
-        return null;
-    }
-
-    public Object getEquippedWeapon() {
-        return null;
-    }
-
-    public void gainGold(int amount) {
-
-    }
-
-    public void gainXP(int amount) {
-
-    }
-
-    public void gainCycle() {
-
-    }
-
-
-    public void buyItem (Item equipment) {
-
-    }
-
-
-    public void sellItem(Item i) {
-
-    }
-
-    public void pickup(Card card) {
-
-    }
-
-    public void pickup(Item item) {
-        
-    }
-
-    public BonusDamageStrategy getBonusDamageStrategy() {
-        return applyBuffs;
-    }
-
-    public void setBonusDamageStrategy(BonusDamageStrategy buff) {
-        applyBuffs = buff;
-    }
-
+    // SOLDIER STUFF
+    ////////////////////////////////////
     public void updateAlliedSoldierAmount() {
         for (AlliedSoldier s : soldiers) {
             if (s.getHealth() <= 0) {
@@ -219,8 +133,95 @@ public class Character extends MovingEntity implements Hero {
             aliveSoldiers.set(soldiers.size());
         }
     }
+    ////////////////////////////////////
+
+    // Getters and Setters and other incrementors
+    ///////////////////////////////////////////////////////
+    public int getHealth() {
+        return health;
+    }
+    public int getXP() {
+        return experience;
+    }
+    public int getGold() {
+        return gold;
+    }
+    public int getCycles() {
+        return cycles;
+    }
+    public int getAlliedSoldierCount() {
+        return aliveSoldiers.get();
+    }
+    public List<AlliedSoldier> getSoldiers() {
+        return soldiers;
+    }
     public List<AlliedSoldier> getAlliedSoldiers() {
         return soldiers;
     }
+    public BonusDamageStrategy getBonusDamageStrategy() {
+        return appliedBuff;
+    }
+    public void setBonusDamageStrategy(BonusDamageStrategy buff) {
+        appliedBuff = buff;
+    }
+    public void setHealth(int i) {
+        health = i;
+    } 
+    public Item getEquippedWeapon() {
+        return equippedWeapon;
+    }
+    public void restoreHealth(int amount) {
+        health += amount;
+        if (health > 100) {
+            setHealth(100);
+        }
+    }
+    public void gainGold(int amount) {
+        gold += amount;
+    }
+    public void gainXP(int amount) {
+        experience += amount;
+    }
+    public void gainCycle() {
+        cycles++;
+    }
+    public void loseHealth(double damage){
+        health -= (int)damage;
+    }
+    public int getHighestLevel(Item item) {
+        return stats.getHighestLevel(((StaticEntity)item).getType());
+    }
+    public int getHighestLevel(String item) {
+        return stats.getHighestLevel(item);
+    }
+    public void updateHighest(Item item) {
+        stats.updateHighestLevel(item);
+    }
+    public Item getweapon() {
+        return equippedWeapon;
+    }
+    public Item getShield() {
 
+    }
+
+    public Item getArmour() {
+
+    }
+
+    public Item getHelmet() {
+
+    }
+
+    public void equip(Item i) {
+        if (i instanceof Weapon) {
+            equippedWeapon = i;
+        } else if (i instanceof Shield) {
+            equippedShield = i;
+        } else if (i instanceof Armour) {
+            equippedArmour = i;
+        } else {
+            equippedHelmet = i;
+        }
+    }
+    //////////////////////////////////////////////////////
 }

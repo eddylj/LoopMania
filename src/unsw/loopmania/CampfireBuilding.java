@@ -4,16 +4,19 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class CampfireBuilding extends StaticEntity implements Building, BuildingOnMove{
 
+    private int radius;
     public CampfireBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("campfire");
-        //TODO Auto-generated constructor stub
+        radius = 2;
     }
 
     @Override
     public void updateOnMove(MovingEntity character) {
         // TODO Auto-generated method stub
-        if (super.getX() == character.getX() && super.getY() == character.getY()) {
+        double distance = Math.sqrt(Math.pow((character.getX()-this.getX()), 2) +  Math.pow((character.getY()-this.getY()), 2));
+
+        if (distance < 2) {
             applybuff((Character) character);
         } else {
             removeBuff((Character) character);
@@ -21,17 +24,20 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
         
         
     }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
     
     private void applybuff(Character character) {
-        character.setBonusDamageStrategy(new CampfireState());
+        if (character.getBonusDamageStrategy() instanceof CampfireState) {
+            return;
+        } else {
+            character.setBonusDamageStrategy(new CampfireState());
+        }
     }
 
     private void removeBuff(Character character) {
-        character.setBonusDamageStrategy(new NormalState());
+        if (character.getBonusDamageStrategy() instanceof NormalState) {
+            return;
+        } else {
+            character.setBonusDamageStrategy(new NormalState());
+        }
     }
 }

@@ -221,7 +221,7 @@ public class LoopManiaWorld {
 
             if (b.getType().equals("tower")) {
                 TowerBuilding tower = (TowerBuilding) b;
-                if (tower.range(character)) {
+                if (tower.isInRange(character)) {
                     towers.add(tower);
                 }
             }

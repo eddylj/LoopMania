@@ -4,11 +4,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class TrapBuilding extends StaticEntity implements Building, BuildingOnMove{
 
-    private boolean broken;
+    private boolean broken = false;
     public TrapBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("trap");
-        //TODO Auto-generated constructor stub
     }
 
     @Override

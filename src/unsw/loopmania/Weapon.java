@@ -42,21 +42,19 @@ public abstract class Weapon extends StaticEntity implements Item{
 
 
     public double getDamage() {
-        return 0;
+        return damage;
     }
 
     public int getLevel() {
-        return 0;
+        return level;
     }
 
-    @Override
     public int getPrice() {
-        return 0;
+        return price;
     }
 
-    @Override
     public int getSellPrice() {
-        return 0;
+        return (int)(price * 0.4);
     }
 
     @Override

@@ -23,8 +23,6 @@ public class Vampire extends Enemy {
 
     }
 
-
-
     public void setStrategy(VampireAttackStrategy Strategy) {
         this.Strategy = Strategy;
     }
@@ -32,8 +30,5 @@ public class Vampire extends Enemy {
     public void attack (Hero h) {
         Strategy.attack(h, this);
     }
-
-
-
     
 }

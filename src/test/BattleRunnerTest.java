@@ -48,6 +48,8 @@ public class BattleRunnerTest {
         enemies.add(e4);
         b.runBattle();
         assertTrue(character.isDead());
+        assertTrue(character.shouldExist().get());
+
     }
 
     @Test

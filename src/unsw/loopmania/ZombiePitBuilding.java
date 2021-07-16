@@ -7,16 +7,15 @@ public class ZombiePitBuilding extends StaticEntity implements Building, Buildin
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 		super.setType("zombiepit");
-        //TODO Auto-generated constructor stub
     }
 
-	@Override
+
 	public Enemy spawnEnemy(PathPosition pathPosition) {
         EnemyFactory ef = new EnemyFactory();
 		return ef.create(pathPosition, "zombie");
 	}
 
-	@Override
+
 	public int generateNumberOfEnemies() {
         int num = LoopManiaWorld.getRandNum();
         int spawn1 = 30;

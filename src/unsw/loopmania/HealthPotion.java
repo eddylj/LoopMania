@@ -24,19 +24,18 @@ public class HealthPotion extends StaticEntity implements Item{
      * @param character
      */
     public void heal(Character character) {
-
+        character.restoreHealth(40);
     }
 
-    @Override
     public int getPrice() {
         // TODO Auto-generated method stub
-        return 0;
+        return 100;
     }
 
     @Override
     public int getSellPrice() {
         // TODO Auto-generated method stub
-        return 0;
+        return 40;
     }
 
     @Override
