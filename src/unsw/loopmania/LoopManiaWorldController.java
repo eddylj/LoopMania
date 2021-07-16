@@ -250,7 +250,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> {
             System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
 
@@ -269,6 +269,9 @@ public class LoopManiaWorldController {
             // List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
+            }
+            if (world.isCharacterDead()) {
+                pause();
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -331,9 +334,11 @@ public class LoopManiaWorldController {
         world.KillEnemy(enemy);
         StaticEntity loot = world.processEnemyLoot(enemy);
         if (loot instanceof Card) {
+            System.out.println(String.format("%s dropped a card", enemy.getType()));
             loadCard((Card)loot);
         }
         else if (loot instanceof Item) {
+            System.out.println(String.format("%s dropped an item", enemy.getType()));
             loadItem((Item)loot);
         }
         // loadSword();
@@ -364,7 +369,7 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Card card) {
         // ImageView view = new ImageView(vampireCastleCardImage);
-        String imageName = String.format("src/images/%scard.png", ((StaticEntity)card).getType());
+        String imageName = String.format("src/images/%s_card.png", ((StaticEntity)card).getType());
         ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
 
         // FROM https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
@@ -407,10 +412,26 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Building building){
         // ImageView view = new ImageView(basicBuildingImage);
-        String imageName = String.format("src/images/%sbuilding.png", ((StaticEntity)building).getType());
+        String imageName = String.format("src/images/%s_building.png", ((StaticEntity)building).getType());
         ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
         addEntity((Entity)building, view);
         squares.getChildren().add(view);
+    }
+
+    private boolean newPositionValid(Item item, Node node) {
+        if (item instanceof Weapon && node.idProperty().get().equals("swordCell")) {
+            return true;
+        }
+        else if (item instanceof Helmet && node.idProperty().get().equals("helmetCell")) {
+            return true;
+        }
+        else if (item instanceof Armour && node.idProperty().get().equals("armourCell")) {
+            return true;
+        }
+        else if (item instanceof Shield && node.idProperty().get().equals("shieldCell")) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -459,10 +480,34 @@ public class LoopManiaWorldController {
                                 onLoad(newBuilding);
                                 break;
                             case ITEM:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
+                                Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
+                                if (newPositionValid(item, node)) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    // System.out.println(String.format(draggableType.))
+                                    // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                    System.out.println("Successfully dropped");
+                                }
+                                else {
+                                    return;
+                                }
+                                System.out.println(String.format("Dropped %s in %s", ((StaticEntity)item).getType(), node.idProperty().get()));
+                                // if (item instanceof Weapon && node.idProperty().get().equals("swordCell")) {
+                                //     System.out.println(":::::::::::::::::::::::::::");
+                                //     System.out.println("Successfully dropped weapon in swordcell");
+                                //     System.out.println(":::::::::::::::::::::::::::");
+                                // }
+                                // else {
+                                //     System.out.println(":::::::::::::::::::::::::::");
+                                //     System.out.println(String.format("Dropped %s in %s", ((StaticEntity)item).getType(), node.idProperty().get()));
+                                //     System.out.println(":::::::::::::::::::::::::::");
+                                // }
+                                // removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                // // System.out.println(String.format(draggableType.))
+                                // // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
+                                // removeItemByCoordinates(nodeX, nodeY);
+                                // targetGridPane.add(image, x, y, 1, 1);
                                 break;
                             default:
                                 break;
