@@ -11,11 +11,11 @@ public class Armour extends Protection {
         super.setType("armour");
     }
     
-    public Armour(int level) {
-        super(level, 400*(1+(level-1)*15/100));
-        damageReduction = 0.4 + 0.03*level;
-        super.setType("armour");
-    }
+    // public Armour(int level) {
+    //     super(level, 400*(1+(level-1)*15/100));
+    //     damageReduction = 0.4 + 0.03*level;
+    //     super.setType("armour");
+    // }
 
     public double getDamageReduction() {
         return damageReduction;
