@@ -267,9 +267,7 @@ public class LoopManiaWorldController {
             }
             System.out.println("tick3!");
             // List<Enemy> newEnemies = world.possiblySpawnEnemies();
-            for (Enemy newEnemy: newEnemies){
-                onLoad(newEnemy);
-            }
+
             if (world.isCharacterDead()) {
                 pause();
             }

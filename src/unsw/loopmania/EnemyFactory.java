@@ -18,13 +18,13 @@ public class EnemyFactory {
         }
     }
     public Enemy create(String type) {
-        if (type.equals("Slug")) {
+        if (type.equals("slug")) {
             return createSlug();
         }
-        else if (type.equals("Zombie")) {
+        else if (type.equals("zombie")) {
             return createZombie();
         }
-        else if (type.equals("Vampire")) {
+        else if (type.equals("vampire")) {
             return createVampire();
         }
         else {

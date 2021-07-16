@@ -19,7 +19,7 @@ public class HeroFactory {
     }
 
     private AlliedSoldier createAlliedSoldier(int cycle) {
-        return new AlliedSoldier(cycle);
+        return new AlliedSoldier();
     }
 
     

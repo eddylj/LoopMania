@@ -185,7 +185,7 @@ public class LoopManiaWorld {
     }
 
     public void updateEnemyList() {
-        for (int i = enemies.size() - 1; i >= 0; i++) {
+        for (int i = enemies.size() - 1; i >= 0; i--) {
             Enemy e = enemies.get(i);
             if (!e.shouldExist().get()) {
                 enemies.remove(i);

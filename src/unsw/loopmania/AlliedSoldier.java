@@ -4,9 +4,9 @@ public class AlliedSoldier implements Hero{
     private int health;
     private int attackDamage;
 
-    public AlliedSoldier(int cycle) {
+    public AlliedSoldier() {
         health = 30;
-        attackDamage = 20 + cycle;
+        attackDamage = 20;
     }
 
     public int getHealth() {

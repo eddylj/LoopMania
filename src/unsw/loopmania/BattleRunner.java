@@ -58,7 +58,7 @@ public class BattleRunner {
     public void convertAllyToZombie(AlliedSoldier a) {
         EnemyFactory f = new EnemyFactory();
         Enemy z =  f.create("zombie");
-        enemies.add(0, z);
+        enemies.add(z);
         // Collections.sort(enemies, new EnemyComparator());
     }
 
@@ -70,7 +70,11 @@ public class BattleRunner {
         
     }
     private void runEnemyAttacks() {
-        for (Enemy e : enemies) {
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+        // for (int i = 0; i < enemies.size(); i++) {
+            System.out.println(String.format("%d %d", enemies.size(), i));
+            Enemy e = enemies.get(i);
+        // for (Enemy e : enemies) {
             if (!allies.isEmpty()) {
                 AlliedSoldier a = allies.get(0);
                 if (e instanceof Zombie) {
