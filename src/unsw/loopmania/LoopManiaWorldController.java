@@ -28,7 +28,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
-import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
 
 import java.util.EnumMap;
 
@@ -220,6 +219,14 @@ public class LoopManiaWorldController {
             }
         }
 
+        for (BuildingOnMove b : world.getMoveBuildings()) {
+            onLoad((Building)b);
+        }
+
+        for (BuildingOnCycle b : world.getCycleBuildings()) {
+            onLoad((Building)b);
+        }
+
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
@@ -238,7 +245,8 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
-            for (Enemy newEnemy: newEnemies){
+            
+            for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
             System.out.println("tick2!");
