@@ -38,6 +38,7 @@ public class BattleRunner {
                 System.out.println("All enemies are dead");
             }
             System.out.println(String.format("Character has %d health", character.getHealth()));
+            checkTrancedEnemies();
         }
         killConvertedEnemies();
         return defeatedEnemies;
