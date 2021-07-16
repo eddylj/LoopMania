@@ -23,7 +23,7 @@ public class Staff extends Weapon{
         int randNum = LoopManiaWorld.getRandNum();
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
-            b.convertEnemyAlly(enemy, cycle);
+            b.convertEnemyToAlly(enemy, cycle);
             return true;
         }
         return false;

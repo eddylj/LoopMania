@@ -31,8 +31,23 @@ public class Character extends MovingEntity implements Hero {
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
-        cards = new ArrayList<Card>();
-        stored = new ArrayList<Item>();
+        List<Card> cards = new ArrayList<Card>();
+        List<Item> stored = new ArrayList<Item>();
+        applyBuffs = new NormalState();
+        stats = new CharacterStats();
+        soldiers = new ArrayList<AlliedSoldier>();
+        aliveSoldiers = new SimpleIntegerProperty(0);
+    }
+    public Character() {
+        super(100);
+        experience = 0;
+        gold = 0;
+        cycles = 0;
+        equippedWeapon = null;
+        equippedHelmet = null;
+        equippedShield = null;
+        List<Card> cards = new ArrayList<Card>();
+        List<Item> stored = new ArrayList<Item>();
         applyBuffs = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
@@ -199,8 +214,9 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void addAlliedSoldier(AlliedSoldier soldier) {
-        if (aliveSoldiers.get() < 3) {
+        if (aliveSoldiers.getValue() < 3) {
             soldiers.add(soldier);
+            aliveSoldiers.set(soldiers.size());
         }
     }
     public List<AlliedSoldier> getAlliedSoldiers() {

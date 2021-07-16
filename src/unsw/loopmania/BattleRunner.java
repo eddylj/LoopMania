@@ -12,7 +12,6 @@ public class BattleRunner {
     private ArrayList<Enemy> defeatedEnemies;
     private List<AlliedSoldier> allies;
     private List<TowerBuilding> towers;
-    private Random rand;
 
     public BattleRunner(Character c, List<Enemy> enemies, List<AlliedSoldier> allies, List<TowerBuilding> towers) {
         this.character = c;
@@ -22,53 +21,47 @@ public class BattleRunner {
         defeatedEnemies = new ArrayList<Enemy>();
     }
 
-
-
-
     /**
      * run the expected battles in the world, based on current world state
      * @return boolean if battle is won or lost
      */
     public ArrayList<Enemy> runBattle() {
+
         while (!character.isDead() && !enemies.isEmpty()) {
-            System.out.println("hi");
             runHeroAttacks();
             runEnemyAttacks();
-            if (!enemies.isEmpty()) {
-                System.out.println(String.format("%s has %d health", enemies.get(0).getType(), enemies.get(0).getHealth()));
-                
-            }
-            else {
-                System.out.println("All enemies are dead");
-            }
-            System.out.println(String.format("Character has %d health", character.getHealth()));
         }
+        killConvertedEnemies();
         return defeatedEnemies;
     }
 
-    public int getRandNum(int range) {
-        return rand.nextInt(range);
+    private void killConvertedEnemies() {
+        for (AlliedSoldier a : allies) {
+            if (a instanceof convertedEnemy) {
+                killAlly(a);
+            }
+        }
     }
 
     private void revivecharacter(Character c) {
         c.setHealth(100);
     }
 
-    public void convertAllyZombie(AlliedSoldier a) {
+    public void convertAllyToZombie(AlliedSoldier a) {
         EnemyFactory f = new EnemyFactory();
         Enemy z =  f.create("zombie");
-        enemies.add(z);
-        Collections.sort(enemies, new EnemyComparator());
+        enemies.add(0, z);
+        // Collections.sort(enemies, new EnemyComparator());
     }
 
-    public void convertEnemyAlly(Enemy enemy,int cycle) {
+    public void convertEnemyToAlly(Enemy enemy,int cycle) {
         enemies.remove(enemy);
         HeroFactory a = new HeroFactory();
         convertedEnemy c = (convertedEnemy) a.create(enemy, cycle);
         allies.add(0, ((AlliedSoldier)c));
         
     }
-    public void runEnemyAttacks() {
+    private void runEnemyAttacks() {
         for (Enemy e : enemies) {
             if (!allies.isEmpty()) {
                 AlliedSoldier a = allies.get(0);
@@ -89,7 +82,7 @@ public class BattleRunner {
             }
         }
     }
-    public void runHeroAttacks() {
+    private void runHeroAttacks() {
         for (TowerBuilding t : towers) {
             if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
@@ -126,39 +119,43 @@ public class BattleRunner {
     private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
-        System.out.println("Enemy has died");
     }
 
     /**
      * kill an ally
      * @param enemy enemy to be killed
      */
-    public void killAlly(AlliedSoldier ally) {
+    private void killAlly(AlliedSoldier ally) {
         allies.remove(ally);
     }
 
 
 
-    class EnemyComparator implements Comparator<Enemy> {
+    // class EnemyComparator implements Comparator<Enemy> {
   
-        // override the compare() method
-        public int compare(Enemy e1, Enemy e2) {
-            String t1 = e1.getType();
-            String t2 = e2.getType();
-            if (t1.equals(t2)) {
-                return 0;
-            }
-            else if (t1.equals("Vampire"))
-                return 1;
-            else if (t2.equals("Vampire"))
-                return -1;
-            else if (t1.equals("Zombie"))
-                return 1;
-            else if (t1.equals("Zombie"))
-                return -1;
-            return 0;
-        }
-    }
+    //     // override the compare() method
+    //     public int compare(Enemy e2, Enemy e1) {
+    //         String t1 = e1.getType();
+    //         String t2 = e2.getType();
+    //         if (t1.equals(t2)) {
+    //             return 0;
+    //         }
+    //         else if (t1.equals("Vampire")) {
+    //             return 1;
+    //         }
+    //         else if (t2.equals("Vampire")) {
+    //             return -1;
+    //         }
+    //         else if (t1.equals("Zombie")) {
+    //             return 1;
+    //         }
+    //         else if (t2.equals("Zombie")) {
+    //             return -1;
+    //         } else {
+    //             return 0;
+    //         }
+    //     }
+    // }
 
 
 

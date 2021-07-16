@@ -198,10 +198,13 @@ public class LoopManiaWorld {
     private List<Enemy> checkForFight() {
         List<Enemy> attacking = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
+            int battleRadius = e.getBattleRadius();
             int supportRadius = e.getSupportRadius();
             double distance = Math.sqrt(Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2));
             System.out.println(String.format("%s distance is %f. Supp radius is %d", e.getType(), distance, supportRadius));
-            if (distance <= supportRadius) {
+            if (distance <= battleRadius) {
+                attacking.add(e);
+            } else if (distance <= supportRadius) {
                 attacking.add(e);
             }
         }

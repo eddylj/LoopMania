@@ -24,7 +24,7 @@ public class Zombie extends Enemy {
             int randomInt = LoopManiaWorld.getRandNum();
             if (randomInt >= 0 && randomInt <= 9) {
                 h.setHealth(0);
-                b.convertAllyZombie((AlliedSoldier)h);
+                b.convertAllyToZombie((AlliedSoldier)h);
             } else {
                 h.takeDamage(this.getAttackDamage());
             }
