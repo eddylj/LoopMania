@@ -26,42 +26,50 @@ public class BuildingFactory {
         else if (type.equals("village")) {
             return createVillage(x, y);
         }
+        else if (type.equals("heros_castle")) {
+            return createHeroCastle(x, y);
+        }
         else {
             return null;
         }
     }
 
-    public CampfireBuilding createCampfire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private CampfireBuilding createCampfire(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new CampfireBuilding(x, y);
     }
     
-    public BarracksBuilding createBarracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private BarracksBuilding createBarracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new BarracksBuilding(x, y);
     }
     
-    public TowerBuilding createTower(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private TowerBuilding createTower(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new TowerBuilding(x, y);
     }
     
-    public TrapBuilding createTrap(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private TrapBuilding createTrap(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new TrapBuilding(x, y);
     }
     
-    public VampireCastleBuilding createVampireCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private VampireCastleBuilding createVampireCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new VampireCastleBuilding(x, y);
     }
     
-    public VillageBuilding createVillage(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private VillageBuilding createVillage(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new VillageBuilding(x, y);
     }
     
-    public ZombiePitBuilding createZombiePit(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private ZombiePitBuilding createZombiePit(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         // return new CampfireCard(x, y);
         return new ZombiePitBuilding(x, y);
+    }
+
+    private HerosCastleBuilding createHeroCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        // return new CampfireCard(x, y);
+        return new HerosCastleBuilding(x, y);
     }
 }

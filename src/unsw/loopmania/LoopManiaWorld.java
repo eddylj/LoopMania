@@ -64,6 +64,9 @@ public class LoopManiaWorld {
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         this.json = goals;
         fillEntityLists();
+        // placeHerosCastle();
+        spawn2slugs();
+        // buildingEntities = new ArrayList<>();
     }
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
@@ -83,16 +86,23 @@ public class LoopManiaWorld {
         bF = new BuildingFactory();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
-        winChecker = goal.getChecker();
+        
+        moveBuildings = new ArrayList<BuildingOnMove>();
+        cycleBuildings = new ArrayList<BuildingOnCycle>();
+        // placeHerosCastle();
         fillEntityLists();
+        spawn2slugs();
+        // buildingEntities = new ArrayList<>();
     }
     
-    public void placeHerosCastle() {
-        Pair<Integer, Integer> start = orderedPath.get(0);
-        SimpleIntegerProperty x = new SimpleIntegerProperty(start.getValue0());
-        SimpleIntegerProperty y = new SimpleIntegerProperty(start.getValue1());
-        BuildingOnMove castle = new HerosCastleBuilding(x, y);
-        moveBuildings.add(castle);
+    public void placeBuildingAtStart(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
+        Building building = bF.create(x, y, type);
+        if (building instanceof BuildingOnCycle) {
+            cycleBuildings.add((BuildingOnCycle)building);
+        }
+        else {
+            moveBuildings.add((BuildingOnMove)building);
+        }
     }
 
     public void spawn2slugs() {
@@ -146,6 +156,10 @@ public class LoopManiaWorld {
 
     public List<BuildingOnCycle> getCycleBuildings() {
         return cycleBuildings;
+    }
+
+    public boolean isCharacterDead() {
+        return character.getHealth() <= 0;
     }
 
     /**
@@ -405,6 +419,10 @@ public class LoopManiaWorld {
             // adjacent contains every PathTile touching building b
             List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
             int numSpawn = Integer.max(b.generateNumberOfEnemies(), adjacent.size());
+            if (numSpawn == 0) {
+                return;
+            }
+            System.out.println(adjacent.size() + "\n");
             for (int i = 0; i < numSpawn; i++) {
                 int tile = rand.nextInt(100) % adjacent.size();
                 int positioninPath = getNumInPath(adjacent.get(tile));
@@ -509,7 +527,7 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y){
+    public Item getUnequippedInventoryItemEntityByCoordinates(int x, int y){
         for (Item e: unequippedInventoryItems){
             StaticEntity entity = convertItemToStaticEntity(e);
             if ((entity.getX() == x) && (entity.getY() == y)){
@@ -517,6 +535,12 @@ public class LoopManiaWorld {
             }
         }
         return null;
+    }
+
+    public Item getEquippedItem(int slot) {
+        if (slot == 0) {
+            return character.get
+        }
     }
 
     /**
@@ -564,7 +588,7 @@ public class LoopManiaWorld {
     /**
      * move all enemies
      */
-    private void moveEnemies() {
+    private void moveEnemies() { // removed if null
         for (Enemy e: enemies){
             e.move();
             System.out.println(e.getType());

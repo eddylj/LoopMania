@@ -66,7 +66,7 @@ public abstract class LoopManiaWorldLoader {
         int x = currentJson.getInt("x");
         int y = currentJson.getInt("y");
         int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
-        assert indexInPath != -1;
+        // assert indexInPath != -1;
 
         Entity entity = null;
         // TODO = load more entity types from the file
@@ -76,9 +76,12 @@ public abstract class LoopManiaWorldLoader {
             world.setCharacter(character);
             onLoad(character);
             entity = character;
+            world.placeBuildingAtStart(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), "heros_castle");
             break;
         case "path_tile":
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
+        default:
+            world.placeBuildingAtStart(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), type);
         // TODO Handle other possible entities
         }
         world.addEntity(entity);
