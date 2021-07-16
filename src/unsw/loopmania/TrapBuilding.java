@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class TrapBuilding extends StaticEntity implements Building, BuildingOnMove{
 
-    private boolean broken = false;
     public TrapBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("trap");
@@ -13,18 +12,17 @@ public class TrapBuilding extends StaticEntity implements Building, BuildingOnMo
     @Override
     public void updateOnMove(MovingEntity enemy) {
         // TODO Auto-generated method stub
-        if (!broken && enemy.getX() == super.getX() && enemy.getY() == super.getY()) {
+        if (enemy.getX() == super.getX() && enemy.getY() == super.getY()) {
             activate(enemy);
-            broken = true;
+            this.destroy();
         }
     }
 
     public void activate(MovingEntity enemy) {
         enemy.takeDamage(30);
-    }
-
-    public boolean checkBroken() {
-        return broken;
+        if (enemy.isDead()) {
+            enemy.destroy();
+        }
     }
     
 }

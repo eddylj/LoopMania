@@ -128,9 +128,9 @@ public class BuildingTests {
         Enemy e1 = new Slug(position);
         TrapBuilding t = new TrapBuilding(x, y);
         t.updateOnMove(e);
-        t.updateOnMove(e1);
+        boolean x = t.shouldExist().get();
+        assertFalse(x);
         assertEquals(20, e.getHealth());
-        assertEquals(50, e1.getHealth());
     }
     //////////////////////////////////
 

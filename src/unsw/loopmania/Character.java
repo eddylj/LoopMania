@@ -201,15 +201,15 @@ public class Character extends MovingEntity implements Hero {
         return equippedWeapon;
     }
     public Item getShield() {
-
+        return equippedShield;
     }
 
     public Item getArmour() {
-
+        return equippedArmour;
     }
 
     public Item getHelmet() {
-
+        return equippedHelmet;
     }
 
     public void equip(Item i) {
