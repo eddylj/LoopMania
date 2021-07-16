@@ -60,6 +60,8 @@ public class LoopManiaWorld {
         eF = new EnemyFactory();
         bF = new BuildingFactory();
         cF = new CardFactory();
+        moveBuildings = new ArrayList<BuildingOnMove>();
+        cycleBuildings = new ArrayList<BuildingOnCycle>();
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
@@ -84,6 +86,9 @@ public class LoopManiaWorld {
         this.json = goals;
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
+        moveBuildings = new ArrayList<BuildingOnMove>();
+        cycleBuildings = new ArrayList<BuildingOnCycle>();
+
         fillEntityLists();
     }
 
