@@ -44,6 +44,19 @@ public class BattleRunner {
         return defeatedEnemies;
     }
 
+    public void checkTrancedEnemies() {
+        for (int i = allies.size() - 1; i >= 0; i--) {
+            AlliedSoldier a = allies.get(i);
+            if (a instanceof convertedEnemy) {
+                if (((convertedEnemy)a).canExitTrance()) {
+                    Enemy original = ((convertedEnemy)a).getEnemy();
+                    enemies.add(original);
+                    killAlly(a);
+                }
+            }
+        }
+    }
+
     private void killConvertedEnemies() {
         for (AlliedSoldier a : allies) {
             if (a instanceof convertedEnemy) {

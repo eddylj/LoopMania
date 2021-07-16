@@ -59,6 +59,6 @@ public abstract class Weapon extends StaticEntity implements Item{
 
     @Override
     public int getReplaceCost() {
-        return 0;
+        return (int)(price * 0.2);
     }
 }
