@@ -717,6 +717,12 @@ public class LoopManiaWorld {
         return null;
     }
 
+    public Item getEquippedItem(int slot) {
+        if (slot == 0) {
+            return character.get
+        }
+    }
+
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
      * @param index index from 0 to length-1

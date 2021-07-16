@@ -87,7 +87,7 @@
                   </ImageView>
                   <ImageView id="shieldCell" GridPane.columnIndex="3">
                      <image>
-                        <Image url="@../../images/shield_unequipped.png" />
+                        <Image url="@../../images/empty_slot.png" />
                      </image>
                   </ImageView>
                </children>

@@ -482,6 +482,13 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
                                 if (newPositionValid(item, node)) {
+                                    Item olditem = world.getUnequippedInventoryItemEntityByCoordinates(x, y);
+                                    // Put previously equipped item back in inventory (then overwrite it)
+                                    if (olditem != null) {
+                                        System.out.println(((StaticEntity)olditem).getType());
+                                        System.out.println("================\nuhoh\n---------------");
+                                        onLoad(olditem);
+                                    }
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     // System.out.println(String.format(draggableType.))
                                     // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
