@@ -10,7 +10,6 @@ public class BarracksCard extends StaticEntity implements Card {
     }
     @Override
     public boolean canBePlaced(PathTile PathTile) {
-        // TODO Auto-generated method stub
         return false;
     }
     
