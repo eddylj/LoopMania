@@ -56,11 +56,12 @@
          <children>
             <!-- equippedItems contains the equipment equipped by the character in special slots -->
             <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
-            <GridPane fx:id="equippedItems">
+            <GridPane fx:id="equippedItems" prefHeight="32.0" prefWidth="49.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints />
@@ -69,19 +70,24 @@
                   <!-- swordCell is the cell where a sword intended to be equipped will be dragged by the human player -->
                   <ImageView id="swordCell" GridPane.columnIndex="0" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
-                        <Image url="@../../images/sword_unequipped.png" />
+                        <Image url="@../../images/sword_slot.png" />
                      </image>
                   </ImageView>
-                  <!-- blankCell is an empty cell -->
-                  <ImageView id="blankCell" GridPane.columnIndex="1" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                  <!-- helmetCell is the cell where a helmet intended to be equipped will be dragged by the human player -->
+                  <ImageView id="helmetCell" GridPane.columnIndex="1" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
-                        <Image url="@../../images/image_just_black_tiny.png" />
+                        <Image url="@../../images/helmet_slot.png" />
                      </image>
                   </ImageView>
                   <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
                   <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
                         <Image url="@../../images/shield_unequipped.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="shieldCell" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../../images/empty_slot.png" />
                      </image>
                   </ImageView>
                </children>
