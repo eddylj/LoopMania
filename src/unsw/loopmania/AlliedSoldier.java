@@ -9,6 +9,14 @@ public class AlliedSoldier implements Hero{
         attackDamage = 20 + cycle;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     /**
      * Attack with this weapon to the given enemy
      * @param enemy that is being attacked
@@ -16,14 +24,6 @@ public class AlliedSoldier implements Hero{
      */
     public void attack(Enemy enemy) {
         enemy.takeDamage(attackDamage);
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     /**
