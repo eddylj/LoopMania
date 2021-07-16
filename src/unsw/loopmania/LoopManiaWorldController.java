@@ -14,9 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -27,10 +30,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.EnumMap;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.DynamicTest.stream;
 
 import java.io.File;
@@ -160,6 +165,8 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
 
+    private MenuSwitcher shopSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -240,6 +247,11 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+        // TODO: IDK
+        // FXMLLoader loader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+        // ShopController shopController = loader.getController();
+        // shopController.initData(world);
+
     }
 
     /**
@@ -293,6 +305,11 @@ public class LoopManiaWorldController {
         pause();
     }
 
+    public void play(){
+        isPaused = false;
+        System.out.println("playing");
+        timeline.play();
+    }
     /**
      * pair the entity an view so that the view copies the movements of the entity.
      * add view to list of entity images
@@ -730,6 +747,11 @@ public class LoopManiaWorldController {
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
 
+    public void setShopSwitcher(MenuSwitcher shopSwitcher){
+        // TODO = possibly set other menu switchers
+        this.shopSwitcher = shopSwitcher;
+    }
+
     /**
      * this method is triggered when click button to go to main menu in FXML
      * @throws IOException
@@ -740,6 +762,38 @@ public class LoopManiaWorldController {
         pause();
         mainMenuSwitcher.switchMenu();
     }
+
+    // TODO: CHANGE LATER TO CYCLES
+    @FXML
+    public void switchToShop() throws IOException {
+        pause();
+        // shopSwitcher.switchMenu();
+
+        // try {
+            // FXMLLoader fxmlLoader = new FXMLLoader();
+            // fxmlLoader.setLocation(getClass().getResource("ShopView.fxml"));
+            /*
+             * if "fx:controller" is not set in fxml
+             * fxmlLoader.setController(NewWindowController);
+             */
+        
+        ShopController shopController = new ShopController(this);
+        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+        shopLoader.setController(shopController);
+        // Parent shopRoot = shopLoader.load();
+        
+        Scene scene = new Scene(shopLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Shop");
+
+        stage.setScene(scene);
+        stage.show();
+        // }
+        // } catch (IOException e) {
+        //     Logger logger = Logger.getLogger(getClass().getName());
+        //     logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    
 
     /**
      * Set a node in a GridPane to have its position track the position of an
