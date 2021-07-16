@@ -2,9 +2,11 @@ package test;
 import unsw.loopmania.BarracksBuilding;
 import unsw.loopmania.BonusDamageStrategy;
 import unsw.loopmania.CampfireBuilding;
+import unsw.loopmania.CampfireState;
 import unsw.loopmania.Character;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Enemy;
+import unsw.loopmania.NormalState;
 import unsw.loopmania.PathPosition;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.security.DrbgParameters.Capability;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +31,9 @@ public class CampfireTest {
     private SimpleIntegerProperty y;
     
     public CampfireTest() {
-        goals = new JSONObject();
-        goals.put("goal", "gold");
-        goals.put("quantity", 1000);
+        // goals = new JSONObject();
+        // goals.put("goal", "gold");
+        // goals.put("quantity", 1000);
         path = createPath();
         x = new SimpleIntegerProperty();
         y = new SimpleIntegerProperty();
@@ -57,31 +60,25 @@ public class CampfireTest {
         CampfireBuilding campfire = new CampfireBuilding(x, y);
         
         BonusDamageStrategy b = c.getBonusDamageStrategy();
+        assert(b instanceof NormalState);
         campfire.updateOnMove(c);
         BonusDamageStrategy newB = c.getBonusDamageStrategy();
-        assertNotEquals(b, newB);
+       
+        assert(newB instanceof CampfireState);
         campfire.updateOnMove(c);
         BonusDamageStrategy newB2 = c.getBonusDamageStrategy();
-        assertEquals(newB, newB2);
+        assert(newB2 instanceof CampfireState);
     }
-
+    @Test
     public void CampfireNotInRangeTest() {
         Character c = new Character(new PathPosition(0, path));
         x.set(5);
         y.set(5);
         CampfireBuilding campfire = new CampfireBuilding(x, y);
-        BonusDamageStrategy b = c.getBonusDamageStrategy();
         campfire.updateOnMove(c);
-        BonusDamageStrategy newB = c.getBonusDamageStrategy();
-        assertEquals(b, newB);
-        BonusDamageStrategy newB2 = c.getBonusDamageStrategy();
-        assertEquals(newB, newB2);
+        BonusDamageStrategy b = c.getBonusDamageStrategy();
+        assert(b instanceof NormalState);
     }
-    // CampfireBuilding f = new BarracksBuilding();
-    // Character c = new Character();
-    // f.applybuff(c);
-    // BonusDamageStrategy b = c.getBonusDamageStrategy();
 
-    // assertTrue(b instanceof CampfireState);
     
 }

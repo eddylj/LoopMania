@@ -21,7 +21,6 @@ import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
 public class BarracksTest {
 
-    private JSONObject goals;
     private List<Pair<Integer, Integer>> path;
     private SimpleIntegerProperty x;
     private SimpleIntegerProperty y;
