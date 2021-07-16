@@ -1,5 +1,6 @@
 package test;
 import unsw.loopmania.BarracksBuilding;
+import unsw.loopmania.BarracksCard;
 import unsw.loopmania.Character;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Enemy;
@@ -26,9 +27,6 @@ public class BarracksTest {
     private SimpleIntegerProperty y;
     
     public BarracksTest() {
-        goals = new JSONObject();
-        goals.put("goal", "gold");
-        goals.put("quantity", 1000);
         path = createPath();
         x = new SimpleIntegerProperty();
         y = new SimpleIntegerProperty();
@@ -51,7 +49,7 @@ public class BarracksTest {
 
     @Test
     public void AddAlliedSoldiersTest() {
-        LoopManiaWorld w = new LoopManiaWorld(8, 14, path, goals);
+        
         Character c = new Character(new PathPosition(0, path));
         BarracksBuilding b = new BarracksBuilding(x, y);
         assertEquals(b.getType(), "barracks");
@@ -76,25 +74,9 @@ public class BarracksTest {
         assertEquals(c.getAlliedSoldierCount(), 0);
     }
 
-    // @Test
-    // public void BarracksTest() {
-    //     BarracksBuilding Barracks = new BarracksBuilding();
-    //     Character c = new Character();
-    //     Barracks.addAlliedSoldier();
-    //     List aList  = c.getAlliedSoldiers();
-    //     assertEquals(aList.size(), 1);
-    // }
-    // @Test
-    // public void MaxAlliedSoldierTest() {
-    //     BarracksBuilding Barracks = new BarracksBuilding();
-    //     Character c = new Character();
-    //     Barracks.addAlliedSoldier();
-    //     Barracks.addAlliedSoldier();
-    //     Barracks.addAlliedSoldier();
-    //     Barracks.addAlliedSoldier();
-    //     Barracks.addAlliedSoldier();
-    //     Barracks.addAlliedSoldier();
-    //     List aList  = c.getAlliedSoldiers();
-    //     assertEquals(aList.size(), 5);
-    // }
+    @Test
+    public void cardCanBePlacedTest(){
+        BarracksCard b = new BarracksCard(x, y);
+        
+    }
 }
