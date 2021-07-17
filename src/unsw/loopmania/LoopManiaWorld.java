@@ -48,18 +48,17 @@ public class LoopManiaWorld {
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
         this.width = width;
         this.height = height;
-        nonSpecifiedEntities = new ArrayList<>();
-        character = null;
-        enemies = new ArrayList<>();
-        cardEntities = new ArrayList<>();
-        //unequippedInventoryItems = new ArrayList<>();
-        this.orderedPath = orderedPath;
-        seed = (int)System.currentTimeMillis();
-        LoopManiaWorld.rand = new Random(seed);
         iF = new itemFactory();
         eF = new EnemyFactory();
         bF = new BuildingFactory();
         cF = new CardFactory();
+        nonSpecifiedEntities = new ArrayList<>();
+        character = null;
+        enemies = new ArrayList<>();
+        cardEntities = new ArrayList<>();
+        this.orderedPath = orderedPath;
+        seed = (int)System.currentTimeMillis();
+        LoopManiaWorld.rand = new Random(seed);
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         battleRunner = new BattleRunner(character);

@@ -81,7 +81,7 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
         }
         if (equippedWeapon instanceof Staff) {
-            if (((Staff)equippedWeapon).castSpell(enemy, b, getCycles())) {
+            if (((Staff)equippedWeapon).castSpell(enemy, b)) {
                 return;
             }
             newDamage = ((Staff)equippedWeapon).getDamage();

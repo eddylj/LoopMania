@@ -9,7 +9,9 @@ import java.util.Random;
 public class BattleRunner {
     private Character character;
     ArrayList<Enemy> defeatedEnemies;
-
+    List<Enemy> enemies;
+    List<AlliedSoldier> allies;
+    List<TowerBuilding> towers;
 
     public BattleRunner(Character c) {
         this.character = c;
@@ -57,9 +59,13 @@ public class BattleRunner {
      */
     public ArrayList<Enemy> runBattle(List<Enemy> enemies, List<AlliedSoldier> allies, List<TowerBuilding> towers) {
         defeatedEnemies = new ArrayList<Enemy>();
+        this.enemies = enemies;
+        this.allies = allies;
+        this.towers = towers;
+        this.enemies = enemies;
         while (!character.isDead() && !enemies.isEmpty()) {
-            runHeroAttacks(enemies, allies, towers);
-            runEnemyAttacks(enemies, allies);
+            runHeroAttacks();
+            runEnemyAttacks();
             if (!enemies.isEmpty()) {
                 System.out.println(String.format("%s has %d health", enemies.get(0).getType(), enemies.get(0).getHealth()));
                 
@@ -68,13 +74,13 @@ public class BattleRunner {
                 System.out.println("All enemies are dead");
             }
             System.out.println(String.format("Character has %d health", character.getHealth()));
-            checkTrancedEnemies(allies, enemies);
+            checkTrancedEnemies();
         }
-        killConvertedEnemies(allies);
+        killConvertedEnemies();
         return defeatedEnemies;
     }
 
-    public void checkTrancedEnemies(List<AlliedSoldier> allies, List<Enemy> enemies) {
+    public void checkTrancedEnemies() {
         for (int i = allies.size() - 1; i >= 0; i--) {
             AlliedSoldier a = allies.get(i);
             if (a instanceof convertedEnemy) {
@@ -87,7 +93,7 @@ public class BattleRunner {
         }
     }
 
-    private void killConvertedEnemies(List<AlliedSoldier> allies) {
+    private void killConvertedEnemies() {
         // for (AlliedSoldier a : allies) {
         for (int i = allies.size() - 1; i >= 0; i--) {
             AlliedSoldier a = allies.get(i);
@@ -101,14 +107,14 @@ public class BattleRunner {
         c.setHealth(100);
     }
 
-    public void convertAllyToZombie(AlliedSoldier a, List<Enemy> enemies) {
+    public void convertAllyToZombie(AlliedSoldier a) {
         EnemyFactory f = new EnemyFactory();
         Enemy z =  f.create("zombie");
         enemies.add(z);
         // Collections.sort(enemies, new EnemyComparator());
     }
 
-    public void convertEnemyToAlly(Enemy enemy, List<Enemy> enemies) {
+    public void convertEnemyToAlly(Enemy enemy) {
         List<AlliedSoldier> allies = getAllies();
         enemies.remove(enemy);
         HeroFactory a = new HeroFactory();
@@ -122,7 +128,7 @@ public class BattleRunner {
     }
 
 
-    private void runEnemyAttacks(List<Enemy> enemies, List<AlliedSoldier> allies) {
+    private void runEnemyAttacks() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
         // for (int i = 0; i < enemies.size(); i++) {
             System.out.println(String.format("%d %d", enemies.size(), i));
@@ -147,32 +153,32 @@ public class BattleRunner {
             }
         }
     }
-    private void runHeroAttacks(List<Enemy> enemies, List<AlliedSoldier> allies, List<TowerBuilding> towers) {
+    private void runHeroAttacks() {
         for (TowerBuilding t : towers) {
             if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
                 t.attack(e);
-                postFight(e, enemies);
+                postFight(e);
             }
         }
         for (AlliedSoldier a : allies) {
             if (!enemies.isEmpty()) {
                 Enemy e = enemies.get(0);
                 a.attack(e);
-                postFight(e, enemies);
+                postFight(e);
             }
         }
         if (!enemies.isEmpty()) {
             Enemy e = enemies.get(0);
             character.attack(e, this);
-            postFight(e, enemies);
+            postFight(e);
         }
     
     }
 
-    private void postFight(Enemy e, List<Enemy> enemies){
+    private void postFight(Enemy e){
         if (e.isDead()){
-            killEnemy(e, enemies);
+            killEnemy(e);
             defeatedEnemies.add(e);
         }
     }
@@ -181,7 +187,7 @@ public class BattleRunner {
      * kill an enemy
      * @param enemy enemy to be killed
      */
-    private void killEnemy(Enemy enemy, List<Enemy> enemies){
+    private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
         System.out.println("Enemy has died");
@@ -192,7 +198,6 @@ public class BattleRunner {
      * @param enemy enemy to be killed
      */
     private void killAlly(AlliedSoldier ally) {
-        List<AlliedSoldier> allies = character.getAlliedSoldiers();
         allies.remove(ally);
     }
 
