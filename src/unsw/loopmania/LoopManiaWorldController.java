@@ -824,6 +824,10 @@ public class LoopManiaWorldController {
         stage.setTitle("Shop-Buy");
 
         stage.setScene(scene);
+        stage.setOnCloseRequest(event -> {
+            shopOpen = false;
+            play();
+        });
         stage.show();
     }
     

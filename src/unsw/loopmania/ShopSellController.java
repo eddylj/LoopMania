@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.plaf.ColorUIResource;
 
@@ -20,9 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -30,7 +34,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class ShopSellController extends ShopController {
+public class ShopSellController {
 
     @FXML
     private StackPane stackPaneRoot;
@@ -41,134 +45,150 @@ public class ShopSellController extends ShopController {
     @FXML
     private AnchorPane itemCosts;
 
-    private LoopManiaWorldController worldController;
-
+    
     private LoopManiaWorld world;
 
-    ShopBuyController buyController;
+    private String[] itemList;
 
-    public ShopSellController(LoopManiaWorldController worldController, LoopManiaWorld world) {
-        super(worldController);
+    public ShopSellController(LoopManiaWorld world) {
         this.world = world;
-        this.worldController = worldController;
+        itemList = setItemList();
     }
 
     @FXML
     public void initialize() {
-        super.addItems();
-        super.addDoneButton();
-        // addBuyModeButton();
+        addItems(itemList);
+        for (ColumnConstraints columnConstraint: shopItems.getColumnConstraints()) {
+            columnConstraint.setPercentWidth(25);
+        }
+        for (RowConstraints rowConstraint: shopItems.getRowConstraints()) {
+            rowConstraint.setPercentHeight(25);
+        }
+        addDoneButton();
     }
 
-    // private void addDoneButton() {
-    //     Button done = new Button("Done");
-    //     done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 60));
-    //     done.setTextFill(Color.GREEN);
-    //     done.setOnAction(new EventHandler<ActionEvent>(){
-    //         @Override
-    //         public void handle(ActionEvent arg0) {
-    //             worldController.play();
-    //             worldController.setShopOpen(false);
-    //             Stage stage = (Stage) done.getScene().getWindow();
-    //             stage.close();
-    //         }
-    //     });
+    private String[] setItemList() {
+        ArrayList<String> itemNameArrayList = new ArrayList<String>();
+        for (Item item: world.getItems()) {
+            if (item instanceof Sword) {
+                itemNameArrayList.add("sword");
+            }
+            else if (item instanceof Stake) {
+                itemNameArrayList.add("stake");
+            }
+            else if (item instanceof Staff) {
+                itemNameArrayList.add("staff");
+            }
+            else if (item instanceof Armour) {
+                itemNameArrayList.add("armour");
+            }
+            else if (item instanceof Shield) {
+                itemNameArrayList.add("shield");
+            }
+            else if (item instanceof Helmet) {
+                itemNameArrayList.add("helmet");
+            }
+            else if (item instanceof HealthPotion) {
+                itemNameArrayList.add("healthpotion");
+            }
+        }
+        return itemNameArrayList.toArray(new String[itemNameArrayList.size()]);
+    }
 
-    //     itemCosts.getChildren().add(done);
-    //     AnchorPane.setTopAnchor(done, (double)470);
-    //     AnchorPane.setLeftAnchor(done, (double)170);
-    // }
+    public void addDoneButton() {
+        Button done = new Button("Done");
+        done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
+        done.setTextFill(Color.GREEN);
+        done.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                doneButtonAction(done);
+            }
+        });
 
+        itemCosts.getChildren().add(done);
+        AnchorPane.setTopAnchor(done, (double)580);
+        AnchorPane.setLeftAnchor(done, (double)180);
+    }
 
-    // public void addPossibleBuyItems() {
-    //     String[] itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
+    public void doneButtonAction(Button done) {
+        Stage stage = (Stage) done.getScene().getWindow();
+        stage.close();
+    }
 
-    //     for (int i = 0; i < 7; i++) {
-    //         String itemName = itemList[i];
-    //         ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemName))).toURI().toString()));
-    //         int row = i / 3;
-    //         int col = i % 3;
-    //         view.setFitHeight(100);
-    //         view.setFitWidth(100);
-    //         shopItems.add(view, col, row);
-    //         GridPane.setHalignment(view, HPos.CENTER);
-    //         GridPane.setValignment(view, VPos.CENTER);
+    public void addItems(String[] itemList) {
+        for (int i = 0; i < itemList.length; i++) {
+            String itemName = itemList[i];
+            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemName))).toURI().toString()));
+            int row = i / 4;
+            int col = i % 4;
+            view.setFitHeight(70);
+            view.setFitWidth(70);
+            shopItems.add(view, col, row);
+            GridPane.setHalignment(view, HPos.CENTER);
+            GridPane.setValignment(view, VPos.CENTER);
             
-    //         ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
-    //         goldView.setFitHeight(40);
-    //         goldView.setFitWidth(40);
+            ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
+            goldView.setFitHeight(28);
+            goldView.setFitWidth(28);
 
-            
-    //         Button buyButton = makeBuyButton(itemName);
+            Button item = makeItemButton(itemName, i);
 
+            GridPane gridPane = new GridPane();
+            gridPane.add(goldView, 0, 0);
+            gridPane.add(item, 1, 0);
+            itemCosts.getChildren().add(gridPane);
 
-    //         GridPane gridPane = new GridPane();
-    //         gridPane.add(goldView, 0, 0);
-    //         gridPane.add(buyButton, 1, 0);
-    //         itemCosts.getChildren().add(gridPane);
+            AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
+            AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
+        }
+    }
 
-    //         AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
-    //         AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
-    //     }
-    // }
-
-    @Override
-    public Button makeItemButton(String itemName) {
-        int price = -2; // TODO: make this according to each item
-        Button buyButton = new Button(Integer.toString(price));
-        buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-
+    public Button makeItemButton(String itemName, int position) {
+        int price = +2; // TODO: make this according to each item
+        Button sellButton = new Button(Integer.toString(price));
+        sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 18));
+        
         // TODO: link button to buying item
-        if (world.getGold() >= price) {
-            buyButton.setOnAction(new EventHandler<ActionEvent>(){
+        sellButton.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent arg0) {
-                    
+                    world.removeUnequippedInventoryItemByCoordinates(position % 4, position / 4);
+                    sellButton.setTextFill(Color.DARKRED);
+                    sellButton.setDisable(true);
+                    // TODO: give money
                 }
             });
-        }
-        else {
-            buyButton.setTextFill(Color.RED);
-        }
-        return buyButton;
+        return sellButton;
     }
 
-    // public double getTopAnchor(int i) {
-    //     if (i < 3) {
-    //         return 170;
-    //     }
-    //     else if (i > 2 && i < 6) {
-    //         return 187*2;
-    //     }
-    //     else {
-    //         return 189*3;
-    //     }
-    // }
+    public double getTopAnchor(int i) {
+        if (i < 4) {
+            return 133;
+        }
+        if (i < 8) {
+            return 288;
+        }
+        if (i < 12) {
+            return 435;
+        }
+        else {
+            return 540;
+        }
+    }
 
-    // public double getLeftAnchor(int i) {
-    //     if (i % 3 == 0) {
-    //         return 10;
-    //     }
-    //     else if (i == 1 || i == 4) {
-    //         return 160;
-    //     }
-    //     else {
-    //         return 315;
-    //     }
-    // }
-
-    // private void inventory() {
-    //     Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-
-    //     for (int x=0; x<LoopManiaWorld.unequippedInventoryWidth; x++){
-    //         for (int y=0; y<LoopManiaWorld.unequippedInventoryHeight; y++){
-    //             ImageView emptySlotView = new ImageView(inventorySlotImage);
-    //             unequippedInventory.add(emptySlotView, x, y);
-    //         }
-    //     }
-
-    //     for (Item i : world.getItems()) {
-    //         onLoad(i);
-    //     }
-    // }
+    public double getLeftAnchor(int i) {
+        if (i % 4 == 0) {
+            return 10;
+        }
+        else if (i % 4 == 1) {
+            return 130;
+        }
+        else if (i % 4 == 2) {
+            return 245;
+        }
+        else {
+            return 345;
+        }
+    }
 }

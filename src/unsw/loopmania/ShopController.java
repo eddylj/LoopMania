@@ -40,13 +40,20 @@ public class ShopController {
 
     private LoopManiaWorldController worldController;
 
+    private String[] itemList;
+
+    private int itemHeight;
+
+    private int itemWidth;
+
     public ShopController(LoopManiaWorldController worldController) {
         this.worldController = worldController;
+        itemList = new String[] {};
     }
 
     @FXML
     public void initialize() {
-        addItems();
+        addItems(itemList);
         addDoneButton();
     }
 
@@ -56,11 +63,8 @@ public class ShopController {
         done.setTextFill(Color.GREEN);
         done.setOnAction(new EventHandler<ActionEvent>(){
             @Override
-            public void handle(ActionEvent arg0) {
-                worldController.play();
-                worldController.setShopOpen(false);
-                Stage stage = (Stage) done.getScene().getWindow();
-                stage.close();
+            public void handle(ActionEvent event) {
+                doneButtonAction(done);
             }
         });
 
@@ -69,10 +73,15 @@ public class ShopController {
         AnchorPane.setLeftAnchor(done, (double)200);
     }
 
-    public void addItems() {
-        String[] itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
+    public void doneButtonAction(Button done) {
+        worldController.play();
+        worldController.setShopOpen(false);
+        Stage stage = (Stage) done.getScene().getWindow();
+        stage.close();
+    }
 
-        for (int i = 0; i < 7; i++) {
+    public void addItems(String[] itemList) {
+        for (int i = 0; i < itemList.length; i++) {
             String itemName = itemList[i];
             ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemName))).toURI().toString()));
             int row = i / 3;
