@@ -12,12 +12,17 @@ import org.junit.Test;
 import unsw.loopmania.Armour;
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaApplication;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Shield;
 import unsw.loopmania.Weapon;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Helmet;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Vampire;
+import unsw.loopmania.Hero;
+
 public class protectionTests {
 
     //Armour Tests
@@ -44,7 +49,38 @@ public class protectionTests {
     //ShieldTests
     @Test
     public void ShieldTest() {
+        
+        LoopManiaWorld.setSeed(22);
+        Shield s1 = new Shield(1);
+        assertEquals(s1.protect(10), 0);
+        assertEquals(s1.protect(10), 10);
+        assertEquals(s1.protect(10), 10);
+        assertEquals(s1.protect(10), 10);
     
+        LoopManiaWorld.setSeed(22);
+        Shield s2 = new Shield(2);
+        assertEquals(s2.protect(10), 0);
+        assertEquals(s2.protect(10), 10);
+        assertEquals(s2.protect(10), 0);
+        assertEquals(s2.protect(10), 10);
+    }
+
+    @Test
+    public void VampireShieldTest() {
+        
+        LoopManiaWorld.setSeed(6);
+        Character c = new Character();
+        Vampire v1 = new Vampire();
+        Hero h = (Hero) c;
+        v1.attack(h);
+        assertEquals(57, c.getHealth());
+
+        Shield s1 = new Shield(1);
+        LoopManiaWorld.setSeed(6);
+        Vampire v2 = new Vampire();
+        c.equip(s1);
+        v2.attack(h);
+        assertEquals(39, c.getHealth());
     }
 
     //HelmetTests

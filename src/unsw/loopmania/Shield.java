@@ -15,6 +15,7 @@ public class Shield extends Protection {
 
     public Shield(int level) {
         super(level, 400*(1+(level-1)*15/100));
+        blockChance += 3*level;
         super.setType("shield");
     }
 
