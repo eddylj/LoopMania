@@ -23,10 +23,11 @@ public class BattleRunnerTest {
     private List<Enemy> enemies = new ArrayList<Enemy>();
     private List<AlliedSoldier> allies = new ArrayList<AlliedSoldier>();
     private List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
-    private BattleRunner b = new BattleRunner(character);
+    private BattleRunner b = new BattleRunner();
 
     @Test
     public void BasicbattleTestVictory(){
+        b.setCharacter(character);
         Enemy e = new Slug();
         enemies.add(e);
         List<Enemy> defeatedEnemies = b.runBattle(enemies, allies, towers);
@@ -36,6 +37,8 @@ public class BattleRunnerTest {
 
     @Test
     public void BasicbattleTestDefeat(){
+        b.setCharacter(character);
+
         Enemy e = new Slug();
         Enemy e1 = new Slug();
         Enemy e2 = new Slug();
@@ -54,6 +57,7 @@ public class BattleRunnerTest {
 
     @Test
     public void BasicbattleTestWithAlly(){
+        b.setCharacter(character);
         Enemy e = new Slug();
         Enemy e1 = new Slug();
         AlliedSoldier a = new AlliedSoldier();
@@ -67,19 +71,25 @@ public class BattleRunnerTest {
 
     @Test
     public void enemyToAllyTest(){
+        b.setCharacter(character);
+
         Enemy e = new Slug();
         assertTrue(enemies.isEmpty());
 
         enemies.add(e);
-        b.convertEnemyToAlly(e, enemies);
+        b.setEnemies(enemies);
+        b.convertEnemyToAlly(e);
         assertTrue(character.getAlliedSoldierCount() > 0);
         assertTrue(enemies.isEmpty());
     }
 
     @Test
-    public void allyToEnemy(){
+    public void allyToEnemyTest(){
+        b.setCharacter(character);
+
         AlliedSoldier a = new AlliedSoldier();
-        b.convertAllyToZombie(a, enemies);
+        b.setEnemies(enemies);
+        b.convertAllyToZombie(a);
         assertTrue(character.getAlliedSoldierCount() == 0);
         assert(enemies.size() > 0);
     }

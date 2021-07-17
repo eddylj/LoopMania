@@ -21,7 +21,10 @@ public class BattleRunner {
         this.character = c;
     }
 
-
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+    
     public List<Enemy> checkForFight(List<Enemy> enemies, List<BuildingOnMove> moveBuildings) {
         List<Enemy> attacking = new ArrayList<Enemy>();
         for (Enemy e : enemies) {
@@ -67,7 +70,6 @@ public class BattleRunner {
         this.enemies = enemies;
         this.allies = allies;
         this.towers = towers;
-        this.enemies = enemies;
         while (!character.isDead() && !enemies.isEmpty()) {
             runHeroAttacks();
             runEnemyAttacks();
@@ -120,18 +122,12 @@ public class BattleRunner {
     }
 
     public void convertEnemyToAlly(Enemy enemy) {
-        List<AlliedSoldier> allies = getAllies();
         enemies.remove(enemy);
         HeroFactory a = new HeroFactory();
         convertedEnemy c = (convertedEnemy) a.create(enemy);
         character.addAlliedSoldier((AlliedSoldier)c);
         
     }
-
-    private List<AlliedSoldier> getAllies() {
-        return character.getAlliedSoldiers();
-    }
-
 
     private void runEnemyAttacks() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
