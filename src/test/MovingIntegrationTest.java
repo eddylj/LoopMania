@@ -62,7 +62,7 @@ public class MovingIntegrationTest {
     public void checkExistsTest() {
         // RIGHT, RIGHT, DOWN, DOWN, LEFT, LEFT, UP, UP
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(10, 10, l);
+        LoopManiaWorld d = new LoopManiaWorld(10, 10, l, goals);
         assertEquals(d.getWidth(), 10);
         assertEquals(d.getHeight(), 10);
     }
@@ -70,7 +70,7 @@ public class MovingIntegrationTest {
     @Test
     public void DoFullLoop() {
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(5, 5, l);
+        LoopManiaWorld d = new LoopManiaWorld(5, 5, l, goals);
         PathPosition characterPosition = new PathPosition(0, l);
         Character c = new Character(characterPosition);
         d.setCharacter(c);
@@ -97,7 +97,7 @@ public class MovingIntegrationTest {
     @Test
     public void SlugMovementTest() {
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(5, 5, l);
+        LoopManiaWorld d = new LoopManiaWorld(5, 5, l, goals);
         worldStateHelper h = new worldStateHelper(d);
         Enemy slug = d.spawnSlug(3, h.getOrderedPath());
         assertPos(slug, 1, 2);
@@ -114,13 +114,13 @@ public class MovingIntegrationTest {
     @Test
     public void ZombieMovementTest() {
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(5, 5, l);
-        worldStateHelper h = new worldStateHelper(d);
-        Enemy zombie = d.spawnZombie(3, h.getOrderedPath());
+        LoopManiaWorld d = new LoopManiaWorld(5, 5, l, goals);
+        //worldStateHelper h = new worldStateHelper(d);
+        Enemy zombie = d.spawnZombie(3, l);
         assertPos(zombie, 1, 2);
         Pair<Integer, Integer> oldPos = new Pair<Integer, Integer>(zombie.getX(), zombie.getY());
         for (int i = 0; i < 100; i++) {
-            d.runTickMoves();
+            d.moveEntities();
             Pair<Integer, Integer> newPos = new Pair<Integer, Integer>(zombie.getX(), zombie.getY());
             // make sure zombie moves every second move!
             if (i % 2 == 0) {

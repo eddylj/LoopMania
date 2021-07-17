@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
 import unsw.loopmania.Sword;
@@ -20,7 +21,7 @@ import unsw.loopmania.Vampire;
 
 
 public class StakeTest {
-
+    private BattleRunner b = new BattleRunner();
     @Test
     public void StakeLevelStoredTest() {
         Character c = new Character();
@@ -43,16 +44,16 @@ public class StakeTest {
     @Test
     public void StakeDamage() {
         Character c = new Character();
-        Item sword = new Sword(10);
         Item stake = new Stake(1);
 
+        c.equip(stake);
         Enemy slug = new Slug();
         assertEquals(slug.getHealth(), 50);
-        c.attack(slug);
+        c.attack(slug, b);
         assertEquals(slug.getHealth(), 30);
         Enemy vampire = new Vampire();
         assertEquals(150, vampire.getHealth());
-        c.attack(vampire);
+        c.attack(vampire, b);
         assertEquals(100, vampire.getHealth());
     }
 }

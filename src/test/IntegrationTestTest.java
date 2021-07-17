@@ -21,7 +21,6 @@ import org.junit.Test;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.LoopManiaWorldControllerLoader;
 import unsw.loopmania.LoopManiaWorldLoader;
-import unsw.loopmania.TestLoopManiaWorldLoader;
 
 public class IntegrationTestTest {
     private int apple;
