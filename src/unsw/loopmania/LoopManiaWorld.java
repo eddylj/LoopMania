@@ -18,8 +18,6 @@ import javafx.beans.property.SimpleIntegerProperty;
  * entity can occupy the same square.
  */
 public class LoopManiaWorld {
-    public static final int unequippedInventoryWidth = 4;
-    public static final int unequippedInventoryHeight = 4;
     public static int seed;
     private static Random rand;
     private itemFactory iF;
@@ -37,7 +35,9 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
-    private List<Item> unequippedInventoryItems;
+    private BattleRunner battleRunner;
+
+
     private String[] itemList;
     private String[] cardList;
     private String[] slugCards; // slugs can't drop vampire castles
@@ -52,7 +52,7 @@ public class LoopManiaWorld {
         character = null;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
-        unequippedInventoryItems = new ArrayList<>();
+        //unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         seed = (int)System.currentTimeMillis();
         LoopManiaWorld.rand = new Random(seed);
@@ -62,6 +62,7 @@ public class LoopManiaWorld {
         cF = new CardFactory();
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
+        battleRunner = new BattleRunner(character);
         this.json = goals;
         fillEntityLists();
         // placeHerosCastle();
@@ -76,7 +77,7 @@ public class LoopManiaWorld {
         character = null;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
-        unequippedInventoryItems = new ArrayList<>();
+        //unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         this.seed = seed;
         rand = new Random(seed);
@@ -150,7 +151,7 @@ public class LoopManiaWorld {
     }
 
     public List<Item> getItems() {
-        return unequippedInventoryItems;
+        return character.getunequippedInventoryItems();
     }
 
     public Random getRand() {
@@ -166,7 +167,7 @@ public class LoopManiaWorld {
     }
 
     public boolean isCharacterDead() {
-        return character.getHealth() <= 0;
+        return character.isDead();
     }
 
     /**
@@ -179,10 +180,9 @@ public class LoopManiaWorld {
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
-        // addUnequippedItem("sword", 1);
-        addUnequippedItem("staff", 1);
-        addUnequippedItem("healthpotion", 1);
-        addUnequippedItem("armour", 4);
+        character.addUnequippedItem("sword", 1);
+        character.addUnequippedItem("staff", 1);
+        character.addUnequippedItem("healthpotion", 1);
     }
 
     public List<Enemy> moveEntities() {
@@ -231,38 +231,9 @@ public class LoopManiaWorld {
     }
 
     private List<Enemy> checkForFight() {
-        List<Enemy> attacking = new ArrayList<Enemy>();
-        for (Enemy e : enemies) {
-            int battleRadius = e.getBattleRadius();
-            int supportRadius = e.getSupportRadius();
-            double distance = Math.sqrt(Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2));
-            System.out.println(String.format("%s distance is %f. Supp radius is %d", e.getType(), distance, supportRadius));
-            if (distance <= battleRadius) {
-                attacking.add(e);
-            } else if (distance <= supportRadius) {
-                attacking.add(e);
-            }
-        }
-        System.out.println(String.format("Attacking enemies: %d", attacking.size()));
-        List<TowerBuilding> towers = getInRangeTowers();
-        BattleRunner b = new BattleRunner(character, attacking, character.getSoldiers(), towers);
-        return b.runBattle();
+        return battleRunner.checkForFight(enemies, moveBuildings);
     }
 
-    private List<TowerBuilding> getInRangeTowers() {
-        List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
-        for (BuildingOnMove b : moveBuildings) {
-
-
-            if (b.getType().equals("tower")) {
-                TowerBuilding tower = (TowerBuilding) b;
-                if (tower.isInRange(character)) {
-                    towers.add(tower);
-                }
-            }
-        }
-        return towers;
-    }
 
     private boolean checkPlayerWin() {
         return winChecker.getValue();
@@ -294,16 +265,16 @@ public class LoopManiaWorld {
         if (num < 15) {
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                item = addUnequippedItem(itemType, 0);
+                item = character.addUnequippedItem(itemType, 0);
 
             }
             else if (num < 5) {
                 int level = getHighestLevel(itemType) + 1;
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
         }
         else if (num < 20) {
@@ -320,15 +291,15 @@ public class LoopManiaWorld {
         if (num < 20) {
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                item = addUnequippedItem(itemType, 0);
+                item = character.addUnequippedItem(itemType, 0);
             }
             else if (num < 10) {
                 int level = getHighestLevel(itemType) + 1;
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
         }
         else if (num < 25) {
@@ -345,15 +316,15 @@ public class LoopManiaWorld {
         if (num < 30) { // INCRAESE BY 5 WHEN RARE ITEMS ARE ADDED
             String itemType = itemList[rand.nextInt(100) % itemList.length];
             if (itemType.equals("healthpotion")) {
-                item = addUnequippedItem(itemType, 0);
+                item = character.addUnequippedItem(itemType, 0);
             }
             else if (num < 20) {
                 int level = getHighestLevel(itemType) + 1;
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
             else {
                 int level = getHighestLevel(itemType);
-                item = addUnequippedItem(itemType, level);
+                item = character.addUnequippedItem(itemType, level);
             }
         }
         else if (num < 25) {
@@ -506,74 +477,18 @@ public class LoopManiaWorld {
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
      */
-    public StaticEntity addUnequippedItem (String type, int level){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
-        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
-            
-            removeItemByPositionInUnequippedInventoryItems(0);
-            firstAvailableSlot = getFirstAvailableSlotForItem();
-        }
-        
-        // now we insert the new sword, as we know we have at least made a slot available...
-        itemFactory f = new itemFactory();
-        Item item = null;
-        if (type.equals("healthpotion")) {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
-        }
-        else {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
-        }
-        // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
-        unequippedInventoryItems.add(item);
-        return (StaticEntity)item;
-    }
+    
 
     public void equipItem(Item i) {
         character.equip(i);
     }
 
-    /**
-     * remove an item by x,y coordinates
-     * @param x x coordinate from 0 to width-1
-     * @param y y coordinate from 0 to height-1
-     */
-    public void removeUnequippedInventoryItemByCoordinates(int x, int y){
-        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        removeUnequippedInventoryItem(item);
-    }
 
-    /**
-     * remove an item from the unequipped inventory
-     * @param item item to be removed
-     */
-    private void removeUnequippedInventoryItem(Item item){
-        // item.destroy();
-        unequippedInventoryItems.remove(item);
-    }
 
-    private StaticEntity convertItemToStaticEntity(Item item) {
-        return (StaticEntity)item;
-    }
 
-    /**
-     * return an unequipped inventory item by x and y coordinates
-     * assumes that no 2 unequipped inventory items share x and y coordinates
-     * @param x x index from 0 to width-1
-     * @param y y index from 0 to height-1
-     * @return unequipped inventory item at the input position
-     */
-    public Item getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Item e: unequippedInventoryItems){
-            StaticEntity entity = convertItemToStaticEntity(e);
-            if ((entity.getX() == x) && (entity.getY() == y)){
-                return e;
-            }
-        }
-        return null;
-    }
+
+
+
 
     public Item getEquippedItemByCoordinates(int x) {
         if (x == 0) {
@@ -599,31 +514,11 @@ public class LoopManiaWorld {
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
      * @param index index from 0 to length-1
      */
-    private void removeItemByPositionInUnequippedInventoryItems(int index){
-        Item item = unequippedInventoryItems.get(index);
-        ((StaticEntity)item).destroy();
-        // int goldAmount = item.getReplaceCost();
-        character.gainGold(item.getReplaceCost());
-        unequippedInventoryItems.remove(index);
-    }
 
 
-    /**
-     * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
-     * @return x,y coordinate pair
-     */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
-        // first available slot for an item...
-        // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
-        for (int y=0; y<unequippedInventoryHeight; y++){
-            for (int x=0; x<unequippedInventoryWidth; x++){
-                if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
-                    return new Pair<Integer, Integer>(x, y);
-                }
-            }
-        }
-        return null;
-    }
+
+
+
 
     /**
      * shift card coordinates down starting from x coordinate
@@ -693,13 +588,6 @@ public class LoopManiaWorld {
     }
 
     public void drinkPotion() {
-        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
-            Item item = unequippedInventoryItems.get(i);
-            if (item instanceof HealthPotion) {
-                ((HealthPotion)item).heal(character);
-                ((Entity)item).destroy();
-                return;
-            }
-        }
+        character.drinkPotion();
     }
 }

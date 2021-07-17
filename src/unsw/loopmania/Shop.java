@@ -14,6 +14,9 @@ public class Shop {
     public void buy(String item) {
         int level = stats.getHighestLevel(item);
         Item purchasedItem = Inventory.addUnequippedItem(item, level+1);
-        stats.updateHighestLevel(Item);
+        stats.updateHighestLevel(purchasedItem);
+        int Price = purchasedItem.getSellPrice();
+        character.loseGold(Price);
+
     }
 }

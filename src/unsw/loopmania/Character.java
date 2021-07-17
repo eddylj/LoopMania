@@ -21,7 +21,7 @@ public class Character extends MovingEntity implements Hero {
     private CharacterStats stats;
     private SimpleIntegerProperty aliveSoldiers;
     private List<AlliedSoldier> soldiers;
-
+    private Inventory inventory;
 
     // TODO = potentially implement relationships between this class and other classes
     public Character(PathPosition position) {
@@ -33,11 +33,11 @@ public class Character extends MovingEntity implements Hero {
         equippedHelmet = null;
         equippedShield = null;
         List<Card> cards = new ArrayList<Card>();
-        List<Item> stored = new ArrayList<Item>();
         appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
         aliveSoldiers = new SimpleIntegerProperty(0);
+        inventory = new Inventory(this);
     }
     public Character() {
         super(100);
@@ -48,7 +48,6 @@ public class Character extends MovingEntity implements Hero {
         equippedHelmet = null;
         equippedShield = null;
         List<Card> cards = new ArrayList<Card>();
-        List<Item> stored = new ArrayList<Item>();
         appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
@@ -95,13 +94,17 @@ public class Character extends MovingEntity implements Hero {
 
 
 
+    public void drinkPotion() {
+        
+        HealthPotion potion = inventory.getHealthPotion();
+        if (!Objects.isNull(potion)) {
+            potion.heal(this);
+        }
+    }
 
     // STORE STUFF
     //////////////////////////////////
     public void sellItem(Item i) {
-
-    }
-    public void buyItem (Item equipment) {
 
     }
     ////////////////////////////////////////
@@ -177,6 +180,9 @@ public class Character extends MovingEntity implements Hero {
     public void gainGold(int amount) {
         gold += amount;
     }
+    public void loseGold(int amount) {
+        gold -= amount;
+    }
     public void gainXP(int amount) {
         experience += amount;
     }
@@ -222,4 +228,10 @@ public class Character extends MovingEntity implements Hero {
         }
     }
     //////////////////////////////////////////////////////
+    public List<Item> getunequippedInventoryItems() {
+        return inventory.getunequippedInventoryItems();
+    }
+    public StaticEntity addUnequippedItem(String string, int i) {
+        return inventory.addUnequippedItem(string, i);
+    }
 }

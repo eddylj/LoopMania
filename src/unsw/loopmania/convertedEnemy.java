@@ -4,7 +4,7 @@ public class convertedEnemy extends AlliedSoldier{
     private Enemy enemy;
     private int remainingTranceTime;
 
-    public convertedEnemy(Enemy enemy, int cycle) {
+    public convertedEnemy(Enemy enemy) {
         super();
         this.enemy = enemy;
     }

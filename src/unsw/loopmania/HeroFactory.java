@@ -3,22 +3,22 @@ package unsw.loopmania;
 
 public class HeroFactory {
 
-    public Hero create(int cycle) {
+    public Hero create() {
      
-        return createAlliedSoldier(cycle);
+        return createAlliedSoldier();
     }
-    public Hero create(Enemy e, int cycle) {
+    public Hero create(Enemy e) {
     
-        return createConvertedEnemy(e, cycle);
+        return createConvertedEnemy(e);
     }
 
 
 
-    private convertedEnemy createConvertedEnemy(Enemy enemy, int cycle) {
-        return new convertedEnemy(enemy, cycle);
+    private convertedEnemy createConvertedEnemy(Enemy enemy) {
+        return new convertedEnemy(enemy);
     }
 
-    private AlliedSoldier createAlliedSoldier(int cycle) {
+    private AlliedSoldier createAlliedSoldier() {
         return new AlliedSoldier();
     }
 

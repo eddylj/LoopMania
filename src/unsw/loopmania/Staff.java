@@ -19,11 +19,11 @@ public class Staff extends Weapon{
     
 
 
-    public boolean castSpell(Enemy enemy, BattleRunner b, int cycle) {
+    public boolean castSpell(Enemy enemy, BattleRunner b) {
         int randNum = LoopManiaWorld.getRandNum();
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
-            b.convertEnemyToAlly(enemy, cycle);
+            b.convertEnemyToAlly(enemy);
             return true;
         }
         return false;
