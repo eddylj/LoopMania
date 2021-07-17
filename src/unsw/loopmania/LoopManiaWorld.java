@@ -175,10 +175,11 @@ public class LoopManiaWorld {
      */
     public void setCharacter(Character character) {
         this.character = character;
+        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
-        addUnequippedItem("sword", 1);
+        // addUnequippedItem("sword", 1);
         addUnequippedItem("staff", 1);
         addUnequippedItem("healthpotion", 1);
         addUnequippedItem("armour", 4);
@@ -486,6 +487,19 @@ public class LoopManiaWorld {
         c.destroy();
         cardEntities.remove(index);
         shiftCardsDownFromXCoordinate(x);
+    }
+
+    public Card getCardByCoordinate(int x) {
+        for (Card c : cardEntities) {
+            if (c.getX() == x) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public boolean isValidPlacement(Card card, int x, int y) {
+        return card.canBePlaced(x, y, orderedPath);
     }
 
     /**

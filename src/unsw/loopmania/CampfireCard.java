@@ -1,5 +1,9 @@
 package unsw.loopmania;
 
+import java.util.List;
+
+import org.javatuples.Pair;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class CampfireCard extends StaticEntity implements Card {
@@ -13,11 +17,16 @@ public class CampfireCard extends StaticEntity implements Card {
         super();
         super.setType("campfire");
     }
-    
+
     @Override
-    public boolean canBePlaced(PathTile PathTile) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath) {
+        for (Pair<Integer, Integer> tile : orderedPath) {
+            if (tile.getValue0() == x && tile.getValue1() == y) {
+                return false;
+            }
+        }
+        return true;
     }
+    
     
 }

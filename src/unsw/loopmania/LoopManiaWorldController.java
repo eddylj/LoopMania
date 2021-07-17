@@ -443,6 +443,10 @@ public class LoopManiaWorldController {
         return false;
     }
 
+    private boolean validPlacement(Card card, int x, int y) {
+        return world.isValidPlacement(card, x, y);
+    }
+
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the background, dropping over the background.
      * These are not attached to invidual items such as swords/cards.
@@ -489,10 +493,16 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType){
                             case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn a building here of different types
-                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                onLoad(newBuilding);
+                                Card card = world.getCardByCoordinate(nodeX);
+                                if (card != null && validPlacement(card, x, y)) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    // TODO = spawn a building here of different types
+                                    Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                    onLoad(newBuilding);
+                                }
+                                else {
+                                    return;
+                                }
                                 break;
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
@@ -531,21 +541,6 @@ public class LoopManiaWorldController {
                                     return;
                                 }
                                 System.out.println(String.format("Dropped %s in %s", ((StaticEntity)item).getType(), node.idProperty().get()));
-                                // if (item instanceof Weapon && node.idProperty().get().equals("swordCell")) {
-                                //     System.out.println(":::::::::::::::::::::::::::");
-                                //     System.out.println("Successfully dropped weapon in swordcell");
-                                //     System.out.println(":::::::::::::::::::::::::::");
-                                // }
-                                // else {
-                                //     System.out.println(":::::::::::::::::::::::::::");
-                                //     System.out.println(String.format("Dropped %s in %s", ((StaticEntity)item).getType(), node.idProperty().get()));
-                                //     System.out.println(":::::::::::::::::::::::::::");
-                                // }
-                                // removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // // System.out.println(String.format(draggableType.))
-                                // // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
-                                // removeItemByCoordinates(nodeX, nodeY);
-                                // targetGridPane.add(image, x, y, 1, 1);
                                 break;
                             default:
                                 break;
