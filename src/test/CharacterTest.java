@@ -52,7 +52,6 @@ public class CharacterTest {
     }
 
 
-    //TO DO
     public void attackSwordTest(){
         Enemy e = new Slug();
         Sword s = new Sword(1);

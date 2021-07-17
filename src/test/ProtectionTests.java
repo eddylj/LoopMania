@@ -56,7 +56,10 @@ public class ProtectionTests {
         assertEquals(s1.protect(10), 10);
         assertEquals(s1.protect(10), 10);
         assertEquals(s1.protect(10), 10);
+    }
     
+    @Test
+    public void ShieldLevelTest() {
         LoopManiaWorld.setSeed(22);
         Shield s2 = new Shield(2);
         assertEquals(s2.protect(10), 0);
@@ -88,7 +91,15 @@ public class ProtectionTests {
     public void helmetProtectTest(){
         Helmet h = new Helmet(1);
         assertEquals(5, h.protect(10));
-        assertEquals(91, h.calcAttackDamage(100));
+        assertEquals(90, h.calcAttackDamage(100));
 
+    }
+
+    @Test
+    public void helmetProtectLevelTest() {
+
+        Helmet h = new Helmet(5);
+        assertEquals(11, h.protect(20));
+        assertEquals(94, h.calcAttackDamage(100));
     }
 }
