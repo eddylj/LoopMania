@@ -47,7 +47,7 @@ public class Vampire extends Enemy {
         }
     }
 
-    public StaticEntity getLoot(Character character) {
+    public StaticEntity getLoot(Character character, int width) {
         int num = LoopManiaWorld.getRandNum();
         if (num < 30) {
             String itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
@@ -65,8 +65,9 @@ public class Vampire extends Enemy {
         }
         else if (num < 45) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            return character.loadCard(cardType);
+            return character.loadCard(cardType, width);
         }
+        return null;
     }
     
 }

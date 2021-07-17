@@ -92,6 +92,6 @@ public abstract class Enemy extends MovingEntity {
         }
     }
 
-    public abstract StaticEntity getLoot(Character character);
+    public abstract StaticEntity getLoot(Character character, int width);
 
 }

@@ -34,12 +34,6 @@ public class LoopManiaWorld {
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
 
-
-    private String[] itemList;
-    private String[] cardList;
-    private String[] slugCards; // slugs can't drop vampire castles
-    private String[] zombieCards; //     
-    private String[] vampireCards; // 
     private List<Pair<Integer, Integer>> orderedPath;
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
@@ -57,7 +51,6 @@ public class LoopManiaWorld {
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         battleRunner = new BattleRunner(character);
         this.json = goals;
-        fillEntityLists();
         spawn2slugs();
     }
 
@@ -93,13 +86,6 @@ public class LoopManiaWorld {
         spawnSlug(pos2, orderedPath);
     }
 
-    private void fillEntityLists() {
-        itemList = new String[]{"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
-        cardList = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
-        slugCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
-        zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
-        zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
-    }
 
     public boolean isCharacterDead() {
         return character.isDead();
@@ -164,7 +150,7 @@ public class LoopManiaWorld {
     }
 
     public StaticEntity processEnemyLoot(Enemy deadEnemy) {
-        return deadEnemy.getLoot(character);
+        return deadEnemy.getLoot(character, width);
     }
 
     /**

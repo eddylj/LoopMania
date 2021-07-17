@@ -46,7 +46,7 @@ public class Zombie extends Enemy {
         }
     }
 
-    public StaticEntity getLoot(Character character) {
+    public StaticEntity getLoot(Character character, int width) {
         int num = LoopManiaWorld.getRandNum();
         // slug drops item better than current
         if (num < 20) {
@@ -65,7 +65,8 @@ public class Zombie extends Enemy {
         }
         else if (num < 25) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            return character.loadCard(cardType);
+            return character.loadCard(cardType, width);
         }
+        return null;
     }
 }

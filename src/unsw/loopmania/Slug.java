@@ -17,7 +17,7 @@ public class Slug extends Enemy{
         super.setType("slug");
     }
 
-    public StaticEntity getLoot(Character character) {
+    public StaticEntity getLoot(Character character, int width) {
         int num = LoopManiaWorld.getRandNum();
         // slug drops item better than current
         if (num < 15) {
@@ -36,7 +36,8 @@ public class Slug extends Enemy{
         }
         else if (num < 20) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            return character.loadCard(cardType);
+            return character.loadCard(cardType, width);
         }
+        return null;
     }
 }
