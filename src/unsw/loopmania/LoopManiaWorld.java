@@ -83,7 +83,22 @@ public class LoopManiaWorld {
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
     }
+    
+    public int getCycles() {
+        return character.getCycles();
+    }
 
+    public int getGold() {
+        return character.getGold();
+    }
+
+    public int getXP() {
+        return character.getXP();
+    }
+
+    public int getHealth() {
+        return character.getHealth();
+    }
 
     public boolean isCharacterDead() {
         return character.isDead();
@@ -129,9 +144,9 @@ public class LoopManiaWorld {
     }
 
     public void triggerCycleActions(List<Enemy> newEnemies) {
-        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
-        if (characterPos.equals(heroCastlePosition)) {
+        if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
+            character.gainCycle();
         }
     }
 

@@ -12,11 +12,18 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -27,10 +34,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.EnumMap;
 
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.DynamicTest.stream;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,6 +111,21 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane unequippedInventory;
 
+    @FXML
+    private Label gameState;
+
+    @FXML
+    private ProgressBar healthBar;
+
+    @FXML
+    private Label goldAmount;
+
+    @FXML
+    private Label xpAmount;
+
+    @FXML
+    private Label cyclesAmount;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -107,6 +133,8 @@ public class LoopManiaWorldController {
      * when we drag a card/item, the picture for whatever we're dragging is set here and we actually drag this node
      */
     private DragIcon draggedEntity;
+
+    private boolean shopOpen;
 
     private boolean isPaused;
     private LoopManiaWorld world;
@@ -160,6 +188,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        shopOpen = false;
         entityImages = new ArrayList<>(initialEntities);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -173,7 +202,7 @@ public class LoopManiaWorldController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         // TODO = load more images/entities during initialization
         
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
@@ -224,12 +253,14 @@ public class LoopManiaWorldController {
         for (Item i : world.getItems()) {
             onLoad(i);
         }
-
+        // make health bar red
+        healthBar.setStyle("-fx-accent: red;");
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
     }
 
     /**
@@ -240,7 +271,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             System.out.println("tick!");
             Item weapon = world.getEquippedItemByCoordinates(0);
             if (weapon == null) {
@@ -266,6 +297,19 @@ public class LoopManiaWorldController {
             if (world.isCharacterDead()) {
                 pause();
             }
+            // TODO: bindbidirectional mb looks btr
+            healthBar.setProgress(world.getHealth()/100);
+            goldAmount.setText("" + world.getGold());
+            xpAmount.setText("" + world.getXP());
+            cyclesAmount.setText("" + world.getCycles());
+            if (world.onHeroCastle()) {
+                try {
+                    shopCycles(world.getCycles());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -280,12 +324,21 @@ public class LoopManiaWorldController {
         isPaused = true;
         System.out.println("pausing");
         timeline.stop();
+        gameState.setText("Paused");
+        gameState.setTextFill(Color.RED);
     }
 
     public void terminate(){
         pause();
     }
 
+    public void play(){
+        isPaused = false;
+        System.out.println("playing");
+        timeline.play();
+        gameState.setText("Playing");
+        gameState.setTextFill(Color.GREEN);
+    }
     /**
      * pair the entity an view so that the view copies the movements of the entity.
      * add view to list of entity images
@@ -332,7 +385,7 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadItem(Item item){
+    public void loadItem(Item item){
         // TODO = load more types of weapon
         // start by getting first available coordinates
         // Sword sword = world.addUnequippedSword(1);
@@ -729,8 +782,12 @@ public class LoopManiaWorldController {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
         case SPACE:
-            if (isPaused){
+            if (isPaused && !shopOpen){
                 startTimer();
+                play();
+            }
+            else if (shopOpen) {
+                System.out.println("must close shop");
             }
             else{
                 pause();
@@ -755,9 +812,44 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToMainMenu() throws IOException {
         // TODO = possibly set other menu switchers
-        pause();
+        terminate();
         mainMenuSwitcher.switchMenu();
     }
+
+    public void shopCycles(int cycles) throws IOException {
+        int sum = 0;
+        for (int i = 1; sum <= cycles; i++) {
+            sum = sum + i;
+            if (sum == cycles) {
+                switchToShop();
+            }
+        }
+    }
+
+    public void setShopOpen(boolean shopOpen) {
+        this.shopOpen = shopOpen;
+    }
+
+    public void switchToShop() throws IOException  {
+        pause();
+        shopOpen = true;
+
+        ShopBuyController shopBuyController = new ShopBuyController(this, world);
+        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+        shopLoader.setController(shopBuyController);
+        
+        Scene scene = new Scene(shopLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Shop-Buy");
+
+        stage.setScene(scene);
+        stage.setOnCloseRequest(event -> {
+            shopOpen = false;
+            play();
+        });
+        stage.show();
+    }
+    
 
     /**
      * Set a node in a GridPane to have its position track the position of an
