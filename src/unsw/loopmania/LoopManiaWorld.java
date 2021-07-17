@@ -373,9 +373,7 @@ public class LoopManiaWorld {
         }
         return -1;
     }
-    private int getHighestLevel(String itemType) {
-        return character.getHighestLevel(itemType);
-    }
+
     public Item getEquippedItemByCoordinates(int x) {
         if (x == 0) {
             System.out.println("Getting equipped weapon");
@@ -436,5 +434,9 @@ public class LoopManiaWorld {
 
     public void removeUnequippedInventoryItemByCoordinates(int nodeX, int nodeY) {
         character.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    }
+
+    public Card getCardByCoordinate(int nodeX) {
+        return character.getCardByCoordinate(nodeX);
     }
 }
