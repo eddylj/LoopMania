@@ -8,7 +8,7 @@ import unsw.loopmania.Slug;
 import unsw.loopmania.AlliedSoldier;
 
 public class AlliedSoldiersTest {
-    AlliedSoldier a = new AlliedSoldier(1);
+    AlliedSoldier a = new AlliedSoldier();
 
     @Test
     public void isDeadTest(){
