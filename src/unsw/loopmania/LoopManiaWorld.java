@@ -92,8 +92,6 @@ public class LoopManiaWorld {
      */
     private int height;
 
-    private int cycles;
-
     private JSONObject json;
     private Composite winChecker;
 
@@ -237,7 +235,19 @@ public class LoopManiaWorld {
     }
 
     public int getCycles() {
-        return cycles;
+        return character.getCycles();
+    }
+
+    public int getGold() {
+        return character.getGold();
+    }
+
+    public int getXP() {
+        return character.getXP();
+    }
+
+    public int getHealth() {
+        return character.getHealth();
     }
 
     public List<Pair<Integer, Integer>> getOrderedPath() {
@@ -279,7 +289,7 @@ public class LoopManiaWorld {
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
-        addUnequippedItem("sword", 1);
+        // addUnequippedItem("sword", 1);
     }
 
     public List<Enemy> moveEntities() {
@@ -317,11 +327,15 @@ public class LoopManiaWorld {
     }
 
     public void triggerCycleActions(List<Enemy> newEnemies) {
-        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
-        if (characterPos.equals(heroCastlePosition)) {
+        if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
-            cycles++;
+            character.gainCycle();
         }
+    }
+
+    public Boolean onHeroCastle() {
+        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
+        return characterPos.equals(heroCastlePosition);
     }
 
 

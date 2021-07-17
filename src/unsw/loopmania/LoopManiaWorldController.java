@@ -20,6 +20,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -113,6 +114,18 @@ public class LoopManiaWorldController {
     @FXML
     private Label gameState;
 
+    @FXML
+    private ProgressBar healthBar;
+
+    @FXML
+    private Label goldAmount;
+
+    @FXML
+    private Label xpAmount;
+
+    @FXML
+    private Label cyclesAmount;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -120,6 +133,8 @@ public class LoopManiaWorldController {
      * when we drag a card/item, the picture for whatever we're dragging is set here and we actually drag this node
      */
     private DragIcon draggedEntity;
+
+    private boolean shopOpen;
 
     private boolean isPaused;
     private LoopManiaWorld world;
@@ -172,14 +187,13 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
 
-    private MenuSwitcher shopSwitcher;
-
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        shopOpen = false;
         entityImages = new ArrayList<>(initialEntities);
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
         basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
@@ -248,7 +262,8 @@ public class LoopManiaWorldController {
         for (Item i : world.getItems()) {
             onLoad(i);
         }
-
+        // make health bar red
+        healthBar.setStyle("-fx-accent: red;");
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
@@ -287,6 +302,19 @@ public class LoopManiaWorldController {
             }
             if (world.isCharacterDead()) {
                 pause();
+            }
+            // TODO: bindbidirectional mb looks btr
+            healthBar.setProgress(world.getHealth()/100);
+            goldAmount.setText("" + world.getGold());
+            xpAmount.setText("" + world.getXP());
+            cyclesAmount.setText("" + world.getCycles());
+            if (world.onHeroCastle()) {
+                try {
+                    shopCycles(world.getCycles());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -372,7 +400,7 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadItem(Item item){
+    public void loadItem(Item item){
         // TODO = load more types of weapon
         // start by getting first available coordinates
         // Sword sword = world.addUnequippedSword(1);
@@ -737,9 +765,12 @@ public class LoopManiaWorldController {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
         case SPACE:
-            if (isPaused){
+            if (isPaused && !shopOpen){
                 startTimer();
                 play();
+            }
+            else if (shopOpen) {
+                System.out.println("must close shop");
             }
             else{
                 pause();
@@ -755,11 +786,6 @@ public class LoopManiaWorldController {
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
 
-    public void setShopSwitcher(MenuSwitcher shopSwitcher){
-        // TODO = possibly set other menu switchers
-        this.shopSwitcher = shopSwitcher;
-    }
-
     /**
      * this method is triggered when click button to go to main menu in FXML
      * @throws IOException
@@ -772,28 +798,34 @@ public class LoopManiaWorldController {
     }
 
     public void shopCycles(int cycles) throws IOException {
-        Long num = Long.valueOf(cycles);
-        long calc_num = 8*num+1;
-        long t = (long) Math.sqrt(calc_num);
-        if (t*t==calc_num) {
-            switchToShop();
+        int sum = 0;
+        for (int i = 1; sum <= cycles; i++) {
+            sum = sum + i;
+            if (sum == cycles) {
+                switchToShop();
+            }
         }
+    }
+
+    public void setShopOpen(boolean shopOpen) {
+        this.shopOpen = shopOpen;
     }
 
     public void switchToShop() throws IOException  {
         pause();
+        shopOpen = true;
 
-        ShopController shopController = new ShopController(this);
+        ShopBuyController shopBuyController = new ShopBuyController(this, world);
         FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
-        shopLoader.setController(shopController);
+        shopLoader.setController(shopBuyController);
         
         Scene scene = new Scene(shopLoader.load());
         Stage stage = new Stage();
-        stage.setTitle("Shop");
+        stage.setTitle("Shop-Buy");
 
         stage.setScene(scene);
         stage.show();
-        }
+    }
     
 
     /**

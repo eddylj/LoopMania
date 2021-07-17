@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -107,15 +109,63 @@
                   
                </children>
             </GridPane>
-            <Button onAction="#switchToShop" text="Shop">
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
             <Label fx:id="gameState" text="Playing" textFill="#27c657">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="147.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../../images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <ProgressBar fx:id="healthBar" layoutX="48.0" layoutY="4.0" prefHeight="32.0" prefWidth="91.0" progress="0.0" />
+               </children>
+            </Pane>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="147.0">
+               <children>
+                  <Label fx:id="goldAmount" layoutX="50.0" layoutY="5.0" text="123" textFill="#d3c30ae3">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../../images/gold_pile.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="147.0">
+               <children>
+                  <Label text="XP" textFill="#e81fc3">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="50.0" layoutY="5.0" text="123" textFill="#e81fc3" fx:id="xpAmount">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="147.0">
+               <children>
+                  <Label text="Cycles" textFill="#081ee4">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cyclesAmount" layoutX="50.0" layoutY="-5.0" text="123" textFill="#081ee4">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          
             <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />

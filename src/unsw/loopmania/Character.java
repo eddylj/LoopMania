@@ -159,7 +159,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void gainCycle() {
-
+        cycles++;
     }
 
 
