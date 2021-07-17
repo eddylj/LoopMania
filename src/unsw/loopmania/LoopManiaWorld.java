@@ -29,7 +29,6 @@ public class LoopManiaWorld {
     private Character character;
     private Pair<Integer, Integer> heroCastlePosition;
     private static List<Enemy> enemies;
-    // private List<Card> cardEntities;
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
@@ -43,7 +42,6 @@ public class LoopManiaWorld {
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
         enemies = new ArrayList<>();
-        //cardEntities = new ArrayList<>();
         this.orderedPath = orderedPath;
         seed = (int)System.currentTimeMillis();
         LoopManiaWorld.rand = new Random(seed);
@@ -292,14 +290,6 @@ public class LoopManiaWorld {
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
         Card card = character.getMatchingCard(cardNodeX, cardNodeY);
-
-        // for (Card c: cardEntities){
-        //     if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
-        //         card = c;
-        //         break;
-        //     }
-        // }
-
         // now spawn building
         Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
         // buildingEntities.add(newBuilding);
@@ -357,14 +347,7 @@ public class LoopManiaWorld {
     public List<BuildingOnCycle> getCycleBuildings() {
         return cycleBuildings;
     }
-    // public Card getCardByCoordinate(int x) {
-    //     for (Card c : cardEntities) {
-    //         if (c.getX() == x) {
-    //             return c;
-    //         }
-    //     }
-    //     return null;
-    // }
+
     private int getNumInPath(Pair<Integer, Integer> tile) {
         for (int i = 0; i < orderedPath.size(); i++) {
             if (tile.equals(orderedPath.get(i))) {
