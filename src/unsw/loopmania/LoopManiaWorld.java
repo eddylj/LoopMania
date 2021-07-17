@@ -20,9 +20,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class LoopManiaWorld {
     public static int seed;
     private static Random rand;
-    private itemFactory iF;
-    private CardFactory cF;
-    private EnemyFactory eF;
     private BuildingFactory bF;
     private int width;
     private int height;
@@ -32,7 +29,7 @@ public class LoopManiaWorld {
     private Character character;
     private Pair<Integer, Integer> heroCastlePosition;
     private static List<Enemy> enemies;
-    private List<Card> cardEntities;
+    // private List<Card> cardEntities;
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
@@ -48,14 +45,11 @@ public class LoopManiaWorld {
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
         this.width = width;
         this.height = height;
-        iF = new itemFactory();
-        eF = new EnemyFactory();
         bF = new BuildingFactory();
-        cF = new CardFactory();
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
         enemies = new ArrayList<>();
-        cardEntities = new ArrayList<>();
+        //cardEntities = new ArrayList<>();
         this.orderedPath = orderedPath;
         seed = (int)System.currentTimeMillis();
         LoopManiaWorld.rand = new Random(seed);
@@ -98,9 +92,6 @@ public class LoopManiaWorld {
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
     }
-    public static int getRandNum() {
-        return LoopManiaWorld.rand.nextInt(100);
-    }
 
     private void fillEntityLists() {
         itemList = new String[]{"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
@@ -110,57 +101,8 @@ public class LoopManiaWorld {
         zombieCards = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public List<Pair<Integer, Integer>> getOrderedPath() {
-        List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
-        copy.addAll(orderedPath);
-        return copy;
-    }
-    
-    public List<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public List<Item> getItems() {
-        return character.getunequippedInventoryItems();
-    }
-
-    public Random getRand() {
-        return rand;
-    }
-
-    public List<BuildingOnMove> getMoveBuildings() {
-        return moveBuildings;
-    }
-
-    public List<BuildingOnCycle> getCycleBuildings() {
-        return cycleBuildings;
-    }
-
     public boolean isCharacterDead() {
         return character.isDead();
-    }
-
-    /**
-     * set the character. This is necessary because it is loaded as a special entity out of the file
-     * @param character the character
-     */
-    public void setCharacter(Character character) {
-        this.character = character;
-        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
-        heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
-        GoalCalculator goal = new GoalCalculator(json, character);
-        winChecker = goal.getChecker();
-        character.addUnequippedItem("sword", 1);
-        character.addUnequippedItem("staff", 1);
-        character.addUnequippedItem("healthpotion", 1);
     }
 
     public List<Enemy> moveEntities() {
@@ -213,7 +155,6 @@ public class LoopManiaWorld {
         return battleRunner.checkForFight(enemies, moveBuildings);
     }
 
-
     private boolean checkPlayerWin() {
         return winChecker.getValue();
     }
@@ -234,15 +175,6 @@ public class LoopManiaWorld {
         // for adding non-specific entities (ones without another dedicated list)
         // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
         nonSpecifiedEntities.add(entity);
-    }
-
-    private int getNumInPath(Pair<Integer, Integer> tile) {
-        for (int i = 0; i < orderedPath.size(); i++) {
-            if (tile.equals(orderedPath.get(i))) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private boolean empty(Pair<Integer, Integer> p) {
@@ -284,15 +216,6 @@ public class LoopManiaWorld {
         return adjacent;
     }
 
-
-    private List<Pair<Integer, Integer>> getAllEmptyTiles() {
-        List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
-        for (Pair<Integer, Integer> p : orderedPath) {
-            if (empty(p)) tiles.add(p);
-        }
-        return tiles;
-    }
-
     public void SpawnEnemiesOnCycle(List<Enemy> newEnemies) {
         // For each building, figure out how many/where to spawn enemies then spawn them
         for (BuildingOnCycle b : cycleBuildings) {
@@ -321,103 +244,17 @@ public class LoopManiaWorld {
     }
 
 
-    public StaticEntity loadCard(String type) {
-        // if adding more cards than have, remove the first card...
-        if (cardEntities.size() >= getWidth()){
-            int gold = rand.nextInt(100) + 1;
-            character.gainGold(gold * 3);
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
-            removeCard(0);
-        }
-        CardFactory cf = new CardFactory();
-        // Card card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        Card card = cf.create(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0), type);
-        cardEntities.add(card);
-        return (StaticEntity)card;
+    public StaticEntity loadCard(String type, int width) {
+        return character.loadCard(type, width);
     }
 
-    /**
-     * remove card at a particular index of cards (position in gridpane of unplayed cards)
-     * @param index the index of the card, from 0 to length-1
-     */
-    private void removeCard(int index){
-        Card c = cardEntities.get(index);
-        int x = c.getX();
-        c.destroy();
-        cardEntities.remove(index);
-        shiftCardsDownFromXCoordinate(x);
-    }
-
-    public Card getCardByCoordinate(int x) {
-        for (Card c : cardEntities) {
-            if (c.getX() == x) {
-                return c;
-            }
-        }
-        return null;
-    }
 
     public boolean isValidPlacement(Card card, int x, int y) {
         return card.canBePlaced(x, y, orderedPath);
     }
 
-    /**
-     * spawn a sword in the world and return the sword entity
-     * @return a sword to be spawned in the controller as a JavaFX node
-     */
-    
-
     public void equipItem(Item i) {
         character.equip(i);
-    }
-
-
-
-
-
-
-
-
-    public Item getEquippedItemByCoordinates(int x) {
-        if (x == 0) {
-            System.out.println("Getting equipped weapon");
-            return character.getWeapon();
-        }
-        else if (x == 1) {
-            return character.getHelmet(); 
-        }
-        else if (x == 2) {
-            return character.getShield();
-        }
-        else if (x == 3) {
-            return character.getArmour();
-        }
-        else {
-            System.out.println("No equipped weapon at " + x);
-            return null;
-        }
-    }
-
-    /**
-     * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
-     * @param index index from 0 to length-1
-     */
-
-
-
-
-
-
-    /**
-     * shift card coordinates down starting from x coordinate
-     * @param x x coordinate which can range from 0 to width-1
-     */
-    private void shiftCardsDownFromXCoordinate(int x){
-        for (Card c: cardEntities){
-            if (c.getX() >= x){
-                c.x().set(c.getX()-1);
-            }
-        }
     }
 
     private CampfireBuilding getClosestCampfire(int x, int y) {
@@ -468,22 +305,22 @@ public class LoopManiaWorld {
 
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
-        Card card = null;
-        for (Card c: cardEntities){
-            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
-                card = c;
-                break;
-            }
-        }
+        Card card = character.getMatchingCard(cardNodeX, cardNodeY);
+
+        // for (Card c: cardEntities){
+        //     if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
+        //         card = c;
+        //         break;
+        //     }
+        // }
+
         // now spawn building
         Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
         // buildingEntities.add(newBuilding);
         addBuilding(newBuilding);
 
         // destroy the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
+        character.destroyCard(card, cardNodeX);
 
         return newBuilding;
     }
@@ -497,5 +334,121 @@ public class LoopManiaWorld {
 
     public void drinkPotion() {
         character.drinkPotion();
+    }
+
+    //Getters and Setters
+    //////////////////////////////////
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
+    public static int getRandNum() {
+        return LoopManiaWorld.rand.nextInt(100);
+    }
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
+        copy.addAll(orderedPath);
+        return copy;
+    }
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public List<Item> getItems() {
+        return character.getunequippedInventoryItems();
+    }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public List<BuildingOnMove> getMoveBuildings() {
+        return moveBuildings;
+    }
+
+    public List<BuildingOnCycle> getCycleBuildings() {
+        return cycleBuildings;
+    }
+    // public Card getCardByCoordinate(int x) {
+    //     for (Card c : cardEntities) {
+    //         if (c.getX() == x) {
+    //             return c;
+    //         }
+    //     }
+    //     return null;
+    // }
+    private int getNumInPath(Pair<Integer, Integer> tile) {
+        for (int i = 0; i < orderedPath.size(); i++) {
+            if (tile.equals(orderedPath.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int getHighestLevel(String itemType) {
+        return character.getHighestLevel(itemType);
+    }
+    public Item getEquippedItemByCoordinates(int x) {
+        if (x == 0) {
+            System.out.println("Getting equipped weapon");
+            return character.getWeapon();
+        }
+        else if (x == 1) {
+            return character.getHelmet(); 
+        }
+        else if (x == 2) {
+            return character.getShield();
+        }
+        else if (x == 3) {
+            return character.getArmour();
+        }
+        else {
+            System.out.println("No equipped weapon at " + x);
+            return null;
+        }
+    }
+    private List<Pair<Integer, Integer>> getAllEmptyTiles() {
+        List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
+        for (Pair<Integer, Integer> p : orderedPath) {
+            if (empty(p)) tiles.add(p);
+        }
+        return tiles;
+    }
+    /**
+     * set the character. This is necessary because it is loaded as a special entity out of the file
+     * @param character the character
+     */
+    public void setCharacter(Character character) {
+        itemFactory iF = new itemFactory();
+        this.character = character;
+        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
+        GoalCalculator goal = new GoalCalculator(json, character);
+        winChecker = goal.getChecker();
+        character.addUnequippedItem("sword", 1);
+        character.addUnequippedItem("staff", 1);
+        character.addUnequippedItem("healthpotion", 1);
+    }
+
+    public static int getunequippedInventoryWidth() {
+        return Inventory.getunequippedInventoryWidth();
+    }
+
+    public static int getunequippedInventoryHeight() {
+        return Inventory.getunequippedInventoryHeight();
+    }
+
+    public Item getUnequippedInventoryItemEntityByCoordinates(int nodeX, int nodeY) {
+        return character.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
+    }
+
+    public StaticEntity addUnequippedItem(String type, int i) {
+        return character.addUnequippedItem(type, i);
+    }
+
+    public void removeUnequippedInventoryItemByCoordinates(int nodeX, int nodeY) {
+        character.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 }

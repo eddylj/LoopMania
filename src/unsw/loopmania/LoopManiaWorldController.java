@@ -212,8 +212,8 @@ public class LoopManiaWorldController {
         }
 
         // add the empty slot images for the unequipped inventory
-        for (int x=0; x<LoopManiaWorld.unequippedInventoryWidth; x++){
-            for (int y=0; y<LoopManiaWorld.unequippedInventoryHeight; y++){
+        for (int x=0; x<LoopManiaWorld.getunequippedInventoryWidth(); x++){
+            for (int y=0; y<LoopManiaWorld.getunequippedInventoryHeight(); y++){
                 ImageView emptySlotView = new ImageView(inventorySlotImage);
                 unequippedInventory.add(emptySlotView, x, y);
             }

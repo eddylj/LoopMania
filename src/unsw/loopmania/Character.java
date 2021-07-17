@@ -236,4 +236,25 @@ public class Character extends MovingEntity implements Hero {
     public StaticEntity addUnequippedItem(String string, int i) {
         return inventory.addUnequippedItem(string, i);
     }
+    public  Inventory getInventory() {
+        return inventory;
+    }
+    public Item getUnequippedInventoryItemEntityByCoordinates(int x, int y){
+        return inventory.getUnequippedInventoryItemEntityByCoordinates(x, y);
+    }
+    public void removeUnequippedInventoryItemByCoordinates(int nodeX, int nodeY) {
+        inventory.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    }
+    public StaticEntity loadCard(String type, int width) {
+        return inventory.loadCard(type, width);
+    }
+    public Card getMatchingCard(int cardNodeX, int cardNodeY) {
+        return inventory.getMatchingCard(cardNodeX, cardNodeY);
+    }
+    public void destroyCard(Card card, int cardNodeX) {
+        inventory.destroyCard(card, cardNodeX);
+    }
+    public Card getCardByCoordinate(int x) {
+        return inventory.getCardByCoordinate(x);
+    }
 }

@@ -13,11 +13,84 @@ public class Inventory {
     private Character character;
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+    private List<Card> cardEntities;
+
+
+
     public Inventory(Character character) {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
+        cardEntities = new ArrayList<>();
 
     }
+
+    public StaticEntity loadCard(String type, int width) {
+        // if adding more cards than have, remove the first card...
+        if (cardEntities.size() >= width){
+            int gold = LoopManiaWorld.getRandNum() + 1;
+            character.gainGold(gold * 3);
+            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
+            removeCard(0);
+        }
+        CardFactory cf = new CardFactory();
+        // Card card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        Card card = cf.create(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0), type);
+        cardEntities.add(card);
+        return (StaticEntity)card;
+    }
+    public Card getMatchingCard(int cardNodeX, int cardNodeY) {
+        for (Card c: cardEntities){
+            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public void destroyCard(Card card, int cardNodeX) {
+        card.destroy();
+        cardEntities.remove(card);
+        shiftCardsDownFromXCoordinate(cardNodeX);
+    }
+
+    public Card getCardByCoordinate(int x) {
+        for (Card c : cardEntities) {
+            if (c.getX() == x) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+
+
+
+
+    /**
+     * remove card at a particular index of cards (position in gridpane of unplayed cards)
+     * @param index the index of the card, from 0 to length-1
+     */
+    private void removeCard(int index){
+        Card c = cardEntities.get(index);
+        int x = c.getX();
+        c.destroy();
+        cardEntities.remove(index);
+        shiftCardsDownFromXCoordinate(x);
+    }
+
+
+    /**
+     * shift card coordinates down starting from x coordinate
+     * @param x x coordinate which can range from 0 to width-1
+     */
+    private void shiftCardsDownFromXCoordinate(int x){
+        for (Card c: cardEntities){
+            if (c.getX() >= x){
+                c.x().set(c.getX()-1);
+            }
+        }
+    }
+
 
     public StaticEntity addUnequippedItem (String type, int level){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
@@ -121,4 +194,19 @@ public class Inventory {
         }
         return null;
     }
+
+
+
+    public static int getunequippedInventoryWidth() {
+		return Inventory.unequippedInventoryWidth;
+	}
+
+
+
+    public static int getunequippedInventoryHeight() {
+		return Inventory.unequippedInventoryHeight;
+	}
+
+
+
 }
