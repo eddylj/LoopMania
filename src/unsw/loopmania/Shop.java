@@ -1,21 +1,14 @@
 package unsw.loopmania;
 
 public class Shop {
-    private boolean open;
 
-    public Shop() {
-        open = true;
+    private CharacterStats stats;
+    private Character character;
+
+    public Shop(CharacterStats stats, Character character) {
+        this.stats = stats;
+        this.character = character;
     }
 
-    public boolean getOpen() {
-        return this.open;
-    }
 
-    public void open() {
-        open = true;
-    }
-
-    public void close() {
-        open = false;
-    }
 }
