@@ -6,7 +6,7 @@ import java.util.Random;
 import org.javatuples.Pair;
 
 public class Vampire extends Enemy {
-
+    private String[] cardDrops;
 
 
     private VampireAttackStrategy Strategy;
@@ -15,7 +15,7 @@ public class Vampire extends Enemy {
         super(position, 2, 3, 18, 500, 150);
         super.setType("vampire");
         Strategy = new VampireNormal();
-            
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
     
     }
 
@@ -23,7 +23,7 @@ public class Vampire extends Enemy {
         super(2, 3, 18, 500, 150);
         super.setType("vampire");
         Strategy = new VampireNormal();
-
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
     }
 
     public void setStrategy(VampireAttackStrategy Strategy) {
@@ -44,6 +44,28 @@ public class Vampire extends Enemy {
         }
         else {
             moveDownPath();
+        }
+    }
+
+    public StaticEntity getLoot(Character character) {
+        int num = LoopManiaWorld.getRandNum();
+        if (num < 30) {
+            String itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
+            if (itemType.equals("healthpotion")) {
+                return character.addUnequippedItem(itemType, 0);
+            }
+            else if (num < 20) {
+                int level = character.getHighestLevel(itemType) + 1;
+                return character.addUnequippedItem(itemType, level);
+            }
+            else {
+                int level = character.getHighestLevel(itemType);
+                return character.addUnequippedItem(itemType, level);
+            }
+        }
+        else if (num < 45) {
+            String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
+            return character.loadCard(cardType);
         }
     }
     

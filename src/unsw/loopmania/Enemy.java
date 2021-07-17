@@ -6,8 +6,8 @@ import java.util.Random;
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
-
-
+    public String[] itemList;
+    
     private int attackDamage;
     private int goldAmount;
     private int allyTurnCount;
@@ -18,6 +18,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
     }
 
     public Enemy (int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health) {
@@ -26,6 +27,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
     }
 
     public int getHealth() {
@@ -90,5 +92,6 @@ public abstract class Enemy extends MovingEntity {
         }
     }
 
+    public abstract StaticEntity getLoot(Character character);
 
 }

@@ -3,17 +3,20 @@ package unsw.loopmania;
 
 public class Zombie extends Enemy {
     private boolean canMove;
+    private String[] cardDrops;
 
     public Zombie (PathPosition position) {
         super(position, 2, 2, 18, 250, 100);
         super.setType("zombie");
         canMove = false;
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
     }
 
     public Zombie() {
         super(2, 2, 18, 250, 100);
         super.setType("zombie");
         canMove = false;
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
     }
 
     @Override
@@ -40,6 +43,29 @@ public class Zombie extends Enemy {
         }
         else {
             canMove = true;
+        }
+    }
+
+    public StaticEntity getLoot(Character character) {
+        int num = LoopManiaWorld.getRandNum();
+        // slug drops item better than current
+        if (num < 20) {
+            String itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
+            if (itemType.equals("healthpotion")) {
+                return character.addUnequippedItem(itemType, 0);
+            }
+            else if (num < 10) {
+                int level = character.getHighestLevel(itemType) + 1;
+                return character.addUnequippedItem(itemType, level);
+            }
+            else {
+                int level = character.getHighestLevel(itemType);
+                return character.addUnequippedItem(itemType, level);
+            }
+        }
+        else if (num < 25) {
+            String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
+            return character.loadCard(cardType);
         }
     }
 }
