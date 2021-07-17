@@ -5,7 +5,7 @@ import java.util.Random;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Shield extends Protection {
-    private int blockChance = 10;
+    private int blockChance = 7;
     
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, 400*(1+(level-1)*15/100), x, y);
@@ -20,9 +20,8 @@ public class Shield extends Protection {
 
     @Override
     public double protect(double damage) {
-        //Will implement the chance to fully block the damage
-        Random r = new Random();
-        int randomInt = r.nextInt(100);
+        //Will implement the chance to fully block the damag
+        int randomInt = LoopManiaWorld.getRandNum();
         if (randomInt < blockChance) {
             return 0;
         }

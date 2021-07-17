@@ -6,7 +6,7 @@ public class CampfireState implements BonusDamageStrategy{
     }
 
     @Override
-    public int ApplyBonusDamge(int damage) {    
+    public double ApplyBonusDamge(double damage) {    
         return damage*2;
     }
     

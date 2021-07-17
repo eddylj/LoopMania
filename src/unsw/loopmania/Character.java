@@ -89,6 +89,7 @@ public class Character extends MovingEntity implements Hero {
         if (!Objects.isNull(equippedHelmet)) {
             newDamage = ((Helmet) equippedHelmet).calcAttackDamage(newDamage);
         }
+        newDamage = appliedBuff.ApplyBonusDamge(newDamage);
         enemy.takeDamage(newDamage);
     }
 

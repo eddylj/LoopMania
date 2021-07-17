@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Stake;
 import unsw.loopmania.Weapon;
@@ -42,6 +43,13 @@ public class weaponTests {
     } 
     @Test
     public void testStaff() {
+
+        LoopManiaWorld l = new LoopManiaWorld(4);
+        System.out.println(LoopManiaWorld.getRandNum());
+        System.out.println(LoopManiaWorld.getRandNum());
+        System.out.println(LoopManiaWorld.getRandNum());
+        System.out.println(LoopManiaWorld.getRandNum());
+
         Staff s = new Staff(1);
         Enemy p = new Slug();
         Enemy v = new Vampire();
@@ -49,6 +57,6 @@ public class weaponTests {
         assertEquals(700, s.getPrice());
         assertEquals(280, s.getSellPrice());
         assertEquals(1, s.getLevel());
-
+        System.out.println(LoopManiaWorld.getRandNum());
     } 
 }

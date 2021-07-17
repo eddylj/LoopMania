@@ -94,6 +94,9 @@ public class LoopManiaWorld {
         spawn2slugs();
         // buildingEntities = new ArrayList<>();
     }
+    public LoopManiaWorld(int seed) {
+        rand = new Random(seed);
+    }
     
     public void placeBuildingAtStart(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         Building building = bF.create(x, y, type);

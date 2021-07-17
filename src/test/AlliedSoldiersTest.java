@@ -8,7 +8,7 @@ import unsw.loopmania.Slug;
 import unsw.loopmania.AlliedSoldier;
 
 public class AlliedSoldiersTest {
-    AlliedSoldier a = new AlliedSoldier(1);
+    AlliedSoldier a = new AlliedSoldier();
 
     @Test
     public void isDeadTest(){
@@ -21,7 +21,7 @@ public class AlliedSoldiersTest {
     public void attackTest(){
         Slug s = new Slug();
         a.attack(s);
-        assertEquals(s.getHealth(), 29);
+        assertEquals(s.getHealth(), 30);
     }
 
     @Test
