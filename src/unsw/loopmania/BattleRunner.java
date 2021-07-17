@@ -13,7 +13,11 @@ public class BattleRunner {
     List<AlliedSoldier> allies;
     List<TowerBuilding> towers;
 
-    public BattleRunner(Character c) {
+    public BattleRunner() {
+        
+    }
+
+    public void setCharacter(Character c) {
         this.character = c;
     }
 

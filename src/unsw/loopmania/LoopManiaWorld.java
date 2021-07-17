@@ -49,7 +49,7 @@ public class LoopManiaWorld {
         LoopManiaWorld.rand = new Random(seed);
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
-        battleRunner = new BattleRunner(character);
+        battleRunner = new BattleRunner();
         this.json = goals;
         spawn2slugs();
     }
@@ -411,9 +411,7 @@ public class LoopManiaWorld {
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
-        character.addUnequippedItem("sword", 1);
-        character.addUnequippedItem("staff", 1);
-        character.addUnequippedItem("healthpotion", 1);
+        battleRunner.setCharacter(character);
     }
 
     public static int getunequippedInventoryWidth() {

@@ -31,7 +31,6 @@ import javafx.util.Duration;
 
 import java.util.EnumMap;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,11 +116,6 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
-    private Image vampireCastleCardImage;
-    private Image basicEnemyImage;
-    private Image swordImage;
-    private Image basicBuildingImage;
-
     /**
      * the image currently being dragged, if there is one, otherwise null.
      * Holding the ImageView being dragged allows us to spawn it again in the drop location if appropriate.
@@ -167,10 +161,6 @@ public class LoopManiaWorldController {
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
         entityImages = new ArrayList<>(initialEntities);
-        vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
-        swordImage = new Image((new File("src/images/shield.png")).toURI().toString());
-        basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -250,7 +240,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> {
             System.out.println("tick!");
             Item weapon = world.getEquippedItemByCoordinates(0);
             if (weapon == null) {
@@ -652,16 +642,16 @@ public class LoopManiaWorldController {
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
-                switch (draggableType){
-                    case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
-                        break;
-                    case ITEM:
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    default:
-                        break;
-                }
+                // switch (draggableType){
+                //     case CARD:
+                //         draggedEntity.setImage(vampireCastleCardImage);
+                //         break;
+                //     case ITEM:
+                //         draggedEntity.setImage(swordImage);
+                //         break;
+                //     default:
+                //         break;
+                // }
                 
                 draggedEntity.setVisible(true);
                 draggedEntity.setMouseTransparent(true);
