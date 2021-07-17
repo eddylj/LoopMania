@@ -97,6 +97,10 @@ public class LoopManiaWorld {
     public LoopManiaWorld(int seed) {
         rand = new Random(seed);
     }
+
+    public static void setSeed(int seed) {
+        rand = new Random(seed);
+    }
     
     public void placeBuildingAtStart(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         Building building = bF.create(x, y, type);

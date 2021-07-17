@@ -16,7 +16,7 @@ import unsw.loopmania.Card;
 import unsw.loopmania.CardFactory;
 
 
-public class cardFactoryTest {
+public class CardFactoryTest {
     //"Campfire", "Barracks", "Tower", "Trap", "VampireCastle", "ZombiePit", "Village"}
     SimpleIntegerProperty x = new SimpleIntegerProperty(0);
     SimpleIntegerProperty y = new SimpleIntegerProperty(0);

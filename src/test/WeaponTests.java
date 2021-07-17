@@ -19,7 +19,7 @@ import unsw.loopmania.Enemy;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Vampire;
-public class weaponTests {
+public class WeaponTests {
     @Test
     public void testSword() {
         Sword s = new Sword(1);
