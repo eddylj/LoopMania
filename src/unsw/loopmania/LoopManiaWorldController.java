@@ -12,11 +12,14 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -105,6 +109,9 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private Label gameState;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -190,7 +197,7 @@ public class LoopManiaWorldController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         // TODO = load more images/entities during initialization
         
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
@@ -247,10 +254,6 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
-        // TODO: IDK
-        // FXMLLoader loader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
-        // ShopController shopController = loader.getController();
-        // shopController.initData(world);
 
     }
 
@@ -262,7 +265,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             System.out.println("tick!");
             List<Enemy> newEnemies = world.moveEntities();
 
@@ -299,6 +302,8 @@ public class LoopManiaWorldController {
         isPaused = true;
         System.out.println("pausing");
         timeline.stop();
+        gameState.setText("Paused");
+        gameState.setTextFill(Color.RED);
     }
 
     public void terminate(){
@@ -309,6 +314,8 @@ public class LoopManiaWorldController {
         isPaused = false;
         System.out.println("playing");
         timeline.play();
+        gameState.setText("Playing");
+        gameState.setTextFill(Color.GREEN);
     }
     /**
      * pair the entity an view so that the view copies the movements of the entity.
@@ -732,6 +739,7 @@ public class LoopManiaWorldController {
         case SPACE:
             if (isPaused){
                 startTimer();
+                play();
             }
             else{
                 pause();
@@ -759,28 +767,25 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToMainMenu() throws IOException {
         // TODO = possibly set other menu switchers
-        pause();
+        terminate();
         mainMenuSwitcher.switchMenu();
     }
 
-    // TODO: CHANGE LATER TO CYCLES
-    @FXML
-    public void switchToShop() throws IOException {
-        pause();
-        // shopSwitcher.switchMenu();
+    public void shopCycles(int cycles) throws IOException {
+        Long num = Long.valueOf(cycles);
+        long calc_num = 8*num+1;
+        long t = (long) Math.sqrt(calc_num);
+        if (t*t==calc_num) {
+            switchToShop();
+        }
+    }
 
-        // try {
-            // FXMLLoader fxmlLoader = new FXMLLoader();
-            // fxmlLoader.setLocation(getClass().getResource("ShopView.fxml"));
-            /*
-             * if "fx:controller" is not set in fxml
-             * fxmlLoader.setController(NewWindowController);
-             */
-        
+    public void switchToShop() throws IOException  {
+        pause();
+
         ShopController shopController = new ShopController(this);
         FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
         shopLoader.setController(shopController);
-        // Parent shopRoot = shopLoader.load();
         
         Scene scene = new Scene(shopLoader.load());
         Stage stage = new Stage();
@@ -788,10 +793,6 @@ public class LoopManiaWorldController {
 
         stage.setScene(scene);
         stage.show();
-        // }
-        // } catch (IOException e) {
-        //     Logger logger = Logger.getLogger(getClass().getName());
-        //     logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
     
 

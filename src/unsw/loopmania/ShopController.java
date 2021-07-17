@@ -30,8 +30,6 @@ import javafx.scene.text.FontWeight;
 
 public class ShopController {
 
-    private MenuSwitcher gameSwitcher;
-
     @FXML
     private StackPane stackPaneRoot;
 
@@ -56,10 +54,6 @@ public class ShopController {
         
     }
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
-        this.gameSwitcher = gameSwitcher;
-    }
-
     private void addDoneButton() {
         Button done = new Button("Done");
         done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 60));
@@ -67,7 +61,6 @@ public class ShopController {
         done.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
-                // gameSwitcher.switchMenu();
                 worldController.play();
                 Stage stage = (Stage) done.getScene().getWindow();
                 stage.close();
@@ -81,7 +74,7 @@ public class ShopController {
 
 
     private void addPossibleBuyItems() {
-        String[] itemList = new String[] {"basic_sword", "stake", "staff", "armour", "shield", "helmet", "brilliant_blue_new"};
+        String[] itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "health_potion"};
 
         for (int i = 0; i < 7; i++) {
             String itemName = String.format("src/images/%s.png", itemList[i]);
@@ -166,9 +159,5 @@ public class ShopController {
     //     for (Item i : world.getItems()) {
     //         onLoad(i);
     //     }
-    // }
-
-    // void initData(LoopManiaWorld world) {
-    //     this.world = world;
     // }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <!-- TODO = modify and expand the GUI? -->
 <!-- anchorPaneRoot is the background of the main game -->
@@ -105,10 +107,18 @@
                   
                </children>
             </GridPane>
+            <Button onAction="#switchToShop" text="Shop">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label fx:id="gameState" text="Playing" textFill="#27c657">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          
             <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
-            <Button onAction="#switchToShop" text="Shop" />
          </children>
       </VBox>
    </HBox>

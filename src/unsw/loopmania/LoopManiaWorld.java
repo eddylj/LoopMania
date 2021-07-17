@@ -92,6 +92,8 @@ public class LoopManiaWorld {
      */
     private int height;
 
+    private int cycles;
+
     private JSONObject json;
     private Composite winChecker;
 
@@ -234,6 +236,10 @@ public class LoopManiaWorld {
         return height;
     }
 
+    public int getCycles() {
+        return cycles;
+    }
+
     public List<Pair<Integer, Integer>> getOrderedPath() {
         List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
         copy.addAll(orderedPath);
@@ -314,6 +320,7 @@ public class LoopManiaWorld {
         Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
         if (characterPos.equals(heroCastlePosition)) {
             SpawnEnemiesOnCycle(newEnemies);
+            cycles++;
         }
     }
 
