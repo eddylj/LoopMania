@@ -390,7 +390,7 @@ public class LoopManiaWorld {
         for (BuildingOnCycle b : cycleBuildings) {
             // adjacent contains every PathTile touching building b
             List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
-            int numSpawn = Integer.max(b.generateNumberOfEnemies(), adjacent.size());
+            int numSpawn = Integer.min(b.generateNumberOfEnemies(), adjacent.size());
             if (numSpawn == 0) {
                 return;
             }
