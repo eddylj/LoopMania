@@ -87,7 +87,7 @@
                   </ImageView>
                   <ImageView id="armourCell" GridPane.columnIndex="3">
                      <image>
-                        <Image url="@../../images/empty_slot.png" />
+                        <Image url="@../../images/armour_slot.png" />
                      </image>
                   </ImageView>
                </children>

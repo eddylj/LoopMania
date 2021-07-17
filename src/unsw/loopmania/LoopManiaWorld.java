@@ -177,6 +177,7 @@ public class LoopManiaWorld {
         addUnequippedItem("sword", 1);
         addUnequippedItem("staff", 1);
         addUnequippedItem("healthpotion", 1);
+        addUnequippedItem("armour", 4);
     }
 
     public List<Enemy> moveEntities() {

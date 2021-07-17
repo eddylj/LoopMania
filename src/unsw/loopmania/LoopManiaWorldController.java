@@ -250,7 +250,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.9), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             System.out.println("tick!");
             Item weapon = world.getEquippedItemByCoordinates(0);
             if (weapon == null) {
@@ -382,7 +382,16 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Item item) {
         // ImageView view = new ImageView(swordImage);
-        ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
+        ImageView view = null;
+        if (((StaticEntity)item).getType().equals("healthpotion")) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
+        }
+        else if (item instanceof Weapon) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Weapon)item).getLevel()))).toURI().toString()));
+        }
+        else {
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Protection)item).getLevel()))).toURI().toString()));
+        }
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity((Entity)item, view);
         unequippedInventory.getChildren().add(view);
