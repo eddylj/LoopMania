@@ -90,7 +90,7 @@ public class ProtectionTests {
     @Test
     public void helmetProtectTest(){
         Helmet h = new Helmet(1);
-        assertEquals(5, h.protect(10));
+        assertEquals(7, h.protect(10));
         assertEquals(90, h.calcAttackDamage(100));
 
     }
@@ -99,7 +99,7 @@ public class ProtectionTests {
     public void helmetProtectLevelTest() {
 
         Helmet h = new Helmet(5);
-        assertEquals(11, h.protect(20));
+        assertEquals(13, h.protect(20));
         assertEquals(94, h.calcAttackDamage(100));
     }
 }

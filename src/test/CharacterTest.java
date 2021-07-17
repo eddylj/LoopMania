@@ -9,9 +9,12 @@ import unsw.loopmania.Enemy;
 import unsw.loopmania.Helmet;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Protection;
 import unsw.loopmania.Shield;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Sword;
+import unsw.loopmania.Staff;
+import unsw.loopmania.Stake;
 import unsw.loopmania.TowerBuilding;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,7 +54,7 @@ public class CharacterTest {
         assertEquals(45, e.getHealth());
     }
 
-
+    @Test
     public void attackSwordTest(){
         Enemy e = new Slug();
         Sword s = new Sword(1);
@@ -59,9 +62,9 @@ public class CharacterTest {
         c.equip(swordItem);
         c.attack(e, b);
         assertEquals(15, e.getHealth());
-        c.uneq
     }
 
+    @Test
     public void attackStakeTest(){
         Enemy e1 = new Vampire();
         Stake s = new Stake(1);
@@ -75,9 +78,9 @@ public class CharacterTest {
 
     }
 
+    @Test
     public void attackStaffTest(){
 
-        Enemy e = new Vampire();
         Staff s = new Staff(1);
         Item staffItem = (Item) s;
         LoopManiaWorld.setSeed(40);
@@ -87,6 +90,7 @@ public class CharacterTest {
         assertEquals(32, e.getHealth());
     }
 
+    @Test
     public void attackHelmetTest(){
         Enemy e = new Slug();
         Stake s = new Stake(1);
@@ -125,14 +129,13 @@ public class CharacterTest {
     @Test
     public void takeDamageHelmetTest() {
         Character c = new Character();
-        Helmet helmet = new Helmet(1);
-        Helmet helmetItem = (Item) helmet;
+        Protection helmet = new Helmet(1);
+        Item helmetItem = (Item) helmet;
         c.equip(helmetItem);
         c.takeDamage(10);
-        assertEquals(c.getHealth(), 97);
+        assertEquals(c.getHealth(), 93);
     }
-
-
+/*
     @Test
     public void SellRemovesItemFromInventory() {
         Character c = new Character();
@@ -149,7 +152,6 @@ public class CharacterTest {
     public void SellGainGold() {
         Character c = new Character();
         Item sword = new Sword(1);
-        c.pickup(sword);
         c.sellItem(sword);
         assertEquals(140, c.getGold());
     }
@@ -158,9 +160,8 @@ public class CharacterTest {
     public void SellLevelGoldValue() {
         Character c = new Character();
         Item sword = new Sword(5);
-        c.pickup(sword);
         c.sellItem(sword);
         assertEquals(224, c.getGold());
-
     }
+    */
 }

@@ -14,6 +14,7 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.NormalState;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Slug;
+import unsw.loopmania.Zombie;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TrapBuilding;
 
@@ -174,27 +175,31 @@ public class BuildingTests {
 
     @Test
     public void ZombiePitSpawnTest() {
-        SimpleIntegerProperty x = new SimpleIntegerProperty(0);
-        SimpleIntegerProperty y = new SimpleIntegerProperty(0);
-        ZombiePitBuilding zombiePit = new ZombiePitBuilding();
+        JSONObject goals = new JSONObject();
+        goals.put("goal", "gold");
+        goals.put("quantity", 9000);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, goals, 4);
+        //LoopManiaWorld.setSeed(4);
+        Character c = new Character(new PathPosition(0, path));
+        world.setCharacter(c);
+        SimpleIntegerProperty x = new SimpleIntegerProperty(1);
+        SimpleIntegerProperty y = new SimpleIntegerProperty(1);
+        ZombiePitBuilding zombiePit = new ZombiePitBuilding(x,y);
+        world.placeBuildingAtStart(x, y, "zombiepit");
+        List<Enemy> enemies = new ArrayList<Enemy>(); 
+        world.SpawnEnemiesOnCycle(enemies);
         zombiePit.spawnEnemy(new PathPosition(0, path));
-        assertTrue(LoopManiaWorld.getEnemies().size() == 1 || LoopManiaWorld.getEnemies().size() == 2
-            || LoopManiaWorld.getEnemies().size() == 3);
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy instanceof Zombie);
+        assertEquals(3, enemies.size());
+        int zombieCount = 0;
+        for (Enemy enemy: enemies) {
+            assertTrue(enemy instanceof Zombie || enemy instanceof Slug);
+            if (enemy instanceof Zombie) {
+                zombieCount++;
+                assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
+                assertTrue(enemy.getY() == y.get() || enemy.getY() - 1 == y.get() || enemy.getY() + 1 == y.get());
+            }
         }
-    }
-
-    @Test
-    public void ZombiePitPositionTest() {
-        SimpleIntegerProperty x = new SimpleIntegerProperty(0);
-        SimpleIntegerProperty y = new SimpleIntegerProperty(0);
-        ZombiePitBuilding zombiePit = new ZombiePitBuilding(x, y);
-        zombiePit.spawnEnemy(new PathPosition(1, path));
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
-            assertTrue(enemy.getY() == y.get() || enemy.getY() - 1 == y.get() || enemy.getY() + 1 == y.get());
-        }
+        assertEquals(zombieCount, 1);
     }
 
     @Test
@@ -214,33 +219,40 @@ public class BuildingTests {
     //////////////////////////////////
     @Test
     public void VampireCastleSpawnTest() {
-        VampireCastleBuilding vampireCastle = new VampireCastleBuilding();
-        vampireCastle.spawnEnemy(new PathPosition(1, path))
-        assertTrue(LoopManiaWorld.getEnemies().size() == 1 || LoopManiaWorld.getEnemies().size() == 2
-            || LoopManiaWorld.getEnemies().size() == 3);
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy instanceof Vampire);
+
+        JSONObject goals = new JSONObject();
+        goals.put("goal", "gold");
+        goals.put("quantity", 9000);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, goals, 4);
+        //LoopManiaWorld.setSeed(4);
+        Character c = new Character(new PathPosition(0, path));
+        world.setCharacter(c);
+        SimpleIntegerProperty x = new SimpleIntegerProperty(1);
+        SimpleIntegerProperty y = new SimpleIntegerProperty(1);
+        VampireCastleBuilding vampireCastle = new VampireCastleBuilding(x,y);
+        world.placeBuildingAtStart(x, y, "vampirecastle");
+        List<Enemy> enemies = new ArrayList<Enemy>(); 
+        world.SpawnEnemiesOnCycle(enemies);
+        vampireCastle.spawnEnemy(new PathPosition(0, path));
+        assertEquals(3, enemies.size());
+        int vampireCount = 0;
+        for (Enemy enemy: enemies) {
+            assertTrue(enemy instanceof Vampire || enemy instanceof Slug);
+            if (enemy instanceof Vampire) {
+                vampireCount++;
+                assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
+                assertTrue(enemy.getY() == y.get() || enemy.getY() - 1 == y.get() || enemy.getY() + 1 == y.get());
+            }
         }
+        assertEquals(vampireCount, 1);
     }
 
     @Test
-    public void VampireCastlePositionTest() {
-        SimpleIntegerProperty x = new SimpleIntegerProperty(0);
-        SimpleIntegerProperty y = new SimpleIntegerProperty(0);
-        VampireCastleBuilding vampireCastle = new ZombiePitBuilding(x, y);
-        vampireCastle.spawnEnemy(new PathPosition(1, path));
-        for (Enemy enemy: LoopManiaWorld.getEnemies()) {
-            assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
-            assertTrue(enemy.getY() == y.get() || enemy.getY() - 1 == y.get() || enemy.getY() + 1 == y.get());
-        }
-    }
-
-    @Test
-    public void ZombiePitCycleTest() {
+    public void VampireCastleCycleTest() {
         LoopManiaWorld.setSeed(10);
         SimpleIntegerProperty x = new SimpleIntegerProperty(0);
         SimpleIntegerProperty y = new SimpleIntegerProperty(0);
-        ZombiePitBuilding v = new VampireCastleBuilding(x, y);
+        VampireCastleBuilding v = new VampireCastleBuilding(x, y);
         assertEquals(1, v.generateNumberOfEnemies());
         assertEquals(2, v.generateNumberOfEnemies());
 

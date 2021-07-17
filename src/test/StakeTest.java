@@ -24,12 +24,9 @@ public class StakeTest {
     @Test
     public void StakeLevelStoredTest() {
         Character c = new Character();
-        Item sword = new Sword(10);
         Item stake = new Stake(3);
 
         assertEquals(1, c.getHighestLevel(stake));
-        c.unequip(sword);
-        c.pickup(stake);
         c.equip(stake);
         assertEquals(3, c.getHighestLevel(stake));
     }
@@ -39,7 +36,6 @@ public class StakeTest {
         Character c = new Character();
         Item stake = new Stake(1);
 
-        c.pickup(stake);
         c.sellItem(stake);
         assertEquals(140, c.getGold());
     }
@@ -50,8 +46,6 @@ public class StakeTest {
         Item sword = new Sword(10);
         Item stake = new Stake(1);
 
-        c.unequip(sword);
-        c.pickup(stake);
         Enemy slug = new Slug();
         assertEquals(slug.getHealth(), 50);
         c.attack(slug);

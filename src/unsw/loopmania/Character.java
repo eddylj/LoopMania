@@ -62,9 +62,11 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Protection) equippedShield).protect(damage);
         }
         if (!Objects.isNull(equippedHelmet)) {
+
             newDamage = ((Protection) equippedHelmet).protect(damage);
         }
         if (!Objects.isNull(equippedArmour)) {
+
             newDamage = ((Protection) equippedArmour).protect(damage);
         }
         super.takeDamage(newDamage);
@@ -105,7 +107,7 @@ public class Character extends MovingEntity implements Hero {
     // STORE STUFF
     //////////////////////////////////
     public void sellItem(Item i) {
-
+        
     }
     ////////////////////////////////////////
 
