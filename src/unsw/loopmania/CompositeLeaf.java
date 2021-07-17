@@ -23,5 +23,15 @@ public class CompositeLeaf implements Composite{
             return character.getCycles() >= amount;
         }
     }
+
+    @Override
+    public int getMax(String type) {
+        if (this.type.equals(type)) {
+            return amount;
+        }
+        else {
+            return 0;
+        }
+    }
     
 }

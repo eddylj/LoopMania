@@ -25,6 +25,7 @@ public class LoopManiaWorld {
     private int height;
     private JSONObject json;
     private Composite winChecker;
+    // private GoalCalculator winChecker;
     private List<Entity> nonSpecifiedEntities;
     private Character character;
     private Pair<Integer, Integer> heroCastlePosition;
@@ -159,7 +160,7 @@ public class LoopManiaWorld {
         return battleRunner.checkForFight(enemies, moveBuildings);
     }
 
-    private boolean checkPlayerWin() {
+    public boolean checkPlayerWin() {
         return winChecker.getValue();
     }
 
@@ -368,6 +369,10 @@ public class LoopManiaWorld {
         return cycleBuildings;
     }
 
+    public int getMaxGoal(String goal) {
+        return winChecker.getMax(goal);
+    }
+
     private int getNumInPath(Pair<Integer, Integer> tile) {
         for (int i = 0; i < orderedPath.size(); i++) {
             if (tile.equals(orderedPath.get(i))) {
@@ -412,9 +417,10 @@ public class LoopManiaWorld {
         this.character = character;
         character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
-        GoalCalculator goal = new GoalCalculator(json, character);
-        winChecker = goal.getChecker();
+        GoalCalculator goals = new GoalCalculator(json, character);
+        winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
+        // System.out.println();
     }
 
     public static int getunequippedInventoryWidth() {

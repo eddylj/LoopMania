@@ -41,9 +41,12 @@ public class IntegrationTestTest {
     
     @Test
     public void workingTest() throws FileNotFoundException {
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("world_with_twists_and_turns", 1);
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("world_with_complex_goal.json", 1);
         assertEquals(world.getHeight(), 14);
         assertEquals(world.getWidth(), 8);
-        
+        System.out.println(world.checkPlayerWin());
+        System.out.println(world.getMaxGoal("gold"));
+        System.out.println(world.getMaxGoal("cycles"));
+        System.out.println(world.getMaxGoal("experience"));
     }
 }

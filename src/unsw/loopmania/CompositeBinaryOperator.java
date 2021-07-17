@@ -15,4 +15,7 @@ public abstract class CompositeBinaryOperator implements Composite{
 
     public abstract boolean applyOperation(Composite left, Composite right);
 
+    public int getMax(String type) {
+        return Integer.max(right.getMax(type), left.getMax(type));
+    }
 }

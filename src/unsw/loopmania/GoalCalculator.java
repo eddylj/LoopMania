@@ -18,9 +18,11 @@ public class GoalCalculator {
         return checker;
     }
 
-    // obj: CompositeAnd(CompositeLeaf(100, character, "cycles"), CompositeOr(CompositeLeaf(123456, character, "experience"), CompositeLeaf(900000, character, "gold")))
+    public int getMax(String type) {
+        return checker.getMax(type);
+    }
+
     public boolean checkWinCondition() {
-        // Composite obj =  winCondition(json);
         return checker.getValue();
     }
 
@@ -32,7 +34,7 @@ public class GoalCalculator {
         else {
             JSONArray subgoals = json.getJSONArray("subgoals");
             JSONObject left = (JSONObject)subgoals.get(0);
-                JSONObject right = (JSONObject)subgoals.get(1);
+            JSONObject right = (JSONObject)subgoals.get(1);
             if (((String)json.get("goal")).equals("AND")) {
                 Composite and = new CompositeAnd(winCondition(left), winCondition(right));
                 return and;
