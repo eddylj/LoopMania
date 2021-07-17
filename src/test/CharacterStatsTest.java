@@ -12,7 +12,7 @@ import unsw.loopmania.Staff;
 import unsw.loopmania.Stake;
 import unsw.loopmania.Sword;
 
-public class characterStatsTest {
+public class CharacterStatsTest {
     CharacterStats c = new CharacterStats();
 
     @Test

@@ -23,7 +23,7 @@ import unsw.loopmania.Staff;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Hero;
 
-public class protectionTests {
+public class ProtectionTests {
 
     //Armour Tests
     @Test
