@@ -37,6 +37,7 @@ public class BattleRunner {
         }
         System.out.println(String.format("Attacking enemies: %d", attacking.size()));
         List<TowerBuilding> towers = getInRangeTowers(moveBuildings);
+        
         return runBattle(attacking, character.getAlliedSoldiers(), towers);
     }
 

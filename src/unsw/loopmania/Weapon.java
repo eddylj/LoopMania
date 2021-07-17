@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Weapon extends StaticEntity implements Item{
     public int level;
     public double damage;
-    public int price;
+    public double price;
 
     /**
      * 
@@ -18,7 +18,7 @@ public abstract class Weapon extends StaticEntity implements Item{
      * @param price
      * @param damage
      */
-    public Weapon(SimpleIntegerProperty x, SimpleIntegerProperty y, int level, int price, int damage) {
+    public Weapon(SimpleIntegerProperty x, SimpleIntegerProperty y, int level, double price, int damage) {
         super(x,y);
         this.level = level;
         this.price = price;
@@ -50,7 +50,7 @@ public abstract class Weapon extends StaticEntity implements Item{
     }
 
     public int getPrice() {
-        return price;
+        return (int)price;
     }
 
     public int getSellPrice() {
