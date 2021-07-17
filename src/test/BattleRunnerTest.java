@@ -23,13 +23,13 @@ public class BattleRunnerTest {
     private List<Enemy> enemies = new ArrayList<Enemy>();
     private List<AlliedSoldier> allies = new ArrayList<AlliedSoldier>();
     private List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
-    private BattleRunner b = new BattleRunner(character, enemies, allies, towers);
+    private BattleRunner b = new BattleRunner(character);
 
     @Test
     public void BasicbattleTestVictory(){
         Enemy e = new Slug();
         enemies.add(e);
-        List<Enemy> defeatedEnemies = b.runBattle();
+        List<Enemy> defeatedEnemies = b.runBattle(enemies, allies, towers);
         assertEquals(1,defeatedEnemies.size());
         assert(character.getHealth() < 100);
     }
@@ -46,7 +46,7 @@ public class BattleRunnerTest {
         enemies.add(e2);
         enemies.add(e3);
         enemies.add(e4);
-        b.runBattle();
+        b.runBattle(enemies, allies, towers);
         assertTrue(character.isDead());
         assertTrue(character.shouldExist().get());
 
@@ -56,10 +56,11 @@ public class BattleRunnerTest {
     public void BasicbattleTestWithAlly(){
         Enemy e = new Slug();
         Enemy e1 = new Slug();
-        AlliedSoldier a = new AlliedSoldier(1);
+        AlliedSoldier a = new AlliedSoldier();
         enemies.add(e);
         enemies.add(e1);
-        b.runBattle();
+        allies.add(a);
+        b.runBattle(enemies, allies, towers);
         assert(allies.isEmpty());
         
     }
@@ -67,16 +68,19 @@ public class BattleRunnerTest {
     @Test
     public void enemyToAllyTest(){
         Enemy e = new Slug();
-        b.convertEnemyToAlly(e, 1);
-        assert(allies.size() > 0);
+        assertTrue(enemies.isEmpty());
+
+        enemies.add(e);
+        b.convertEnemyToAlly(e, enemies);
+        assertTrue(character.getAlliedSoldierCount() > 0);
         assertTrue(enemies.isEmpty());
     }
 
     @Test
     public void allyToEnemy(){
-        AlliedSoldier a = new AlliedSoldier(1);
-        b.convertAllyToZombie(a);
-        assertTrue(allies.isEmpty());
+        AlliedSoldier a = new AlliedSoldier();
+        b.convertAllyToZombie(a, enemies);
+        assertTrue(character.getAlliedSoldierCount() == 0);
         assert(enemies.size() > 0);
     }
 

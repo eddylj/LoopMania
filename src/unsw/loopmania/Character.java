@@ -135,7 +135,7 @@ public class Character extends MovingEntity implements Hero {
 
     public void addAlliedSoldier(AlliedSoldier soldier) {
         if (aliveSoldiers.getValue() < 3) {
-            soldiers.add(soldier);
+            soldiers.add(0,soldier);
             aliveSoldiers.set(soldiers.size());
         }
     }

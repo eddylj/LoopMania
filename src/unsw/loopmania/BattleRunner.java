@@ -123,7 +123,7 @@ public class BattleRunner {
         enemies.remove(enemy);
         HeroFactory a = new HeroFactory();
         convertedEnemy c = (convertedEnemy) a.create(enemy);
-        allies.add(0, ((AlliedSoldier)c));
+        character.addAlliedSoldier((AlliedSoldier)c);
         
     }
 
