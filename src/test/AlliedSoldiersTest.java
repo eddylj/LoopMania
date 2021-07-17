@@ -21,7 +21,7 @@ public class AlliedSoldiersTest {
     public void attackTest(){
         Slug s = new Slug();
         a.attack(s);
-        assertEquals(s.getHealth(), 29);
+        assertEquals(s.getHealth(), 30);
     }
 
     @Test
