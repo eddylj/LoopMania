@@ -47,13 +47,12 @@ public class ShopBuyController {
 
     private String[] itemList;
 
-    private boolean sellShopOpen;
+    private Shop shop;
 
     public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world) {
         this.world = world;
         this.worldController = worldController;
         itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
-        sellShopOpen = false;
     }
 
     @FXML

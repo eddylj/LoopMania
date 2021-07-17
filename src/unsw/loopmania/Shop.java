@@ -2,6 +2,10 @@ package unsw.loopmania;
 
 public class Shop {
 
+    public Shop() {
+        
+    }
+
     private CharacterStats stats;
     private Character character;
     itemFactory i = new itemFactory();
@@ -18,6 +22,5 @@ public class Shop {
         stats.updateHighestLevel(purchasedItem);
         int Price = purchasedItem.getSellPrice();
         character.loseGold(Price);
-
     }
 }

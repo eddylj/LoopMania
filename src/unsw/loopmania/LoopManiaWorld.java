@@ -150,6 +150,11 @@ public class LoopManiaWorld {
         }
     }
 
+    public Boolean onHeroCastle() {
+        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
+        return characterPos.equals(heroCastlePosition);
+    }
+
     private List<Enemy> checkForFight() {
         return battleRunner.checkForFight(enemies, moveBuildings);
     }
