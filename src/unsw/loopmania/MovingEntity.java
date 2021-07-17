@@ -10,7 +10,7 @@ public abstract class MovingEntity extends Entity {
     /**
      * object holding position in the path
      */
-    private PathPosition position;
+    public PathPosition position;
     public int health;
 
     /**

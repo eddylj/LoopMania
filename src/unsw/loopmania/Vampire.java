@@ -1,6 +1,9 @@
 package unsw.loopmania;
 
+import java.util.List;
 import java.util.Random;
+
+import org.javatuples.Pair;
 
 public class Vampire extends Enemy {
 
@@ -29,6 +32,19 @@ public class Vampire extends Enemy {
     @Override
     public void attack (Hero h) {
         Strategy.attack(h, this);
+    }
+
+    public void move(CampfireBuilding campfire) {
+        Pair<Integer, Integer> forward = position.getClockwisePosition();
+        Pair<Integer, Integer> backward = position.getAntiClockwisePosition();
+        double forwardDistance = Math.sqrt(Math.pow(forward.getValue0() - getX(), 2) + Math.pow(forward.getValue1() - getY(), 2));
+        double backwardDistance = Math.sqrt(Math.pow(backward.getValue0() - getX(), 2) + Math.pow(backward.getValue1() - getY(), 2));
+        if (forwardDistance > backwardDistance) {
+            moveUpPath();
+        }
+        else {
+            moveDownPath();
+        }
     }
     
 }

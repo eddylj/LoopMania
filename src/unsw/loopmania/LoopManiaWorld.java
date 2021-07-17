@@ -64,35 +64,14 @@ public class LoopManiaWorld {
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         this.json = goals;
         fillEntityLists();
-        // placeHerosCastle();
         spawn2slugs();
-        // buildingEntities = new ArrayList<>();
     }
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
-        this.width = width;
-        this.height = height;
-        nonSpecifiedEntities = new ArrayList<>();
-        character = null;
-        enemies = new ArrayList<>();
-        cardEntities = new ArrayList<>();
-        unequippedInventoryItems = new ArrayList<>();
-        this.orderedPath = orderedPath;
+        this(width, height, orderedPath, goals);
         this.seed = seed;
         rand = new Random(seed);
-        iF = new itemFactory();
-        eF = new EnemyFactory();
-        cF = new CardFactory();
-        bF = new BuildingFactory();
-        this.json = goals;
-        GoalCalculator goal = new GoalCalculator(json, character);
-        
-        moveBuildings = new ArrayList<BuildingOnMove>();
-        cycleBuildings = new ArrayList<BuildingOnCycle>();
-        // placeHerosCastle();
-        fillEntityLists();
-        spawn2slugs();
-        // buildingEntities = new ArrayList<>();
+
     }
     public LoopManiaWorld(int seed) {
         rand = new Random(seed);
@@ -216,6 +195,7 @@ public class LoopManiaWorld {
         else if (checkPlayerLoss()) {
             System.out.println("GAME HAS BEEN LOST");
         }
+        updateEnemyList();
         character.updateAlliedSoldierAmount();
     }
 
@@ -637,12 +617,32 @@ public class LoopManiaWorld {
         }
     }
 
+    private CampfireBuilding getClosestCampfire(int x, int y) {
+        CampfireBuilding closest = null;
+        double closestDistance = getHeight(); // max distance
+        for (BuildingOnMove b : moveBuildings) {
+            if (b instanceof CampfireBuilding) {
+                double distance = Math.sqrt(Math.pow(((StaticEntity)b).getX() - x, 2) + Math.pow(((StaticEntity)b).getY() - y, 2));
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closest = (CampfireBuilding)b;
+                }
+            }
+        }
+        return closest;
+    }
+
     /**
      * move all enemies
      */
     private void moveEnemies() { // removed if null
         for (Enemy e: enemies){
-            e.move();
+            if (e instanceof Vampire) {
+                ((Vampire)e).move(getClosestCampfire(e.getX(), e.getY()));
+            }
+            else {
+                e.move();
+            }
             System.out.println(e.getType());
             checkBuildingActions(e);
         }
