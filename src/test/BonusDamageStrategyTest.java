@@ -31,7 +31,7 @@ public class BonusDamageStrategyTest {
     private List<Enemy> enemies = new ArrayList<Enemy>();
     private List<AlliedSoldier> allies = new ArrayList<AlliedSoldier>();
     private List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
-    private BattleRunner b = new BattleRunner(c, enemies, allies, towers);
+    private BattleRunner b = new BattleRunner();
 
     @Test
     public void attackTest(){

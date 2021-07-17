@@ -17,31 +17,28 @@ public class HealthPotionTest {
     @Test
     public void PotionRestoreDamageTest() {
         Character c = new Character();
-        Item potion = new Potion();
-
-        c.pickup(potion);
+        Item potion = new HealthPotion();
 
         assertEquals(100, c.getHealth());
         c.takeDamage(10);
         assertEquals(90, c.getHealth());
-        Potion potionType = (Potion)potion;
+        HealthPotion potionType = (HealthPotion)potion;
         potionType.heal(c);
-        assertEquals(94, c.getHealth());
+        assertEquals(100, c.getHealth());
     }
 
     @Test
     public void PotionRestoreMoreDamageTest() {
         Character c = new Character();
-        Item potion = new Potion();
+        Item potion = new HealthPotion();
 
-        c.pickup(potion);
 
         assertEquals(100, c.getHealth());
         c.takeDamage(20);
-        assertEquals(90, c.getHealth());
-        Potion potionType = (Potion)potion;
+        assertEquals(80, c.getHealth());
+        HealthPotion potionType = (HealthPotion)potion;
         potionType.heal(c);
-        assertEquals(88, c.getHealth());
+        assertEquals(100, c.getHealth());
     }
 
 }
