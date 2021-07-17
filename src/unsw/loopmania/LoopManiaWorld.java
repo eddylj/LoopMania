@@ -172,6 +172,8 @@ public class LoopManiaWorld {
         GoalCalculator goal = new GoalCalculator(json, character);
         winChecker = goal.getChecker();
         addUnequippedItem("sword", 1);
+        addUnequippedItem("staff", 1);
+        addUnequippedItem("healthpotion", 1);
     }
 
     public List<Enemy> moveEntities() {
@@ -551,11 +553,25 @@ public class LoopManiaWorld {
         return null;
     }
 
-    // public Item getEquippedItem(int slot) {
-    //     if (slot == 0) {
-    //         return character.get
-    //     }
-    // }
+    public Item getEquippedItemByCoordinates(int x) {
+        if (x == 0) {
+            System.out.println("Getting equipped weapon");
+            return character.getWeapon();
+        }
+        else if (x == 1) {
+            return character.getHelmet(); 
+        }
+        else if (x == 2) {
+            return character.getShield();
+        }
+        else if (x == 3) {
+            return character.getArmour();
+        }
+        else {
+            System.out.println("No equipped weapon at " + x);
+            return null;
+        }
+    }
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
@@ -652,5 +668,16 @@ public class LoopManiaWorld {
         Enemy slug =  e.create(new PathPosition(i, orderedPath2), "slug");
         enemies.add(slug);
         return (Slug)slug;
+    }
+
+    public void drinkPotion() {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
+            Item item = unequippedInventoryItems.get(i);
+            if (item instanceof HealthPotion) {
+                ((HealthPotion)item).heal(character);
+                ((Entity)item).destroy();
+                return;
+            }
+        }
     }
 }

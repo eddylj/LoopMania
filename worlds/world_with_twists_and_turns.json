@@ -5,8 +5,7 @@
   "goal-condition": {"goal": "experience", "quantity": 123456 },
   "entities": [
     {"x": 0, "y": 0, "type": "hero_castle"},
-    {"x": 1, "y": 1, "type": "zombiepit"},
-    {"x": 1, "y": 0, "type": "barracks"}
+    {"x": 1, "y": 1, "type": "zombiepit"}
   ],
   "path": {
     "type": "path_tile",

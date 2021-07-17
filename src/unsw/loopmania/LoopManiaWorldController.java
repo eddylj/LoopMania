@@ -250,22 +250,27 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.9), event -> {
             System.out.println("tick!");
+            Item weapon = world.getEquippedItemByCoordinates(0);
+            if (weapon == null) {
+                System.out.println("No weapon in hand");
+            }
+            else {
+                System.out.println(String.format("Currently holding a %s", ((StaticEntity)weapon).getType()));
+            }
+            // System.out.println(world.getEquippedItemByCoordinates(0));
             List<Enemy> newEnemies = world.moveEntities();
 
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
-            System.out.println("tick2!");
             List<Enemy> defeatedEnemies = world.fight();
             world.cleanUpFight();
-            System.out.println("hello?");
             // List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            System.out.println("tick3!");
             // List<Enemy> newEnemies = world.possiblySpawnEnemies();
 
             if (world.isCharacterDead()) {
@@ -408,16 +413,22 @@ public class LoopManiaWorldController {
     }
 
     private boolean newPositionValid(Item item, Node node) {
-        if (item instanceof Weapon && node.idProperty().get().equals("swordCell")) {
+        System.out.println("%%%%%%%%%%%%%%%%");
+        System.out.println(node.getId());
+        if (node.getId() == null) {
+            System.out.println("!!!!!!!!!!!!!!!");
+            // System.out.println(node.toBack();)
+        }
+        else if (item instanceof Weapon && node.getId().equals("swordCell")) {
             return true;
         }
-        else if (item instanceof Helmet && node.idProperty().get().equals("helmetCell")) {
+        else if (item instanceof Helmet && node.getId().equals("helmetCell")) {
             return true;
         }
-        else if (item instanceof Armour && node.idProperty().get().equals("armourCell")) {
+        else if (item instanceof Armour && node.getId().equals("armourCell")) {
             return true;
         }
-        else if (item instanceof Shield && node.idProperty().get().equals("shieldCell")) {
+        else if (item instanceof Shield && node.getId().equals("shieldCell")) {
             return true;
         }
         return false;
@@ -450,12 +461,18 @@ public class LoopManiaWorldController {
                     //If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
+                    System.out.println("getting depth");
+                    if (node.getId() == null) {
+                        System.out.println("Just sent node back");
+                        node.toBack();
+                        node = event.getPickResult().getIntersectedNode();
+                    }
                     if(node != targetGridPane && db.hasImage()){
-
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
                         int y = rIndex == null ? 0 : rIndex;
+                        System.out.println(String.format("x: %d\ny: %d", x, y));
                         //Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
 
@@ -471,15 +488,27 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
                                 if (newPositionValid(item, node)) {
-                                    // Item olditem = world.getEquippedItemByCoordinates(x, y);
-                                    // // Put previously equipped item back in inventory (then overwrite it)
-                                    // if (olditem != null) {
-                                    //     System.out.println(((StaticEntity)olditem).getType());
-                                    //     System.out.println("================\nuhoh\n---------------");
-                                    //     itemFactory iF = new itemFactory();
-                                    //     reloadItem = iF.create()
-                                    //     onLoad();
-                                    // }
+                                    StaticEntity olditem = (StaticEntity)world.getEquippedItemByCoordinates(x);
+                                    // Put previously equipped item back in inventory (then overwrite it)
+                                    if (olditem != null) {
+                                        System.out.println(((StaticEntity)olditem).getType());
+                                        System.out.println("================\nuhoh\n---------------");
+                                        // itemFactory iF = new itemFactory();
+                                        // reloadItem = iF.create()
+                                        StaticEntity newItem;
+                                        if (olditem.getType().equals("healthpotion")) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), 0);
+                                        }
+                                        else {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                        }
+                                        // put previously equipped weapon back in the unequipped inventory
+                                        onLoad((Item)newItem);
+                                        olditem.destroy();
+                                    }
+                                    else {
+                                        System.out.println("No currently equipped weapon");
+                                    }
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     // System.out.println(String.format(draggableType.))
                                     // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
@@ -489,6 +518,7 @@ public class LoopManiaWorldController {
                                     System.out.println("Successfully dropped");
                                 }
                                 else {
+                                    System.out.println("New position is not valid");
                                     return;
                                 }
                                 System.out.println(String.format("Dropped %s in %s", ((StaticEntity)item).getType(), node.idProperty().get()));
@@ -712,6 +742,8 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        case D:
+            world.drinkPotion();
         default:
             break;
         }

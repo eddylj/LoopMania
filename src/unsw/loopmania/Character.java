@@ -167,9 +167,6 @@ public class Character extends MovingEntity implements Hero {
     public void setHealth(int i) {
         health = i;
     } 
-    public Item getEquippedWeapon() {
-        return equippedWeapon;
-    }
     public void restoreHealth(int amount) {
         health += amount;
         if (health > 100) {
@@ -197,7 +194,7 @@ public class Character extends MovingEntity implements Hero {
     public void updateHighest(Item item) {
         stats.updateHighestLevel(item);
     }
-    public Item getweapon() {
+    public Item getWeapon() {
         return equippedWeapon;
     }
     public Item getShield() {
@@ -214,6 +211,7 @@ public class Character extends MovingEntity implements Hero {
 
     public void equip(Item i) {
         if (i instanceof Weapon) {
+            System.out.println("equipping a weapon " + ((Entity)i).getType());
             equippedWeapon = i;
         } else if (i instanceof Shield) {
             equippedShield = i;

@@ -44,7 +44,9 @@ public class BattleRunner {
     }
 
     private void killConvertedEnemies() {
-        for (AlliedSoldier a : allies) {
+        // for (AlliedSoldier a : allies) {
+        for (int i = allies.size() - 1; i >= 0; i--) {
+            AlliedSoldier a = allies.get(i);
             if (a instanceof convertedEnemy) {
                 killAlly(a);
             }
