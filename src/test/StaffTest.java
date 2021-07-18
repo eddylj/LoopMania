@@ -9,52 +9,80 @@ import java.util.List;
 
 import org.junit.Test;
 
+import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Weapon;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Slug;
+import unsw.loopmania.AlliedSoldier;
+import unsw.loopmania.TowerBuilding;
 
 
 public class StaffTest {
-    // @Test
-    // public void StaffLevelStoredTest() {
-    //     Character c = new Character();
-    //     Item sword = new Sword(10);
-    //     Item staff = new Staff(3);
+    private List<Enemy> enemies = new ArrayList<Enemy>();
+    private List<AlliedSoldier> allies = new ArrayList<AlliedSoldier>();
+    private List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
+    private BattleRunner b = new BattleRunner();
 
-    //     assertEquals(1, c.getHighestLevel(staff));
-    //     c.unequip(sword);
-    //     c.pickup(staff);
-    //     c.equip(staff);
-    //     assertEquals(3, c.getHighestLevel(staff));
-    // }
+    @Test
+    public void StaffLevelStoredTest() {
+        Character c = new Character();
+        Item staff = new Staff(3);
 
-    // @Test
-    // public void StaffSaleTest() {
-    //     Character c = new Character();
-    //     Item staff = new Staff(1);
+        assertEquals(1, c.getHighestLevel(staff));
+        c.equip(staff);
+        assertEquals(3, c.getHighestLevel(staff));
+    }
 
-    //     c.pickup(staff);
-    //     c.sellItem(staff);
-    //     assertEquals(280, c.getGold());
-    // }
+    @Test
+    public void StaffSaleTest() {
+        Character c = new Character();
+        Item staff = new Staff(1);
 
-    // @Test
-    // public void StaffDamage() {
-    //     Character c = new Character();
-    //     Item sword = new Sword(10);
-    //     Item staff = new Staff(1);
+        c.sellItem(staff);
+        //assertEquals(280, c.getGold());
+    }
 
-    //     assertEquals(1, c.getHighestLevel(staff));
-    //     c.unequip(sword);
-    //     c.pickup(staff);
-    //     Enemy slug = new Slug();
-    //     c.attack(slug);
-    //     assertEquals(slug.getHealth(), 40);
-    // }
+    @Test
+    public void StaffTranceTest() {
+        LoopManiaWorld.setSeed(18);
+        Character c = new Character();
+        b.setCharacter(c);
 
+        Item staff = new Staff(1);
+        
+        Enemy e = new Slug();
+        enemies = new ArrayList<Enemy>();
+        assertTrue(enemies.isEmpty());
+        b.setEnemies(enemies);
+        enemies.add(e);
+        c.equip(staff);
+        c.attack(e, b);
+
+        assertTrue(c.getAlliedSoldierCount()>0);
+        assertTrue(enemies.isEmpty());
+        assertEquals(e.getHealth(), 32);
+    }
+
+    @Test
+    public void StaffDamageTest() {
+        LoopManiaWorld.setSeed(17);
+        Character c = new Character();
+        b.setCharacter(c);
+
+        Item staff = new Staff(1);
+
+        assertEquals(1, c.getHighestLevel(staff));
+        
+        Enemy e = new Slug();
+
+        c.equip(staff);
+        c.attack(e, b);
+        assertEquals(e.getHealth(), 32);
+    }
     
 }

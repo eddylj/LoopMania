@@ -14,6 +14,7 @@ public class Staff extends Weapon{
 
     public Staff(int level) {
         super(level, 700*(1+(level-1)*15/100), 18*(1+(level-1)/10));
+        tranceChance = 30 + level * 3;
         super.setType("staff");
     }
     
@@ -21,6 +22,7 @@ public class Staff extends Weapon{
 
     public boolean castSpell(Enemy enemy, BattleRunner b) {
         int randNum = LoopManiaWorld.getRandNum();
+
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
             b.convertEnemyToAlly(enemy);
