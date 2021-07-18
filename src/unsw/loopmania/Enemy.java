@@ -24,7 +24,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
-        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "rare"};
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
     }
 
     /**
