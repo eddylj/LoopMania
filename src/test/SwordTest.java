@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
 import unsw.loopmania.Sword;
@@ -18,55 +19,48 @@ import unsw.loopmania.Slug;
 
 
 public class SwordTest {
+    private BattleRunner b = new BattleRunner();
     @Test
     public void StartWithSwordAndUnequipTest() {
         Character c = new Character();
         Item sword = new Sword(10);
         assertEquals(1, c.getHighestLevel(sword));
-        assertEquals(1, c.getNumEquipped());
-        c.unequip(sword);
-        assertEquals(1, c.getHighestLevel(sword));
-        assertEquals(0, c.getNumEquipped());
+        c.equip(sword);
+        assertEquals(10, c.getHighestLevel(sword));
     }
 
     @Test
     public void EquipLowerLevelSword() {
-        List<Item> equipment = new ArrayList<Item>();
-        Sword sword1 = new Sword(1);
-        equipment.add(sword1);
-        Character c = new Character(equipment);
+        Character c = new Character();
+        Item sword1 = new Sword(10);
+        Item sword2 = new Sword(3);
         assertEquals(1, c.getHighestLevel(sword1));
-        assertEquals(1, c.getNumStored());
-        Sword sword2 = new Sword(2);
-        c.pickup(sword2);
-        assertEquals(1, c.getHighestLevel(sword1));
-        assertEquals(2, c.getNumStored());
-        c.equip(sword2);
         c.equip(sword1);
-        assertEquals(sword1, c.getEquippedWeapon());
+        assertEquals(10, c.getHighestLevel(sword1));
+        c.equip(sword2);
+        assertEquals(10, c.getHighestLevel(sword2));
     }
 
     @Test
     public void compareDamages() {
         Weapon sword = new Sword(1);
-        int damage = sword.getDamage();
+        Double damage = sword.getDamage();
         for (int i = 2; i <= 10; i++) {
             Weapon nextSword = new Sword(i);
-            assertTrue(nextSword.getDamage() == Math.floor(damage * 1.1 + 0.5));
+            assertEquals(nextSword.getDamage(), damage * 1.1);
             damage = nextSword.getDamage();
         }
     }
 
     @Test
     public void whackSomethingWithSwordTest() {
-        Item sword = new Sword(10);
-        List<Item> equipment = new ArrayList<Item>();
-        equipment.add(sword);
+        Character c = new Character();
+        Item sword = new Sword(1);
+
+        c.equip(sword);
         Enemy slug = new Slug();
-        List<Enemy> enemies = new ArrayList<Enemy>();
-        Character c = new Character(slug, enemies, equipment);
-        c.fight();
-        assertEquals(100, c.getHealth());
-        assertFalse(slug.shouldExist().get());
+        assertEquals(slug.getHealth(), 50);
+        c.attack(slug, b);
+        assertEquals(slug.getHealth(), 15);
     }
 } 

@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.text.html.parser.Entity;
+
 import org.javatuples.Pair;
 
 import org.junit.Test;
@@ -25,6 +28,7 @@ import unsw.loopmania.EnemyFactory;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
+import unsw.loopmania.StaticEntity;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TrapBuilding;
 import unsw.loopmania.VampireCastleBuilding;
@@ -60,7 +64,7 @@ public class FactoryTest {
     @ValueSource(strings = {"sword", "helmet", "armour", "shield", "stake", "staff"})
     public void itemFactoryLevelTest(String input) {
         itemFactory f = new itemFactory();
-        Random rand = new Random();
+        LoopManiaWorld.setSeed(5);
         int level = (LoopManiaWorld.getRandNum() % 10) + 1;
         Item item1 = f.create(x, y, input, level);
         Item item2 = f.create(x, y, input, level);
@@ -92,8 +96,10 @@ public class FactoryTest {
     public void CardFactoryTest(String input) {
         CardFactory c = new CardFactory();
         Card card = c.create(x, y, input);
-        String cardClass = card.getClass().getSimpleName();
-        assertEquals(String.format("%sCard",input), cardClass);
+        StaticEntity e = (StaticEntity) card;
+        String cardClass = e.getType();
+
+        assertEquals(input, cardClass);
     }
 
     

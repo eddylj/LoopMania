@@ -10,6 +10,11 @@ public class CharacterStats {
 
     public CharacterStats() {
         sword = 1;
+        stake = 1;
+        staff = 1;
+        shield = 1;
+        helmet = 1;
+        armour = 1;
     }
 
     public int getHighestLevel(String type) {
@@ -38,23 +43,23 @@ public class CharacterStats {
 
     public void updateHighestLevel(Item item) {
         String type = ((StaticEntity)item).getType();
-        if (type.equals("sword")) {
-            sword += 1;
+        if (type.equals("sword") &&  sword <= ((Weapon)item).getLevel()) {
+            sword = ((Weapon)item).getLevel();
         }
-        else if (type.equals("stake")) {
-            stake += 1;
+        else if (type.equals("stake") && stake <= ((Weapon)item).getLevel()) {
+            stake = ((Weapon)item).getLevel();
         }
-        else if (type.equals("staff")) {
-            staff += 1;
+        else if (type.equals("staff") && staff <= ((Weapon)item).getLevel()) {
+            staff = ((Weapon)item).getLevel();
         }
-        else if (type.equals("shield")) {
-            shield += 1;
+        else if (type.equals("shield") && shield <= ((Protection)item).getLevel()) {
+            shield = ((Protection)item).getLevel();
         }
-        else if (type.equals("helmet")) {
-            helmet += 1;
+        else if (type.equals("helmet") && helmet <= ((Protection)item).getLevel()) {
+            helmet = ((Protection)item).getLevel();
         }
-        else if (type.equals("armour")) {
-            armour += 1;
+        else if (type.equals("armour") && armour <= ((Protection)item).getLevel()) {
+            armour = ((Protection)item).getLevel();
         }
     }
 }

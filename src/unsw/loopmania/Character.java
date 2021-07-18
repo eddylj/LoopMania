@@ -221,6 +221,7 @@ public class Character extends MovingEntity implements Hero {
 
     public void equip(Item i) {
         inventory.removeUnequippedItem(i);
+        stats.updateHighestLevel(i);
         if (i instanceof Weapon) {
             equippedWeapon = i;
         } else if (i instanceof Shield) {

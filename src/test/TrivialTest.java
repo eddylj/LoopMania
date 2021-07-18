@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.javatuples.Pair;
+
 import unsw.loopmania.LoopManiaWorld;
 
 
@@ -15,6 +19,7 @@ import unsw.loopmania.LoopManiaWorld;
  * A clickable "Run Test" link should appear if you have installed the Java Extension Pack properly.
  */
 public class TrivialTest {
+    /*
     @Test
     public void blahTest(){
         assertEquals("a", "a");
@@ -22,7 +27,11 @@ public class TrivialTest {
     
     @Test
     public void blahTest2(){
-        LoopManiaWorld d = new LoopManiaWorld(1, 2, new ArrayList<>());
+
+        List<Pair<Integer, Integer>> l = new ArrayList<Pair<Integer, Integer>>();
+        LoopManiaWorld d = new LoopManiaWorld(1, 2, l);
         assertEquals(d.getWidth(), 1);
+        
     }
+    */
 }
