@@ -3,12 +3,20 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class VillageBuilding extends StaticEntity implements Building, BuildingOnMove{
-
+    /**
+     * 
+     * @param x
+     * @param y
+     */
     public VillageBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("village");
     }
 
+    /**
+     * Checks if character is on village. If so heal it
+     * @param character
+     */
     @Override
     public void updateOnMove(MovingEntity character) {
         if (!(character instanceof Character)) {
@@ -19,7 +27,10 @@ public class VillageBuilding extends StaticEntity implements Building, BuildingO
         }
         
     }
-
+    /**
+     * Heals character
+     * @param c
+     */
     public void heal(Character c) {
         c.restoreHealth((100- c.getHealth())/2);
     }

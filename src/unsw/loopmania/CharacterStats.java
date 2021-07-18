@@ -16,7 +16,11 @@ public class CharacterStats {
         helmet = 1;
         armour = 1;
     }
-
+    /**
+     * Gets highest level of respective item
+     * @param type
+     * @return int highest level
+     */
     public int getHighestLevel(String type) {
         if (type.equals("sword")) {
             return sword;
@@ -40,7 +44,10 @@ public class CharacterStats {
             return 0;
         }
     }
-
+    /**
+     * updates respective item with new highest level
+     * @param item
+     */
     public void updateHighestLevel(Item item) {
         String type = ((StaticEntity)item).getType();
         if (type.equals("sword") &&  sword <= ((Weapon)item).getLevel()) {

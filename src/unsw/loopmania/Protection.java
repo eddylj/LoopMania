@@ -5,7 +5,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Protection extends StaticEntity implements Item{
     private int level;
     private double price;
-
+    /**
+     * 
+     * @param level
+     * @param price
+     * @param x
+     * @param y
+     */
     public Protection (int level, double price, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.level = level;
@@ -29,18 +35,17 @@ public abstract class Protection extends StaticEntity implements Item{
     public int getLevel() {
         return level;
     }
-
+    @Override
     public int getPrice() {
         return (int)price;
     }
-
+    @Override
     public int getSellPrice() {
         return (int) (price * 0.4);
     }
 
     @Override
     public int getReplaceCost() {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int) (price * 0.2);
     }
 }

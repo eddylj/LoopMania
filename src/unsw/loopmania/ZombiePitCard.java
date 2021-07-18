@@ -7,7 +7,11 @@ import org.javatuples.Pair;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class ZombiePitCard extends StaticEntity implements Card {
-
+    /**
+     * 
+     * @param x
+     * @param y
+     */
     public ZombiePitCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("zombiepit");
@@ -17,6 +21,15 @@ public class ZombiePitCard extends StaticEntity implements Card {
         super();
         super.setType("zombiepit");
     }
+
+    /**
+     * Checks if cards are next to each other
+     * @param oldX
+     * @param oldY
+     * @param newX
+     * @param newY
+     * @return  true or false whether old coordinates are next to new ones
+     */
     private boolean nextTo(int oldX, int oldY, int newX, int newY) {
         if (oldX == newX + 1 && oldY == newY) {
             return true;
@@ -33,6 +46,13 @@ public class ZombiePitCard extends StaticEntity implements Card {
         return false;
     }
 
+    /**
+     * checks whether card can be placed on path
+     * @param x
+     * @param y
+     * @param orderedPath
+     * @return boolean on whether card can be placed
+     */
     @Override
     public boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath) {
         for (Pair<Integer, Integer> tile : orderedPath) {

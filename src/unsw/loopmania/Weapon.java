@@ -33,14 +33,6 @@ public abstract class Weapon extends StaticEntity implements Item{
 
     }
 
-    /**
-     * Deals damage with this weapon to the given enemy, also deals with addition 
-     * effects for special weapons
-     * @param enemy that is being attacked
-     * @return boolean that is true if the enemy was killed
-     */
-
-
     public double getDamage() {
         return damage;
     }
@@ -48,15 +40,14 @@ public abstract class Weapon extends StaticEntity implements Item{
     public int getLevel() {
         return level;
     }
-
+    @Override
     public int getPrice() {
         return (int)price;
     }
-
+    @Override
     public int getSellPrice() {
         return (int)(price * 0.4);
     }
-
     @Override
     public int getReplaceCost() {
         return (int)(price * 0.2);

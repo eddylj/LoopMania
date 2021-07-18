@@ -8,11 +8,9 @@ import java.util.Random;
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
-    public String[] itemList;
-    
+    public String[] itemList;   
     private int attackDamage;
     private int goldAmount;
-    private int allyTurnCount;
 
     public Enemy (PathPosition position, int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health) {
         super(position, health);

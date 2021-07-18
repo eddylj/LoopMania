@@ -2,14 +2,11 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.LoggingPermission;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -18,7 +15,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  * A world can contain many entities, each occupy a square. More than one
  * entity can occupy the same square.
  */
-public class LoopManiaWorld {
+
+    public class LoopManiaWorld {
     public static int seed;
     private static Random rand;
     private BuildingFactory bF;
@@ -34,21 +32,15 @@ public class LoopManiaWorld {
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
-
     private List<Pair<Integer, Integer>> orderedPath;
-
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject json) {
-        seed = (int)System.currentTimeMillis();
-        LoopManiaWorld.rand = new Random(seed);
-        commonConstructorMethod(width, height, orderedPath, json);
-    }
-
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
-        LoopManiaWorld.seed = seed;
-        LoopManiaWorld.rand = new Random(seed);
-        commonConstructorMethod(width, height, orderedPath, goals);
-    }
-
+    
+    /**
+     * 
+     * @param width
+     * @param height
+     * @param orderedPath
+     * @param json
+     */
     private void commonConstructorMethod(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject json) {
         this.width = width;
         this.height = height;
@@ -66,14 +58,28 @@ public class LoopManiaWorld {
         getRareItems();
     }
 
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
+        seed = (int)System.currentTimeMillis();
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
+        LoopManiaWorld.seed = seed;
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
     public LoopManiaWorld(int seed) {
         rand = new Random(seed);
     }
 
-    public static void setSeed(int seed) {
-        rand = new Random(seed);
-    }
-    
+    /**
+     * Places building that occur at start of game
+     * @param x
+     * @param y
+     * @param type
+     */
     public void placeBuildingAtStart(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         Building building = bF.create(x, y, type);
         if (building instanceof BuildingOnCycle) {
@@ -84,6 +90,9 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Parse through json to get rare items
+     */
     public void getRareItems() {
         JSONArray rareItemList = json.getJSONArray("rare_items");
         for (int i = 0; i < rareItemList.length(); i++) {
@@ -91,6 +100,9 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Spawns 2 slugs at start of game
+     */
     public void spawn2slugs() {
         int pos1 = LoopManiaWorld.getRandNum() % orderedPath.size();
         int pos2 = LoopManiaWorld.getRandNum() % orderedPath.size();
@@ -98,27 +110,16 @@ public class LoopManiaWorld {
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
     }
-    
-    public int getCycles() {
-        return character.getCycles();
-    }
-
-    public int getGold() {
-        return character.getGold();
-    }
-
-    public int getXP() {
-        return character.getXP();
-    }
-
-    public int getHealth() {
-        return character.getHealth();
-    }
-
+    /**
+     * Checks if character is dead
+     * @return
+     */
     public boolean isCharacterDead() {
         return character.isDead();
     }
-
+    /**
+     * Simulates one tick in game
+     */
     public void tick() {
         moveEntities();
         List<Enemy> deadEnemies = fight();
@@ -127,7 +128,10 @@ public class LoopManiaWorld {
         }
         cleanUpFight();
     }
-
+    /**
+     * Moves character and enemies and check if they activated any buildings
+     * @return
+     */
     public List<Enemy> moveEntities() {
         List<Enemy> newEnemies = new ArrayList<Enemy>();
         character.moveDownPath();
@@ -137,7 +141,9 @@ public class LoopManiaWorld {
         updateEnemyList();
         return newEnemies;
     }
-
+    /**
+     * Checks if any enemies died during battle
+     */
     public void updateEnemyList() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
             Enemy e = enemies.get(i);
@@ -146,12 +152,17 @@ public class LoopManiaWorld {
             }
         }
     }
-
+    /**
+     * Checks for a fight with character and runs the battle
+     * @return list of defeated enemies
+     */
     public List<Enemy> fight() {
         List<Enemy> deadEnemies = checkForFight();
         return deadEnemies;
     }
-
+    /**
+     * Checks if player has won or nt and updates allied soldier amount
+     */
     public void cleanUpFight() {
         if (checkPlayerWin()) {
             System.out.println("GAME HAS BEEN WON");
@@ -162,46 +173,65 @@ public class LoopManiaWorld {
         updateEnemyList();
         character.updateAlliedSoldierAmount();
     }
-
+    /**
+     * Kills an enemy
+     * @param e
+     */
     public void KillEnemy(Enemy e) {
         enemies.remove(e);
     }
-
+    /**
+     * Updates cycle count after lap and spawns new enemies
+     * @param newEnemies
+     */
     public void triggerCycleActions(List<Enemy> newEnemies) {
         if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
             character.gainCycle();
         }
     }
-
+    /**
+     * Checks if character is standing on hero castle
+     * @return
+     */
     public Boolean onHeroCastle() {
         Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
         return characterPos.equals(heroCastlePosition);
     }
-
+    /**
+     * Checks if character is in range of enemies
+     * @return list of defeated enemies
+     */
     private List<Enemy> checkForFight() {
         return battleRunner.checkForFight(enemies, moveBuildings);
     }
-
+    /**
+     * check if character has won
+     * @return true of false if player has won
+     */
     public boolean checkPlayerWin() {
         return winChecker.getValue();
     }
-
+    /**
+     * check if character has lost
+     * @return true of false if player has lost
+     */
     public boolean checkPlayerLoss() {
         return character.getHealth() <= 0;
     }
-
+    /**
+     * Processes loot drop from enemy
+     * @param deadEnemy
+     * @return Loot
+     */
     public StaticEntity processEnemyLoot(Enemy deadEnemy) {
         return deadEnemy.getLoot(character, width, rareItems);
     }
-
     /**
      * add a generic entity (without it's own dedicated method for adding to the world)
      * @param entity
      */
     public void addEntity(Entity entity) {
-        // for adding non-specific entities (ones without another dedicated list)
-        // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
         nonSpecifiedEntities.add(entity);
     }
 
@@ -276,15 +306,30 @@ public class LoopManiaWorld {
         return character.loadCard(type, width);
     }
 
-
+    /**
+     * Check if card placement is valid
+     * @param card
+     * @param x
+     * @param y
+     * @return boolean
+     */
     public boolean isValidPlacement(Card card, int x, int y) {
         return card.canBePlaced(x, y, orderedPath);
     }
 
+    /**
+     * Equips character with item
+     * @param i
+     */
     public void equipItem(Item i) {
         character.equip(i);
     }
-
+    /**
+     * Gets closest campfire from Vampire
+     * @param x
+     * @param y
+     * @return closest campfire
+     */
     private CampfireBuilding getClosestCampfire(int x, int y) {
         CampfireBuilding closest = null;
         double closestDistance = getHeight(); // max distance
@@ -301,9 +346,9 @@ public class LoopManiaWorld {
     }
 
     /**
-     * move all enemies
+     * Move all enemies
      */
-    private void moveEnemies() { // removed if null
+    private void moveEnemies() { 
         for (Enemy e: enemies){
             if (e instanceof Vampire) {
                 ((Vampire)e).move(getClosestCampfire(e.getX(), e.getY()));
@@ -315,13 +360,19 @@ public class LoopManiaWorld {
             checkBuildingActions(e);
         }
     }
-
+    /**
+     * Get all buildings to check for update
+     * @param e
+     */
     public void checkBuildingActions(MovingEntity e) {
         for (BuildingOnMove b : moveBuildings) {
             b.updateOnMove(e);
         }
     }
-
+    /**
+     * Adds building to list of buildings
+     * @param b
+     */
     private void addBuilding(Building b) {
         if (b instanceof BuildingOnCycle) {
             cycleBuildings.add((BuildingOnCycle)b);
@@ -338,10 +389,8 @@ public class LoopManiaWorld {
         Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
         // buildingEntities.add(newBuilding);
         addBuilding(newBuilding);
-
         // destroy the card
         character.destroyCard(card, cardNodeX);
-
         return newBuilding;
     }
 
@@ -351,7 +400,9 @@ public class LoopManiaWorld {
         enemies.add(slug);
         return (Slug)slug;
     }
-
+    /**
+     * Makes character drink potion
+     */
     public void drinkPotion() {
         character.drinkPotion();
     }
@@ -478,5 +529,24 @@ public class LoopManiaWorld {
 
     public Card getCardByCoordinate(int nodeX) {
         return character.getCardByCoordinate(nodeX);
+    }
+    public static void setSeed(int seed) {
+        rand = new Random(seed);
+    }
+        
+    public int getCycles() {
+        return character.getCycles();
+    }
+
+    public int getGold() {
+        return character.getGold();
+    }
+
+    public int getXP() {
+        return character.getXP();
+    }
+
+    public int getHealth() {
+        return character.getHealth();
     }
 }
