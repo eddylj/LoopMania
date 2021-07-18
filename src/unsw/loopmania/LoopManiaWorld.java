@@ -581,7 +581,7 @@ public class LoopManiaWorld {
      * @param character the character
      */
     public void setCharacter(Character character) {
-        itemFactory iF = new itemFactory();
+        ItemFactory iF = new ItemFactory();
         this.character = character;
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
