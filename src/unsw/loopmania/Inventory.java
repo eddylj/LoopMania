@@ -70,6 +70,18 @@ public class Inventory {
         return nonLevelItems;
     }
 
+    public Boolean hasRing() {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i++) {
+            Item item = unequippedInventoryItems.get(i);
+            if (item instanceof TheOneRing) {
+                ((StaticEntity)item).destroy();
+                unequippedInventoryItems.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void removeUnequippedItem(Item removeItem) {
         unequippedInventoryItems.remove(removeItem);
     }
@@ -199,6 +211,7 @@ public class Inventory {
             Item item = unequippedInventoryItems.get(i);
             if (item instanceof HealthPotion) {
                 ((Entity)item).destroy();
+                unequippedInventoryItems.remove(i);
                 return ((HealthPotion)item);
             }
         }

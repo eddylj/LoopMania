@@ -148,7 +148,7 @@ public class BattleRunner {
             } 
             else {
                 e.attack(character, this);
-                if (character.isDead() && character.hasring()) {
+                if (character.isDead() && character.hasRing()) {
                     revivecharacter(character);
                 }
             }

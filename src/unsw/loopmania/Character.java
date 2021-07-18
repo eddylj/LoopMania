@@ -115,8 +115,8 @@ public class Character extends MovingEntity implements Hero {
     // INVENTORY ITEM RELATED STUFF
     ////////////////////////////////////
 
-    public boolean hasring() {
-        return false;
+    public boolean hasRing() {
+        return inventory.hasRing();
     }
 
 
