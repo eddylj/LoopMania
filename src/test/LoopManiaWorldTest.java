@@ -10,10 +10,8 @@ import org.javatuples.Pair;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.StaticEntity;
 import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
 

@@ -18,7 +18,6 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.BuildingOnMove;
 import unsw.loopmania.Character;
 
 public class ZombieTest {

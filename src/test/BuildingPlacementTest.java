@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.CardFactory;
-import unsw.loopmania.CampfireCard;
 import unsw.loopmania.Card;
 
 

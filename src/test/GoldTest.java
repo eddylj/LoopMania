@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,16 +8,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import unsw.loopmania.CampfireCard;
-import unsw.loopmania.TrapCard;
-import unsw.loopmania.VampireCastleCard;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Stake;
 import unsw.loopmania.Shield;
 import unsw.loopmania.Inventory;
-import unsw.loopmania.Helmet;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Slug;
 import unsw.loopmania.Vampire;
