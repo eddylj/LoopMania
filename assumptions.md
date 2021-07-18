@@ -1,7 +1,7 @@
 **Assumptions**
 
 
-* Multiple enemies can’t be on the same tile together
+* Multiple enemies can be on the same tile together
 * Potions cannot be sold in heroes castle
 * The character moves at a constant speed
 * Items have different levels and become more powerful as their level increases
