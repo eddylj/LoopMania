@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+
 public class EnemyFactory {
     /**
      * Creates respective Enemy

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.junit.Test;
 
@@ -14,8 +13,6 @@ import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Slug;
 import unsw.loopmania.TowerBuilding;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
 
 public class BattleRunnerTest {
 

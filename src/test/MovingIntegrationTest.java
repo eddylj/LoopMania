@@ -1,12 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +13,14 @@ import org.json.JSONArray;
 
 
 import unsw.loopmania.Character;
-import unsw.loopmania.Enemy;
+//import unsw.loopmania.Enemy;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldControllerLoader;
-import unsw.loopmania.LoopManiaWorldLoader;
+//import unsw.loopmania.LoopManiaWorldControllerLoader;
+//import unsw.loopmania.LoopManiaWorldLoader;
 import unsw.loopmania.MovingEntity;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.PathTile;
-import unsw.loopmania.VampireCastleBuilding;
+//import unsw.loopmania.PathTile;
+//import unsw.loopmania.VampireCastleBuilding;
 
 public class MovingIntegrationTest {
     private JSONObject setting;
@@ -59,11 +54,12 @@ public class MovingIntegrationTest {
         assertEquals(e.getY(), y);
     }
 
+    /*
     private void assertDifferentPositions(Pair<Integer, Integer> pos1, Pair<Integer, Integer> pos2, Pair<Integer, Integer> pos3) {
         assertNotEquals(pos1, pos2);
         assertNotEquals(pos1, pos3);
         assertNotEquals(pos2, pos3);
-    }
+    }*/
 
     @Test
     public void checkExistsTest() {

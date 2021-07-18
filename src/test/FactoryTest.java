@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import javax.swing.text.html.parser.Entity;
 
 import org.javatuples.Pair;
 

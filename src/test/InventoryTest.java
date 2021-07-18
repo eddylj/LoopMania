@@ -1,22 +1,12 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.Test;
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Armour;
-import unsw.loopmania.Helmet;
-import unsw.loopmania.Inventory;
-import unsw.loopmania.Shield;
-import unsw.loopmania.HealthPotion;
 
 // import unsw.loopmania.OneRing;
-import unsw.loopmania.Stake;
-import unsw.loopmania.Staff;
 
 public class InventoryTest {
     @Test

@@ -1,6 +1,5 @@
 package test;
 import unsw.loopmania.BarracksBuilding;
-import unsw.loopmania.BarracksCard;
 import unsw.loopmania.BonusDamageStrategy;
 import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.CampfireState;
@@ -129,7 +128,6 @@ public class BuildingTests {
     @Test
     public void trapinactiveTest(){
         Enemy e = new Slug(position);
-        Enemy e1 = new Slug(position);
         TrapBuilding t = new TrapBuilding(x, y);
         t.updateOnMove(e);
         boolean x = t.shouldExist().get();

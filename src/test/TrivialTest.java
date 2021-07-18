@@ -1,3 +1,4 @@
+/*
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +19,9 @@ import unsw.loopmania.LoopManiaWorld;
  * you should setup additional test classes in a similar fashion, aiming to achieve high coverage.
  * A clickable "Run Test" link should appear if you have installed the Java Extension Pack properly.
  */
+/*
 public class TrivialTest {
-    /*
+
     @Test
     public void blahTest(){
         assertEquals("a", "a");
@@ -33,5 +35,6 @@ public class TrivialTest {
         assertEquals(d.getWidth(), 1);
         
     }
-    */
+    
 }
+*/

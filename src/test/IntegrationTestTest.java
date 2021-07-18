@@ -1,31 +1,20 @@
 package test;
 
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.BreakIterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 
-import org.javatuples.Pair;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.junit.Test;
 
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldControllerLoader;
-import unsw.loopmania.LoopManiaWorldLoader;
-import unsw.loopmania.StaticEntity;
 
 public class IntegrationTestTest {
 

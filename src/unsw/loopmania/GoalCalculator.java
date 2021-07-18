@@ -4,12 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GoalCalculator {
-    private JSONObject json;
+    //private JSONObject json;
     private Character character;
     private Composite checker;
 
     public GoalCalculator(JSONObject json, Character character) {
-        this.json = json;
+        //this.json = json;
         this.character = character;
         this.checker = winCondition(json);
     }

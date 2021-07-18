@@ -1,6 +1,5 @@
 package test;
 
-import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.Armour;
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
@@ -15,23 +14,16 @@ import unsw.loopmania.Slug;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Stake;
-import unsw.loopmania.TowerBuilding;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 
 public class CharacterTest {
     private Character c = new Character();
     
-    private List<Enemy> enemies = new ArrayList<Enemy>();
-    private List<AlliedSoldier> allies = new ArrayList<AlliedSoldier>();
-    private List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
     private BattleRunner b = new BattleRunner();
 
 

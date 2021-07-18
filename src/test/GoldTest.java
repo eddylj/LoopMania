@@ -1,3 +1,4 @@
+/*
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -23,7 +24,7 @@ import unsw.loopmania.Zombie;
 import unsw.loopmania.Character;
 
 public class GoldTest {
-    /*
+    
     @Test
     public void GetGoldFromSlugTest() {
         List<Enemy> enemies = new ArrayList<Enemy>();
@@ -93,5 +94,5 @@ public class GoldTest {
         c.pickup(new VampireCastleCard());
         assertTrue(600 <= c.getGold() && c.getGold() <= 800);
     }
-    */
 }
+    */

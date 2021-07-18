@@ -16,14 +16,13 @@ public class CharacterStatsTest {
     CharacterStats c = new CharacterStats();
 
     @Test
-    public void CharacterStatsTest(){
+    public void CharacterStatTest(){
         Sword sword = new Sword(2);
         Stake stake = new Stake(1);
         Staff staff = new Staff(1);
         Helmet helmet = new Helmet(1);
         Shield shield = new Shield(1);
         Armour armour = new Armour(3);
-
         c.updateHighestLevel(sword);
         assertEquals(2, c.getHighestLevel("sword"));
         c.updateHighestLevel(stake);

@@ -1,25 +1,14 @@
 package test;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 
 import unsw.loopmania.Armour;
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
-import unsw.loopmania.LoopManiaApplication;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Shield;
-import unsw.loopmania.Weapon;
-import unsw.loopmania.Enemy;
 import unsw.loopmania.Helmet;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Staff;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Hero;
 

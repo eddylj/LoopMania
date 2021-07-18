@@ -1,3 +1,4 @@
+/*
 package test;
 
 import unsw.loopmania.Character;
@@ -31,6 +32,7 @@ public class ShopTest {
             }
             
         }
-        */
+        
     }
 }
+*/

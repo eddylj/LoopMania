@@ -40,8 +40,6 @@ import javafx.util.Duration;
 
 import java.util.EnumMap;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.DynamicTest.stream;
 
 import java.io.File;
 import java.io.IOException;
