@@ -7,7 +7,10 @@ import java.util.Objects;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * represents the main character in the backend of the game world
+ * Character contains the character that moves around the map.
+ * It contains all the stats and fields for the character object,
+ * as well as the character's inventory.
+ * @author Group FRIDGE
  */
 public class Character extends MovingEntity implements Hero {
     private int experience;
@@ -23,7 +26,10 @@ public class Character extends MovingEntity implements Hero {
     private List<AlliedSoldier> soldiers;
     private Inventory inventory;
 
-    // TODO = potentially implement relationships between this class and other classes
+    /**
+     * Constructor for the character Class
+     * @param position PathPosition: The starting position for the character
+     */
     public Character(PathPosition position) {
         super(position, 100);
         experience = 0;
@@ -32,13 +38,17 @@ public class Character extends MovingEntity implements Hero {
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
-        List<Card> cards = new ArrayList<Card>();
         appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
         aliveSoldiers = new SimpleIntegerProperty(0);
         inventory = new Inventory(this);
     }
+
+    /**
+     * Constructor for the character class.
+     * This is only used in tests.
+     */
     public Character() {
         super(100);
         experience = 0;
@@ -47,7 +57,6 @@ public class Character extends MovingEntity implements Hero {
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
-        List<Card> cards = new ArrayList<Card>();
         appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
@@ -55,8 +64,11 @@ public class Character extends MovingEntity implements Hero {
         aliveSoldiers = new SimpleIntegerProperty(0);
     }
 
-
-
+    /**
+     * Calculates damage reduction caused by all of Character's equipped
+     * protective items
+     * @param damage double: The incoming damage
+     */
     public void takeDamage(double damage){
         double newDamage = damage;
         if (!Objects.isNull(equippedShield)) {
@@ -73,6 +85,12 @@ public class Character extends MovingEntity implements Hero {
         super.takeDamage(newDamage);
     }
 
+    /**
+     * Character deaals damage to an enemy. This method has access to the
+     * battlerunner class so the staff can convert enemies into converted Soldiers.
+     * @param enemy Enemy: The enemy being attacked
+     * @param b BattleRunner: BattleRunner class running the current battle
+     */
     public void attack(Enemy enemy, BattleRunner b) {
         double newDamage = 5;
         if (equippedWeapon instanceof Sword) {
@@ -96,7 +114,10 @@ public class Character extends MovingEntity implements Hero {
     }
 
 
-
+    /**
+     * Checks whether the character has a potion in their inventory and
+     * if so, drinks it (to heal)
+     */
     public void drinkPotion() {
         
         HealthPotion potion = inventory.getHealthPotion();

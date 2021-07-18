@@ -48,7 +48,7 @@ public class PathPosition{
      * @return Integer Pair representing next position in path
      */
     public Pair<Integer, Integer> getClockwisePosition() {
-        return orderedPath.get(getPositionInPath() + 1);
+        return orderedPath.get((getPositionInPath() + 1) % orderedPath.size());
     }
 
     /**
@@ -56,7 +56,13 @@ public class PathPosition{
      * @return Integer Pair representing previous position in path
      */
     public Pair<Integer, Integer> getAntiClockwisePosition() {
-        return orderedPath.get(getPositionInPath() - 1);
+        // Deal with modulo 0
+        if (getPositionInPath() == 1) {
+            return orderedPath.get(-1);
+        }
+        else {
+            return orderedPath.get(getPositionInPath() - 1);
+        }
     }
 
     /**
