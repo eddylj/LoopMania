@@ -12,14 +12,8 @@ public class HerosCastleBuilding extends StaticEntity implements Building, Build
 
     @Override
     public void updateOnMove(MovingEntity movingEntity) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    // @Override
-    // public void updateOnCycle() {
-    //     // TODO Auto-generated method stub
-        
-    // }
-    
+        if (movingEntity instanceof Character) {
+            ((Character)movingEntity).gainCycle();
+        }
+    }    
 }

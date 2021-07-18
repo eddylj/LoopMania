@@ -11,7 +11,10 @@ public class VillageBuilding extends StaticEntity implements Building, BuildingO
 
     @Override
     public void updateOnMove(MovingEntity character) {
-        if (character.getX() == super.getX() && character.getY() == super.getY()) {
+        if (!(character instanceof Character)) {
+            return;
+        }
+        else if (character.getX() == super.getX() && character.getY() == super.getY()) {
             heal((Character) character);
         }
         

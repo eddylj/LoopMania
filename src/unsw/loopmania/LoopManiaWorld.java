@@ -170,7 +170,6 @@ public class LoopManiaWorld {
     public void triggerCycleActions(List<Enemy> newEnemies) {
         if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
-            character.gainCycle();
         }
     }
 
@@ -449,7 +448,6 @@ public class LoopManiaWorld {
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
-        // character.addUnequippedItem("stake", 1);
         // System.out.println();
     }
 

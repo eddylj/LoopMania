@@ -279,14 +279,14 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             System.out.println("tick!");
-            Item weapon = world.getEquippedItemByCoordinates(0);
-            if (weapon == null) {
-                System.out.println("No weapon in hand");
+            Item armour = world.getEquippedItemByCoordinates(1);
+            if (armour == null) {
+                System.out.println("\n\nNo weapon in head\n\n");
             }
             else {
-                System.out.println(String.format("Currently holding a %s", ((StaticEntity)weapon).getType()));
+                System.out.println(String.format("\n\nCurrently holding a level %d armour\n\n", ((Protection)armour).getLevel()));
             }
             // System.out.println(world.getEquippedItemByCoordinates(0));
             List<Enemy> newEnemies = world.moveEntities();
@@ -562,8 +562,16 @@ public class LoopManiaWorldController {
                                         System.out.println("================\nuhoh\n---------------");
                                         // itemFactory iF = new itemFactory();
                                         // reloadItem = iF.create()
-                                        StaticEntity newItem;
-                                        newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                        StaticEntity newItem = null;
+                                        if (olditem instanceof Weapon) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                        }
+                                        else if (olditem instanceof Protection) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+                                        }
+                                        else {
+                                            System.out.println("nope. thats bad.");
+                                        }
                                         // put previously equipped weapon back in the unequipped inventory
                                         onLoad((Item)newItem);
                                         olditem.destroy();

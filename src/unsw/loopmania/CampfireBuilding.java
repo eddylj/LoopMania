@@ -13,7 +13,9 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
 
     @Override
     public void updateOnMove(MovingEntity character) {
-        // TODO Auto-generated method stub
+        if (!(character instanceof Character)) {
+            return;
+        }
         double distance = Math.sqrt(Math.pow((character.getX()-this.getX()), 2) +  Math.pow((character.getY()-this.getY()), 2));
 
         if (distance < 2) {

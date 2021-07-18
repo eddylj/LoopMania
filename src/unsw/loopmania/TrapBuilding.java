@@ -11,8 +11,10 @@ public class TrapBuilding extends StaticEntity implements Building, BuildingOnMo
 
     @Override
     public void updateOnMove(MovingEntity enemy) {
-        // TODO Auto-generated method stub
-        if (enemy.getX() == super.getX() && enemy.getY() == super.getY()) {
+        if (!(enemy instanceof Enemy)) {
+            return;
+        }
+        else if (enemy.getX() == super.getX() && enemy.getY() == super.getY()) {
             activate(enemy);
             this.destroy();
         }
