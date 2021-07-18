@@ -3,7 +3,7 @@ package unsw.loopmania;
 import java.util.List;
 
 public class Slug extends Enemy{
-    String[] cardDrops;
+    private String[] cardDrops;
     /**
      * 
      * @param position

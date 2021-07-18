@@ -179,6 +179,25 @@ public class Character extends MovingEntity implements Hero {
             aliveSoldiers.set(soldiers.size());
         }
     }
+        /**
+     * Equips a given item. Assumes item is valid to be equipped
+     * (e.g. Item is not a HealthPotion)
+     * @param i Item: item to be equipped.
+     */
+    public void equip(Item i) {
+        inventory.removeUnequippedItem(i);
+        stats.updateHighestLevel(i);
+        if (i instanceof Weapon) {
+            equippedWeapon = i;
+        } else if (i instanceof Shield) {
+            equippedShield = i;
+        } else if (i instanceof Armour) {
+            equippedArmour = i;
+        } else {
+            equippedHelmet = i;
+        }
+    }
+
     ////////////////////////////////////
 
     // Getters and Setters and other incrementors
@@ -373,24 +392,6 @@ public class Character extends MovingEntity implements Hero {
         return equippedHelmet;
     }
 
-    /**
-     * Equips a given item. Assumes item is valid to be equipped
-     * (e.g. Item is not a HealthPotion)
-     * @param i Item: item to be equipped.
-     */
-    public void equip(Item i) {
-        inventory.removeUnequippedItem(i);
-        stats.updateHighestLevel(i);
-        if (i instanceof Weapon) {
-            equippedWeapon = i;
-        } else if (i instanceof Shield) {
-            equippedShield = i;
-        } else if (i instanceof Armour) {
-            equippedArmour = i;
-        } else {
-            equippedHelmet = i;
-        }
-    }
 
     /**
      * Gets a List of items that don't have levels
@@ -399,7 +400,7 @@ public class Character extends MovingEntity implements Hero {
     public List<String> getNonLevelItems() {
         return inventory.getNonLevelItems();
     }
-    //////////////////////////////////////////////////////
+
 
     /**
      * Gets a list of all unequipped items in the character's inventory
