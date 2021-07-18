@@ -271,7 +271,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), event -> {
             System.out.println("tick!");
             Item weapon = world.getEquippedItemByCoordinates(0);
             if (weapon == null) {
@@ -517,9 +517,7 @@ public class LoopManiaWorldController {
                     //If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
-                    System.out.println("getting depth");
                     if (node.getId() == null) {
-                        System.out.println("Just sent node back");
                         node.toBack();
                         node = event.getPickResult().getIntersectedNode();
                     }
@@ -528,7 +526,6 @@ public class LoopManiaWorldController {
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
                         int y = rIndex == null ? 0 : rIndex;
-                        System.out.println(String.format("x: %d\ny: %d", x, y));
                         //Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
 
@@ -558,12 +555,7 @@ public class LoopManiaWorldController {
                                         // itemFactory iF = new itemFactory();
                                         // reloadItem = iF.create()
                                         StaticEntity newItem;
-                                        if (olditem.getType().equals("healthpotion")) {
-                                            newItem = world.addUnequippedItem(olditem.getType(), 0);
-                                        }
-                                        else {
-                                            newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
-                                        }
+                                        newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
                                         // put previously equipped weapon back in the unequipped inventory
                                         onLoad((Item)newItem);
                                         olditem.destroy();

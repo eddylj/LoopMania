@@ -24,6 +24,8 @@ public class Inventory {
 
     }
 
+    
+
     public StaticEntity loadCard(String type, int width) {
         // if adding more cards than have, remove the first card...
         if (cardEntities.size() >= width){
@@ -62,7 +64,9 @@ public class Inventory {
         return null;
     }
 
-
+    public void removeUnequippedItem(Item removeItem) {
+        unequippedInventoryItems.remove(removeItem);
+    }
 
 
 

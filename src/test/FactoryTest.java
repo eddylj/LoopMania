@@ -23,6 +23,7 @@ import unsw.loopmania.CardFactory;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.EnemyFactory;
 import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TrapBuilding;
@@ -60,7 +61,7 @@ public class FactoryTest {
     public void itemFactoryLevelTest(String input) {
         itemFactory f = new itemFactory();
         Random rand = new Random();
-        int level = rand.nextInt(9) + 1;
+        int level = (LoopManiaWorld.getRandNum() % 10) + 1;
         Item item1 = f.create(x, y, input, level);
         Item item2 = f.create(x, y, input, level);
         assertNotEquals(item1, item2);

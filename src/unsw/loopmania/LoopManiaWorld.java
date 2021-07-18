@@ -37,6 +37,18 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
+        seed = (int)System.currentTimeMillis();
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
+        LoopManiaWorld.seed = seed;
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
+    private void commonConstructorMethod(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
         this.width = width;
         this.height = height;
         bF = new BuildingFactory();
@@ -44,8 +56,6 @@ public class LoopManiaWorld {
         character = null;
         enemies = new ArrayList<>();
         this.orderedPath = orderedPath;
-        seed = (int)System.currentTimeMillis();
-        LoopManiaWorld.rand = new Random(seed);
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         battleRunner = new BattleRunner();
@@ -53,12 +63,6 @@ public class LoopManiaWorld {
         spawn2slugs();
     }
 
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
-        this(width, height, orderedPath, goals);
-        this.seed = seed;
-        rand = new Random(seed);
-
-    }
     public LoopManiaWorld(int seed) {
         rand = new Random(seed);
     }
@@ -78,8 +82,8 @@ public class LoopManiaWorld {
     }
 
     public void spawn2slugs() {
-        int pos1 = rand.nextInt(100) % orderedPath.size();
-        int pos2 = rand.nextInt(100) % orderedPath.size();
+        int pos1 = LoopManiaWorld.getRandNum() % orderedPath.size();
+        int pos2 = LoopManiaWorld.getRandNum() % orderedPath.size();
         if (pos1 == pos2) pos2 += 1;
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
@@ -103,6 +107,15 @@ public class LoopManiaWorld {
 
     public boolean isCharacterDead() {
         return character.isDead();
+    }
+
+    public void tick() {
+        moveEntities();
+        List<Enemy> deadEnemies = fight();
+        for (Enemy e : deadEnemies) {
+            e.getLoot(character, width);
+        }
+        cleanUpFight();
     }
 
     public List<Enemy> moveEntities() {
@@ -164,7 +177,7 @@ public class LoopManiaWorld {
         return winChecker.getValue();
     }
 
-    private boolean checkPlayerLoss() {
+    public boolean checkPlayerLoss() {
         return character.getHealth() <= 0;
     }
 
@@ -232,7 +245,7 @@ public class LoopManiaWorld {
             }
             System.out.println(adjacent.size() + "\n");
             for (int i = 0; i < numSpawn; i++) {
-                int tile = rand.nextInt(100) % adjacent.size();
+                int tile = LoopManiaWorld.getRandNum() % adjacent.size();
                 int positioninPath = getNumInPath(adjacent.get(tile));
                 Enemy e = b.spawnEnemy(new PathPosition(positioninPath, orderedPath));
                 adjacent.remove(tile);
@@ -243,7 +256,7 @@ public class LoopManiaWorld {
         // Spawn 2 slugs every cycle
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
         for (int i = 0; i < 2; i++) {
-            int position = rand.nextInt(100) % emptyTiles.size();
+            int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnSlug(position, emptyTiles));
         }
     }
@@ -415,11 +428,12 @@ public class LoopManiaWorld {
     public void setCharacter(Character character) {
         itemFactory iF = new itemFactory();
         this.character = character;
-        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        // character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goals = new GoalCalculator(json, character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
+        character.addUnequippedItem("sword", 1);
         // System.out.println();
     }
 
