@@ -168,6 +168,9 @@ public class Character extends MovingEntity implements Hero {
     public BonusDamageStrategy getBonusDamageStrategy() {
         return appliedBuff;
     }
+    public CharacterStats getStats() {
+        return stats;
+    }
     public void setBonusDamageStrategy(BonusDamageStrategy buff) {
         appliedBuff = buff;
     }
