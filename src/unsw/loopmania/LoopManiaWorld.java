@@ -433,7 +433,8 @@ public class LoopManiaWorld {
         GoalCalculator goals = new GoalCalculator(json, character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
-        character.addUnequippedItem("sword", 1);
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        // character.addUnequippedItem("stake", 1);
         // System.out.println();
     }
 

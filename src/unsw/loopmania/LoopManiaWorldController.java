@@ -238,6 +238,21 @@ public class LoopManiaWorldController {
             }
         }
 
+        System.out.println(equippedItems.getChildren().get(0).getId());
+        ImageView view = new ImageView(new File(String.format("src/images/sword1.png")).toURI().toString());
+        // if (((StaticEntity)item).getType().equals("healthpotion")) {
+        //     view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
+        // }
+        // else if (item instanceof Weapon) {
+        //     view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Weapon)item).getLevel()))).toURI().toString()));
+        // }
+        // else {
+        //     view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Protection)item).getLevel()))).toURI().toString()));
+        // }
+        // addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        // addEntity((Entity)item, view);
+        equippedItems.getChildren().add(view);
+
         for (BuildingOnMove b : world.getMoveBuildings()) {
             onLoad((Building)b);
         }
@@ -261,6 +276,10 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
+    }
+
+    public void startWithSword() {
+        
     }
 
     /**
