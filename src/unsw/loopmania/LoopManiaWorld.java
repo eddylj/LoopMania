@@ -170,6 +170,7 @@ public class LoopManiaWorld {
     public void triggerCycleActions(List<Enemy> newEnemies) {
         if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
+            character.gainCycle();
         }
     }
 

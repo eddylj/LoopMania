@@ -12,8 +12,6 @@ public class HerosCastleBuilding extends StaticEntity implements Building, Build
 
     @Override
     public void updateOnMove(MovingEntity movingEntity) {
-        if (movingEntity instanceof Character) {
-            ((Character)movingEntity).gainCycle();
-        }
+        
     }    
 }
