@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -176,10 +177,13 @@ public class BuildingTests {
     @Test
     public void ZombiePitSpawnTest() {
         JSONObject goals = new JSONObject();
+        JSONObject setting = new JSONObject();
         goals.put("goal", "gold");
         goals.put("quantity", 9000);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, goals, 4);
-        //LoopManiaWorld.setSeed(4);
+        JSONArray rareItem = new JSONArray();
+        setting.put("rare_items", rareItem);
+        setting.put("goal-condition",goals);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
@@ -221,10 +225,13 @@ public class BuildingTests {
     public void VampireCastleSpawnTest() {
 
         JSONObject goals = new JSONObject();
+        JSONObject setting = new JSONObject();
         goals.put("goal", "gold");
         goals.put("quantity", 9000);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, goals, 4);
-        //LoopManiaWorld.setSeed(4);
+        JSONArray rareItem = new JSONArray();
+        setting.put("rare_items", rareItem);
+        setting.put("goal-condition",goals);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);

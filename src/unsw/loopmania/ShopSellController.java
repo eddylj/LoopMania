@@ -45,57 +45,25 @@ public class ShopSellController {
     @FXML
     private AnchorPane itemCosts;
 
-    
     private LoopManiaWorld world;
 
-    private String[] itemList;
+    private Shop shop;
 
     public ShopSellController(LoopManiaWorld world) {
         this.world = world;
-        itemList = setItemList();
+        shop = new Shop(world.getCharacter());
     }
 
     @FXML
     public void initialize() {
-        addItems(itemList);
         for (ColumnConstraints columnConstraint: shopItems.getColumnConstraints()) {
             columnConstraint.setPercentWidth(25);
         }
         for (RowConstraints rowConstraint: shopItems.getRowConstraints()) {
             rowConstraint.setPercentHeight(25);
         }
+        addItems();
         addDoneButton();
-    }
-
-    private String[] setItemList() {
-        ArrayList<String> itemNameArrayList = new ArrayList<String>();
-        for (Item item: world.getItems()) {
-            if (item instanceof Sword) {
-                itemNameArrayList.add("sword");
-            }
-            else if (item instanceof Stake) {
-                itemNameArrayList.add("stake");
-            }
-            else if (item instanceof Staff) {
-                itemNameArrayList.add("staff");
-            }
-            else if (item instanceof Armour) {
-                itemNameArrayList.add("armour");
-            }
-            else if (item instanceof Shield) {
-                itemNameArrayList.add("shield");
-            }
-            else if (item instanceof Helmet) {
-                itemNameArrayList.add("helmet");
-            }
-            else if (item instanceof HealthPotion) {
-                itemNameArrayList.add("healthpotion");
-            }
-            else if (item instanceof TheOneRing) {
-                itemNameArrayList.add("theonering");
-            }
-        }
-        return itemNameArrayList.toArray(new String[itemNameArrayList.size()]);
     }
 
     public void addDoneButton() {
@@ -119,10 +87,25 @@ public class ShopSellController {
         stage.close();
     }
 
-    public void addItems(String[] itemList) {
-        for (int i = 0; i < itemList.length; i++) {
-            String itemName = itemList[i];
-            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemName))).toURI().toString()));
+    public void addItems() {
+        int i = 0;
+        for (Item item: world.getItems()) {
+            int itemLevel = 0;
+            if (item instanceof Weapon) {
+                itemLevel = ((Weapon)item).getLevel();
+            }
+            else if (item instanceof Protection) {
+                itemLevel = ((Protection)item).getLevel();
+            }
+            String itemName = ((StaticEntity) item).getType();
+            String itemString;
+            if (item instanceof HealthPotion || item instanceof TheOneRing) {
+                itemString = itemName;
+            }
+            else {
+                itemString = itemName + itemLevel;
+            }
+            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString()));
             int row = i / 4;
             int col = i % 4;
             view.setFitHeight(70);
@@ -135,31 +118,31 @@ public class ShopSellController {
             goldView.setFitHeight(28);
             goldView.setFitWidth(28);
 
-            Button item = makeItemButton(itemName, i);
+            Button itemButton = makeItemButton(item, i);
 
             GridPane gridPane = new GridPane();
             gridPane.add(goldView, 0, 0);
-            gridPane.add(item, 1, 0);
+            gridPane.add(itemButton, 1, 0);
             itemCosts.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
+            i++;
         }
     }
 
-    public Button makeItemButton(String itemName, int position) {
-        int price = +2; // TODO: make this according to each item
+    public Button makeItemButton(Item item, int position) {
+        int price = shop.getSellPrice(item);
         Button sellButton = new Button(Integer.toString(price));
         sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 18));
         
-        // TODO: link button to buying item
         sellButton.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
-                public void handle(ActionEvent arg0) {
-                    world.removeUnequippedInventoryItemByCoordinates(position % 4, position / 4);
+                public void handle(ActionEvent event) {
+                    shop.sell(item);
                     sellButton.setTextFill(Color.DARKRED);
                     sellButton.setDisable(true);
-                    // TODO: give money
+                    world.getCharacter().gainGold(price);
                 }
             });
         return sellButton;

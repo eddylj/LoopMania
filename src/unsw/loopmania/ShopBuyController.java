@@ -53,6 +53,7 @@ public class ShopBuyController {
         this.world = world;
         this.worldController = worldController;
         itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
+        shop = new Shop(world.getCharacter());
     }
 
     @FXML
@@ -114,7 +115,7 @@ public class ShopBuyController {
     }
 
     public Button makeItemButton(String itemName) {
-        int price = -2; // TODO: make this according to each item
+        int price = shop.getBuyPrice(itemName); // TODO: make this according to each item
         Button buyButton = new Button(Integer.toString(price));
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
 
@@ -123,7 +124,11 @@ public class ShopBuyController {
             buyButton.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent arg0) {
-                    StaticEntity item = world.addUnequippedItem(itemName, 1);
+                    // StaticEntity item = world.addUnequippedItem(itemName, 1);
+                    // worldController.loadItem((Item)item);
+                    // buyButton.setTextFill(Color.DARKRED);
+                    // buyButton.setDisable(true);
+                    StaticEntity item = (StaticEntity) shop.buy(itemName);
                     worldController.loadItem((Item)item);
                     buyButton.setTextFill(Color.DARKRED);
                     buyButton.setDisable(true);
