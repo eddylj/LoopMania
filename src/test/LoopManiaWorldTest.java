@@ -44,9 +44,5 @@ public class LoopManiaWorldTest {
         world.moveEntities();
         assertEquals(vampire.getX(), 0);
         assertEquals(vampire.getY(), 1);
-
-
     }
-
-
 }

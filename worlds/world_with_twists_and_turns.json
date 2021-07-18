@@ -6,7 +6,7 @@
     [ { "goal": "cycles", "quantity": 50 },
       { "goal": "AND", "subgoals":
         [ {"goal": "experience", "quantity": 100 },
-          {"goal": "gold", "quantity": 20000 }
+          {"goal": "gold", "quantity": 10000 }
         ]
       }
     ]

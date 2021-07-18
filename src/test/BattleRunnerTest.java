@@ -2,6 +2,8 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.junit.Test;
 
 import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
+import unsw.loopmania.BuildingFactory;
 import unsw.loopmania.Character;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Slug;
@@ -34,6 +37,7 @@ public class BattleRunnerTest {
 
     @Test
     public void BasicbattleTestDefeat(){
+        BuildingFactory bF = new BuildingFactory();
         b.setCharacter(character);
 
         Enemy e = new Slug();
@@ -46,6 +50,7 @@ public class BattleRunnerTest {
         enemies.add(e2);
         enemies.add(e3);
         enemies.add(e4);
+        towers.add((TowerBuilding)bF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "tower"));
         b.runBattle(enemies, allies, towers);
         assertTrue(character.isDead());
         assertTrue(character.shouldExist().get());
