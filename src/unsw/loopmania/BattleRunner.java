@@ -57,14 +57,12 @@ public class BattleRunner {
             int battleRadius = e.getBattleRadius();
             int supportRadius = e.getSupportRadius();
             double distance = Math.sqrt(Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2));
-            System.out.println(String.format("%s distance is %f. Supp radius is %d", e.getType(), distance, supportRadius));
             if (distance <= battleRadius) {
                 attacking.add(e);
             } else if (distance <= supportRadius) {
                 attacking.add(e);
             }
         }
-        System.out.println(String.format("Attacking enemies: %d", attacking.size()));
         List<TowerBuilding> towers = getInRangeTowers(moveBuildings);
         
         return runBattle(attacking, character.getAlliedSoldiers(), towers);
@@ -103,14 +101,6 @@ public class BattleRunner {
         while (!character.isDead() && !enemies.isEmpty()) {
             runHeroAttacks();
             runEnemyAttacks();
-            if (!enemies.isEmpty()) {
-                System.out.println(String.format("%s has %d health", enemies.get(0).getType(), enemies.get(0).getHealth()));
-                
-            }
-            else {
-                System.out.println("All enemies are dead");
-            }
-            System.out.println(String.format("Character has %d health", character.getHealth()));
             checkTrancedEnemies();
         }
         killConvertedEnemies();
@@ -259,7 +249,6 @@ public class BattleRunner {
         enemies.remove(enemy);
         character.gainGold(enemy.getGold());
         character.gainXP(enemy.getXP());
-        System.out.println("Enemy has died");
     }
 
     /**

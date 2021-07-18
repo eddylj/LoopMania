@@ -365,7 +365,6 @@ public class LoopManiaWorld {
             else {
                 e.move();
             }
-            System.out.println(e.getType());
             checkBuildingActions(e);
         }
     }
@@ -532,7 +531,6 @@ public class LoopManiaWorld {
      */
     public Item getEquippedItemByCoordinates(int x) {
         if (x == 0) {
-            System.out.println("Getting equipped weapon");
             return character.getWeapon();
         }
         else if (x == 1) {
@@ -545,7 +543,6 @@ public class LoopManiaWorld {
             return character.getArmour();
         }
         else {
-            System.out.println("No equipped weapon at " + x);
             return null;
         }
     }

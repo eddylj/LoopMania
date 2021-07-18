@@ -93,13 +93,13 @@ public class IntegrationTestTest {
         assertTrue(world.checkPlayerLoss());
     }
 
-    @Test
-    public void BuyAndUsePotion() throws FileNotFoundException{
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("one_ring_grind.json", 2);
-        for (int i = 0; i < 8; i++) {
-            world.tick();
-        }
-        Character c = world.getCharacter();
-        character.
-    }
+    // @Test
+    // public void BuyAndUsePotion() throws FileNotFoundException{
+    //     LoopManiaWorld world = IntegrationTestHelper.createWorld("one_ring_grind.json", 2);
+    //     for (int i = 0; i < 8; i++) {
+    //         world.tick();
+    //     }
+    //     Character c = world.getCharacter();
+    //     character.
+    // }
 }
