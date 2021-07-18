@@ -148,7 +148,7 @@ public class Inventory {
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         // now we insert the new sword, as we know we have at least made a slot available...
-        itemFactory f = new itemFactory();
+        ItemFactory f = new ItemFactory();
         Item item = null;
         if (nonLevelItems.contains(type)) {
             item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
