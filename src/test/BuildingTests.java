@@ -220,7 +220,7 @@ public class BuildingTests {
     // VampireCastleTests
     //////////////////////////////////
     @Test
-    public void VampireCastleSpawnTest() {
+    public void VampireCastleSpawnNoSpawnTest() {
 
         JSONObject goals = new JSONObject();
         JSONObject setting = new JSONObject();
@@ -240,6 +240,36 @@ public class BuildingTests {
         world.SpawnEnemiesOnCycle(enemies);
         vampireCastle.spawnEnemy(new PathPosition(0, path));
         assertEquals(2, enemies.size());
+
+        for (Enemy enemy: enemies) {
+            assertTrue(enemy instanceof Slug);
+        }
+    }
+
+    @Test
+    public void VampireCastleSpawnTest() {
+
+        JSONObject goals = new JSONObject();
+        JSONObject setting = new JSONObject();
+        goals.put("goal", "gold");
+        goals.put("quantity", 9000);
+        JSONArray rareItem = new JSONArray();
+        setting.put("rare_items", rareItem);
+        setting.put("goal-condition",goals);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        Character c = new Character(new PathPosition(0, path));
+        world.setCharacter(c);
+        SimpleIntegerProperty x = new SimpleIntegerProperty(1);
+        SimpleIntegerProperty y = new SimpleIntegerProperty(1);
+        VampireCastleBuilding vampireCastle = new VampireCastleBuilding(x,y);
+        world.placeBuildingAtStart(x, y, "vampirecastle");
+        List<Enemy> enemies = new ArrayList<Enemy>(); 
+        c.setCycles(5);
+        world.SpawnEnemiesOnCycle(enemies);
+        vampireCastle.spawnEnemy(new PathPosition(0, path));
+        assertEquals(3, enemies.size());
+
+
         int vampireCount = 0;
         for (Enemy enemy: enemies) {
             assertTrue(enemy instanceof Vampire || enemy instanceof Slug);

@@ -241,6 +241,14 @@ public class Character extends MovingEntity implements Hero {
     }
 
     /**
+     * Sets the character's cycles only used in tests
+     * @return void
+     */
+    public void setCycles(int cycle) {
+        this.cycles.set(cycle);
+    }
+
+    /**
      * Gets the character's allied soldier count
      * @return int: The character's allied soldier count
      */
