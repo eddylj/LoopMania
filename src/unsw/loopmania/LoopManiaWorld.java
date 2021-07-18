@@ -1,3 +1,4 @@
+
 package unsw.loopmania;
 
 import java.util.ArrayList;
@@ -5,7 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.javatuples.Pair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -14,73 +18,562 @@ import javafx.beans.property.SimpleIntegerProperty;
  * A world can contain many entities, each occupy a square. More than one
  * entity can occupy the same square.
  */
+
 public class LoopManiaWorld {
-    // TODO = add additional backend functionality
 
-    public static final int unequippedInventoryWidth = 4;
-    public static final int unequippedInventoryHeight = 4;
-
-    /**
-     * width of the world in GridPane cells
-     */
+    public static int seed;
+    private static Random rand;
+    private BuildingFactory bF;
     private int width;
-
-    /**
-     * height of the world in GridPane cells
-     */
     private int height;
-
-    /**
-     * generic entitites - i.e. those which don't have dedicated fields
-     */
+    private JSONObject json;
+    private List<String> rareItems;
+    private Composite winChecker;
     private List<Entity> nonSpecifiedEntities;
-
     private Character character;
-
-    // TODO = add more lists for other entities, for equipped inventory items, etc...
-
-    // TODO = expand the range of enemies
-    private List<BasicEnemy> enemies;
-
-    // TODO = expand the range of cards
-    private List<Card> cardEntities;
-
-    // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
-
-    // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
-
-    /**
-     * list of x,y coordinate pairs in the order by which moving entities traverse them
-     */
+    private Pair<Integer, Integer> heroCastlePosition;
+    private static List<Enemy> enemies;
+    private List<BuildingOnCycle> cycleBuildings;
+    private List<BuildingOnMove> moveBuildings;
+    private BattleRunner battleRunner;
     private List<Pair<Integer, Integer>> orderedPath;
-
+    
     /**
-     * create the world (constructor)
      * 
-     * @param width width of world in number of cells
-     * @param height height of world in number of cells
-     * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
+     * @param width
+     * @param height
+     * @param orderedPath
+     * @param json
      */
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
+    private void commonConstructorMethod(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject json) {
         this.width = width;
         this.height = height;
+        bF = new BuildingFactory();
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
         enemies = new ArrayList<>();
-        cardEntities = new ArrayList<>();
-        unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
-        buildingEntities = new ArrayList<>();
+        moveBuildings = new ArrayList<BuildingOnMove>();
+        cycleBuildings = new ArrayList<BuildingOnCycle>();
+        battleRunner = new BattleRunner();
+        this.json = json;
+        rareItems = new ArrayList<String>();
+        spawn2slugs();
+        getRareItems();
     }
 
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
+        seed = (int)System.currentTimeMillis();
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
+        LoopManiaWorld.seed = seed;
+        LoopManiaWorld.rand = new Random(seed);
+        commonConstructorMethod(width, height, orderedPath, goals);
+    }
+
+    public LoopManiaWorld(int seed) {
+        rand = new Random(seed);
+    }
+
+    /**
+     * Places building that occur at start of game
+     * @param x
+     * @param y
+     * @param type
+     */
+    public void placeBuildingAtStart(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
+        Building building = bF.create(x, y, type);
+        if (building instanceof BuildingOnCycle) {
+            cycleBuildings.add((BuildingOnCycle)building);
+        }
+        else {
+            moveBuildings.add((BuildingOnMove)building);
+        }
+    }
+
+    /**
+     * Parse through json to get rare items
+     */
+    public void getRareItems() {
+        JSONArray rareItemList = json.getJSONArray("rare_items");
+        for (int i = 0; i < rareItemList.length(); i++) {
+            rareItems.add(rareItemList.getString(i));
+        }
+    }
+
+    /**
+     * Spawns 2 slugs at start of game
+     */
+    public void spawn2slugs() {
+        int pos1 = LoopManiaWorld.getRandNum() % orderedPath.size();
+        int pos2 = LoopManiaWorld.getRandNum() % orderedPath.size();
+        if (pos1 == pos2) pos2 += 1;
+        spawnSlug(pos1, orderedPath);
+        spawnSlug(pos2, orderedPath);
+    }
+    
+    /**
+     * Checks if character is dead
+     * @return
+     */
+    public boolean isCharacterDead() {
+        return character.isDead();
+    }
+    /**
+     * Simulates one tick in game
+     */
+    public void tick() {
+        moveEntities();
+        List<Enemy> deadEnemies = fight();
+        for (Enemy e : deadEnemies) {
+            e.getLoot(character, width, rareItems);
+        }
+        cleanUpFight();
+    }
+    /**
+     * Moves character and enemies and check if they activated any buildings
+     * @return
+     */
+    public List<Enemy> moveEntities() {
+        List<Enemy> newEnemies = new ArrayList<Enemy>();
+        character.moveDownPath();
+        checkBuildingActions(character);
+        moveEnemies();
+        triggerCycleActions(newEnemies);
+        updateEnemyList();
+        return newEnemies;
+    }
+    /**
+     * Checks if any enemies died during battle
+     */
+    public void updateEnemyList() {
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            Enemy e = enemies.get(i);
+            if (!e.shouldExist().get()) {
+                enemies.remove(i);
+            }
+        }
+    }
+    /**
+     * Checks for a fight with character and runs the battle
+     * @return list of defeated enemies
+     */
+    public List<Enemy> fight() {
+        List<Enemy> deadEnemies = checkForFight();
+        return deadEnemies;
+    }
+    /**
+     * Checks if player has won or nt and updates allied soldier amount
+     */
+    public void cleanUpFight() {
+        if (checkPlayerWin()) {
+            System.out.println("GAME HAS BEEN WON");
+        }
+        else if (checkPlayerLoss()) {
+            System.out.println("GAME HAS BEEN LOST");
+        }
+        updateEnemyList();
+        character.updateAlliedSoldierAmount();
+    }
+    /**
+     * Kills an enemy
+     * @param e
+     */
+    public void KillEnemy(Enemy e) {
+        enemies.remove(e);
+    }
+    /**
+     * Updates cycle count after lap and spawns new enemies
+     * @param newEnemies
+     */
+    public void triggerCycleActions(List<Enemy> newEnemies) {
+        if (onHeroCastle()) {
+            SpawnEnemiesOnCycle(newEnemies);
+            character.gainCycle();
+        }
+    }
+    /**
+     * Checks if character is standing on hero castle
+     * @return
+     */
+    public Boolean onHeroCastle() {
+        Pair<Integer, Integer> characterPos = new Pair<Integer, Integer>(character.getX(), character.getY());
+        return characterPos.equals(heroCastlePosition);
+    }
+    /**
+     * Checks if character is in range of enemies
+     * @return list of defeated enemies
+     */
+    private List<Enemy> checkForFight() {
+        return battleRunner.checkForFight(enemies, moveBuildings);
+    }
+    /**
+     * check if character has won
+     * @return true of false if player has won
+     */
+    public boolean checkPlayerWin() {
+        return winChecker.getValue();
+    }
+    /**
+     * check if character has lost
+     * @return true of false if player has lost
+     */
+    public boolean checkPlayerLoss() {
+        return character.getHealth() <= 0;
+    }
+    /**
+     * Processes loot drop from enemy
+     * This function is only called by the frontend
+     * @param deadEnemy
+     * @return Loot
+     */
+    public StaticEntity processEnemyLoot(Enemy deadEnemy) {
+        return deadEnemy.getLoot(character, width, rareItems);
+    }
+    /**
+     * add a generic entity (without it's own dedicated method for adding to the world)
+     * @param entity
+     */
+    public void addEntity(Entity entity) {
+        nonSpecifiedEntities.add(entity);
+    }
+
+    private boolean empty(Pair<Integer, Integer> p) {
+        if (!enemies.isEmpty()) {
+            for (Enemy e : enemies) {
+                if (e.getX() == p.getValue0() && e.getY() == p.getValue1()) {
+                    return false;
+                }
+            }
+        }
+        if (character.getX() == p.getValue0() && character.getY() == p.getValue1()) {
+            return false;
+        }
+        return true;
+    }
+
+    private List<Pair<Integer, Integer>> getAdjacentPathTiles(StaticEntity b) {
+        List<Pair<Integer, Integer>> adjacent = new ArrayList<Pair<Integer, Integer>>();
+        for (Pair<Integer, Integer> p : orderedPath) {
+            if (!empty(p)) continue;
+
+            // If path is above building
+            if (p.getValue0() == b.getX() && p.getValue1() == b.getY() - 1) {
+                adjacent.add(p);
+            }
+            // If path is below building
+            else if (p.getValue0() == b.getX() && p.getValue1() == b.getY() + 1) {
+                adjacent.add(p);
+            }
+            // If path is left of building
+            else if (p.getValue0() == b.getX() - 1 && p.getValue1() == b.getY()) {
+                adjacent.add(p);
+            }
+            // If path is right of building
+            else if (p.getValue0() == b.getX() + 1 && p.getValue1() == b.getY()) {
+                adjacent.add(p);
+            }
+        }
+        return adjacent;
+    }
+
+    public void SpawnEnemiesOnCycle(List<Enemy> newEnemies) {
+        // For each building, figure out how many/where to spawn enemies then spawn them
+        for (BuildingOnCycle b : cycleBuildings) {
+            // adjacent contains every PathTile touching building b
+            List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
+            int numSpawn;
+            if (b instanceof VampireCastleBuilding) {
+                numSpawn = Integer.min(((VampireCastleBuilding)b).generateNumberOfEnemies(character.getCycles().get()), adjacent.size());
+            }
+            else {
+                numSpawn = Integer.min(b.generateNumberOfEnemies(), adjacent.size());
+            }
+            for (int i = 0; i < numSpawn; i++) {
+                int tile = LoopManiaWorld.getRandNum() % adjacent.size();
+                int positioninPath = getNumInPath(adjacent.get(tile));
+                Enemy e = b.spawnEnemy(new PathPosition(positioninPath, orderedPath));
+                adjacent.remove(tile);
+                enemies.add(e);
+                newEnemies.add(e);
+            }
+        }
+        // Spawn 2 slugs every cycle
+        List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
+        for (int i = 0; i < 2; i++) {
+            int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
+            newEnemies.add(spawnSlug(position, emptyTiles));
+        }
+    }
+
+
+    public StaticEntity loadCard(String type, int width) {
+        return character.loadCard(type, width);
+    }
+
+    /**
+     * Check if card placement is valid
+     * This function is only called by the frontend
+     * @param card
+     * @param x
+     * @param y
+     * @return boolean
+     */
+    public boolean isValidPlacement(Card card, int x, int y) {
+        return card.canBePlaced(x, y, orderedPath);
+    }
+
+    /**
+     * Equips character with item
+     * @param i
+     */
+    public void equipItem(Item i) {
+        character.equip(i);
+    }
+    /**
+     * Gets closest campfire from Vampire
+     * @param x
+     * @param y
+     * @return closest campfire
+     */
+    private CampfireBuilding getClosestCampfire(int x, int y) {
+        CampfireBuilding closest = null;
+        double closestDistance = getHeight(); // max distance
+        for (BuildingOnMove b : moveBuildings) {
+            if (b instanceof CampfireBuilding) {
+                double distance = Math.sqrt(Math.pow(((StaticEntity)b).getX() - x, 2) + Math.pow(((StaticEntity)b).getY() - y, 2));
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closest = (CampfireBuilding)b;
+                }
+            }
+        }
+        return closest;
+    }
+
+    /**
+     * Move all enemies. This method is called every tick.
+     */
+    private void moveEnemies() { 
+        for (Enemy e: enemies){
+            if (e instanceof Vampire) {
+                ((Vampire)e).move(getClosestCampfire(e.getX(), e.getY()));
+            }
+            else {
+                e.move();
+            }
+            checkBuildingActions(e);
+        }
+    }
+
+    /**
+     * Updates all buildings that update on move
+     * @param e
+     */
+    public void checkBuildingActions(MovingEntity e) {
+        for (BuildingOnMove b : moveBuildings) {
+            b.updateOnMove(e);
+        }
+    }
+
+    /**
+     * Adds building to list of buildings
+     * @param b
+     */
+    private void addBuilding(Building b) {
+        if (b instanceof BuildingOnCycle) {
+            cycleBuildings.add((BuildingOnCycle)b);
+        }
+        else if (b instanceof BuildingOnMove) {
+            moveBuildings.add((BuildingOnMove)b);
+        }
+    }
+
+    /**
+     * Converts a dragged card into a building on the map and then removes the card afterwards
+     * @param cardNodeX int: Column coordinate of card in card inventory
+     * @param cardNodeY int: Row coordinate of card in card inventory
+     * @param buildingNodeX int: Column coordinate of building on the map
+     * @param buildingNodeY int: Row coordinate of building on the map
+     */
+    public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+        // start by getting card
+        Card card = character.getMatchingCard(cardNodeX, cardNodeY);
+        // now spawn building
+        Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
+        // buildingEntities.add(newBuilding);
+        addBuilding(newBuilding);
+        // destroy the card
+        character.destroyCard(card, cardNodeX);
+        return newBuilding;
+    }
+
+    /**
+     * Spawns a slug  on an empty PathTile
+     * @param i int: position in ordered path
+     * @param orderedPath2 List<Pair<Integer, Integer>>: the orderedPath
+     * @return Slug: the slug that was just spawned
+     */
+    public Slug spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath) {
+        EnemyFactory e = new EnemyFactory();
+        Enemy slug =  e.create(new PathPosition(i, orderedPath), "slug");
+        enemies.add(slug);
+        return (Slug)slug;
+    }
+
+    /**
+     * Makes character drink potion (if possible)
+     */
+    public void drinkPotion() {
+        character.drinkPotion();
+    }
+
+    //Getters and Setters
+    //////////////////////////////////
+    /**
+     * Gets the width of the map
+     * @return int: the width of the map
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the height of the map
+     * @return int: the height of the map
+     */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * Static method that generates a random number so other classes
+     * that uses 'random' numbers can generate them using the same Random object
+     * @return int: A random number between 0-99
+     */
+    public static int getRandNum() {
+        return LoopManiaWorld.rand.nextInt(100);
+    }
+
+    /**
+     * Gets the orderedPath that the map uses
+     * @return List<Pair<Integer, Integer>>: the orderedPath
+     */
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
+        copy.addAll(orderedPath);
+        return copy;
+    }
+
+    /**
+     * Gets a list of enemies on the map
+     * @return List<Enemy>: the list of enemies
+     */
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    /**
+     * Gets a list of the character's unequipped items
+     * @return List<Item>: list of the character's unequipped items
+     */
+    public List<Item> getItems() {
+        return character.getunequippedInventoryItems();
+    }
+
+    /**
+     * Gets a list of all buildings that update when an entity moves on/within range of it
+     * @return List<BuildingOnMove>: a list of buildings
+     */
+    public List<BuildingOnMove> getMoveBuildings() {
+        return moveBuildings;
+    }
+
+    /**
+     * Gets a list of all buildings that update at the start of every cycle
+     * @return List<BuildingOnCycle>: a list of buildings
+     */
+    public List<BuildingOnCycle> getCycleBuildings() {
+        return cycleBuildings;
+    }
+
+    /**
+     * Gets the maximum amount of a goal 'resource' (gold, experience, cycles)
+     * that is needed to win the game
+     * @param goal String: The particular resource in question
+     * @return int: How much is needed
+     */
+    public int getMaxGoal(String goal) {
+        return winChecker.getMax(goal);
+    }
+
+    /**
+     * Gets the index of a tile in the orderedPath
+     * @param tile Pair<Integer, Integer>: The tile in question
+     * @return int: The tile's index
+     */
+    private int getNumInPath(Pair<Integer, Integer> tile) {
+        for (int i = 0; i < orderedPath.size(); i++) {
+            if (tile.equals(orderedPath.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Gets an equipped item by its index in the equipped item inventory
+     * @param x int: index of item
+     * @return Item: The equipped item
+     */
+    public Item getEquippedItemByCoordinates(int x) {
+        if (x == 0) {
+            return character.getWeapon();
+        }
+        else if (x == 1) {
+            return character.getHelmet(); 
+        }
+        else if (x == 2) {
+            return character.getShield();
+        }
+        else if (x == 3) {
+            return character.getArmour();
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets a list of all items that don't have levels
+     * (e.g. HealthPotion and TheOneRing)
+     * @return List<String>: a list of all items that don't have levels
+     */
+    public List<String> getNonLevelItems() {
+        return character.getNonLevelItems();
+    }
+
+    /**
+     * Gets a list of all empty (spawnable) tiles
+     * @return List<Pair<Integer, Integer>>: a list of all empty tiles
+     */
+    private List<Pair<Integer, Integer>> getAllEmptyTiles() {
+        List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
+        for (Pair<Integer, Integer> p : orderedPath) {
+            if (empty(p)) tiles.add(p);
+        }
+        return tiles;
+    }
+
+    /**
+     * Gets the character
+     * @return Character: The character
+     */
+    public Character getCharacter() {
+        return character;
     }
 
     /**
@@ -88,264 +581,121 @@ public class LoopManiaWorld {
      * @param character the character
      */
     public void setCharacter(Character character) {
+        itemFactory iF = new itemFactory();
         this.character = character;
+        heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
+        GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
+        winChecker = goals.getChecker();
+        battleRunner.setCharacter(character);
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
     }
 
     /**
-     * add a generic entity (without it's own dedicated method for adding to the world)
-     * @param entity
+     * Gets the width of the unequipped inventory
+     * @return int: The width
      */
-    public void addEntity(Entity entity) {
-        // for adding non-specific entities (ones without another dedicated list)
-        // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
-        nonSpecifiedEntities.add(entity);
+    public static int getunequippedInventoryWidth() {
+        return Inventory.getunequippedInventoryWidth();
     }
 
     /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
+     * Gets the height of the unequipped inventory
+     * @return int: The height
      */
-    public List<BasicEnemy> possiblySpawnEnemies(){
-        // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
-        List<BasicEnemy> spawningEnemies = new ArrayList<>();
-        if (pos != null){
-            int indexInPath = orderedPath.indexOf(pos);
-            BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
-            enemies.add(enemy);
-            spawningEnemies.add(enemy);
-        }
-        return spawningEnemies;
+    public static int getunequippedInventoryHeight() {
+        return Inventory.getunequippedInventoryHeight();
     }
 
     /**
-     * kill an enemy
-     * @param enemy enemy to be killed
+     * Gets an unequipped item from the character's inventory by its coordinates
+     * @param nodeX int: The column coordinate of the item in the character's unequipped item inventory
+     * @param nodeY int: The row coordinate of the item in the character's unequipped item inventory
+     * @return Item: The item at the coordinates
      */
-    private void killEnemy(BasicEnemy enemy){
-        enemy.destroy();
-        enemies.remove(enemy);
+    public Item getUnequippedInventoryItemEntityByCoordinates(int nodeX, int nodeY) {
+        return character.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
     }
 
     /**
-     * run the expected battles in the world, based on current world state
-     * @return list of enemies which have been killed
+     * Adds an unequipped item to the character's inventory
+     * @param type String: The type of item to add
+     * @param i int: The level of the item
+     * @return StaticEntity: The item added
      */
-    public List<BasicEnemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
-        for (BasicEnemy e: enemies){
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-                // fight...
-                defeatedEnemies.add(e);
-            }
-        }
-        for (BasicEnemy e: defeatedEnemies){
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-            // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
-        }
-        return defeatedEnemies;
+    public StaticEntity addUnequippedItem(String type, int level) {
+        return character.addUnequippedItem(type, level);
     }
 
     /**
-     * spawn a card in the world and return the card entity
-     * @return a card to be spawned in the controller as a JavaFX node
+     * Removes an unequipped item to the character's inventory by its coordinates
+     * @param nodeX int: The column coordinate of the item in the character's unequipped item inventory
+     * @param nodeY int: The row coordinate of the item in the character's unequipped item inventory
      */
-    public VampireCastleCard loadVampireCard(){
-        // if adding more cards than have, remove the first card...
-        if (cardEntities.size() >= getWidth()){
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
-            removeCard(0);
-        }
-        VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(vampireCastleCard);
-        return vampireCastleCard;
+    public void removeUnequippedInventoryItemByCoordinates(int nodeX, int nodeY) {
+        character.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
     /**
-     * remove card at a particular index of cards (position in gridpane of unplayed cards)
-     * @param index the index of the card, from 0 to length-1
+     * Gets a card from the character's card inventory from its index
+     * @param x int: index of the card
+     * @return Card: The card
      */
-    private void removeCard(int index){
-        Card c = cardEntities.get(index);
-        int x = c.getX();
-        c.destroy();
-        cardEntities.remove(index);
-        shiftCardsDownFromXCoordinate(x);
+    public Card getCardByCoordinate(int nodeX) {
+        return character.getCardByCoordinate(nodeX);
     }
 
     /**
-     * spawn a sword in the world and return the sword entity
-     * @return a sword to be spawned in the controller as a JavaFX node
+     * Sets the seed that is used to generate random numbers
+     * @param seed int: The seed to be used
      */
-    public Sword addUnequippedSword(){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
-        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
-            removeItemByPositionInUnequippedInventoryItems(0);
-            firstAvailableSlot = getFirstAvailableSlotForItem();
-        }
-        
-        // now we insert the new sword, as we know we have at least made a slot available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(sword);
-        return sword;
+    public static void setSeed(int seed) {
+        rand = new Random(seed);
+    }
+    
+    /**
+     * Gets the character's cycles
+     * @return int: The character's cycles
+     */
+    public IntegerProperty getCycles() {
+        return character.getCycles();
     }
 
     /**
-     * remove an item by x,y coordinates
-     * @param x x coordinate from 0 to width-1
-     * @param y y coordinate from 0 to height-1
+     * Gets the character's gold
+     * @return int: The character's gold
      */
-    public void removeUnequippedInventoryItemByCoordinates(int x, int y){
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        removeUnequippedInventoryItem(item);
+    public IntegerProperty getGold() {
+        return character.getGoldProperty();
     }
 
     /**
-     * run moves which occur with every tick without needing to spawn anything immediately
+     * Gets the character's experience
+     * @return int: The character's experience
      */
-    public void runTickMoves(){
-        character.moveDownPath();
-        moveBasicEnemies();
+    public IntegerProperty getXP() {
+        return character.getXP();
     }
 
     /**
-     * remove an item from the unequipped inventory
-     * @param item item to be removed
+     * Gets the character's health
+     * @return IntegerProperty: The character's health
      */
-    private void removeUnequippedInventoryItem(Entity item){
-        item.destroy();
-        unequippedInventoryItems.remove(item);
+    public IntegerProperty getHealth() {
+        return character.getHealthProperty();
     }
 
-    /**
-     * return an unequipped inventory item by x and y coordinates
-     * assumes that no 2 unequipped inventory items share x and y coordinates
-     * @param x x index from 0 to width-1
-     * @param y y index from 0 to height-1
-     * @return unequipped inventory item at the input position
-     */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Entity e: unequippedInventoryItems){
-            if ((e.getX() == x) && (e.getY() == y)){
-                return e;
-            }
-        }
-        return null;
-    }
 
-    /**
-     * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
-     * @param index index from 0 to length-1
-     */
-    private void removeItemByPositionInUnequippedInventoryItems(int index){
-        Entity item = unequippedInventoryItems.get(index);
-        item.destroy();
-        unequippedInventoryItems.remove(index);
-    }
+///////////////////
+//Functions for testing
 
-    /**
-     * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
-     * @return x,y coordinate pair
-     */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
-        // first available slot for an item...
-        // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
-        for (int y=0; y<unequippedInventoryHeight; y++){
-            for (int x=0; x<unequippedInventoryWidth; x++){
-                if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
-                    return new Pair<Integer, Integer>(x, y);
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * shift card coordinates down starting from x coordinate
-     * @param x x coordinate which can range from 0 to width-1
-     */
-    private void shiftCardsDownFromXCoordinate(int x){
-        for (Card c: cardEntities){
-            if (c.getX() >= x){
-                c.x().set(c.getX()-1);
-            }
-        }
-    }
-
-    /**
-     * move all enemies
-     */
-    private void moveBasicEnemies() {
-        // TODO = expand to more types of enemy
-        for (BasicEnemy e: enemies){
-            e.move();
-        }
-    }
-
-    /**
-     * get a randomly generated position which could be used to spawn an enemy
-     * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
-     */
-    private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
-        // TODO = modify this
-        
-        // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
-        Random rand = new Random();
-        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-        // TODO = change based on spec
-        if ((choice == 0) && (enemies.size() < 2)){
-            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
-            // inclusive start and exclusive end of range of positions not allowed
-            int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
-            int endNotAllowed = (indexPosition + 3)%orderedPath.size();
-            // note terminating condition has to be != rather than < since wrap around...
-            for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
-                orderedPathSpawnCandidates.add(orderedPath.get(i));
-            }
-
-            // choose random choice
-            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
-
-            return spawnPosition;
-        }
-        return null;
-    }
-
-    /**
-     * remove a card by its x, y coordinates
-     * @param cardNodeX x index from 0 to width-1 of card to be removed
-     * @param cardNodeY y index from 0 to height-1 of card to be removed
-     * @param buildingNodeX x index from 0 to width-1 of building to be added
-     * @param buildingNodeY y index from 0 to height-1 of building to be added
-     */
-    public VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
-        // start by getting card
-        Card card = null;
-        for (Card c: cardEntities){
-            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
-                card = c;
-                break;
-            }
-        }
-        
-        // now spawn building
-        VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-        buildingEntities.add(newBuilding);
-
-        // destroy the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
-
-        return newBuilding;
+/**
+ * Integration tests aren't working on Gradle, so this is the only way to spawn a vampire
+ * because without using the LoopManiaWorldLoader, it's impossible to load in a 
+ */
+    public Enemy spawnVampire() {
+        EnemyFactory eF = new EnemyFactory();
+        Enemy vamp = eF.create(new PathPosition(0, orderedPath), "vampire");
+        enemies.add(vamp);
+        return vamp;
     }
 }

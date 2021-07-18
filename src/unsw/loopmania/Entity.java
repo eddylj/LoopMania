@@ -23,7 +23,7 @@ public abstract class Entity {
      * This is why we don't have to track which JavaFX node corresponds to which backend entity explicitly! (for example, in a Hashmap)
      */
     private BooleanProperty shouldExist;
-
+    private String type;
     /**
      * create an Entity
      * this constructor should be called for subclass Entities
@@ -32,6 +32,12 @@ public abstract class Entity {
         shouldExist = new SimpleBooleanProperty(true);
     }
 
+    public void setType(String type){
+        this.type = type;
+    }
+    public String getType(){
+        return type;
+    }
      /**
       * specify that this entity should destroy itself
       * this method will trigger any ChangeListeners attached to shouldExist

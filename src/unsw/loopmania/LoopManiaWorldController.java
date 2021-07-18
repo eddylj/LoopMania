@@ -10,13 +10,20 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Label;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -27,8 +34,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.util.EnumMap;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -98,6 +109,33 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane unequippedInventory;
 
+    @FXML
+    private Label gameState;
+
+    @FXML
+    private Rectangle healthBar;
+
+    @FXML
+    private Label goldAmount;
+
+    @FXML
+    private Label xpAmount;
+
+    @FXML
+    private Label cyclesAmount;
+
+    @FXML
+    private Label goldGoal;
+
+    @FXML
+    private Label xpGoal;
+
+    @FXML
+    private Label cyclesGoal;
+
+    @FXML
+    private Label alliedSoldierAmount;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -106,6 +144,9 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
+    private boolean buyShopOpen;
+    private boolean sellShopOpen;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -113,11 +154,6 @@ public class LoopManiaWorldController {
      * runs the periodic game logic - second-by-second moving of character through maze, as well as enemies, and running of battles
      */
     private Timeline timeline;
-
-    private Image vampireCastleCardImage;
-    private Image basicEnemyImage;
-    private Image swordImage;
-    private Image basicBuildingImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -163,11 +199,9 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        buyShopOpen = false;
+        sellShopOpen = false;
         entityImages = new ArrayList<>(initialEntities);
-        vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
-        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
-        basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -180,7 +214,7 @@ public class LoopManiaWorldController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         // TODO = load more images/entities during initialization
         
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
@@ -209,18 +243,60 @@ public class LoopManiaWorldController {
         }
 
         // add the empty slot images for the unequipped inventory
-        for (int x=0; x<LoopManiaWorld.unequippedInventoryWidth; x++){
-            for (int y=0; y<LoopManiaWorld.unequippedInventoryHeight; y++){
+        for (int x=0; x<LoopManiaWorld.getunequippedInventoryWidth(); x++){
+            for (int y=0; y<LoopManiaWorld.getunequippedInventoryHeight(); y++){
                 ImageView emptySlotView = new ImageView(inventorySlotImage);
                 unequippedInventory.add(emptySlotView, x, y);
             }
         }
 
+        ImageView view = new ImageView(new File(String.format("src/images/sword1.png")).toURI().toString());
+        equippedItems.getChildren().add(view);
+
+        for (BuildingOnMove b : world.getMoveBuildings()) {
+            onLoad((Building)b);
+        }
+
+        for (BuildingOnCycle b : world.getCycleBuildings()) {
+            onLoad((Building)b);
+        }
+
+        for (Enemy e : world.getEnemies()) {
+            onLoad(e);
+        }
+
+        for (Item i : world.getItems()) {
+            onLoad(i);
+        }
+
+        // Initialise bindings for stats and allied soldiers
+        goldAmount.textProperty().bind(world.getGold().asString());
+        cyclesAmount.textProperty().bind(world.getCycles().asString());
+        xpAmount.textProperty().bind(world.getXP().asString());
+        alliedSoldierAmount.textProperty().bind(world.getCharacter().getAlliedSoldierProperty().asString());
+
+        // initialises healt hbar
+        healthBar.toFront();
+        healthBar.setFill(Color.RED);
+        // binds character health as a percentage to the health bar rectangle
+        healthBar.widthProperty().bind(Bindings.divide(world.getHealth(), 100/healthBar.widthProperty().get()));
+
+        // Initialise bindings for goals
+        goldGoal.setText(Integer.toString(world.getMaxGoal("gold")));
+        xpGoal.setText(Integer.toString(world.getMaxGoal("experience")));
+        cyclesGoal.setText(Integer.toString(world.getMaxGoal("cycles")));
+
+        
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+    }
+
+    public void startWithSword() {
+        
     }
 
     /**
@@ -232,14 +308,27 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
-            world.runTickMoves();
-            List<BasicEnemy> defeatedEnemies = world.runBattles();
-            for (BasicEnemy e: defeatedEnemies){
+            List<Enemy> newEnemies = world.moveEntities();
+
+            for (Enemy newEnemy : newEnemies){
+                onLoad(newEnemy);
+            }
+            List<Enemy> defeatedEnemies = world.fight();
+            world.cleanUpFight();
+            for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
-            for (BasicEnemy newEnemy: newEnemies){
-                onLoad(newEnemy);
+
+            if (world.isCharacterDead()) {
+                pause();
+                loadDeathScreen();
+            }
+            if (world.onHeroCastle()) {
+                try {
+                    shopCycles(world.getCycles().get());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -255,12 +344,27 @@ public class LoopManiaWorldController {
         isPaused = true;
         System.out.println("pausing");
         timeline.stop();
+        gameState.setText("Paused");
+        gameState.setTextFill(Color.RED);
     }
 
     public void terminate(){
-        pause();
+        Platform.exit();
     }
 
+    public void tryToPlay() {
+        if (isPaused && !buyShopOpen && !sellShopOpen){
+            play();
+        }
+    }
+
+    public void play(){
+        isPaused = false;
+        System.out.println("playing");
+        timeline.play();
+        gameState.setText("Playing");
+        gameState.setTextFill(Color.GREEN);
+    }
     /**
      * pair the entity an view so that the view copies the movements of the entity.
      * add view to list of entity images
@@ -273,35 +377,50 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a vampire card from the world, and pair it with an image in the GUI
-     */
-    private void loadVampireCard() {
-        // TODO = load more types of card
-        VampireCastleCard vampireCastleCard = world.loadVampireCard();
-        onLoad(vampireCastleCard);
-    }
-
-    /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadSword(){
-        // TODO = load more types of weapon
-        // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword();
-        onLoad(sword);
-    }
+    // private void loadSword(){
+    //     // TODO = load more types of weapon
+    //     // start by getting first available coordinates
+    //     Sword sword = world.addUnequippedSword(1);
+    //     onLoad(sword);
+    // }
 
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(BasicEnemy enemy){
+    private void reactToEnemyDefeat(Enemy enemy){
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadSword();
-        loadVampireCard();
+        world.KillEnemy(enemy);
+        StaticEntity loot = world.processEnemyLoot(enemy);
+        if (loot instanceof Card) {
+            loadCard((Card)loot);
+        }
+        else if (loot instanceof Item) {
+            loadItem((Item)loot);
+        }
+        // loadSword();
+        // loadVampireCard();
     }
+
+    /**
+     * load a sword from the world, and pair it with an image in the GUI
+     */
+    public void loadItem(Item item){
+        // TODO = load more types of weapon
+        // start by getting first available coordinates
+        // Sword sword = world.addUnequippedSword(1);
+        onLoad(item);
+    }
+
+    private void loadCard(Card card) {
+        onLoad(card);
+    }
+
+
 
     /**
      * load a vampire castle card into the GUI.
@@ -309,14 +428,16 @@ public class LoopManiaWorldController {
      * and load the image into the cards GridPane.
      * @param vampireCastleCard
      */
-    private void onLoad(VampireCastleCard vampireCastleCard) {
-        ImageView view = new ImageView(vampireCastleCardImage);
+    private void onLoad(Card card) {
+        // ImageView view = new ImageView(vampireCastleCardImage);
+        String imageName = String.format("src/images/%s_card.png", ((StaticEntity)card).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
 
         // FROM https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
         // note target setOnDragOver and setOnDragEntered defined in initialize method
         addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
 
-        addEntity(vampireCastleCard, view);
+        addEntity((Entity)card, view);
         cards.getChildren().add(view);
     }
 
@@ -326,10 +447,20 @@ public class LoopManiaWorldController {
      * and load the image into the unequippedInventory GridPane.
      * @param sword
      */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
+    private void onLoad(Item item) {
+        // ImageView view = new ImageView(swordImage);
+        ImageView view = null;
+        if (world.getNonLevelItems().contains(((StaticEntity)item).getType())) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
+        }
+        else if (item instanceof Weapon) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Weapon)item).getLevel()))).toURI().toString()));
+        }
+        else {
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Protection)item).getLevel()))).toURI().toString()));
+        }
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
+        addEntity((Entity)item, view);
         unequippedInventory.getChildren().add(view);
     }
 
@@ -337,8 +468,10 @@ public class LoopManiaWorldController {
      * load an enemy into the GUI
      * @param enemy
      */
-    private void onLoad(BasicEnemy enemy) {
-        ImageView view = new ImageView(basicEnemyImage);
+    private void onLoad(Enemy enemy) {
+        // ImageView view = new ImageView(basicEnemyImage);
+        String imageName = String.format("src/images/%s.png", ((MovingEntity)enemy).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
@@ -347,10 +480,35 @@ public class LoopManiaWorldController {
      * load a building into the GUI
      * @param building
      */
-    private void onLoad(VampireCastleBuilding building){
-        ImageView view = new ImageView(basicBuildingImage);
-        addEntity(building, view);
+    private void onLoad(Building building){
+        // ImageView view = new ImageView(basicBuildingImage);
+        String imageName = String.format("src/images/%s_building.png", ((StaticEntity)building).getType());
+        ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
+        addEntity((Entity)building, view);
         squares.getChildren().add(view);
+    }
+
+    private boolean newPositionValid(Item item, Node node) {
+        if (node == null) {
+            return false;
+        }
+        if (item instanceof Weapon && node.getId().equals("swordCell")) {
+            return true;
+        }
+        else if (item instanceof Helmet && node.getId().equals("helmetCell")) {
+            return true;
+        }
+        else if (item instanceof Armour && node.getId().equals("armourCell")) {
+            return true;
+        }
+        else if (item instanceof Shield && node.getId().equals("shieldCell")) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validPlacement(Card card, int x, int y) {
+        return world.isValidPlacement(card, x, y);
     }
 
     /**
@@ -380,8 +538,11 @@ public class LoopManiaWorldController {
                     //If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
+                    if (node.getId() == null) {
+                        node.toBack();
+                        node = event.getPickResult().getIntersectedNode();
+                    }
                     if(node != targetGridPane && db.hasImage()){
-
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
@@ -393,16 +554,47 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType){
                             case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn a building here of different types
-                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                onLoad(newBuilding);
+                                Card card = world.getCardByCoordinate(nodeX);
+                                if (card != null && validPlacement(card, x, y)) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    // TODO = spawn a building here of different types
+                                    Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                    onLoad(newBuilding);
+                                }
+                                else {
+                                    return;
+                                }
                                 break;
                             case ITEM:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
+                                Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
+                                if (newPositionValid(item, node)) {
+                                    StaticEntity olditem = (StaticEntity)world.getEquippedItemByCoordinates(x);
+                                    // Put previously equipped item back in inventory (then overwrite it)
+                                    if (olditem != null) {
+                                        StaticEntity newItem = null;
+                                        if (olditem instanceof Weapon) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                        }
+                                        else if (olditem instanceof Protection) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+                                        }
+                                        else {
+                                            System.out.println("nope. thats bad.");
+                                        }
+                                        // put previously equipped weapon back in the unequipped inventory
+                                        onLoad((Item)newItem);
+                                        olditem.destroy();
+                                    }
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                    world.equipItem(item);
+                                    System.out.println("Successfully dropped");
+                                }
+                                else {
+                                    System.out.println("New position is not valid");
+                                    return;
+                                }
                                 break;
                             default:
                                 break;
@@ -476,7 +668,7 @@ public class LoopManiaWorldController {
      * @param buildingNodeY the y coordinate of the drop location for the card, where the building will spawn, from 0 to height-1
      * @return building entity returned from the world
      */
-    private VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
     }
 
@@ -514,16 +706,16 @@ public class LoopManiaWorldController {
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
-                switch (draggableType){
-                    case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
-                        break;
-                    case ITEM:
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    default:
-                        break;
-                }
+                // switch (draggableType){
+                //     case CARD:
+                //         draggedEntity.setImage(vampireCastleCardImage);
+                //         break;
+                //     case ITEM:
+                //         draggedEntity.setImage(swordImage);
+                //         break;
+                //     default:
+                //         break;
+                // }
                 
                 draggedEntity.setVisible(true);
                 draggedEntity.setMouseTransparent(true);
@@ -601,13 +793,19 @@ public class LoopManiaWorldController {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
         case SPACE:
-            if (isPaused){
+            if (isPaused && !buyShopOpen && !sellShopOpen){
                 startTimer();
+                play();
+            }
+            else if (buyShopOpen || sellShopOpen) {
+                System.out.println("must close shop");
             }
             else{
                 pause();
             }
             break;
+        case D:
+            world.drinkPotion();
         default:
             break;
         }
@@ -624,10 +822,57 @@ public class LoopManiaWorldController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        // TODO = possibly set other menu switchers
-        pause();
+        terminate();
         mainMenuSwitcher.switchMenu();
     }
+
+    public void shopCycles(int cycles) throws IOException {
+        int sum = 0;
+        for (int i = 1; sum <= cycles; i++) {
+            sum = sum + i;
+            if (sum == cycles) {
+                switchToShop();
+            }
+        }
+    }
+
+    public void setBuyShopOpen(boolean shopOpen) {
+        this.buyShopOpen = shopOpen;
+    }
+
+    public void setSellShopOpen(boolean shopOpen) {
+        this.sellShopOpen = shopOpen;
+    }
+
+    public void switchToShop() throws IOException  {
+        pause();
+        buyShopOpen = true;
+
+        ShopBuyController shopBuyController = new ShopBuyController(this, world);
+        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+        shopLoader.setController(shopBuyController);
+        
+        Scene scene = new Scene(shopLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Shop-Buy");
+
+        stage.setScene(scene);
+        stage.setOnCloseRequest(event -> {
+            buyShopOpen = false;
+            tryToPlay();
+        });
+        stage.show();
+    }
+
+    public void loadDeathScreen() {
+        Label label = new Label("GAME OVER");
+        label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 40));
+        label.setTextFill(Color.RED);
+        
+        anchorPaneRoot.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, anchorPaneRoot.getHeight()/2);
+    }
+    
 
     /**
      * Set a node in a GridPane to have its position track the position of an

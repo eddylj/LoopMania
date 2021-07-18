@@ -36,6 +36,36 @@ public class PathPosition{
     }
 
     /**
+     * Gets ordered path from position
+     * @return orderedPath (List of Integer Pairs)
+     */
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        return orderedPath;
+    }
+
+    /**
+     * Gets next position in path
+     * @return Integer Pair representing next position in path
+     */
+    public Pair<Integer, Integer> getClockwisePosition() {
+        return orderedPath.get((getPositionInPath() + 1) % orderedPath.size());
+    }
+
+    /**
+     * Gets previous position in path
+     * @return Integer Pair representing previous position in path
+     */
+    public Pair<Integer, Integer> getAntiClockwisePosition() {
+        // Deal with modulo
+        if (getPositionInPath() == 0) {
+            return orderedPath.get(orderedPath.size() - 1);
+        }
+        else {
+            return orderedPath.get(getPositionInPath() - 1);
+        }
+    }
+
+    /**
      * move forward through the path i.e. clockwise
      */
     public void moveDownPath(){
@@ -66,5 +96,9 @@ public class PathPosition{
 
     public SimpleIntegerProperty getY(){
         return y;
+    }
+
+    public int getPositionInPath() {
+        return currentPositionInPath;
     }
 }

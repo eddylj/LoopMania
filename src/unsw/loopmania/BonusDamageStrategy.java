@@ -1,5 +1,11 @@
 package unsw.loopmania;
 
+/**
+ * BonusDamageStrategy is a strategy pattern used for calculating external buffs
+ * to the character's damage. Currently it is either NormalState or CampfireState
+ * depending on whether the character is in range of a CampfireBuilding
+ * @author Group FRIDGE
+ */
 public interface BonusDamageStrategy {
-    public int ApplyBonusDamge(int damage);
+    public double ApplyBonusDamge(double damage);
 }

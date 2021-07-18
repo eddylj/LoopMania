@@ -2,17 +2,37 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class VillageBuilding extends StaticEntity implements BuildingOnMove{
-
+public class VillageBuilding extends StaticEntity implements Building, BuildingOnMove{
+    /**
+     * 
+     * @param x
+     * @param y
+     */
     public VillageBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        //TODO Auto-generated constructor stub
+        super.setType("village");
     }
 
+    /**
+     * Checks if character is on village. If so heal it
+     * @param character
+     */
     @Override
-    public void updateOnMove() {
-        // TODO Auto-generated method stub
+    public void updateOnMove(MovingEntity character) {
+        if (!(character instanceof Character)) {
+            return;
+        }
+        else if (character.getX() == super.getX() && character.getY() == super.getY()) {
+            heal((Character) character);
+        }
         
+    }
+    /**
+     * Heals character
+     * @param c
+     */
+    public void heal(Character c) {
+        c.restoreHealth((100- c.getHealth())/2);
     }
     
 }

@@ -4,11 +4,13 @@ public class NormalState implements BonusDamageStrategy{
     public NormalState() {
         
     }
-
+    /**
+     * @return damage
+     */
     @Override
-    public int ApplyBonusDamge(int damage) {
+    public double ApplyBonusDamge(double damage) {
         // TODO Auto-generated method stub
-        return 0;
+        return damage;
     }
     
 }

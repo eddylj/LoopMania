@@ -1,54 +1,95 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.Test;
 import unsw.loopmania.Character;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Equipment;
+import unsw.loopmania.LoopManiaWorld;
+
+// import unsw.loopmania.OneRing;
 
 public class InventoryTest {
     @Test
     public void PickUpDifferentItemsTest() {
         Character c = new Character();
-        Equipment sword = new Sword(1);
-        Equipment armour = new Armour(2);
-        Equipment helmet = new Helmet(3);
-        Equipment shield = new Shield(4);
-        Equipment potion = new Potion();
-        Equipment oneRing = new OneRing(6);
-        Equipment stake = new Stake(7);
-        Equipment staff = new Staff(8);
-        Equipment sword2 = new Sword(9);
-        Equipment helmet2 = new Helmet(9);
-        Equipment potion2 = new Potion();
-        Equipment sword3 = new Sword(1);
-        assertEquals(0, c.numEquipmentInInventory());
-        c.pickUp(sword);
-        assertEquals(1, c.numEquipmentInInventory());
-        c.pickUp(helmet);
-        c.pickUp(armour);
-        c.pickUp(shield);
-        c.pickUp(potion);
-        assertEquals(5, c.numEquipmentInInventory());
-        c.pickUp(oneRing);
-        c.pickUp(stake);
-        c.pickUp(staff);
-        c.pickUp(sword2);
-        c.pickUp(helmet2);
-        c.pickUp(potion2);
-        c.pickUp(sword3);
-        assertEquals(12, c.numEquipmentInInventory());
+        assertEquals(0, c.getUnequippedInventoryItemsNum());
+
+        c.addUnequippedItem("sword", 1);
+        assertEquals(1, c.getUnequippedInventoryItemsNum());
+
+        c.addUnequippedItem("armour", 2);
+        c.addUnequippedItem("helmet", 3);
+        c.addUnequippedItem("shield", 4);
+        c.addUnequippedItem("healthpotion", 0);
+        assertEquals(5, c.getUnequippedInventoryItemsNum());
+        // Item oneRing = new OneRing(6);
+        c.addUnequippedItem("stake", 7);
+        c.addUnequippedItem("staff", 8);
+        c.addUnequippedItem("sword", 9);
+        c.addUnequippedItem("helmet", 9);
+        c.addUnequippedItem("healthpotion", 0);
+        c.addUnequippedItem("healthpotion", 0);
+        c.addUnequippedItem("sword", 1);
+        assertEquals(12, c.getUnequippedInventoryItemsNum());
     }
+
     @Test
     public void PickUpMaxItemsTest() {
         Character c = new Character();
-        for (int i = 0; i < 15; i++) {
-            c.equip(new Sword(1));
+        for (int i = 0; i < 16; i++) {
+            c.addUnequippedItem("sword", 1);
         }
-        assertEquals(15, c.numEquipmentInInventory());
-        c.equip(new Sword(1));
-        assertEquals(15, c.numEquipmentInInventory());
+        assertEquals(16, c.getUnequippedInventoryItemsNum());
+        assertEquals(c.getGold(), 0);
+        c.addUnequippedItem("sword", 1);
+        assertEquals(16, c.getUnequippedInventoryItemsNum());
+        assertEquals(c.getGold(), 70);
+    }
+
+    @Test
+    public void PickUpDifferentCardsTest() {
+        Character c = new Character();
+        LoopManiaWorld.setSeed(5);
+        int width = 16;
+        assertEquals(0, c.getCardsNum());
+        c.loadCard("zombiepit", width);
+
+        assertEquals(1, c.getCardsNum());
+        c.loadCard("vampirecastle", width);
+
+        
+        c.loadCard("campfire", width);
+        assertEquals(3, c.getCardsNum());
+
+        c.loadCard("village", width);
+        assertEquals(4, c.getCardsNum());
+
+        c.loadCard("trap", width);
+        assertEquals(5, c.getCardsNum());
+
+        c.loadCard("tower", width);
+        assertEquals(6, c.getCardsNum());
+
+        c.loadCard("barracks", width);
+        assertEquals(7, c.getCardsNum());
+
+        c.loadCard("heros_castle", width);
+        assertEquals(8, c.getCardsNum());
+
+    }
+
+    @Test
+    public void PickUpMaxCardsTest() {
+        LoopManiaWorld.setSeed(5);
+        Character c = new Character();
+        int width = 8;
+        for (int i = 0; i < 8; i++) {
+            c.loadCard("trap", width);
+        }
+        assertEquals(8, c.getCardsNum());
+        assertEquals(c.getGold(), 0);
+        c.loadCard("trap", width);
+        assertEquals(8, c.getCardsNum());
+        assertEquals(c.getGold(), 264);
     }
 }

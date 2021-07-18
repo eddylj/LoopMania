@@ -47,10 +47,13 @@ public class LoopManiaApplication extends Application {
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
-        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);
+            stop();
+        });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
+            mainController.play();
         });
         
         // deploy the main onto the stage
@@ -80,3 +83,4 @@ public class LoopManiaApplication extends Application {
         launch(args);
     }
 }
+
