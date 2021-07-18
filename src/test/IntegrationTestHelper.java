@@ -20,7 +20,13 @@ import unsw.loopmania.PathTile;
 public class IntegrationTestHelper {
 
     public static LoopManiaWorld createWorld(String fileName, int seed) throws FileNotFoundException{
-        JSONObject json = new JSONObject(new JSONTokener(new FileReader("bin/worlds/" + fileName)));
+        JSONObject json;
+        try {
+            json = new JSONObject(new JSONTokener(new FileReader("bin/worlds/" + fileName)));
+        }
+        catch (FileNotFoundException e) {
+            json = new JSONObject(new JSONTokener(new FileReader("worlds/" + fileName)));
+        }
         // JSONObject goals = json.getJSONObject("goal-condition");
         List<Pair<Integer, Integer>> orderedPath = IntegrationTestHelper.loadPathTiles(json.getJSONObject("path"), 8, 14);
         int width = json.getInt("width");

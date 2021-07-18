@@ -190,7 +190,6 @@ public class BattleRunner {
      */
     private void runEnemyAttacks() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
-            System.out.println(String.format("%d %d", enemies.size(), i));
             Enemy e = enemies.get(i);
             if (!allies.isEmpty()) {
                 AlliedSoldier a = allies.get(0);

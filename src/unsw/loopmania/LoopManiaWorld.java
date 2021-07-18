@@ -680,4 +680,19 @@ import javafx.beans.property.SimpleIntegerProperty;
     public int getHealth() {
         return character.getHealth();
     }
+
+
+///////////////////
+//Functions for testing
+
+/**
+ * Integration tests aren't working on Gradle, so this is the only way to spawn a vampire
+ * because without using the LoopManiaWorldLoader, it's impossible to load in a 
+ */
+    public Enemy spawnVampire() {
+        EnemyFactory eF = new EnemyFactory();
+        Enemy vamp = eF.create(new PathPosition(0, orderedPath), "vampire");
+        enemies.add(vamp);
+        return vamp;
+    }
 }

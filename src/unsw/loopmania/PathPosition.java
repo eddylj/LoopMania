@@ -56,9 +56,9 @@ public class PathPosition{
      * @return Integer Pair representing previous position in path
      */
     public Pair<Integer, Integer> getAntiClockwisePosition() {
-        // Deal with modulo 0
-        if (getPositionInPath() == 1) {
-            return orderedPath.get(-1);
+        // Deal with modulo
+        if (getPositionInPath() == 0) {
+            return orderedPath.get(orderedPath.size() - 1);
         }
         else {
             return orderedPath.get(getPositionInPath() - 1);
