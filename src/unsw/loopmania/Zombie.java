@@ -11,14 +11,14 @@ public class Zombie extends Enemy {
      * @param position
      */
     public Zombie (PathPosition position) {
-        super(position, 2, 2, 18, 250, 100);
+        super(position, 2, 2, 18, 250, 100, 2);
         super.setType("zombie");
         canMove = false;
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
     }
 
     public Zombie() {
-        super(2, 2, 18, 250, 100);
+        super(2, 2, 18, 250, 100, 2);
         super.setType("zombie");
         canMove = false;
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};

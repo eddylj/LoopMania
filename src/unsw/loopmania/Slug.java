@@ -9,13 +9,13 @@ public class Slug extends Enemy{
      * @param position
      */
     public Slug (PathPosition position) {
-        super(position, 1, 1, 10, 100, 50);
+        super(position, 1, 1, 10, 100, 50, 1);
         super.setType("slug");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }
 
     public Slug() {
-        super(1, 1, 10, 100, 50);
+        super(1, 1, 10, 100, 50, 1);
         super.setType("slug");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }

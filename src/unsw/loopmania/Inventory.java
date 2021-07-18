@@ -38,6 +38,7 @@ public class Inventory {
         if (cardEntities.size() >= width){
             int gold = LoopManiaWorld.getRandNum() + 1;
             character.gainGold(gold * 3);
+            character.gainXP(3);
             removeCard(0);
         }
         CardFactory cf = new CardFactory();
