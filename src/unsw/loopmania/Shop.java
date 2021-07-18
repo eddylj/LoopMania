@@ -35,7 +35,6 @@ public class Shop {
         return price;
     }
 
-
     public int getItemBuyLevel(String item) {
         int level = stats.getHighestLevel(item);
         return level + 1;
