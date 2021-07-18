@@ -346,7 +346,7 @@ import javafx.beans.property.SimpleIntegerProperty;
     }
 
     /**
-     * Move all enemies
+     * Move all enemies. This method is called every tick.
      */
     private void moveEnemies() { 
         for (Enemy e: enemies){
@@ -360,8 +360,9 @@ import javafx.beans.property.SimpleIntegerProperty;
             checkBuildingActions(e);
         }
     }
+
     /**
-     * Get all buildings to check for update
+     * Updates all buildings that update on move
      * @param e
      */
     public void checkBuildingActions(MovingEntity e) {
@@ -369,6 +370,7 @@ import javafx.beans.property.SimpleIntegerProperty;
             b.updateOnMove(e);
         }
     }
+
     /**
      * Adds building to list of buildings
      * @param b
@@ -382,6 +384,13 @@ import javafx.beans.property.SimpleIntegerProperty;
         }
     }
 
+    /**
+     * Converts a dragged card into a building on the map and then removes the card afterwards
+     * @param cardNodeX int: Column coordinate of card in card inventory
+     * @param cardNodeY int: Row coordinate of card in card inventory
+     * @param buildingNodeX int: Column coordinate of building on the map
+     * @param buildingNodeY int: Row coordinate of building on the map
+     */
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
         Card card = character.getMatchingCard(cardNodeX, cardNodeY);
@@ -394,14 +403,21 @@ import javafx.beans.property.SimpleIntegerProperty;
         return newBuilding;
     }
 
-    public Slug spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath2) {
+    /**
+     * Spawns a slug  on an empty PathTile
+     * @param i int: position in ordered path
+     * @param orderedPath2 List<Pair<Integer, Integer>>: the orderedPath
+     * @return Slug: the slug that was just spawned
+     */
+    public Slug spawnSlug(int i, List<Pair<Integer, Integer>> orderedPath) {
         EnemyFactory e = new EnemyFactory();
-        Enemy slug =  e.create(new PathPosition(i, orderedPath2), "slug");
+        Enemy slug =  e.create(new PathPosition(i, orderedPath), "slug");
         enemies.add(slug);
         return (Slug)slug;
     }
+
     /**
-     * Makes character drink potion
+     * Makes character drink potion (if possible)
      */
     public void drinkPotion() {
         character.drinkPotion();
@@ -409,44 +425,88 @@ import javafx.beans.property.SimpleIntegerProperty;
 
     //Getters and Setters
     //////////////////////////////////
+    /**
+     * Gets the width of the map
+     * @return int: the width of the map
+     */
     public int getWidth() {
         return width;
     }
+
+    /**
+     * Gets the height of the map
+     * @return int: the height of the map
+     */
     public int getHeight() {
         return height;
     }
+
+    /**
+     * Static method that generates a random number so other classes
+     * that uses 'random' numbers can generate them using the same Random object
+     * @return int: A random number between 0-99
+     */
     public static int getRandNum() {
         return LoopManiaWorld.rand.nextInt(100);
     }
+
+    /**
+     * Gets the orderedPath that the map uses
+     * @return List<Pair<Integer, Integer>>: the orderedPath
+     */
     public List<Pair<Integer, Integer>> getOrderedPath() {
         List<Pair<Integer, Integer>> copy = new ArrayList<Pair<Integer, Integer>>();
         copy.addAll(orderedPath);
         return copy;
     }
+
+    /**
+     * Gets a list of enemies on the map
+     * @return List<Enemy>: the list of enemies
+     */
     public List<Enemy> getEnemies() {
         return enemies;
     }
 
+    /**
+     * Gets a list of the character's unequipped items
+     * @return List<Item>: list of the character's unequipped items
+     */
     public List<Item> getItems() {
         return character.getunequippedInventoryItems();
     }
 
-    public Random getRand() {
-        return rand;
-    }
-
+    /**
+     * Gets a list of all buildings that update when an entity moves on/within range of it
+     * @return List<BuildingOnMove>: a list of buildings
+     */
     public List<BuildingOnMove> getMoveBuildings() {
         return moveBuildings;
     }
 
+    /**
+     * Gets a list of all buildings that update at the start of every cycle
+     * @return List<BuildingOnCycle>: a list of buildings
+     */
     public List<BuildingOnCycle> getCycleBuildings() {
         return cycleBuildings;
     }
 
+    /**
+     * Gets the maximum amount of a goal 'resource' (gold, experience, cycles)
+     * that is needed to win the game
+     * @param goal String: The particular resource in question
+     * @return int: How much is needed
+     */
     public int getMaxGoal(String goal) {
         return winChecker.getMax(goal);
     }
 
+    /**
+     * Gets the index of a tile in the orderedPath
+     * @param tile Pair<Integer, Integer>: The tile in question
+     * @return int: The tile's index
+     */
     private int getNumInPath(Pair<Integer, Integer> tile) {
         for (int i = 0; i < orderedPath.size(); i++) {
             if (tile.equals(orderedPath.get(i))) {
@@ -456,6 +516,11 @@ import javafx.beans.property.SimpleIntegerProperty;
         return -1;
     }
 
+    /**
+     * Gets an equipped item by its index in the equipped item inventory
+     * @param x int: index of item
+     * @return Item: The equipped item
+     */
     public Item getEquippedItemByCoordinates(int x) {
         if (x == 0) {
             System.out.println("Getting equipped weapon");
@@ -476,10 +541,19 @@ import javafx.beans.property.SimpleIntegerProperty;
         }
     }
 
+    /**
+     * Gets a list of all items that don't have levels
+     * (e.g. HealthPotion and TheOneRing)
+     * @return List<String>: a list of all items that don't have levels
+     */
     public List<String> getNonLevelItems() {
         return character.getNonLevelItems();
     }
 
+    /**
+     * Gets a list of all empty (spawnable) tiles
+     * @return List<Pair<Integer, Integer>>: a list of all empty tiles
+     */
     private List<Pair<Integer, Integer>> getAllEmptyTiles() {
         List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
         for (Pair<Integer, Integer> p : orderedPath) {
@@ -488,9 +562,14 @@ import javafx.beans.property.SimpleIntegerProperty;
         return tiles;
     }
 
+    /**
+     * Gets the character
+     * @return Character: The character
+     */
     public Character getCharacter() {
         return character;
     }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity out of the file
      * @param character the character
@@ -498,54 +577,103 @@ import javafx.beans.property.SimpleIntegerProperty;
     public void setCharacter(Character character) {
         itemFactory iF = new itemFactory();
         this.character = character;
-        // character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
-        // System.out.println();
     }
 
+    /**
+     * Gets the width of the unequipped inventory
+     * @return int: The width
+     */
     public static int getunequippedInventoryWidth() {
         return Inventory.getunequippedInventoryWidth();
     }
 
+    /**
+     * Gets the height of the unequipped inventory
+     * @return int: The height
+     */
     public static int getunequippedInventoryHeight() {
         return Inventory.getunequippedInventoryHeight();
     }
 
+    /**
+     * Gets an unequipped item from the character's inventory by its coordinates
+     * @param nodeX int: The column coordinate of the item in the character's unequipped item inventory
+     * @param nodeY int: The row coordinate of the item in the character's unequipped item inventory
+     * @return Item: The item at the coordinates
+     */
     public Item getUnequippedInventoryItemEntityByCoordinates(int nodeX, int nodeY) {
         return character.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
     }
 
-    public StaticEntity addUnequippedItem(String type, int i) {
-        return character.addUnequippedItem(type, i);
+    /**
+     * Adds an unequipped item to the character's inventory
+     * @param type String: The type of item to add
+     * @param i int: The level of the item
+     * @return StaticEntity: The item added
+     */
+    public StaticEntity addUnequippedItem(String type, int level) {
+        return character.addUnequippedItem(type, level);
     }
 
+    /**
+     * Removes an unequipped item to the character's inventory by its coordinates
+     * @param nodeX int: The column coordinate of the item in the character's unequipped item inventory
+     * @param nodeY int: The row coordinate of the item in the character's unequipped item inventory
+     */
     public void removeUnequippedInventoryItemByCoordinates(int nodeX, int nodeY) {
         character.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
+    /**
+     * Gets a card from the character's card inventory from its index
+     * @param x int: index of the card
+     * @return Card: The card
+     */
     public Card getCardByCoordinate(int nodeX) {
         return character.getCardByCoordinate(nodeX);
     }
+
+    /**
+     * Sets the seed that is used to generate random numbers
+     * @param seed int: The seed to be used
+     */
     public static void setSeed(int seed) {
         rand = new Random(seed);
     }
-        
+    
+    /**
+     * Gets the character's cycles
+     * @return int: The character's cycles
+     */
     public int getCycles() {
         return character.getCycles();
     }
 
+    /**
+     * Gets the character's gold
+     * @return int: The character's gold
+     */
     public int getGold() {
         return character.getGold();
     }
 
+    /**
+     * Gets the character's experience
+     * @return int: The character's experience
+     */
     public int getXP() {
         return character.getXP();
     }
 
+    /**
+     * Gets the character's health
+     * @return int: The character's health
+     */
     public int getHealth() {
         return character.getHealth();
     }
