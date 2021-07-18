@@ -133,6 +133,9 @@ public class LoopManiaWorldController {
     @FXML
     private Label cyclesGoal;
 
+    @FXML
+    private Label alliedSoldierAmount;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -266,11 +269,13 @@ public class LoopManiaWorldController {
             onLoad(i);
         }
 
-        // Initialise bindings for stats
+        // Initialise bindings for stats and allied soldiers
         goldAmount.textProperty().bind(world.getGold().asString());
         cyclesAmount.textProperty().bind(world.getCycles().asString());
         xpAmount.textProperty().bind(world.getXP().asString());
-        
+        alliedSoldierAmount.textProperty().bind(world.getCharacter().getAlliedSoldierProperty().asString());
+
+        // initialises healt hbar
         healthBar.toFront();
         healthBar.setFill(Color.RED);
         // binds character health as a percentage to the health bar rectangle
