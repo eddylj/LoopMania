@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.BarracksBuilding;
 import unsw.loopmania.Building;
 import unsw.loopmania.BuildingFactory;
@@ -22,6 +24,7 @@ import unsw.loopmania.Card;
 import unsw.loopmania.CardFactory;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.EnemyFactory;
+import unsw.loopmania.HeroFactory;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
@@ -79,13 +82,20 @@ public class FactoryTest {
     @Test
     public void EnemyFactoryTest() {
         EnemyFactory e = new EnemyFactory();
-        Enemy slug = e.create(new PathPosition(0, createPath()), "slug");
-        System.err.println(slug.getHealth());
-        assertEquals(slug.getHealth(), 50);
-        Enemy vampire = e.create(new PathPosition(1, createPath()), "vampire");
-        assertEquals(vampire.getHealth(), 150);
-        Enemy zombie = e.create(new PathPosition(2, createPath()), "zombie");
-        assertEquals(zombie.getHealth(), 100);
+        Enemy slug1 = e.create(new PathPosition(0, createPath()), "slug");
+        Enemy slug2 = e.create("slug");
+        assertEquals(slug1.getHealth(), 50);
+        assertEquals(slug2.getHealth(), 50);
+        Enemy vampire1 = e.create(new PathPosition(1, createPath()), "vampire");
+        Enemy vampire2 = e.create("vampire");
+        assertEquals(vampire1.getHealth(), 150);
+        assertEquals(vampire2.getHealth(), 150);
+        Enemy zombie1 = e.create(new PathPosition(2, createPath()), "zombie");
+        Enemy zombie2 = e.create("zombie");
+        assertEquals(zombie1.getHealth(), 100);
+        assertEquals(zombie2.getHealth(), 100);
+        assertNull(e.create(new PathPosition(2, createPath()), "breakfast"));
+        assertNull(e.create("dinner"));
     }
 
     @ParameterizedTest
@@ -135,5 +145,11 @@ public class FactoryTest {
     public void createvillageTest() {
         Building i = b.create(x, y, "village");
         assertTrue(i instanceof VillageBuilding);
+    }
+
+    @Test
+    public void createAlliedSoldierTest() {
+        HeroFactory hF = new HeroFactory();
+        assertTrue(hF.create() instanceof AlliedSoldier);
     }
 }

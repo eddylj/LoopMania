@@ -40,6 +40,9 @@ public class VampireCastleCard extends StaticEntity implements Card {
 
     @Override
     public boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath) {
+        if (orderedPath.contains(new Pair<Integer, Integer>(x,y))) {
+            return false;
+        }
         for (Pair<Integer, Integer> tile : orderedPath) {
             if (nextTo(x, y, tile.getValue0(), tile.getValue1())) {
                 return true;
