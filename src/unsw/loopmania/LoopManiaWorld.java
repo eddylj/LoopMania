@@ -7,6 +7,8 @@ import java.util.Random;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -110,6 +112,7 @@ import javafx.beans.property.SimpleIntegerProperty;
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
     }
+    
     /**
      * Checks if character is dead
      * @return
@@ -650,7 +653,7 @@ import javafx.beans.property.SimpleIntegerProperty;
      * Gets the character's cycles
      * @return int: The character's cycles
      */
-    public int getCycles() {
+    public IntegerProperty getCycles() {
         return character.getCycles();
     }
 
@@ -658,15 +661,15 @@ import javafx.beans.property.SimpleIntegerProperty;
      * Gets the character's gold
      * @return int: The character's gold
      */
-    public int getGold() {
-        return character.getGold();
+    public IntegerProperty getGold() {
+        return character.getGoldProperty();
     }
 
     /**
      * Gets the character's experience
      * @return int: The character's experience
      */
-    public int getXP() {
+    public IntegerProperty getXP() {
         return character.getXP();
     }
 

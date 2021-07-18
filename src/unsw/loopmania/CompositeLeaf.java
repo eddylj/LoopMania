@@ -17,10 +17,10 @@ public class CompositeLeaf implements Composite{
             return character.getGold() >= amount;
         }
         else if (type.equals("experience")) {
-            return character.getXP() >= amount;
+            return character.getXP().get() >= amount;
         }
         else {
-            return character.getCycles() >= amount;
+            return character.getCycles().get() >= amount;
         }
     }
 

@@ -157,6 +157,7 @@ public class Inventory {
         }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
+        character.updateHighest(item);
         return (StaticEntity)item;
     }
 

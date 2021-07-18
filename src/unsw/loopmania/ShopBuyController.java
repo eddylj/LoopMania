@@ -5,6 +5,10 @@ import java.io.IOException;
 
 import javax.swing.plaf.ColorUIResource;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -80,8 +84,8 @@ public class ShopBuyController {
     }
 
     public void doneButtonAction(Button done) {
-        worldController.play();
-        worldController.setShopOpen(false);
+        worldController.setBuyShopOpen(false);
+        worldController.tryToPlay();
         Stage stage = (Stage) done.getScene().getWindow();
         stage.close();
     }
@@ -89,7 +93,15 @@ public class ShopBuyController {
     public void addItems(String[] itemList) {
         for (int i = 0; i < itemList.length; i++) {
             String itemName = itemList[i];
-            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemName))).toURI().toString()));
+            String itemString;
+            int itemLevel = shop.getItemBuyLevel(itemName);
+            if (itemName.equals("healthpotion")) {
+                itemString = itemName;
+            }
+            else {
+                itemString = itemName + itemLevel;
+            }
+            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString()));
             int row = i / 3;
             int col = i % 3;
             view.setFitHeight(100);
@@ -115,29 +127,17 @@ public class ShopBuyController {
     }
 
     public Button makeItemButton(String itemName) {
-        int price = shop.getBuyPrice(itemName); // TODO: make this according to each item
+        int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-
-        // TODO: link button to buying item
-        if (world.getGold() >= price) {
-            buyButton.setOnAction(new EventHandler<ActionEvent>(){
-                @Override
-                public void handle(ActionEvent arg0) {
-                    // StaticEntity item = world.addUnequippedItem(itemName, 1);
-                    // worldController.loadItem((Item)item);
-                    // buyButton.setTextFill(Color.DARKRED);
-                    // buyButton.setDisable(true);
-                    StaticEntity item = (StaticEntity) shop.buy(itemName);
-                    worldController.loadItem((Item)item);
-                    buyButton.setTextFill(Color.DARKRED);
-                    buyButton.setDisable(true);
-                }
-            });
-        }
-        else {
-            buyButton.setTextFill(Color.RED);
-        }
+        buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+        buyButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                StaticEntity item = (StaticEntity) shop.buy(itemName);
+                worldController.loadItem((Item)item);
+            }
+        });
         return buyButton;
     }
 
@@ -149,7 +149,7 @@ public class ShopBuyController {
             @Override
             public void handle(ActionEvent event) {
 
-                ShopSellController shopSellController = new ShopSellController(world);
+                ShopSellController shopSellController = new ShopSellController(world, worldController);
                 FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
                 shopLoader.setController(shopSellController);
                 
@@ -157,7 +157,11 @@ public class ShopBuyController {
                     Scene scene = new Scene(shopLoader.load());
                     Stage stage = new Stage();
                     stage.setTitle("Shop-Sell");
-    
+                    worldController.setSellShopOpen(true);
+                    stage.setOnCloseRequest(closeEvent -> {
+                        worldController.setSellShopOpen(false);
+                        worldController.tryToPlay();
+                    });
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException e) {

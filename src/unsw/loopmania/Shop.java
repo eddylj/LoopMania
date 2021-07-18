@@ -30,10 +30,17 @@ public class Shop {
         }
         else {
             int level = stats.getHighestLevel(item);
-            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item, level).getPrice();
+            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item, level + 1).getPrice();
         }
         return price;
     }
+
+
+    public int getItemBuyLevel(String item) {
+        int level = stats.getHighestLevel(item);
+        return level + 1;
+    }
+
     /**
      * Buys item from shop and adds it to inventory
      * @param item
@@ -43,7 +50,7 @@ public class Shop {
         int level = stats.getHighestLevel(item);
         Item purchasedItem = (Item)inventory.addUnequippedItem(item, level+1);
         stats.updateHighestLevel(purchasedItem);
-        int price = purchasedItem.getSellPrice();
+        int price = purchasedItem.getPrice();
         character.loseGold(price);
         return purchasedItem;
     }
@@ -57,7 +64,9 @@ public class Shop {
      * @param item
      */
     public void sell(Item item) {
+        int price = item.getSellPrice();
         ((Entity)item).destroy();
         character.getunequippedInventoryItems().remove(item);
+        character.gainGold(price);
     }
 }

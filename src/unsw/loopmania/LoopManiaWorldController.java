@@ -132,7 +132,8 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
-    private boolean shopOpen;
+    private boolean buyShopOpen;
+    private boolean sellShopOpen;
 
     private boolean isPaused;
     private LoopManiaWorld world;
@@ -186,7 +187,8 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
-        shopOpen = false;
+        buyShopOpen = false;
+        sellShopOpen = false;
         entityImages = new ArrayList<>(initialEntities);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -257,6 +259,12 @@ public class LoopManiaWorldController {
         }
         // make health bar red
         healthBar.setStyle("-fx-accent: red;");
+
+        // Initialise bindings for stats
+        goldAmount.textProperty().bind(world.getGold().asString());
+        cyclesAmount.textProperty().bind(world.getCycles().asString());
+        xpAmount.textProperty().bind(world.getXP().asString());
+        
         // create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
@@ -303,14 +311,9 @@ public class LoopManiaWorldController {
             if (world.isCharacterDead()) {
                 pause();
             }
-            // TODO: bindbidirectional mb looks btr
-            healthBar.setProgress(world.getHealth()/100);
-            goldAmount.setText("" + world.getGold());
-            xpAmount.setText("" + world.getXP());
-            cyclesAmount.setText("" + world.getCycles());
             if (world.onHeroCastle()) {
                 try {
-                    shopCycles(world.getCycles());
+                    shopCycles(world.getCycles().get());
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -336,6 +339,12 @@ public class LoopManiaWorldController {
 
     public void terminate(){
         pause();
+    }
+
+    public void tryToPlay() {
+        if (isPaused && !buyShopOpen && !sellShopOpen){
+            play();
+        }
     }
 
     public void play(){
@@ -788,11 +797,11 @@ public class LoopManiaWorldController {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
         case SPACE:
-            if (isPaused && !shopOpen){
+            if (isPaused && !buyShopOpen && !sellShopOpen){
                 startTimer();
                 play();
             }
-            else if (shopOpen) {
+            else if (buyShopOpen || sellShopOpen) {
                 System.out.println("must close shop");
             }
             else{
@@ -832,13 +841,17 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void setShopOpen(boolean shopOpen) {
-        this.shopOpen = shopOpen;
+    public void setBuyShopOpen(boolean shopOpen) {
+        this.buyShopOpen = shopOpen;
+    }
+
+    public void setSellShopOpen(boolean shopOpen) {
+        this.sellShopOpen = shopOpen;
     }
 
     public void switchToShop() throws IOException  {
         pause();
-        shopOpen = true;
+        buyShopOpen = true;
 
         ShopBuyController shopBuyController = new ShopBuyController(this, world);
         FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
@@ -850,8 +863,8 @@ public class LoopManiaWorldController {
 
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
-            shopOpen = false;
-            play();
+            buyShopOpen = false;
+            tryToPlay();
         });
         stage.show();
     }

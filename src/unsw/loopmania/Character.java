@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -13,9 +14,9 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Group FRIDGE
  */
 public class Character extends MovingEntity implements Hero {
-    private int experience;
-    private int gold;
-    private int cycles;
+    private IntegerProperty experience;
+    private IntegerProperty gold;
+    private IntegerProperty cycles;
     private Item equippedWeapon;
     private Item equippedHelmet;
     private Item equippedShield;
@@ -32,9 +33,9 @@ public class Character extends MovingEntity implements Hero {
      */
     public Character(PathPosition position) {
         super(position, 100);
-        experience = 0;
-        gold = 0;
-        cycles = 0;
+        experience = new SimpleIntegerProperty(0);
+        gold = new SimpleIntegerProperty(0);
+        cycles = new SimpleIntegerProperty(0);
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
@@ -51,9 +52,9 @@ public class Character extends MovingEntity implements Hero {
      */
     public Character() {
         super(100);
-        experience = 0;
-        gold = 0;
-        cycles = 0;
+        experience = new SimpleIntegerProperty(0);
+        gold = new SimpleIntegerProperty(0);
+        cycles = new SimpleIntegerProperty(0);
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
@@ -194,7 +195,7 @@ public class Character extends MovingEntity implements Hero {
      * Gets the character's experience
      * @return int: The character's experience
      */
-    public int getXP() {
+    public IntegerProperty getXP() {
         return experience;
     }
 
@@ -203,6 +204,9 @@ public class Character extends MovingEntity implements Hero {
      * @return int: The character's gold
      */
     public int getGold() {
+        return gold.get();
+    }
+    public IntegerProperty getGoldProperty() {
         return gold;
     }
 
@@ -210,7 +214,7 @@ public class Character extends MovingEntity implements Hero {
      * Gets the character's cycles
      * @return int: The character's cycles
      */
-    public int getCycles() {
+    public IntegerProperty getCycles() {
         return cycles;
     }
 
@@ -278,7 +282,7 @@ public class Character extends MovingEntity implements Hero {
      * @param amount int: Amount to increase
      */
     public void gainGold(int amount) {
-        gold += amount;
+        gold.set(gold.get() + amount);
     }
 
     /**
@@ -286,7 +290,7 @@ public class Character extends MovingEntity implements Hero {
      * @param amount int: Amount to decrease
      */
     public void loseGold(int amount) {
-        gold -= amount;
+        gold.set(gold.get() - amount);
     }
 
     /**
@@ -294,13 +298,13 @@ public class Character extends MovingEntity implements Hero {
      * @param amount int: Amount to increase
      */
     public void gainXP(int amount) {
-        experience += amount;
+        experience.set(experience.get() + amount);
     }
     /**
      * Increases character's cycle count by 1
      */
     public void gainCycle() {
-        cycles++;
+        cycles.set(cycles.get() + 1);
     }
 
     /**

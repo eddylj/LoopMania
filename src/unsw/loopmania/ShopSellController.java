@@ -47,10 +47,13 @@ public class ShopSellController {
 
     private LoopManiaWorld world;
 
+    private LoopManiaWorldController worldController;
+
     private Shop shop;
 
-    public ShopSellController(LoopManiaWorld world) {
+    public ShopSellController(LoopManiaWorld world, LoopManiaWorldController worldController) {
         this.world = world;
+        this.worldController = worldController;
         shop = new Shop(world.getCharacter());
     }
 
@@ -83,6 +86,8 @@ public class ShopSellController {
     }
 
     public void doneButtonAction(Button done) {
+        worldController.setSellShopOpen(false);
+        worldController.tryToPlay();
         Stage stage = (Stage) done.getScene().getWindow();
         stage.close();
     }
@@ -142,7 +147,6 @@ public class ShopSellController {
                     shop.sell(item);
                     sellButton.setTextFill(Color.DARKRED);
                     sellButton.setDisable(true);
-                    world.getCharacter().gainGold(price);
                 }
             });
         return sellButton;
