@@ -870,7 +870,9 @@ public class LoopManiaWorldController {
         Label label = new Label("GAME OVER");
         label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 40));
         label.setTextFill(Color.RED);
+        
         anchorPaneRoot.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, anchorPaneRoot.getHeight()/2);
     }
     
 
