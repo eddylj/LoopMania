@@ -1,9 +1,6 @@
 package unsw.loopmania;
 
-import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
-
 import java.util.List;
-import java.util.Random;
 
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
@@ -30,11 +27,6 @@ public abstract class Enemy extends MovingEntity {
         itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "rare"};
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-
     /**
      * Enemy attacks the character given
      * @param character
@@ -47,38 +39,8 @@ public abstract class Enemy extends MovingEntity {
 
     public void attack(Hero h, BattleRunner b) {
         h.takeDamage(attackDamage);
-        
+
     }
-    /**
-     * Enemy attacks the ally given
-     * @param ally
-     * @return boolean if the ally was killed returns true
-     */
-
-
-    /**
-     * Returns the gold that the enemy drops when they die
-     * @param gold
-     * @return
-     */
-    public int getGold(int gold) {
-        return goldAmount;
-    }
-
-    public int getBattleRadius() {
-        return this.battleRadius;
-    }
-
-    public int getAttackDamage() {
-        return this.attackDamage;
-    }
-
-
-    public int getSupportRadius() {
-        return this.supportRadius;
-    }
-
-
     /**
      * move the enemy
      */
@@ -91,7 +53,32 @@ public abstract class Enemy extends MovingEntity {
             moveDownPath();
         }
     }
-
+    /**
+     * Generates random loot for player for zombie
+     * @param character
+     * @param width
+     * @param rareItems
+     * @return StaticEntity loot
+     */
     public abstract StaticEntity getLoot(Character character, int width, List<String> rareItems);
 
+    // Getters and Setters
+    
+    public int getHealth() {
+        return health;
+    }
+    public int getGold(int gold) {
+        return goldAmount;
+    }
+
+    public int getBattleRadius() {
+        return this.battleRadius;
+    }
+
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+    public int getSupportRadius() {
+        return this.supportRadius;
+    }
 }

@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import java.util.Random;
-
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Shield extends Protection {

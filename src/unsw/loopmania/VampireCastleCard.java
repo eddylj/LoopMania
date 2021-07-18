@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * represents a vampire castle card in the backend game world
  */
-import javafx.beans.property.SimpleIntegerProperty;
 
 public class VampireCastleCard extends StaticEntity implements Card {
 
