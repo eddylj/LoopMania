@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class BattleRunner {
     private Character character;
-    ArrayList<Enemy> defeatedEnemies;
-    List<Enemy> enemies;
-    List<AlliedSoldier> allies;
-    List<TowerBuilding> towers;
+    private ArrayList<Enemy> defeatedEnemies;
+    private List<Enemy> enemies;
+    private List<AlliedSoldier> allies;
+    private List<TowerBuilding> towers;
 
     /**
      * Empty constructor for BattleRunner class because it doesn't retain
@@ -258,6 +258,7 @@ public class BattleRunner {
     private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
+        character.gainGold(enemy.getGold());
         System.out.println("Enemy has died");
     }
 

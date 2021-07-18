@@ -20,6 +20,7 @@ public class CampfireBuilding extends StaticEntity implements Building, Building
     public CampfireBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("campfire");
+        radius = 2;
     }
 
     /**

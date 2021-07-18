@@ -12,7 +12,7 @@ import javafx.beans.property.IntegerProperty;
  * @author Group FRIDGE
  */
 public interface Card {
-    boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath);
+    public boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath);
     public int getX();
     public int getY();
     public void destroy();

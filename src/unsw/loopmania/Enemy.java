@@ -67,7 +67,7 @@ public abstract class Enemy extends MovingEntity {
     public int getHealth() {
         return health;
     }
-    public int getGold(int gold) {
+    public int getGold() {
         return goldAmount;
     }
 
