@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.FileNotFoundException;
 
@@ -15,6 +17,7 @@ import org.junit.Test;
 
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.StaticEntity;
 
 public class IntegrationTestTest {
 
@@ -80,6 +83,11 @@ public class IntegrationTestTest {
             world.tick();
             assertFalse(world.checkPlayerLoss());
         }
+        assertTrue(((StaticEntity)world.getEquippedItemByCoordinates(0)).getType().equals("sword"));
+        assertNull(((StaticEntity)world.getEquippedItemByCoordinates(1)));
+        assertNull(((StaticEntity)world.getEquippedItemByCoordinates(2)));
+        assertTrue(((StaticEntity)world.getEquippedItemByCoordinates(3)).getType().equals("armour"));
+        assertNull(((StaticEntity)world.getEquippedItemByCoordinates(4)));
         world.tick();
         assertTrue(world.checkPlayerLoss());
     }

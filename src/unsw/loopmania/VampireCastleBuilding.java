@@ -19,7 +19,6 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
         return ef.create(pathPosition, "vampire");
 	}
 
-	@Override
 	public int generateNumberOfEnemies() {
         int num = LoopManiaWorld.getRandNum();
         int spawn1 = 60;
@@ -30,5 +29,14 @@ public class VampireCastleBuilding extends StaticEntity implements Building, Bui
             return 2;
         }
     }
+
+	public int generateNumberOfEnemies(int cycle) {
+		if (cycle == 0 || cycle % 5 != 0) {
+            return 0;
+        }
+        else {
+            return generateNumberOfEnemies();
+        }
+	}
     
 }

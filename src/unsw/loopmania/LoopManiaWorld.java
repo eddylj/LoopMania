@@ -224,6 +224,7 @@ import javafx.beans.property.SimpleIntegerProperty;
     }
     /**
      * Processes loot drop from enemy
+     * This function is only called by the frontend
      * @param deadEnemy
      * @return Loot
      */
@@ -282,11 +283,13 @@ import javafx.beans.property.SimpleIntegerProperty;
         for (BuildingOnCycle b : cycleBuildings) {
             // adjacent contains every PathTile touching building b
             List<Pair<Integer, Integer>> adjacent = getAdjacentPathTiles((StaticEntity)b);
-            int numSpawn = Integer.min(b.generateNumberOfEnemies(), adjacent.size());
-            if (numSpawn == 0) {
-                return;
+            int numSpawn;
+            if (b instanceof VampireCastleBuilding) {
+                numSpawn = Integer.min(((VampireCastleBuilding)b).generateNumberOfEnemies(character.getCycles().get()), adjacent.size());
             }
-            System.out.println(adjacent.size() + "\n");
+            else {
+                numSpawn = Integer.min(b.generateNumberOfEnemies(), adjacent.size());
+            }
             for (int i = 0; i < numSpawn; i++) {
                 int tile = LoopManiaWorld.getRandNum() % adjacent.size();
                 int positioninPath = getNumInPath(adjacent.get(tile));
@@ -311,6 +314,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
     /**
      * Check if card placement is valid
+     * This function is only called by the frontend
      * @param card
      * @param x
      * @param y
