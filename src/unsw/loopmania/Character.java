@@ -257,6 +257,14 @@ public class Character extends MovingEntity implements Hero {
     }
 
     /**
+     * Gets the character's allied soldier count as an IntegerProperty
+     * @return IntegerProperty: The character's allied soldier count
+     */
+    public IntegerProperty getAlliedSoldierProperty() {
+        return aliveSoldiers;
+    }
+
+    /**
      * Gets the character's allied soldiers
      * @return List<AlliedSoldier>: The character's allied soldiers
      */

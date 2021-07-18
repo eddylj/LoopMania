@@ -41,7 +41,7 @@ public class ZombieTest {
     
     @Test
     public void zombieMovementTest() {
-        LoopManiaWorld world = new LoopManiaWorld(602);
+        new LoopManiaWorld(602);
         List<Pair<Integer, Integer>> path = createPath();
         Enemy zombie = eF.create(new PathPosition(0, path), "zombie");
         Pair<Integer, Integer> oldPos = new Pair<Integer, Integer>(zombie.getX(), zombie.getY());
@@ -55,7 +55,7 @@ public class ZombieTest {
 
     @Test
     public void zombieBiteSoldierTest() {
-        LoopManiaWorld world = new LoopManiaWorld(45);
+        new LoopManiaWorld(45);
         HeroFactory hF = new HeroFactory();
         Character c = new Character();
         List<Enemy> enemies = new ArrayList<Enemy>();

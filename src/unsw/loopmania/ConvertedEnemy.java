@@ -1,13 +1,13 @@
 package unsw.loopmania;
 
-public class convertedEnemy extends AlliedSoldier{
+public class ConvertedEnemy extends AlliedSoldier{
     private Enemy enemy;
     private int remainingTranceTime;
     /**
      * 
      * @param enemy
      */
-    public convertedEnemy(Enemy enemy) {
+    public ConvertedEnemy(Enemy enemy) {
         super();
         this.enemy = enemy;
     }
