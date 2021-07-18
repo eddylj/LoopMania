@@ -17,6 +17,7 @@ import unsw.loopmania.Stake;
 import unsw.loopmania.Staff;
 
 public class InventoryTest {
+    /*
     @Test
     public void PickUpDifferentItemsTest() {
         Character c = new Character();
@@ -71,5 +72,5 @@ public class InventoryTest {
         c.equip(armour);
         assertEquals(0, c.numEquipmentInInventory());
 
-    }
+    }*/
 }
