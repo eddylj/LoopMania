@@ -33,3 +33,4 @@
 * Replace replaces oldest NONRARE item
 * Vampires have 5% change to drop rare item. Rest have 1%
 * Enemies killed by traps don't drop items
+* Main menu does not terminate application, only pauses
