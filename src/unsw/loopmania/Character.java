@@ -207,6 +207,9 @@ public class Character extends MovingEntity implements Hero {
      * @return int: The character's health
      */
     public int getHealth() {
+        return health.get();
+    }
+    public IntegerProperty getHealthProperty() {
         return health;
     }
 
@@ -282,7 +285,7 @@ public class Character extends MovingEntity implements Hero {
      * @param health int: The character's health
      */
     public void setHealth(int health) {
-        this.health = health;
+        this.health.set(health);
     } 
 
     /**
@@ -290,8 +293,8 @@ public class Character extends MovingEntity implements Hero {
      * @param health int: The character's maximum health increase
      */
     public void restoreHealth(int amount) {
-        health += amount;
-        if (health > 100) {
+        health.set(health.get() + amount);
+        if (health.get() > 100) {
             setHealth(100);
         }
     }
@@ -331,7 +334,7 @@ public class Character extends MovingEntity implements Hero {
      * @param damage double: Amount to decrease
      */
     public void loseHealth(double damage){
-        health -= (int)damage;
+        health.set(health.get() - (int)damage);
     }
 
     /**

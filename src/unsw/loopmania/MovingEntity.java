@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -11,7 +12,7 @@ public abstract class MovingEntity extends Entity {
      * object holding position in the path
      */
     public PathPosition position;
-    public int health;
+    public IntegerProperty health;
 
     /**
      * Create a moving entity which moves up and down the path in position
@@ -20,12 +21,12 @@ public abstract class MovingEntity extends Entity {
     public MovingEntity(PathPosition position, int health) {
         super();
         this.position = position;
-        this.health = health;
+        this.health = new SimpleIntegerProperty(health);
     }
 
     public MovingEntity(int health) {
         super();
-        this.health = health;
+        this.health = new SimpleIntegerProperty(health);
     }
 
     public PathPosition getPosition() {
@@ -66,16 +67,16 @@ public abstract class MovingEntity extends Entity {
      * @param attackdamage amount of damage to be taken
      */
     public void takeDamage(double attackDamage) {
-        health -= ((int)attackDamage);
+       health.set(health.get() - (int)attackDamage);
     }
 
 
     /**
-     * Checks if movnign entity is dead
+     * Checks if moving entity is dead
      * @return boolean for if entity health is <= 0
      */
     public boolean isDead() {
-        if (health <= 0) {
+        if (health.get() <= 0) {
             return true;
         }
         return false;
