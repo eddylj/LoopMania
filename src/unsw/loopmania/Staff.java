@@ -4,7 +4,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Staff extends Weapon{
     private int tranceChance;
-
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param level
+     */
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         // super(x, y, level, 700*(1+(level-1)*15/100), 18);
         super(x, y, level, 700*(1+(level-1)*15/100), 18.0*(1+((level-1)*1.0)/10));
@@ -19,10 +24,14 @@ public class Staff extends Weapon{
     }
     
 
-
+    /** 
+     * Attacks Enemy and potentially cast a spell on them
+     * @param enemy
+     * @param b
+     * @return true if enemy tranced, false otherwise
+     */
     public boolean castSpell(Enemy enemy, BattleRunner b) {
         int randNum = LoopManiaWorld.getRandNum();
-
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
             b.convertEnemyToAlly(enemy);

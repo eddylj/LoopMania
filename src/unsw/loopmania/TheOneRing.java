@@ -13,12 +13,16 @@ public class TheOneRing extends RareItem{
         super(x,y);
         super.setType("theonering");
     }
-
+    /**
+     * @return cost of selling item
+     */
     @Override
     public int getSellPrice() {
         return 1000;
     }
-
+    /**
+     * @return gold gained when item is replaced as oldest in inventory
+     */
     @Override
     public int getReplaceCost() {
         return 400;

@@ -2,23 +2,30 @@ package unsw.loopmania;
 
 import java.util.List;
 
-import org.javatuples.Pair;
-
 public class Slug extends Enemy{
     String[] cardDrops;
-
+    /**
+     * 
+     * @param position
+     */
     public Slug (PathPosition position) {
         super(position, 1, 1, 10, 100, 50);
         super.setType("slug");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }
 
-
     public Slug() {
         super(1, 1, 10, 100, 50);
         super.setType("slug");
     }
-
+    /**
+     * Generates random loot for player for zombie
+     * @param character
+     * @param width
+     * @param rareItems
+     * @return StaticEntity loot
+     */
+    @Override
     public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
         // slug drops item better than current

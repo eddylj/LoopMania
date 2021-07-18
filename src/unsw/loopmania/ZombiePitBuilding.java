@@ -3,19 +3,30 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class ZombiePitBuilding extends StaticEntity implements Building, BuildingOnCycle{
-
+    /**
+     * 
+     * @param x
+     * @param y
+     */
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 		super.setType("zombiepit");
     }
 
-
+    /**
+     * Spawns enemy on pathPosition
+     * @param pathPosition
+     * @return Spawned enemy
+     */
 	public Enemy spawnEnemy(PathPosition pathPosition) {
         EnemyFactory ef = new EnemyFactory();
 		return ef.create(pathPosition, "zombie");
 	}
 
-
+    /**
+     * Generates a random number of enemies between 1-3
+     * @return int number of random enemies
+     */
 	public int generateNumberOfEnemies() {
         int num = LoopManiaWorld.getRandNum();
         int spawn1 = 30;

@@ -33,15 +33,6 @@ public class StakeTest {
     }
 
     @Test
-    public void StakeSaleTest() {
-        Character c = new Character();
-        Item stake = new Stake(1);
-
-        c.sellItem(stake);
-        assertEquals(140, c.getGold());
-    }
-
-    @Test
     public void StakeDamage() {
         Character c = new Character();
         Item stake = new Stake(1);

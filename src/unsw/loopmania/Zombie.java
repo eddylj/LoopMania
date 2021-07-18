@@ -5,7 +5,11 @@ import java.util.List;
 public class Zombie extends Enemy {
     private boolean canMove;
     private String[] cardDrops;
-
+    
+    /**
+     * 
+     * @param position
+     */
     public Zombie (PathPosition position) {
         super(position, 2, 2, 18, 250, 100);
         super.setType("zombie");
@@ -20,8 +24,14 @@ public class Zombie extends Enemy {
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
     }
 
+    /**
+     * Deals damage to Hero
+     * @param h
+     * @param b
+     */
     @Override
     public void attack(Hero h, BattleRunner b) {
+        // Accounts for zombie critical bite against AS
         if (h instanceof AlliedSoldier) {
             int randomInt = LoopManiaWorld.getRandNum();
             if (randomInt >= 0 && randomInt <= 9) {
@@ -36,6 +46,9 @@ public class Zombie extends Enemy {
         }
     }
 
+    /**
+     * move the enemy
+     */
     @Override
     public void move() {
         if (canMove) {
@@ -47,9 +60,15 @@ public class Zombie extends Enemy {
         }
     }
 
+    /**
+     * Generates random loot for player for zombie
+     * @param character
+     * @param width
+     * @param rareItems
+     * @return StaticEntity loot
+     */
     public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
-        // slug drops item better than current
         if (num < 20) {
             String itemType;
             if (num < 1 && !rareItems.isEmpty()) {

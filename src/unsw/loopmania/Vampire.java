@@ -7,10 +7,12 @@ import org.javatuples.Pair;
 
 public class Vampire extends Enemy {
     private String[] cardDrops;
-
-
     private VampireAttackStrategy Strategy;
 
+    /**
+     * 
+     * @param position
+     */
     public Vampire (PathPosition position) {
         super(position, 2, 3, 18, 500, 150);
         super.setType("vampire");
@@ -26,14 +28,18 @@ public class Vampire extends Enemy {
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
     }
 
-    public void setStrategy(VampireAttackStrategy Strategy) {
-        this.Strategy = Strategy;
-    }
+    /**
+     * Deals damage to Hero
+     */
     @Override
     public void attack (Hero h) {
         Strategy.attack(h, this);
     }
 
+    /**
+     * Moves vampire based on where campfires are
+     * @param campfire
+     */
     public void move(CampfireBuilding campfire) {
         Pair<Integer, Integer> forward = position.getClockwisePosition();
         Pair<Integer, Integer> backward = position.getAntiClockwisePosition();
@@ -47,6 +53,13 @@ public class Vampire extends Enemy {
         }
     }
 
+    /**
+     * Generates random loot for player for vampire
+     * @param character
+     * @param width
+     * @param rareItems
+     * @return StaticEntity loot
+     */
     public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
         if (num < 30) {
@@ -76,4 +89,7 @@ public class Vampire extends Enemy {
         return null;
     }
     
+    public void setStrategy(VampireAttackStrategy Strategy) {
+        this.Strategy = Strategy;
+    }
 }

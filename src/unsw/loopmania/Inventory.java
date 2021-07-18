@@ -71,7 +71,7 @@ public class Inventory {
     }
 
     public Boolean hasRing() {
-        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i++) {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
             Item item = unequippedInventoryItems.get(i);
             if (item instanceof TheOneRing) {
                 ((StaticEntity)item).destroy();
