@@ -30,3 +30,6 @@
 * Character only has to be touching battle/support radius of enemies to trigger battle
 * Rare items can't be replaced (only sold)
 * Character can't buy rare items
+* Replace replaces oldest NONRARE item
+* Vampires have 5% change to drop rare item. Rest have 1%
+* Enemies killed by traps don't drop items
