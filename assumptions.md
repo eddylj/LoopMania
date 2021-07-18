@@ -2,7 +2,7 @@
 
 
 * Multiple enemies can be on the same tile together
-* Potions cannot be sold in heroes castle
+* Character can hold as many potions as they want in inventory
 * The character moves at a constant speed
 * Items have different levels and become more powerful as their level increases
 * Potion’s can’t be used while in battle
@@ -36,3 +36,4 @@
 * Buildings can't spawn enemies diagonally
 * You can't place a card on an existing buildings
 * You can't drag an item out of the equipped slot
+* Game unpauses when no shop window is open
