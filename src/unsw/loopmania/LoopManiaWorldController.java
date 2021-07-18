@@ -10,6 +10,13 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.IntegerBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,6 +31,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -113,7 +123,7 @@ public class LoopManiaWorldController {
     private Label gameState;
 
     @FXML
-    private ProgressBar healthBar;
+    private Rectangle healthBar;
 
     @FXML
     private Label goldAmount;
@@ -123,6 +133,15 @@ public class LoopManiaWorldController {
 
     @FXML
     private Label cyclesAmount;
+
+    @FXML
+    private Label goldGoal;
+
+    @FXML
+    private Label xpGoal;
+
+    @FXML
+    private Label cyclesGoal;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -257,13 +276,22 @@ public class LoopManiaWorldController {
         for (Item i : world.getItems()) {
             onLoad(i);
         }
-        // make health bar red
-        healthBar.setStyle("-fx-accent: red;");
 
         // Initialise bindings for stats
         goldAmount.textProperty().bind(world.getGold().asString());
         cyclesAmount.textProperty().bind(world.getCycles().asString());
         xpAmount.textProperty().bind(world.getXP().asString());
+        
+        healthBar.toFront();
+        healthBar.setFill(Color.RED);
+        // binds character health as a percentage to the health bar rectangle
+        healthBar.widthProperty().bind(Bindings.divide(world.getHealth(), 100/healthBar.widthProperty().get()));
+
+        // Initialise bindings for goals
+        goldGoal.setText(Integer.toString(world.getMaxGoal("gold")));
+        xpGoal.setText(Integer.toString(world.getMaxGoal("experience")));
+        cyclesGoal.setText(Integer.toString(world.getMaxGoal("cycles")));
+
         
         // create the draggable icon
         draggedEntity = new DragIcon();
@@ -310,6 +338,7 @@ public class LoopManiaWorldController {
 
             if (world.isCharacterDead()) {
                 pause();
+                loadDeathScreen();
             }
             if (world.onHeroCastle()) {
                 try {
@@ -338,7 +367,7 @@ public class LoopManiaWorldController {
     }
 
     public void terminate(){
-        pause();
+        Platform.exit();
     }
 
     public void tryToPlay() {
@@ -826,7 +855,6 @@ public class LoopManiaWorldController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        // TODO = possibly set other menu switchers
         terminate();
         mainMenuSwitcher.switchMenu();
     }
@@ -867,6 +895,13 @@ public class LoopManiaWorldController {
             tryToPlay();
         });
         stage.show();
+    }
+
+    public void loadDeathScreen() {
+        Label label = new Label("GAME OVER");
+        label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 40));
+        label.setTextFill(Color.RED);
+        anchorPaneRoot.getChildren().add(label);
     }
     
 

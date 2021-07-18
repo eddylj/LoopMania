@@ -4,6 +4,8 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.graalvm.compiler.nodes.calc.IntegerBelowNode;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -675,9 +677,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
     /**
      * Gets the character's health
-     * @return int: The character's health
+     * @return IntegerProperty: The character's health
      */
-    public int getHealth() {
-        return character.getHealth();
+    public IntegerProperty getHealth() {
+        return character.getHealthProperty();
     }
 }
