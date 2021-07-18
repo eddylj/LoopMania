@@ -4,6 +4,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class itemFactory {
     //"Sword", "Helmet", "Armour", "Shield", "Stake", "Staff"
+    /**
+     * Generates respective item
+     * @param x
+     * @param y
+     * @param type
+     * @param level
+     * @return Item
+     */
     public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type, int level) {
         if (type.equals("sword")) {
             return createSword(x, y, level);

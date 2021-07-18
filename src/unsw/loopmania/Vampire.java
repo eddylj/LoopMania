@@ -1,7 +1,6 @@
 package unsw.loopmania;
 
 import java.util.List;
-import java.util.Random;
 
 import org.javatuples.Pair;
 

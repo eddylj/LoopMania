@@ -28,19 +28,16 @@ public class HealthPotion extends StaticEntity implements Item{
     }
 
     public int getPrice() {
-        // TODO Auto-generated method stub
         return 100;
     }
 
     @Override
     public int getSellPrice() {
-        // TODO Auto-generated method stub
         return 40;
     }
 
     @Override
     public int getReplaceCost() {
-        // TODO Auto-generated method stub
-        return 0;
+        return 20;
     }
 }

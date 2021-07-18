@@ -1,8 +1,12 @@
 package unsw.loopmania;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class EnemyFactory {
+    /**
+     * Creates respective Enemy
+     * @param path
+     * @param type
+     * @return Enemy
+     */
     public Enemy create(PathPosition path, String type) {
         if (type.equals("slug")) {
             return createSlug(path);

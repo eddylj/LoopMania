@@ -29,7 +29,6 @@ public class Zombie extends Enemy {
      * @param h
      * @param b
      */
-    @Override
     public void attack(Hero h, BattleRunner b) {
         // Accounts for zombie critical bite against AS
         if (h instanceof AlliedSoldier) {
