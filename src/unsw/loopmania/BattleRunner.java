@@ -115,9 +115,9 @@ public class BattleRunner {
     public void checkTrancedEnemies() {
         for (int i = allies.size() - 1; i >= 0; i--) {
             AlliedSoldier a = allies.get(i);
-            if (a instanceof convertedEnemy) {
-                if (((convertedEnemy)a).canExitTrance()) {
-                    Enemy original = ((convertedEnemy)a).getEnemy();
+            if (a instanceof ConvertedEnemy) {
+                if (((ConvertedEnemy)a).canExitTrance()) {
+                    Enemy original = ((ConvertedEnemy)a).getEnemy();
                     enemies.add(original);
                     killAlly(a);
                 }
@@ -133,7 +133,7 @@ public class BattleRunner {
         // for (AlliedSoldier a : allies) {
         for (int i = allies.size() - 1; i >= 0; i--) {
             AlliedSoldier a = allies.get(i);
-            if (a instanceof convertedEnemy) {
+            if (a instanceof ConvertedEnemy) {
                 killAlly(a);
             }
         }
@@ -168,7 +168,7 @@ public class BattleRunner {
     public void convertEnemyToAlly(Enemy enemy) {
         enemies.remove(enemy);
         HeroFactory a = new HeroFactory();
-        convertedEnemy c = (convertedEnemy) a.create(enemy);
+        ConvertedEnemy c = (ConvertedEnemy) a.create(enemy);
         character.addAlliedSoldier((AlliedSoldier)c);
         
     }

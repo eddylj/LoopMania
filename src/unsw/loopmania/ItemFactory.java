@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class itemFactory {
+public class ItemFactory {
     //"Sword", "Helmet", "Armour", "Shield", "Stake", "Staff"
     /**
      * Generates respective item

@@ -10,8 +10,8 @@ public class HeroFactory {
         return createConvertedEnemy(e);
     }
 
-    private convertedEnemy createConvertedEnemy(Enemy enemy) {
-        return new convertedEnemy(enemy);
+    private ConvertedEnemy createConvertedEnemy(Enemy enemy) {
+        return new ConvertedEnemy(enemy);
     }
 
     private AlliedSoldier createAlliedSoldier() {

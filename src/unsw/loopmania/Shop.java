@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Shop {
     private CharacterStats stats;
     private Character character;
-    private itemFactory i;
+    private ItemFactory i;
     Inventory inventory;
 
     /**
@@ -16,7 +16,7 @@ public class Shop {
         this.stats = character.getStats();
         this.inventory = character.getInventory();
         this.character = character;
-        i = new itemFactory();
+        i = new ItemFactory();
     }
     /**
      * Gets purchase cost of item

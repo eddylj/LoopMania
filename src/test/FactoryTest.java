@@ -34,7 +34,7 @@ import unsw.loopmania.TrapBuilding;
 import unsw.loopmania.VampireCastleBuilding;
 import unsw.loopmania.VillageBuilding;
 import unsw.loopmania.ZombiePitBuilding;
-import unsw.loopmania.itemFactory;
+import unsw.loopmania.ItemFactory;
 
 public class FactoryTest {
     private SimpleIntegerProperty x;
@@ -63,7 +63,7 @@ public class FactoryTest {
     @ParameterizedTest
     @ValueSource(strings = {"sword", "helmet", "armour", "shield", "stake", "staff"})
     public void itemFactoryLevelTest(String input) {
-        itemFactory f = new itemFactory();
+        ItemFactory f = new ItemFactory();
         LoopManiaWorld.setSeed(5);
         int level = (LoopManiaWorld.getRandNum() % 10) + 1;
         Item item1 = f.create(x, y, input, level);
@@ -73,7 +73,7 @@ public class FactoryTest {
 
     @Test
     public void itemFactoryRegularTest() {
-        itemFactory f = new itemFactory();
+        ItemFactory f = new ItemFactory();
         Item potion = f.create(x, y, "healthpotion");
         Item potion2 = f.create(x, y, "healthpotion");
         assertNotEquals(potion, potion2);
