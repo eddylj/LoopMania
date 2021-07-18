@@ -17,6 +17,7 @@ public class Slug extends Enemy{
     public Slug() {
         super(1, 1, 10, 100, 50);
         super.setType("slug");
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }
     /**
      * Generates random loot for player for zombie

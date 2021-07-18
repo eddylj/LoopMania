@@ -37,7 +37,7 @@ public class CharacterTest {
         Character c = new Character();
         assertEquals(100, c.getHealth());
         assertEquals(0, c.getGold());
-        assertEquals(0, c.getXP());
+        assertEquals(0, c.getXP().get());
     }
     @Test
     public void attackTest(){
