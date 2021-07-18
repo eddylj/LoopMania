@@ -4,7 +4,6 @@ public class CompositeOr extends CompositeBinaryOperator{
 
     public CompositeOr(Composite left, Composite right) {
         super(left, right);
-        //TODO Auto-generated constructor stub
     }
 
     @Override

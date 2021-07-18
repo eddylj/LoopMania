@@ -18,7 +18,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  * entity can occupy the same square.
  */
 
-    public class LoopManiaWorld {
+public class LoopManiaWorld {
+
     public static int seed;
     private static Random rand;
     private BuildingFactory bF;

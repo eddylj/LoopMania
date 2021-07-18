@@ -26,7 +26,7 @@ public class HealthPotion extends StaticEntity implements Item{
     public void heal(Character character) {
         character.restoreHealth(40);
     }
-
+    @Override
     public int getPrice() {
         return 100;
     }
