@@ -258,6 +258,7 @@ public class BattleRunner {
     private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
+        character.gainGold(enemy.getGold());
         System.out.println("Enemy has died");
     }
 
