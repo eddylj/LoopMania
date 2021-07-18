@@ -45,9 +45,11 @@ public class SwordTest {
     public void compareDamages() {
         Weapon sword = new Sword(1);
         Double damage = sword.getDamage();
+        Double initialDamage = damage;
         for (int i = 2; i <= 10; i++) {
             Weapon nextSword = new Sword(i);
-            assertEquals(nextSword.getDamage(), damage * 1.1);
+            System.out.println(damage*1.1);
+            assertEquals(nextSword.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
             damage = nextSword.getDamage();
         }
     }
@@ -56,7 +58,6 @@ public class SwordTest {
     public void whackSomethingWithSwordTest() {
         Character c = new Character();
         Item sword = new Sword(1);
-
         c.equip(sword);
         Enemy slug = new Slug();
         assertEquals(slug.getHealth(), 50);

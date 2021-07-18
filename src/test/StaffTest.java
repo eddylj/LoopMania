@@ -84,5 +84,17 @@ public class StaffTest {
         c.attack(e, b);
         assertEquals(e.getHealth(), 32);
     }
+
+    @Test
+    public void compareDamages() {
+        Weapon staff = new Staff(1);
+        Double damage = staff.getDamage();
+        Double initialDamage = damage;
+        for (int i = 2; i <= 10; i++) {
+            Weapon nextStaff= new Staff(i);
+            assertEquals(nextStaff.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            damage = nextStaff.getDamage();
+        }
+    }
     
 }

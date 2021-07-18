@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import org.javatuples.Pair;
 import org.json.JSONObject;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 
 import unsw.loopmania.Character;
@@ -28,12 +28,17 @@ import unsw.loopmania.PathTile;
 import unsw.loopmania.VampireCastleBuilding;
 
 public class MovingIntegrationTest {
-    private JSONObject goals;
+    private JSONObject setting;
     
     public MovingIntegrationTest() {
-        goals = new JSONObject();
+        
+        JSONObject goals = new JSONObject();
+        setting = new JSONObject();
         goals.put("goal", "gold");
-        goals.put("quantity", 1000);
+        goals.put("quantity", 9000);
+        JSONArray rareItem = new JSONArray();
+        setting.put("rare_items", rareItem);
+        setting.put("goal-condition",goals);
     }
 
     private List<Pair<Integer, Integer>> createPath() {
@@ -64,7 +69,7 @@ public class MovingIntegrationTest {
     public void checkExistsTest() {
         // RIGHT, RIGHT, DOWN, DOWN, LEFT, LEFT, UP, UP
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(10, 10, l, goals);
+        LoopManiaWorld d = new LoopManiaWorld(10, 10, l, setting);
         assertEquals(d.getWidth(), 10);
         assertEquals(d.getHeight(), 10);
     }
@@ -72,7 +77,7 @@ public class MovingIntegrationTest {
     @Test
     public void DoFullLoop() {
         List<Pair<Integer, Integer>> l = createPath();
-        LoopManiaWorld d = new LoopManiaWorld(5, 5, l, goals);
+        LoopManiaWorld d = new LoopManiaWorld(5, 5, l, setting);
         PathPosition characterPosition = new PathPosition(0, l);
         Character c = new Character(characterPosition);
         d.setCharacter(c);

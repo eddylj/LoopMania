@@ -7,13 +7,13 @@ public class Staff extends Weapon{
 
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         // super(x, y, level, 700*(1+(level-1)*15/100), 18);
-        super(x, y, level, 700*(1+(level-1)*15/100), 18*(1+(level-1)/10));
+        super(x, y, level, 700*(1+(level-1)*15/100), 18.0*(1+((level-1)*1.0)/10));
         tranceChance = 30 + level * 3;
         super.setType("staff");
     }    
 
     public Staff(int level) {
-        super(level, 700*(1+(level-1)*15/100), 18*(1+(level-1)/10));
+        super(level, 700*(1+(level-1)*15/100), 18.0*(1+((level-1)*1.0)/10));
         tranceChance = 30 + level * 3;
         super.setType("staff");
     }

@@ -56,4 +56,16 @@ public class StakeTest {
         c.attack(vampire, b);
         assertEquals(100, vampire.getHealth());
     }
+
+    @Test
+    public void compareDamages() {
+        Weapon stake = new Stake(1);
+        Double damage = stake.getDamage();
+        Double initialDamage = damage;
+        for (int i = 2; i <= 10; i++) {
+            Weapon nextStake= new Stake(i);
+            assertEquals(nextStake.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            damage = nextStake.getDamage();
+        }
+    }
 }
