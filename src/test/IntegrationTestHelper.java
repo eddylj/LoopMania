@@ -21,12 +21,12 @@ public class IntegrationTestHelper {
 
     public static LoopManiaWorld createWorld(String fileName, int seed) throws FileNotFoundException{
         JSONObject json = new JSONObject(new JSONTokener(new FileReader("bin/worlds/" + fileName)));
-        JSONObject goals = json.getJSONObject("goal-condition");
+        // JSONObject goals = json.getJSONObject("goal-condition");
         List<Pair<Integer, Integer>> orderedPath = IntegrationTestHelper.loadPathTiles(json.getJSONObject("path"), 8, 14);
         int width = json.getInt("width");
         int height = json.getInt("height");
 
-        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, goals, seed);
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json, seed);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 

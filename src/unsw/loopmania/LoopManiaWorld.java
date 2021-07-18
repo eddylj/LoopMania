@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.LoggingPermission;
 import org.javatuples.Pair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -24,8 +25,8 @@ public class LoopManiaWorld {
     private int width;
     private int height;
     private JSONObject json;
+    private List<String> rareItems;
     private Composite winChecker;
-    // private GoalCalculator winChecker;
     private List<Entity> nonSpecifiedEntities;
     private Character character;
     private Pair<Integer, Integer> heroCastlePosition;
@@ -36,10 +37,10 @@ public class LoopManiaWorld {
 
     private List<Pair<Integer, Integer>> orderedPath;
 
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject json) {
         seed = (int)System.currentTimeMillis();
         LoopManiaWorld.rand = new Random(seed);
-        commonConstructorMethod(width, height, orderedPath, goals);
+        commonConstructorMethod(width, height, orderedPath, json);
     }
 
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals, int seed) {
@@ -48,7 +49,7 @@ public class LoopManiaWorld {
         commonConstructorMethod(width, height, orderedPath, goals);
     }
 
-    private void commonConstructorMethod(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goals) {
+    private void commonConstructorMethod(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject json) {
         this.width = width;
         this.height = height;
         bF = new BuildingFactory();
@@ -59,8 +60,10 @@ public class LoopManiaWorld {
         moveBuildings = new ArrayList<BuildingOnMove>();
         cycleBuildings = new ArrayList<BuildingOnCycle>();
         battleRunner = new BattleRunner();
-        this.json = goals;
+        this.json = json;
+        rareItems = new ArrayList<String>();
         spawn2slugs();
+        getRareItems();
     }
 
     public LoopManiaWorld(int seed) {
@@ -78,6 +81,13 @@ public class LoopManiaWorld {
         }
         else {
             moveBuildings.add((BuildingOnMove)building);
+        }
+    }
+
+    public void getRareItems() {
+        JSONArray rareItemList = json.getJSONArray("rare_items");
+        for (int i = 0; i < rareItemList.length(); i++) {
+            rareItems.add(rareItemList.getString(i));
         }
     }
 
@@ -113,7 +123,7 @@ public class LoopManiaWorld {
         moveEntities();
         List<Enemy> deadEnemies = fight();
         for (Enemy e : deadEnemies) {
-            e.getLoot(character, width);
+            e.getLoot(character, width, rareItems);
         }
         cleanUpFight();
     }
@@ -182,7 +192,7 @@ public class LoopManiaWorld {
     }
 
     public StaticEntity processEnemyLoot(Enemy deadEnemy) {
-        return deadEnemy.getLoot(character, width);
+        return deadEnemy.getLoot(character, width, rareItems);
     }
 
     /**
@@ -414,6 +424,11 @@ public class LoopManiaWorld {
             return null;
         }
     }
+
+    public List<String> getNonLevelItems() {
+        return character.getNonLevelItems();
+    }
+
     private List<Pair<Integer, Integer>> getAllEmptyTiles() {
         List<Pair<Integer, Integer>> tiles = new ArrayList<Pair<Integer, Integer>>();
         for (Pair<Integer, Integer> p : orderedPath) {
@@ -430,7 +445,7 @@ public class LoopManiaWorld {
         this.character = character;
         // character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
-        GoalCalculator goals = new GoalCalculator(json, character);
+        GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));

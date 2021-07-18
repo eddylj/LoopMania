@@ -28,11 +28,6 @@ import unsw.loopmania.LoopManiaWorldLoader;
 import unsw.loopmania.StaticEntity;
 
 public class IntegrationTestTest {
-    private int apple;
-
-    public IntegrationTestTest() {
-        apple = 3;
-    }
 
     public static JSONObject parseJSON(String fileName) {
         try {
@@ -47,8 +42,6 @@ public class IntegrationTestTest {
     @Test
     public void workingTest() throws FileNotFoundException {
         LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world.json", 1);
-        Item sword = world.getUnequippedInventoryItemEntityByCoordinates(0, 0);
-        world.equipItem(sword);
         for (int i = 0; i < 8; i++) {
             world.tick();
             assertFalse(world.checkPlayerLoss());
@@ -57,16 +50,14 @@ public class IntegrationTestTest {
     }
 
     /**
-     * Player walks in a 3x3 circle attacking slugs and then dies on the 37th tick.
+     * Player walks in a 3x3 circle attacking slugs and then dies on the 38th tick.
      * When player picks up armour, player does not equip it.
      * @throws FileNotFoundException
      */
     @Test
     public void checkLossTest() throws FileNotFoundException {
         LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", 4);
-        Item sword = world.getUnequippedInventoryItemEntityByCoordinates(0, 0);
-        world.equipItem(sword);
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 37; i++) {
             System.out.println(i);
             world.tick();
             
@@ -78,17 +69,12 @@ public class IntegrationTestTest {
 
     /**
      * Same test as checkLossTest except when player picks up armour, player equips it,
-     * so the player survives for an extra 14 ticks (almost 2 cycles)
+     * so the player survives for an extra 13 ticks (almost 2 cycles)
      * @throws FileNotFoundException
      */
     @Test
     public void checkLaterLossTest() throws FileNotFoundException {
         LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", 4);
-        Item sword = world.getUnequippedInventoryItemEntityByCoordinates(0, 0);
-        Item other = world.getItems().get(0);
-        System.out.println(((StaticEntity)sword).getType());
-        System.out.println(((StaticEntity)other).getType());
-        world.equipItem(sword);
         for (int i = 0; i < 36; i++) {
             List<Item> inventory = world.getItems();
             if (!inventory.isEmpty()) {

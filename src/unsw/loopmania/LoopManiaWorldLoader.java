@@ -42,9 +42,9 @@ public abstract class LoopManiaWorldLoader {
         // path variable is collection of coordinates with directions of path taken...
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
 
-        JSONObject goals = json.getJSONObject("goal-condition");
+        // JSONObject j = json.getJSONObject("goal-condition");
 
-        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, goals);
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 

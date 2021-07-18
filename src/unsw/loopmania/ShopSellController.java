@@ -91,6 +91,9 @@ public class ShopSellController {
             else if (item instanceof HealthPotion) {
                 itemNameArrayList.add("healthpotion");
             }
+            else if (item instanceof TheOneRing) {
+                itemNameArrayList.add("theonering");
+            }
         }
         return itemNameArrayList.toArray(new String[itemNameArrayList.size()]);
     }

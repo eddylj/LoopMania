@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -14,6 +15,7 @@ public class Inventory {
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
     private List<Card> cardEntities;
+    private List<String> nonLevelItems;
 
 
 
@@ -21,7 +23,7 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering"));
     }
 
     
@@ -62,6 +64,10 @@ public class Inventory {
             }
         }
         return null;
+    }
+
+    public List<String> getNonLevelItems() {
+        return nonLevelItems;
     }
 
     public void removeUnequippedItem(Item removeItem) {
@@ -109,7 +115,7 @@ public class Inventory {
         // now we insert the new sword, as we know we have at least made a slot available...
         itemFactory f = new itemFactory();
         Item item = null;
-        if (type.equals("healthpotion")) {
+        if (nonLevelItems.contains(type)) {
             item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }
         else {

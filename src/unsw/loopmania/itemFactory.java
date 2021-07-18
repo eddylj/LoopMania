@@ -32,6 +32,9 @@ public class itemFactory {
         if (type.equals("healthpotion")) {
             return createHealthPotion(x, y);
         }
+        else if (type.equals("theonering")) {
+            return createTheOneRing(x, y);
+        }
         else {
             return null;
         }
@@ -58,6 +61,9 @@ public class itemFactory {
     }
     public HealthPotion createHealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new HealthPotion(x, y);
+    }
+    public TheOneRing createTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new TheOneRing(x, y);
     }
 
 }

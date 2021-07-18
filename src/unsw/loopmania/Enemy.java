@@ -1,6 +1,8 @@
 package unsw.loopmania;
 
 import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
+
+import java.util.List;
 import java.util.Random;
 
 public abstract class Enemy extends MovingEntity {
@@ -27,7 +29,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
-        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion"};
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "rare"};
     }
 
     public int getHealth() {
@@ -92,6 +94,6 @@ public abstract class Enemy extends MovingEntity {
         }
     }
 
-    public abstract StaticEntity getLoot(Character character, int width);
+    public abstract StaticEntity getLoot(Character character, int width, List<String> rareItems);
 
 }

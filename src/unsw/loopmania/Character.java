@@ -232,6 +232,10 @@ public class Character extends MovingEntity implements Hero {
             equippedHelmet = i;
         }
     }
+
+    public List<String> getNonLevelItems() {
+        return inventory.getNonLevelItems();
+    }
     //////////////////////////////////////////////////////
     public List<Item> getunequippedInventoryItems() {
         return inventory.getunequippedInventoryItems();
