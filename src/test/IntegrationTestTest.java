@@ -18,6 +18,7 @@ import org.junit.Test;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.StaticEntity;
+import unsw.loopmania.Character;
 
 public class IntegrationTestTest {
 
@@ -90,5 +91,15 @@ public class IntegrationTestTest {
         assertNull(((StaticEntity)world.getEquippedItemByCoordinates(4)));
         world.tick();
         assertTrue(world.checkPlayerLoss());
+    }
+
+    @Test
+    public void BuyAndUsePotion() throws FileNotFoundException{
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("one_ring_grind.json", 2);
+        for (int i = 0; i < 8; i++) {
+            world.tick();
+        }
+        Character c = world.getCharacter();
+        character.
     }
 }

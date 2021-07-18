@@ -239,7 +239,7 @@ public class BuildingTests {
         List<Enemy> enemies = new ArrayList<Enemy>(); 
         world.SpawnEnemiesOnCycle(enemies);
         vampireCastle.spawnEnemy(new PathPosition(0, path));
-        assertEquals(3, enemies.size());
+        assertEquals(2, enemies.size());
         int vampireCount = 0;
         for (Enemy enemy: enemies) {
             assertTrue(enemy instanceof Vampire || enemy instanceof Slug);
