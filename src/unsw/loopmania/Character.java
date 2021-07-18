@@ -51,6 +51,7 @@ public class Character extends MovingEntity implements Hero {
         appliedBuff = new NormalState();
         stats = new CharacterStats();
         soldiers = new ArrayList<AlliedSoldier>();
+        inventory = new Inventory(this);
         aliveSoldiers = new SimpleIntegerProperty(0);
     }
 
@@ -257,5 +258,13 @@ public class Character extends MovingEntity implements Hero {
     }
     public Card getCardByCoordinate(int x) {
         return inventory.getCardByCoordinate(x);
+    }
+
+    public int getUnequippedInventoryItemsNum() {
+        return inventory.getUnequippedInventoryItemsNum();
+    }
+
+    public int getCardsNum() {
+        return inventory.getCardsNum();
     }
 }

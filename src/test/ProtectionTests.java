@@ -32,7 +32,7 @@ public class ProtectionTests {
         assertEquals(armour.getType(), "armour");
         for (int i = 0; i < 10; i++) {
             double damage = i * 10;
-            assertEquals(damage - armour.getDamageReduction(), armour.protect(damage));
+            assertEquals(damage * (1 - armour.getDamageReduction()), armour.protect(damage));
         }
     }
 

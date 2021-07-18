@@ -199,7 +199,13 @@ public class Inventory {
         return null;
     }
 
+    public int getUnequippedInventoryItemsNum() {
+        return unequippedInventoryItems.size();
+    }
 
+    public int getCardsNum() {
+        return cardEntities.size();
+    }
 
     public static int getunequippedInventoryWidth() {
 		return Inventory.unequippedInventoryWidth;
