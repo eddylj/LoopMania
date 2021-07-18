@@ -1,22 +1,30 @@
 package unsw.loopmania;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Shop {
 
     private CharacterStats stats;
     private Character character;
-    itemFactory i = new itemFactory();
+    private itemFactory i;
     Inventory inventory;
 
     public Shop(Character character) {
         this.stats = character.getStats();
         this.inventory = character.getInventory();
         this.character = character;
+        i = new itemFactory();
     }
 
     public int getBuyPrice(String item) {
-        int level = stats.getHighestLevel(item);
-        Item purchasedItem = (Item)inventory.addUnequippedItem(item, level+1);
-        int price = purchasedItem.getPrice();
+        int price;
+        if (item.equals("healthpotion")) {
+            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item).getPrice();
+        }
+        else {
+            int level = stats.getHighestLevel(item);
+            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item, level).getPrice();
+        }
         return price;
     }
 
@@ -34,7 +42,8 @@ public class Shop {
         return price;
     }
 
-    public Item sell(Item item) {
-        
+    public void sell(Item item) {
+        ((Entity)item).destroy();
+        character.getunequippedInventoryItems().remove(item);
     }
 }

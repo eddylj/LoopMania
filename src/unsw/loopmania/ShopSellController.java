@@ -62,6 +62,7 @@ public class ShopSellController {
         for (RowConstraints rowConstraint: shopItems.getRowConstraints()) {
             rowConstraint.setPercentHeight(25);
         }
+        addItems();
         addDoneButton();
     }
 
@@ -87,8 +88,8 @@ public class ShopSellController {
     }
 
     public void addItems() {
-        for (int i = 0; i < world.getItems().size(); i++) {
-            Item item = world.getItems().get(i);
+        int i = 0;
+        for (Item item: world.getItems()) {
             int itemLevel = 0;
             if (item instanceof Weapon) {
                 itemLevel = ((Weapon)item).getLevel();
@@ -98,7 +99,7 @@ public class ShopSellController {
             }
             String itemName = ((StaticEntity) item).getType();
             String itemString;
-            if (item instanceof HealthPotion) {
+            if (item instanceof HealthPotion || item instanceof TheOneRing) {
                 itemString = itemName;
             }
             else {
@@ -126,19 +127,19 @@ public class ShopSellController {
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
+            i++;
         }
     }
 
     public Button makeItemButton(Item item, int position) {
-        int price = shop.getSellPrice(item); // TODO: make this according to each item
+        int price = shop.getSellPrice(item);
         Button sellButton = new Button(Integer.toString(price));
         sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 18));
         
-        // TODO: link button to buying item
         sellButton.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent event) {
-                    world.removeUnequippedInventoryItemByCoordinates(position % 4, position / 4);
+                    shop.sell(item);
                     sellButton.setTextFill(Color.DARKRED);
                     sellButton.setDisable(true);
                     world.getCharacter().gainGold(price);
