@@ -268,7 +268,6 @@ public class LoopManiaWorldController {
         for (Item i : world.getItems()) {
             onLoad(i);
         }
-        System.out.println("11wnjdka\n222222aid\n33333333333aihudnjadd\n444444444aihudiahhasdhjas\n55555555555555aiuhdhafhba\nawhuidahfawh\naiudhbafba\n");
 
         for (Coin c : world.getCoin()) {
             onLoad(c);

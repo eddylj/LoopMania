@@ -14,9 +14,14 @@ public class Coin extends StaticEntity{
         amount = LoopManiaWorld.getRandNum()/2+50;
     }
 
+    public Coin() {
+        super();
+        amount = LoopManiaWorld.getRandNum()/2+50;
+    }
+
     /**
      * Checks if character has stepped on coin. If so activate coin
-     * @param enemy
+     * @param character
      */
     public void updateOnMove(Character character) {
         if (!(character instanceof Character)) {
@@ -24,7 +29,6 @@ public class Coin extends StaticEntity{
         }
         else if (character.getX() == super.getX() && character.getY() == super.getY()) {
             activate(character);
-            this.destroy();
         }
     }
 
@@ -34,5 +38,10 @@ public class Coin extends StaticEntity{
      */
     public void activate(Character character) {
         character.gainGold(amount);
+        this.destroy();
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }
