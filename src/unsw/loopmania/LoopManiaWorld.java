@@ -684,6 +684,19 @@ public class LoopManiaWorld {
         return character.getHealthProperty();
     }
 
+    ////////////////
+    // Getters used in SaveGame
+    public int getSeed() {
+        return seed;
+    }
+
+    public List<Entity> getNonSpecifiedEntities() {
+        return nonSpecifiedEntities;
+    }
+
+    public Pair<Integer, Integer> getHerosCastlePosition() {
+        return heroCastlePosition;
+    }
 
 ///////////////////
 //Functions for testing

@@ -244,6 +244,9 @@ public class Inventory {
     public int getCardsNum() {
         return cardEntities.size();
     }
+    public List<Card> getCards() {
+        return cardEntities;
+    }
     public static int getunequippedInventoryWidth() {
 		return Inventory.unequippedInventoryWidth;
 	}
