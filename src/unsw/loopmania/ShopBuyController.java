@@ -119,11 +119,14 @@ public class ShopBuyController {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-        buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+        buyButton.disableProperty().bind(shop.canBuy(itemName).not());
+        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 StaticEntity item = (StaticEntity) shop.buy(itemName);
+                buyButton.setText(Integer.toString(shop.getBuyPrice(item.getType())));
+                buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
             }
         });
@@ -147,6 +150,7 @@ public class ShopBuyController {
                     Stage stage = new Stage();
                     stage.setTitle("Shop-Sell");
                     worldController.setSellShopOpen(true);
+                    shop.restock();
                     stage.setOnCloseRequest(closeEvent -> {
                         worldController.setSellShopOpen(false);
                         worldController.tryToPlay();

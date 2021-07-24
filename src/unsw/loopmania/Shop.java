@@ -1,11 +1,14 @@
 package unsw.loopmania;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Shop {
     private CharacterStats stats;
     private Character character;
     private ItemFactory i;
+    private ShopStrategy available;
     Inventory inventory;
 
     /**
@@ -16,6 +19,8 @@ public class Shop {
         this.stats = character.getStats();
         this.inventory = character.getInventory();
         this.character = character;
+        // this.available = new NormalShopStrategy();
+        this.available = new SurvivalShopStrategy(character);
         i = new ItemFactory();
     }
     /**
@@ -24,15 +29,19 @@ public class Shop {
      * @return cost to buy item
      */
     public int getBuyPrice(String item) {
-        int price;
-        if (item.equals("healthpotion")) {
-            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item).getPrice();
+        return previewItem(item).getPrice();
+    }
+
+    private Item previewItem(String itemType) {
+        Item item = null;
+        if (itemType.equals("healthpotion")) {
+            item = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
         }
         else {
-            int level = stats.getHighestLevel(item);
-            price = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), item, level + 1).getPrice();
+            int level = stats.getHighestLevel(itemType);
+            item = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType, level + 1);
         }
-        return price;
+        return item;
     }
 
     public int getItemBuyLevel(String item) {
@@ -51,6 +60,7 @@ public class Shop {
         stats.updateHighestLevel(purchasedItem);
         int price = purchasedItem.getPrice();
         character.loseGold(price);
+        available.buyItem(purchasedItem);
         return purchasedItem;
     }
 
@@ -67,5 +77,22 @@ public class Shop {
         ((Entity)item).destroy();
         character.getunequippedInventoryItems().remove(item);
         character.gainGold(price);
+    }
+
+    public BooleanProperty canBuy(String item) {
+        // return new SimpleBooleanProperty(vailable.getAvailable(previewItem(item)));
+        return new SimpleBooleanProperty(available.getAvailable(previewItem(item)));
+    }
+
+    public void restock() {
+        available.restock();
+    }
+
+    public void setSurvival() {
+        available = new SurvivalShopStrategy(character);
+    }
+
+    public void setBeserker() {
+        available = new BeserkerShopStrategy(character);
     }
 }
