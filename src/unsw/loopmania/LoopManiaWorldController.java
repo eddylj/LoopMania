@@ -146,6 +146,7 @@ public class LoopManiaWorldController {
 
     private boolean buyShopOpen;
     private boolean sellShopOpen;
+    private Shop shop;
 
     private boolean isPaused;
     private LoopManiaWorld world;
@@ -204,6 +205,7 @@ public class LoopManiaWorldController {
         entityImages = new ArrayList<>(initialEntities);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
+        shop = new Shop(world.getCharacter());
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -307,7 +309,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             List<Enemy> newEnemies = world.moveEntities();
 
             for (Enemy newEnemy : newEnemies){
@@ -848,7 +850,7 @@ public class LoopManiaWorldController {
         pause();
         buyShopOpen = true;
 
-        ShopBuyController shopBuyController = new ShopBuyController(this, world);
+        ShopBuyController shopBuyController = new ShopBuyController(this, world, shop);
         FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
         shopLoader.setController(shopBuyController);
         

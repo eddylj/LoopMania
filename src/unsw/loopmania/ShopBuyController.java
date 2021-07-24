@@ -42,11 +42,11 @@ public class ShopBuyController {
 
     private Shop shop;
 
-    public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world) {
+    public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
         itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
-        shop = new Shop(world.getCharacter());
+        this.shop = shop;
     }
 
     @FXML
