@@ -18,7 +18,7 @@ public class Armour extends Protection {
      * @param level int Level of armour
      */
     public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(level, 400*(1+(level-1)*15/100), x, y);
+        super(level, 400, x, y);
         damageReduction = 0.4 + 0.03*(level-1);
         super.setType("armour");
     }
@@ -28,7 +28,7 @@ public class Armour extends Protection {
      * @param level int Level of armour
      */
     public Armour(int level) {
-        super(level, 400*(1+(level-1)*15/100));
+        super(level, 400);
         damageReduction = 0.4 + 0.03*(level-1);
         super.setType("armour");
     }

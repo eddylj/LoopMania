@@ -15,7 +15,7 @@ public abstract class Protection extends StaticEntity implements Item{
     public Protection (int level, double price, SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         this.level = level;
-        this.price = price;
+        this.price = price * Math.pow(1.15, level);
     }
 
     public Protection(int level, int price) {

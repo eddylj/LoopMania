@@ -12,14 +12,14 @@ public class Helmet extends Protection {
      * @param level
      */
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(level, 400*(1+(level-1)*15/100), x, y);
+        super(level, 400, x, y);
         debuff = 10 - (level-1);
         damageReduction += (level-1);
         super.setType("helmet");
     }
     
     public Helmet(int level) {
-        super(level, 400*(1+(level-1)*15/100));
+        super(level, 400);
         debuff = 10 - (level-1);
         damageReduction += (level-1);
         super.setType("helmet");

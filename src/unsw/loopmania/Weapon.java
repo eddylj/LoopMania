@@ -21,11 +21,11 @@ public abstract class Weapon extends StaticEntity implements Item{
     public Weapon(SimpleIntegerProperty x, SimpleIntegerProperty y, int level, double price, Double damage) {
         super(x,y);
         this.level = level;
-        this.price = price;
-        this.damage = damage;
+        this.price = 350 * Math.pow(1.15, level);
+        this.damage = damage * Math.pow(1.1, level);
     }
 
-    public Weapon(int level, int price, Double damage) {
+    public Weapon(int level, Double price, Double damage) {
         super();
         this.level = level;
         this.price = price;

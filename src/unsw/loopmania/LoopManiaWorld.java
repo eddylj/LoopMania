@@ -587,7 +587,7 @@ public class LoopManiaWorld {
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
-        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 3));
     }
 
     /**
