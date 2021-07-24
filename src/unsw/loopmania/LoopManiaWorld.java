@@ -37,6 +37,7 @@ public class LoopManiaWorld {
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
     private List<Pair<Integer, Integer>> orderedPath;
+    private List<Coin> gold;
     
     /**
      * 
@@ -58,6 +59,8 @@ public class LoopManiaWorld {
         battleRunner = new BattleRunner();
         this.json = json;
         rareItems = new ArrayList<String>();
+        gold = new ArrayList<Coin>();
+        spawnCoin();
         spawn2slugs();
         getRareItems();
     }
@@ -114,6 +117,16 @@ public class LoopManiaWorld {
         spawnSlug(pos1, orderedPath);
         spawnSlug(pos2, orderedPath);
     }
+
+    /**
+     * Spawns coin at start of game
+     */
+    public void spawnCoin() {
+
+        int pos = LoopManiaWorld.getRandNum() % orderedPath.size();
+        PathPosition position = new PathPosition(pos, orderedPath);
+        gold.add(new Coin(position.getX(), position.getY()));
+    }
     
     /**
      * Checks if character is dead
@@ -141,6 +154,7 @@ public class LoopManiaWorld {
         List<Enemy> newEnemies = new ArrayList<Enemy>();
         character.moveDownPath();
         checkBuildingActions(character);
+        checkGoldActions(character);
         moveEnemies();
         triggerCycleActions(newEnemies);
         updateEnemyList();
@@ -157,6 +171,8 @@ public class LoopManiaWorld {
             }
         }
     }
+
+    
     /**
      * Checks for a fight with character and runs the battle
      * @return list of defeated enemies
@@ -193,6 +209,7 @@ public class LoopManiaWorld {
         if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
             character.gainCycle();
+            spawnCoinsOnCycle();
         }
     }
     /**
@@ -309,6 +326,15 @@ public class LoopManiaWorld {
         }
     }
 
+    public void spawnCoinsOnCycle() {
+        List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
+
+        int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
+        PathPosition position = new PathPosition(pos, emptyTiles);
+        gold.add(new Coin(position.getX(), position.getY()));
+        
+
+    }
 
     public StaticEntity loadCard(String type, int width) {
         return character.loadCard(type, width);
@@ -377,6 +403,20 @@ public class LoopManiaWorld {
         for (BuildingOnMove b : moveBuildings) {
             b.updateOnMove(e);
         }
+    }
+
+    public void checkGoldActions(Character character) {
+        for (Coin c : gold) {
+            c.updateOnMove(character);
+        }
+
+        for (int i = gold.size() - 1; i >= 0; i--) {
+            Coin c = gold.get(i);
+            if (!c.shouldExist().get()) {
+                gold.remove(i);
+            }
+        }
+
     }
 
     /**
@@ -474,6 +514,14 @@ public class LoopManiaWorld {
      */
     public List<Enemy> getEnemies() {
         return enemies;
+    }
+
+    /**
+     * Gets the coin on the map
+     * @return Coin: the coin on the map
+     */
+    public List<Coin> getCoin() {
+        return gold;
     }
 
     /**

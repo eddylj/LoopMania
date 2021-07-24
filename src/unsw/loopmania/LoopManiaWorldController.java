@@ -268,6 +268,11 @@ public class LoopManiaWorldController {
         for (Item i : world.getItems()) {
             onLoad(i);
         }
+        System.out.println("11wnjdka\n222222aid\n33333333333aihudnjadd\n444444444aihudiahhasdhjas\n55555555555555aiuhdhafhba\nawhuidahfawh\naiudhbafba\n");
+
+        for (Coin c : world.getCoin()) {
+            onLoad(c);
+        }
 
         // Initialise bindings for stats and allied soldiers
         goldAmount.textProperty().bind(world.getGold().asString());
@@ -309,6 +314,11 @@ public class LoopManiaWorldController {
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             List<Enemy> newEnemies = world.moveEntities();
+            List <Coin> newCoins = world.getCoin();
+
+            for (Coin c : newCoins) {
+                onLoad(c);
+            }
 
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
@@ -485,6 +495,12 @@ public class LoopManiaWorldController {
         String imageName = String.format("src/images/%s_building.png", ((StaticEntity)building).getType());
         ImageView view = new ImageView(new Image((new File(imageName)).toURI().toString()));
         addEntity((Entity)building, view);
+        squares.getChildren().add(view);
+    }
+
+    private void onLoad(Coin coin) {
+        ImageView view = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
+        addEntity(coin, view);
         squares.getChildren().add(view);
     }
 
