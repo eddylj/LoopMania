@@ -20,7 +20,7 @@ public class SaveGame {
     public void SaveWorld(String name) {
         saveCharacter();
         saveNonSpecifiedEntities();
-        saveHerosCastlePosition();
+        // saveHerosCastlePosition();
         saveEnemies();
         saveCycleBuildings();
         saveMoveBuildings();
@@ -41,9 +41,9 @@ public class SaveGame {
     private void saveCharacter() {
         Character character = world.getCharacter();
         JSONObject c = new JSONObject();
-        c.put("experience", character.getXP());
+        c.put("experience", character.getXP().get());
         c.put("gold", character.getGold());
-        c.put("cycles", character.getCycles());
+        c.put("cycles", character.getCycles().get());
         c.put("health", character.getHealth());
         addEquippedWeapon(c);
         addEquippedArmour(c);
@@ -67,13 +67,13 @@ public class SaveGame {
         save.put("nonSpecifiedEntities", nonSpecifiedEntities);
     }
 
-    private void saveHerosCastlePosition() {
-        Pair<Integer, Integer> pos = world.getHerosCastlePosition();
-        JSONObject heroscastle = new JSONObject();
-        heroscastle.put("X", pos.getValue0());
-        heroscastle.put("Y", pos.getValue1());
-        save.put("herosCastlePosition", heroscastle);
-    }
+    // private void saveHerosCastlePosition() {
+    //     Pair<Integer, Integer> pos = world.getHerosCastlePosition();
+    //     JSONObject heroscastle = new JSONObject();
+    //     heroscastle.put("X", pos.getValue0());
+    //     heroscastle.put("Y", pos.getValue1());
+    //     save.put("herosCastlePosition", heroscastle);
+    // }
 
     private void saveEnemies() {
         List<Enemy> l = world.getEnemies();
@@ -81,8 +81,7 @@ public class SaveGame {
         for (Enemy e : l) {
             JSONObject enemy = new JSONObject();
             enemy.put("type", e.getType());
-            enemy.put("X", e.getX());
-            enemy.put("Y", e.getY());
+            enemy.put("index", e.getIndexOfPosition());
             enemies.put(enemy);
         }
         save.put("enemies", enemies);
@@ -177,8 +176,6 @@ public class SaveGame {
         for (Item i : inventory.getunequippedInventoryItems()) {
             JSONObject item = new JSONObject();
             item.put("type", ((StaticEntity)i).getType());
-            item.put("x", ((StaticEntity)i).getX());
-            item.put("y", ((StaticEntity)i).getY());
             if (i instanceof Protection) {
                 item.put("level", ((Protection)i).getLevel());
             }
@@ -193,15 +190,10 @@ public class SaveGame {
             JSONObject card = new JSONObject();
             card.put("type", ((StaticEntity)c).getType());
             card.put("x", ((StaticEntity)c).getX());
-            card.put("y", ((StaticEntity)c).getY());
             cards.put(card);
         }
 
         character.put("unequippedItems", items);
         character.put("cards", cards);
     }
-
-
-    
-
 }

@@ -248,6 +248,18 @@ public class Character extends MovingEntity implements Hero {
         this.cycles.set(cycle);
     }
 
+    public void setStats(String type, int level) {
+        stats.setStats(type, level);
+    }
+
+    public void setAliveSoldiers(int num) {
+        aliveSoldiers.set(num);
+        HeroFactory hF = new HeroFactory();
+        for (int i = 0; i < num; i++) {
+            addAlliedSoldier((AlliedSoldier)hF.create());
+        }
+    }
+
     /**
      * Gets the character's allied soldier count
      * @return int: The character's allied soldier count
@@ -345,6 +357,9 @@ public class Character extends MovingEntity implements Hero {
         cycles.set(cycles.get() + 1);
     }
 
+    public void setCycle(int amount) {
+        cycles.set(amount);
+    }
     /**
      * Decreases the character's health
      * @param damage double: Amount to decrease

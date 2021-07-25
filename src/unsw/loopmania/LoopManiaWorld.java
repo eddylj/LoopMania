@@ -58,7 +58,9 @@ public class LoopManiaWorld {
         battleRunner = new BattleRunner();
         this.json = json;
         rareItems = new ArrayList<String>();
-        spawn2slugs();
+        if (!json.has("saveWorld")) {
+            spawn2slugs();
+        }
         getRareItems();
     }
 
@@ -383,7 +385,7 @@ public class LoopManiaWorld {
      * Adds building to list of buildings
      * @param b
      */
-    private void addBuilding(Building b) {
+    public void addBuilding(Building b) {
         if (b instanceof BuildingOnCycle) {
             cycleBuildings.add((BuildingOnCycle)b);
         }
@@ -685,7 +687,7 @@ public class LoopManiaWorld {
     }
 
     ////////////////
-    // Getters used in SaveGame
+    // Getters used in SaveGame and LoadGame
     public int getSeed() {
         return seed;
     }
@@ -700,6 +702,10 @@ public class LoopManiaWorld {
 
     public JSONObject getJSON() {
         return json;
+    }
+
+    public void addEnemy(Enemy e) {
+        enemies.add(e);
     }
 
     public void saveGame(String name) {

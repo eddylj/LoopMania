@@ -52,6 +52,9 @@ public abstract class LoopManiaWorldLoader {
             loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
         }
 
+        LoadGame load = new LoadGame(world, json);
+        load.loadWorld();
+
         return world;
     }
 

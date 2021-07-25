@@ -33,6 +33,10 @@ public abstract class MovingEntity extends Entity {
         return position;
     }
 
+    public int getIndexOfPosition() {
+        return position.getPositionInPath();
+    }
+
     /**
      * move clockwise through the path
      */
@@ -67,7 +71,7 @@ public abstract class MovingEntity extends Entity {
      * @param attackdamage amount of damage to be taken
      */
     public void takeDamage(double attackDamage) {
-       health.set(health.get() - (int)attackDamage);
+        health.set(health.get() - (int)attackDamage);
     }
 
 
