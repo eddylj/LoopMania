@@ -543,19 +543,18 @@ public class LoopManiaWorldController {
     }
 
     private boolean newPositionValid(Item item, Node node) {
-        if (node == null || node.getId() == null) {
-            return false;
-        }
-        if (item instanceof Weapon && node.getId().equals("swordCell")) {
+        System.out.println(node.getLayoutX());
+        System.out.println(node.getLayoutY());
+        if (item instanceof Weapon && node.getLayoutX() == 0) {
             return true;
         }
-        else if (item instanceof Helmet && node.getId().equals("helmetCell")) {
+        if (item instanceof Helmet && node.getLayoutX() == 32) {
             return true;
         }
-        else if (item instanceof Armour && node.getId().equals("armourCell")) {
+        if (item instanceof Shield && node.getLayoutX() == 64) {
             return true;
         }
-        else if (item instanceof Shield && node.getId().equals("shieldCell")) {
+        if (item instanceof Armour && node.getLayoutX() == 92) {
             return true;
         }
         return false;
