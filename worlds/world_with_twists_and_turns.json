@@ -12,7 +12,8 @@
     ]
   },
   "entities": [
-    {"x": 0, "y": 0, "type": "hero_castle"}
+    {"x": 0, "y": 0, "type": "hero_castle"},
+    {"x": 0, "y": 11, "type": "trap"}
   ],
   "path": {
     "type": "path_tile",

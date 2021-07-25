@@ -354,10 +354,19 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             List<Enemy> newEnemies = world.moveEntities();
             List <Coin> newCoins = world.getCoin();
-
+            
             for (Coin c : newCoins) {
                 onLoad(c);
             }
+
+            for (BuildingOnMove b : world.getMoveBuildings()) {
+                onLoad((Building)b);
+            }
+
+            for (BuildingOnCycle b : world.getCycleBuildings()) {
+                onLoad((Building)b);
+            }
+
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
@@ -545,6 +554,10 @@ public class LoopManiaWorldController {
         squares.getChildren().add(view);
     }
 
+    public void setMode(String mode) {
+        world.setMode(mode);
+    }
+
     private boolean newPositionValid(Item item, Node node) {
         System.out.println(node.getLayoutX());
         System.out.println(node.getLayoutY());
@@ -557,7 +570,7 @@ public class LoopManiaWorldController {
         if (item instanceof Shield && node.getLayoutX() == 64) {
             return true;
         }
-        if (item instanceof Armour && node.getLayoutX() == 92) {
+        if (item instanceof Armour && node.getLayoutX() == 96) {
             return true;
         }
         return false;
@@ -648,6 +661,9 @@ public class LoopManiaWorldController {
                                     System.out.println("Successfully dropped");
                                 }
                                 else {
+                                    node.getLayoutX();
+                                    node.getLayoutY();
+                                    // squares.add(arg0, arg1, arg2);
                                     System.out.println("New position is not valid");
                                     return;
                                 }

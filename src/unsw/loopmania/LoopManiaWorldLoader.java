@@ -28,7 +28,7 @@ public abstract class LoopManiaWorldLoader {
 
     public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
         System.err.println(filename);
-        json = new JSONObject(new JSONTokener(new FileReader("backup/" + filename)));
+        json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
     }
 
     /**

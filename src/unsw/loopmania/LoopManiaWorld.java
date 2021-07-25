@@ -161,6 +161,7 @@ public class LoopManiaWorld {
         moveEnemies();
         triggerCycleActions(newEnemies);
         updateEnemyList();
+        updateBuildingList();
         return newEnemies;
     }
     /**
@@ -171,6 +172,21 @@ public class LoopManiaWorld {
             Enemy e = enemies.get(i);
             if (!e.shouldExist().get()) {
                 enemies.remove(i);
+            }
+        }
+    }
+
+    public void updateBuildingList() {
+        for (int i = moveBuildings.size() - 1; i >= 0; i--) {
+            BuildingOnMove b = moveBuildings.get(i);
+            if (!((StaticEntity)b).shouldExist().get()) {
+                moveBuildings.remove(i);
+            }
+        }
+        for (int i = cycleBuildings.size() - 1; i >= 0; i--) {
+            BuildingOnCycle b = cycleBuildings.get(i);
+            if (!((StaticEntity)b).shouldExist().get()) {
+                cycleBuildings.remove(i);
             }
         }
     }
@@ -640,6 +656,15 @@ public class LoopManiaWorld {
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         shop = new Shop(character);
+    }
+
+    public void setMode(String mode) {
+        if (mode.equals("survival")) {
+            shop.setSurvival();
+        }
+        if (mode.equals("beserker")) {
+            shop.setBeserker();
+        }
     }
 
     /**

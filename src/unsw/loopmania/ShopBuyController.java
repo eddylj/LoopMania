@@ -138,13 +138,13 @@ public class ShopBuyController {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-        // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
+        buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 StaticEntity item = (StaticEntity) shop.buy(itemName);
                 buyButton.setText(Integer.toString(shop.getBuyPrice(item.getType())));
-                // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
+                buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
                 view.setImage(makeItemImage(itemName));
             }
