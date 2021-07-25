@@ -43,6 +43,9 @@ public class Slug extends Enemy{
             }
             else if (num < 5) {
                 int level = character.getHighestLevel(itemType) + 1;
+                if (level > 10) {
+                    level = 10;
+                }
                 return character.addUnequippedItem(itemType, level);
             }
             else {

@@ -57,8 +57,11 @@ public class Shop {
     }
 
     public int getItemBuyLevel(String item) {
-        int level = stats.getHighestLevel(item);
-        return level + 1;
+        int level = stats.getHighestLevel(item)+1;
+        if (level > 10) {
+            return 10;
+        }
+        return level;
     }
 
     /**

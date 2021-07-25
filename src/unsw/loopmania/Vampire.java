@@ -74,6 +74,9 @@ public class Vampire extends Enemy {
             }
             else if (num < 20) {
                 int level = character.getHighestLevel(itemType) + 1;
+                if (level > 10) {
+                    level = 10;
+                }
                 return character.addUnequippedItem(itemType, level);
             }
             else {
