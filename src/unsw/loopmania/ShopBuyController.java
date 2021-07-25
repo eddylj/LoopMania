@@ -80,56 +80,76 @@ public class ShopBuyController {
     }
 
     public void addItems(String[] itemList) {
+        int rowNum = 0;
+        int colNum = 0;
         for (int i = 0; i < itemList.length; i++) {
             String itemName = itemList[i];
-            String itemString;
-            int itemLevel = shop.getItemBuyLevel(itemName);
-            if (itemName.equals("healthpotion")) {
-                itemString = itemName;
-            }
-            else {
-                itemString = itemName + itemLevel;
-            }
-            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString()));
-            int row = i / 3;
-            int col = i % 3;
+            Image itemImage = makeItemImage(itemName);
+            ImageView view = new ImageView(itemImage);
             view.setFitHeight(100);
             view.setFitWidth(100);
-            shopItems.add(view, col, row);
+
+            shopItems.add(view, colNum, rowNum);
             GridPane.setHalignment(view, HPos.CENTER);
             GridPane.setValignment(view, VPos.CENTER);
             
-            ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
-            goldView.setFitHeight(40);
-            goldView.setFitWidth(40);
+            ImageView goldImageView = makeGoldImageView();
 
-            Button item = makeItemButton(itemName);
+            Button itemButton = makeItemButton(itemName, view);
 
             GridPane gridPane = new GridPane();
-            gridPane.add(goldView, 0, 0);
-            gridPane.add(item, 1, 0);
+            gridPane.add(goldImageView, 0, 0);
+            gridPane.add(itemButton, 1, 0);
             itemCosts.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
+            if (colNum < 2) {
+                colNum++;
+            }
+            else {
+                colNum = 0;
+                rowNum++;
+            }
         }
     }
 
-    public Button makeItemButton(String itemName) {
+    public Image makeItemImage(String itemName) {
+        String itemString;
+        int itemLevel = shop.getItemBuyLevel(itemName);
+        if (itemName.equals("healthpotion")) {
+            itemString = itemName;
+        }
+        else {
+            itemString = itemName + itemLevel;
+        }
+        Image view = new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString());
+        return view;
+    }
+
+    public ImageView makeGoldImageView() {
+        ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
+        goldView.setFitHeight(40);
+        goldView.setFitWidth(40);
+        return goldView;
+    }
+
+    public Button makeItemButton(String itemName, ImageView view) {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-        buyButton.disableProperty().bind(shop.canBuy(itemName).not());
-        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+        // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 StaticEntity item = (StaticEntity) shop.buy(itemName);
                 buyButton.setText(Integer.toString(shop.getBuyPrice(item.getType())));
-                buyButton.disableProperty().bind(shop.canBuy(itemName).not());
+                // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
+                view.setImage(makeItemImage(itemName));
             }
         });
+        buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         return buyButton;
     }
 

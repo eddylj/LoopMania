@@ -25,4 +25,14 @@ public class MainMenuController {
     private void switchToGame() throws IOException {
         gameSwitcher.switchMenu();
     }
+
+    @FXML
+    private void switchToSurvival() throws IOException {
+        gameSwitcher.switchMenu();
+    }
+
+    @FXML
+    private void switchToBerserker() throws IOException {
+        gameSwitcher.switchMenu();
+    }
 }
