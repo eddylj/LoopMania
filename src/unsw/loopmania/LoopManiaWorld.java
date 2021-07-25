@@ -38,6 +38,7 @@ public class LoopManiaWorld {
     private BattleRunner battleRunner;
     private List<Pair<Integer, Integer>> orderedPath;
     private List<Coin> gold;
+    private Shop shop;
     
     /**
      * 
@@ -638,6 +639,7 @@ public class LoopManiaWorld {
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        shop = new Shop(character);
     }
 
     /**
@@ -724,6 +726,10 @@ public class LoopManiaWorld {
      */
     public IntegerProperty getXP() {
         return character.getXP();
+    }
+
+    public Shop getShop() {
+        return shop;
     }
 
     /**

@@ -211,7 +211,8 @@ public class LoopManiaWorldController {
         entityImages = new ArrayList<>(initialEntities);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
-        shop = new Shop(world.getCharacter());
+        // shop = new Shop(world.getCharacter());
+        shop = world.getShop();
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
