@@ -13,12 +13,15 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
@@ -151,6 +154,9 @@ public class LoopManiaWorldController {
     private boolean isPaused;
     private LoopManiaWorld world;
 
+    private Button save;
+    private TextField name;
+
     /**
      * runs the periodic game logic - second-by-second moving of character through maze, as well as enemies, and running of battles
      */
@@ -252,8 +258,39 @@ public class LoopManiaWorldController {
             }
         }
 
-        ImageView view = new ImageView(new File(String.format("src/images/sword1.png")).toURI().toString());
-        equippedItems.getChildren().add(view);
+        // Equip weapon
+        Item weapon = world.getEquippedItemByCoordinates(0);
+        String type = ((StaticEntity)weapon).getType();
+        int level = ((Weapon)weapon).getLevel();
+        ImageView viewWeapon = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+        equippedItems.add(viewWeapon, 0, 0);
+
+        // Equip helmet
+        Item helmet = world.getEquippedItemByCoordinates(1);
+        if (helmet != null) {
+            type = ((StaticEntity)helmet).getType();
+            level = ((Protection)helmet).getLevel();
+            ImageView viewHelmet = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewHelmet, 1, 0);
+        }
+
+        // Equip shield
+        Item shield = world.getEquippedItemByCoordinates(2);
+        if (shield != null) {
+            type = ((StaticEntity)shield).getType();
+            level = ((Protection)shield).getLevel();
+            ImageView viewShield = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewShield, 2, 0);
+        }
+
+        // Equip armour
+        Item armour = world.getEquippedItemByCoordinates(3);
+        if (armour != null) {
+            type = ((StaticEntity)armour).getType();
+            level = ((Protection)armour).getLevel();
+            ImageView viewArmour = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewArmour, 3, 0);
+        }
 
         for (BuildingOnMove b : world.getMoveBuildings()) {
             onLoad((Building)b);
@@ -506,7 +543,7 @@ public class LoopManiaWorldController {
     }
 
     private boolean newPositionValid(Item item, Node node) {
-        if (node == null) {
+        if (node == null || node.getId() == null) {
             return false;
         }
         if (item instanceof Weapon && node.getId().equals("swordCell")) {
@@ -839,8 +876,26 @@ public class LoopManiaWorldController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        terminate();
-        mainMenuSwitcher.switchMenu();
+        pause();
+        name = new TextField();
+        name.setPromptText("Enter name of world.");
+        GridPane.setConstraints(name, 1, 1);
+        anchorPaneRoot.getChildren().add(name);
+        save = new Button("Save");
+        // GridPane.setConstraints(backup, 3, 3);
+        GridPane.setColumnIndex(save, 3);
+        GridPane.setRowIndex(save, 4);
+        anchorPaneRoot.getChildren().add(save);
+        save.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e) {
+                String n = name.getText();
+                if (n != null) {
+                    world.saveGame(n);
+                    terminate();
+                }
+            }
+        });
     }
 
     public void shopCycles(int cycles) throws IOException {

@@ -69,4 +69,25 @@ public class CharacterStats {
             armour = ((Protection)item).getLevel();
         }
     }
+
+    public void setStats(String type, int level) {
+        if (type.equals("sword")) {
+            sword = level;
+        }
+        else if (type.equals("stake")) {
+            stake = level;
+        }
+        else if (type.equals("staff")) {
+            staff = level;
+        }
+        else if (type.equals("shield")) {
+            shield = level;
+        }
+        else if (type.equals("helmet")) {
+            helmet = level;
+        }
+        else if (type.equals("armour")) {
+            armour = level;
+        }
+    }
 }

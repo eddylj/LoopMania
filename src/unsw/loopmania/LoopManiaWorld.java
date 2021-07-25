@@ -61,7 +61,9 @@ public class LoopManiaWorld {
         rareItems = new ArrayList<String>();
         gold = new ArrayList<Coin>();
         spawnCoin();
-        spawn2slugs();
+        if (!json.has("saveWorld")) {
+            spawn2slugs();
+        }
         getRareItems();
     }
 
@@ -423,7 +425,7 @@ public class LoopManiaWorld {
      * Adds building to list of buildings
      * @param b
      */
-    private void addBuilding(Building b) {
+    public void addBuilding(Building b) {
         if (b instanceof BuildingOnCycle) {
             cycleBuildings.add((BuildingOnCycle)b);
         }
@@ -635,7 +637,7 @@ public class LoopManiaWorld {
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
-        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 3));
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
     }
 
     /**
@@ -732,6 +734,32 @@ public class LoopManiaWorld {
         return character.getHealthProperty();
     }
 
+    ////////////////
+    // Getters used in SaveGame and LoadGame
+    public int getSeed() {
+        return seed;
+    }
+
+    public List<Entity> getNonSpecifiedEntities() {
+        return nonSpecifiedEntities;
+    }
+
+    public Pair<Integer, Integer> getHerosCastlePosition() {
+        return heroCastlePosition;
+    }
+
+    public JSONObject getJSON() {
+        return json;
+    }
+
+    public void addEnemy(Enemy e) {
+        enemies.add(e);
+    }
+
+    public void saveGame(String name) {
+        SaveGame save = new SaveGame(this);
+        save.SaveWorld(name);
+    }
 
 ///////////////////
 //Functions for testing

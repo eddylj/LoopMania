@@ -28,7 +28,7 @@ public abstract class LoopManiaWorldLoader {
 
     public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
         System.err.println(filename);
-        json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
+        json = new JSONObject(new JSONTokener(new FileReader("backup/" + filename)));
     }
 
     /**
@@ -50,6 +50,11 @@ public abstract class LoopManiaWorldLoader {
         // load non-path entities later so that they're shown on-top
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
+        }
+
+        if (json.has("saveWorld")) {
+            LoadGame load = new LoadGame(world, json);
+            load.loadWorld();
         }
 
         return world;
