@@ -879,15 +879,20 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToMainMenu() throws IOException {
         pause();
-        name = new TextField();
-        name.setPromptText("Enter name of world.");
-        GridPane.setConstraints(name, 1, 1);
-        anchorPaneRoot.getChildren().add(name);
-        save = new Button("Save");
+        // name = new TextField();
+        // name.setPromptText("Enter name of world.");
+        // GridPane.setConstraints(name, 1, 1);
+        // anchorPaneRoot.getChildren().add(name);
+        
         // GridPane.setConstraints(backup, 3, 3);
-        GridPane.setColumnIndex(save, 3);
-        GridPane.setRowIndex(save, 4);
-        anchorPaneRoot.getChildren().add(save);
+        // GridPane.setColumnIndex(save, 3);
+        // GridPane.setRowIndex(save, 4);
+        // anchorPaneRoot.getChildren().add(save);
+
+        Label label = new Label("Enter name of world");
+        label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 20));
+        label.setTextFill(Color.VIOLET);        
+        save = new Button("Save");
         save.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e) {
@@ -898,6 +903,12 @@ public class LoopManiaWorldController {
                 }
             }
         });
+        GridPane gridpane = new GridPane();
+        gridpane.add(label, 0, 0);
+        gridpane.add(save,0, 1);
+        anchorPaneRoot.getChildren().add(gridpane);
+        AnchorPane.setTopAnchor(gridpane, anchorPaneRoot.getHeight()/2);
+
     }
 
     public void shopCycles(int cycles) throws IOException {
