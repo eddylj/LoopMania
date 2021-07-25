@@ -1,6 +1,5 @@
 package unsw.loopmania;
 
-public interface RareItem {
-
+public interface Boss {
     
 }

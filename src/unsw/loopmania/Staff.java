@@ -3,6 +3,10 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Staff extends Weapon{
+    public static final double PRICE = 700.0;
+    public static final double DAMAGE = 18.0;
+    public static final int BASETRANCECHANCE = 30;
+
     private int tranceChance;
     /**
      * 
@@ -11,15 +15,14 @@ public class Staff extends Weapon{
      * @param level
      */
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        // super(x, y, level, 700*(1+(level-1)*15/100), 18);
-        super(x, y, level, 700.0, 18.0);
-        tranceChance = 30 + level * 3;
+        super(x, y, level, PRICE, DAMAGE);
+        tranceChance = BASETRANCECHANCE + level * 3;
         super.setType("staff");
     }    
 
     public Staff(int level) {
-        super(level, 700.0, 18.0);
-        tranceChance = 30 + level * 3;
+        super(level, PRICE, DAMAGE);
+        tranceChance = BASETRANCECHANCE + level * 3;
         super.setType("staff");
     }
     

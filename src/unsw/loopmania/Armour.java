@@ -9,6 +9,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Group FRIDGE
  */
 public class Armour extends Protection {
+    private static final int PRICE = 400;
+    private static final double DMGREDUCTION = 0.4;
     private double damageReduction;
 
     /**
@@ -18,8 +20,8 @@ public class Armour extends Protection {
      * @param level int Level of armour
      */
     public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(level, 400, x, y);
-        damageReduction = 0.4 + 0.03*(level-1);
+        super(level, PRICE, x, y);
+        damageReduction = DMGREDUCTION + 0.03*(level-1);
         super.setType("armour");
     }
     
@@ -28,8 +30,8 @@ public class Armour extends Protection {
      * @param level int Level of armour
      */
     public Armour(int level) {
-        super(level, 400);
-        damageReduction = 0.4 + 0.03*(level-1);
+        super(level, PRICE);
+        damageReduction = DMGREDUCTION + 0.03*(level-1);
         super.setType("armour");
     }
 

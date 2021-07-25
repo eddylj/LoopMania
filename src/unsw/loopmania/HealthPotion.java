@@ -3,6 +3,8 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class HealthPotion extends StaticEntity implements Item{
+    public static final int SELLPRICE = 40;
+    public static final int REPLACECOST = 20;
     private int cost;
     /**
      * The class of health potion
@@ -34,12 +36,12 @@ public class HealthPotion extends StaticEntity implements Item{
 
     @Override
     public int getSellPrice() {
-        return 40;
+        return SELLPRICE;
     }
 
     @Override
     public int getReplaceCost() {
-        return 20;
+        return REPLACECOST;
     }
 
     public void increaseCost(int timesBought) {

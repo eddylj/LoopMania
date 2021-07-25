@@ -26,6 +26,7 @@ public class Character extends MovingEntity implements Hero {
     private SimpleIntegerProperty aliveSoldiers;
     private List<AlliedSoldier> soldiers;
     private Inventory inventory;
+    private boolean isStunned = false;
 
     /**
      * Constructor for the character Class
@@ -70,9 +71,12 @@ public class Character extends MovingEntity implements Hero {
      * protective items
      * @param damage double: The incoming damage
      */
-    public void takeDamage(double damage){
+    public void takeDamage(double damage, Enemy e){
         double newDamage = damage;
         if (!Objects.isNull(equippedShield)) {
+            if (equippedShield instanceof TreeStump) {
+                newDamage = ((Protection) equippedShield).protect(damage, e);
+            }
             newDamage = ((Protection) equippedShield).protect(damage);
         }
         if (!Objects.isNull(equippedHelmet)) {
@@ -127,20 +131,6 @@ public class Character extends MovingEntity implements Hero {
         }
     }
 
-    // STORE STUFF
-    //////////////////////////////////
-
-    /**
-     * Sells an item and gives the character some gold
-     * @param i Item: item to be sold
-     */
-    public void sellItem(Item i) {
-    }
-    ////////////////////////////////////////
-
-    // INVENTORY ITEM RELATED STUFF
-    ////////////////////////////////////
-
     /**
      * Checks whether player has The One Ring in their inventory
      * @return Boolean depending on whether player has the Ring
@@ -148,13 +138,7 @@ public class Character extends MovingEntity implements Hero {
     public boolean hasRing() {
         return inventory.hasRing();
     }
-
-
-    ////////////////////////////////////    
-
-
-    // SOLDIER STUFF
-    ////////////////////////////////////
+    
     /**
      * Removes any dead allied soldiers from the soldier list.
      * This is called after the battle has been done
@@ -197,8 +181,6 @@ public class Character extends MovingEntity implements Hero {
             equippedHelmet = i;
         }
     }
-
-    ////////////////////////////////////
 
     // Getters and Setters and other incrementors
     ///////////////////////////////////////////////////////
@@ -533,5 +515,12 @@ public class Character extends MovingEntity implements Hero {
      */
     public int getCardsNum() {
         return inventory.getCardsNum();
+    }
+
+    public void setStunned(boolean b) {
+        isStunned = b;
+    }
+    public boolean isStunned() {
+        return isStunned;
     }
 }

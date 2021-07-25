@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.List;
 
+
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
@@ -37,11 +38,11 @@ public abstract class Enemy extends MovingEntity {
      */
 
     public void attack (Hero h) {
-        h.takeDamage(attackDamage);
+        h.takeDamage(attackDamage, this);
     }
 
     public void attack(Hero h, BattleRunner b) {
-        h.takeDamage(attackDamage);
+        h.takeDamage(attackDamage, this);
 
     }
     /**
@@ -87,5 +88,9 @@ public abstract class Enemy extends MovingEntity {
     }
     public int getSupportRadius() {
         return this.supportRadius;
+    }
+
+    public void heal() {
+        health.set((int)(health.get() * 1.05));
     }
 }

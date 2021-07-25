@@ -16,6 +16,9 @@ public class ItemFactory {
         if (type.equals("sword")) {
             return createSword(x, y, level);
         }
+        if (type.equals("anduril")) {
+            return createAnduril(x, y, level);
+        }
         else if (type.equals("helmet")) {
             return createHelmet(x, y, level);
         }
@@ -24,6 +27,9 @@ public class ItemFactory {
         }
         else if (type.equals("shield")) {
             return createShield(x, y, level);
+        }
+        if (type.equals("treestump")) {
+            return createTreeStump(x, y, level);
         }
         else if (type.equals("stake")) {
             return createStake(x, y, level);
@@ -43,11 +49,26 @@ public class ItemFactory {
         else if (type.equals("theonering")) {
             return createTheOneRing(x, y);
         }
+        else if (type.equals("doggiecoin")) {
+            return createDoggieCoin(x, y);
+        }
         else {
             return null;
         }
     }
     
+    private Item createDoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new DoggieCoin(x, y);
+    }
+
+    private Item createTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+        return new TreeStump(x,y,level);
+    }
+
+    private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+        return new Anduril(x, y, level);
+    }
+
     public Sword createSword(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return new Sword(x, y, level);
     }

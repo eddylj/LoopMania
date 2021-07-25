@@ -5,6 +5,12 @@ import java.util.List;
 import org.javatuples.Pair;
 
 public class Vampire extends Enemy {
+    public static final int BATTLERADIUS = 2;
+    public static final int SUPPORTRADIUS = 3;
+    public static final int DAMAGE = 18;
+    public static final int GOLDAMOUNT = 500;
+    public static final int HEALTH = 150;
+    public static final int XP = 800;
     private String[] cardDrops;
     private VampireAttackStrategy Strategy;
 
@@ -13,7 +19,7 @@ public class Vampire extends Enemy {
      * @param position
      */
     public Vampire (PathPosition position) {
-        super(position, 2, 3, 18, 500, 150, 4);
+        super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("vampire");
         Strategy = new VampireNormal();
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
@@ -21,7 +27,7 @@ public class Vampire extends Enemy {
     }
 
     public Vampire() {
-        super(2, 3, 18, 500, 150, 4);
+        super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("vampire");
         Strategy = new VampireNormal();
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
