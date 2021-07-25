@@ -9,7 +9,7 @@ public class Doggie extends Enemy implements Boss{
     public static final int DAMAGE = 20;
     public static final int GOLDAMOUNT = 0;
     public static final int HEALTH = 500;
-    public static final int XP = 600;
+    public static final int XP = 700;
     public static final int STUNCHANCE = 20;
     private String[] cardDrops;
 
