@@ -358,7 +358,6 @@ public class LoopManiaWorldController {
             for (Coin c : newCoins) {
                 onLoad(c);
             }
-
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
@@ -367,10 +366,13 @@ public class LoopManiaWorldController {
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-
             if (world.isCharacterDead()) {
                 pause();
                 loadDeathScreen();
+            }
+            if (world.checkPlayerWin()) {
+                pause();
+                loadVictoryScreen();
             }
             if (world.onHeroCastle()) {
                 try {
@@ -621,7 +623,7 @@ public class LoopManiaWorldController {
                                 break;
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
-                                if (newPositionValid(item, node)) {
+                                if (item != null && newPositionValid(item, node)) {
                                     StaticEntity olditem = (StaticEntity)world.getEquippedItemByCoordinates(x);
                                     // Put previously equipped item back in inventory (then overwrite it)
                                     if (olditem != null) {
@@ -772,7 +774,7 @@ public class LoopManiaWorldController {
                 // }
                 
                 draggedEntity.setVisible(true);
-                draggedEntity.setMouseTransparent(true);
+                // draggedEntity.setMouseTransparent(true);
                 draggedEntity.toFront();
 
                 // IMPORTANT!!!
@@ -943,6 +945,15 @@ public class LoopManiaWorldController {
         
         anchorPaneRoot.getChildren().add(label);
         AnchorPane.setTopAnchor(label, anchorPaneRoot.getHeight()/2);
+    }
+
+    public void loadVictoryScreen() {
+        Label label = new Label("VICTORY!!!");
+        label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 40));
+        label.setTextFill(Color.AQUA);
+        
+        anchorPaneRoot.getChildren().add(label);
+        AnchorPane.setTopAnchor(label, anchorPaneRoot.getHeight()*1/3);
     }
     
 

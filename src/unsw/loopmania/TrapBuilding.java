@@ -24,7 +24,6 @@ public class TrapBuilding extends StaticEntity implements Building, BuildingOnMo
         }
         else if (enemy.getX() == super.getX() && enemy.getY() == super.getY()) {
             activate(enemy);
-            this.destroy();
         }
     }
 
@@ -33,6 +32,7 @@ public class TrapBuilding extends StaticEntity implements Building, BuildingOnMo
      * @param enemy
      */
     public void activate(MovingEntity enemy) {
+        this.destroy();
         enemy.takeDamage(30);
         if (enemy.isDead()) {
             enemy.destroy();
