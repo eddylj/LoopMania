@@ -258,8 +258,39 @@ public class LoopManiaWorldController {
             }
         }
 
-        ImageView view = new ImageView(new File(String.format("src/images/sword1.png")).toURI().toString());
-        equippedItems.getChildren().add(view);
+        // Equip weapon
+        Item weapon = world.getEquippedItemByCoordinates(0);
+        String type = ((StaticEntity)weapon).getType();
+        int level = ((Weapon)weapon).getLevel();
+        ImageView viewWeapon = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+        equippedItems.add(viewWeapon, 0, 0);
+
+        // Equip helmet
+        Item helmet = world.getEquippedItemByCoordinates(1);
+        if (helmet != null) {
+            type = ((StaticEntity)helmet).getType();
+            level = ((Protection)helmet).getLevel();
+            ImageView viewHelmet = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewHelmet, 1, 0);
+        }
+
+        // Equip shield
+        Item shield = world.getEquippedItemByCoordinates(2);
+        if (shield != null) {
+            type = ((StaticEntity)shield).getType();
+            level = ((Protection)shield).getLevel();
+            ImageView viewShield = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewShield, 2, 0);
+        }
+
+        // Equip armour
+        Item armour = world.getEquippedItemByCoordinates(3);
+        if (armour != null) {
+            type = ((StaticEntity)armour).getType();
+            level = ((Protection)armour).getLevel();
+            ImageView viewArmour = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
+            equippedItems.add(viewArmour, 3, 0);
+        }
 
         for (BuildingOnMove b : world.getMoveBuildings()) {
             onLoad((Building)b);

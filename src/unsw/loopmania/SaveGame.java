@@ -28,7 +28,7 @@ public class SaveGame {
         JSONObject json = world.getJSON();
         json.put("saveWorld", save);
         try {
-            FileWriter file = new FileWriter(String.format("src/saves/%s.json", name));
+            FileWriter file = new FileWriter(String.format("backup/%s.json", name));
             file.write(json.toString());
             file.close();
         } catch (IOException e) {

@@ -52,7 +52,7 @@ public class LoadGame {
     }
 
     private void equipItem(JSONObject item) {
-        if (item == null) {
+        if (item.isEmpty()) {
             return;
         }
         Character character = world.getCharacter();
@@ -112,8 +112,8 @@ public class LoadGame {
                 continue;
             }
             String type = building.getString("type");
-            SimpleIntegerProperty x = new SimpleIntegerProperty(building.getInt("x"));
-            SimpleIntegerProperty y = new SimpleIntegerProperty(building.getInt("y"));
+            SimpleIntegerProperty x = new SimpleIntegerProperty(building.getInt("X"));
+            SimpleIntegerProperty y = new SimpleIntegerProperty(building.getInt("Y"));
             Building b = (Building)bF.create(x, y, type);
             world.addBuilding(b);
         }
