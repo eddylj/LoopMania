@@ -1,5 +1,8 @@
 package unsw.loopmania;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 import org.javatuples.Pair;
 import org.json.JSONArray;
@@ -14,7 +17,7 @@ public class SaveGame {
         save = new JSONObject();
     }
 
-    public void SaveWorld() {
+    public void SaveWorld(String name) {
         saveCharacter();
         saveNonSpecifiedEntities();
         saveHerosCastlePosition();
@@ -22,6 +25,17 @@ public class SaveGame {
         saveCycleBuildings();
         saveMoveBuildings();
         save.put("seed", world.getSeed());
+        JSONObject json = world.getJSON();
+        json.put("saveWorld", save);
+        try {
+            FileWriter file = new FileWriter(String.format("src/saves/%s.json", name));
+            file.write(json.toString());
+            file.close();
+        } catch (IOException e) {
+            System.out.println("oopsies");
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void saveCharacter() {
@@ -113,30 +127,36 @@ public class SaveGame {
     private void addEquippedHelmet(JSONObject c) {
         JSONObject equippedHelmet = new JSONObject();
         Item i = world.getEquippedItemByCoordinates(1);
-        equippedHelmet.put("type", ((StaticEntity)i).getType());
-        equippedHelmet.put("level", ((Protection)i).getLevel());
-        equippedHelmet.put("x", ((StaticEntity)i).getX());
-        equippedHelmet.put("y", ((StaticEntity)i).getY());
+        if (i != null) {
+            equippedHelmet.put("type", ((StaticEntity)i).getType());
+            equippedHelmet.put("level", ((Protection)i).getLevel());
+            equippedHelmet.put("x", ((StaticEntity)i).getX());
+            equippedHelmet.put("y", ((StaticEntity)i).getY());
+        }
         c.put("equippedHelmet", equippedHelmet);
     }
 
     private void addEquippedShield(JSONObject c) {
         JSONObject equippedShield = new JSONObject();
         Item i = world.getEquippedItemByCoordinates(2);
-        equippedShield.put("type", ((StaticEntity)i).getType());
-        equippedShield.put("level", ((Protection)i).getLevel());
-        equippedShield.put("x", ((StaticEntity)i).getX());
-        equippedShield.put("y", ((StaticEntity)i).getY());
+        if (i != null) {
+            equippedShield.put("type", ((StaticEntity)i).getType());
+            equippedShield.put("level", ((Protection)i).getLevel());
+            equippedShield.put("x", ((StaticEntity)i).getX());
+            equippedShield.put("y", ((StaticEntity)i).getY());
+        }
         c.put("equippedShield", equippedShield);
     }
     
     private void addEquippedArmour(JSONObject c) {
         JSONObject equippedArmour = new JSONObject();
         Item i = world.getEquippedItemByCoordinates(3);
-        equippedArmour.put("type", ((StaticEntity)i).getType());
-        equippedArmour.put("level", ((Protection)i).getLevel());
-        equippedArmour.put("x", ((StaticEntity)i).getX());
-        equippedArmour.put("y", ((StaticEntity)i).getY());
+        if (i != null) {
+            equippedArmour.put("type", ((StaticEntity)i).getType());
+            equippedArmour.put("level", ((Protection)i).getLevel());
+            equippedArmour.put("x", ((StaticEntity)i).getX());
+            equippedArmour.put("y", ((StaticEntity)i).getY());
+        }
         c.put("equippedArmour", equippedArmour);
     }
 

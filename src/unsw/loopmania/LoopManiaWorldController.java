@@ -13,12 +13,15 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
@@ -150,6 +153,9 @@ public class LoopManiaWorldController {
 
     private boolean isPaused;
     private LoopManiaWorld world;
+
+    private Button save;
+    private TextField name;
 
     /**
      * runs the periodic game logic - second-by-second moving of character through maze, as well as enemies, and running of battles
@@ -491,7 +497,7 @@ public class LoopManiaWorldController {
     }
 
     private boolean newPositionValid(Item item, Node node) {
-        if (node == null) {
+        if (node == null || node.getId() == null) {
             return false;
         }
         if (item instanceof Weapon && node.getId().equals("swordCell")) {
@@ -824,8 +830,26 @@ public class LoopManiaWorldController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        terminate();
-        mainMenuSwitcher.switchMenu();
+        pause();
+        name = new TextField();
+        name.setPromptText("Enter name of world.");
+        GridPane.setConstraints(name, 1, 1);
+        anchorPaneRoot.getChildren().add(name);
+        save = new Button("Save");
+        // GridPane.setConstraints(backup, 3, 3);
+        GridPane.setColumnIndex(save, 3);
+        GridPane.setRowIndex(save, 4);
+        anchorPaneRoot.getChildren().add(save);
+        save.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e) {
+                String n = name.getText();
+                if (n != null) {
+                    world.saveGame(n);
+                    terminate();
+                }
+            }
+        });
     }
 
     public void shopCycles(int cycles) throws IOException {

@@ -587,7 +587,7 @@ public class LoopManiaWorld {
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
-        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 3));
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
     }
 
     /**
@@ -696,6 +696,15 @@ public class LoopManiaWorld {
 
     public Pair<Integer, Integer> getHerosCastlePosition() {
         return heroCastlePosition;
+    }
+
+    public JSONObject getJSON() {
+        return json;
+    }
+
+    public void saveGame(String name) {
+        SaveGame save = new SaveGame(this);
+        save.SaveWorld(name);
     }
 
 ///////////////////
