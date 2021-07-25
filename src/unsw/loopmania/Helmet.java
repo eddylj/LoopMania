@@ -3,6 +3,8 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Helmet extends Protection {
+    public static final int PRICE = 400;
+    public static final int BASEDEBUFF = 10;
     private int damageReduction = 3;
     private double debuff;
     /**
@@ -12,15 +14,15 @@ public class Helmet extends Protection {
      * @param level
      */
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(level, 400, x, y);
-        debuff = 10 - (level-1);
+        super(level, PRICE, x, y);
+        debuff = BASEDEBUFF - (level-1);
         damageReduction += (level-1);
         super.setType("helmet");
     }
     
     public Helmet(int level) {
-        super(level, 400);
-        debuff = 10 - (level-1);
+        super(level, PRICE);
+        debuff = BASEDEBUFF - (level-1);
         damageReduction += (level-1);
         super.setType("helmet");
     }
@@ -43,7 +45,7 @@ public class Helmet extends Protection {
      */
     public double calcAttackDamage(double attackDamage) {
         if (debuff > 0) {
-            return attackDamage * (1- debuff*0.01);
+            return attackDamage * (1 - debuff * 0.01);
         } 
         return attackDamage;
     }

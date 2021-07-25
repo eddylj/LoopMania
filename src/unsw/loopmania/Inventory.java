@@ -12,8 +12,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Inventory {
     private List<Item> unequippedInventoryItems;
     private Character character;
-    public static final int unequippedInventoryWidth = 4;
-    public static final int unequippedInventoryHeight = 4;
+    public static final int UNEQUIPPEDINVENTORYWIDTH = 4;
+    public static final int UNEQUIPPEDINVENTORYHEIGHT = 4;
     private List<Card> cardEntities;
     private List<String> nonLevelItems;
 
@@ -169,8 +169,8 @@ public class Inventory {
     private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
         // first available slot for an item...
         // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
-        for (int y=0; y<unequippedInventoryHeight; y++){
-            for (int x=0; x<unequippedInventoryWidth; x++){
+        for (int y=0; y<UNEQUIPPEDINVENTORYHEIGHT; y++){
+            for (int x=0; x<UNEQUIPPEDINVENTORYWIDTH; x++){
                 if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
                     return new Pair<Integer, Integer>(x, y);
                 }
@@ -245,10 +245,10 @@ public class Inventory {
         return cardEntities.size();
     }
     public static int getunequippedInventoryWidth() {
-		return Inventory.unequippedInventoryWidth;
+		return Inventory.UNEQUIPPEDINVENTORYWIDTH;
 	}
     public static int getunequippedInventoryHeight() {
-		return Inventory.unequippedInventoryHeight;
+		return Inventory.UNEQUIPPEDINVENTORYHEIGHT;
 	}
     public List<String> getNonLevelItems() {
         return nonLevelItems;

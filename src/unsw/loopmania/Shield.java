@@ -3,6 +3,7 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Shield extends Protection {
+    public static final int PRICE = 400;
     private int blockChance = 7;
     
     /**
@@ -12,8 +13,8 @@ public class Shield extends Protection {
      * @param level
      */
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(level, 400, x, y);
-        blockChance += 3*level;
+        super(level, PRICE, x, y);
+        blockChance += 3 * level;
         super.setType("shield");
     }
 
@@ -38,5 +39,10 @@ public class Shield extends Protection {
         }
         return damage;
     }
-    
+    public int getBlockChance() {
+        return blockChance;
+    }
+    public void setBlockChance(int blockChance){
+        this.blockChance = blockChance;
+    }
 }

@@ -3,19 +3,26 @@ package unsw.loopmania;
 import java.util.List;
 
 public class Slug extends Enemy{
+    public static final int BATTLERADIUS = 1;
+    public static final int SUPPORTRADIUS = 1;
+    public static final int DAMAGE = 10;
+    public static final int GOLDAMOUNT = 100;
+    public static final int HEALTH = 50;
+    public static final int XP = 100;
+
     private String[] cardDrops;
     /**
      * 
      * @param position
      */
     public Slug (PathPosition position) {
-        super(position, 1, 1, 10, 100, 50, 1);
+        super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("slug");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }
 
     public Slug() {
-        super(1, 1, 10, 100, 50, 1);
+        super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("slug");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
     }

@@ -3,6 +3,12 @@ package unsw.loopmania;
 import java.util.List;
 
 public class Zombie extends Enemy {
+    public static final int BATTLERADIUS = 2;
+    public static final int SUPPORTRADIUS = 2;
+    public static final int DAMAGE = 18;
+    public static final int GOLDAMOUNT = 250;
+    public static final int HEALTH = 100;
+    public static final int XP = 500;
     private boolean canMove;
     private String[] cardDrops;
     
@@ -11,14 +17,14 @@ public class Zombie extends Enemy {
      * @param position
      */
     public Zombie (PathPosition position) {
-        super(position, 2, 2, 18, 250, 100, 2);
+        super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("zombie");
         canMove = false;
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
     }
 
     public Zombie() {
-        super(2, 2, 18, 250, 100, 2);
+        super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("zombie");
         canMove = false;
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
@@ -37,11 +43,11 @@ public class Zombie extends Enemy {
                 h.setHealth(0);
                 b.convertAllyToZombie((AlliedSoldier)h);
             } else {
-                h.takeDamage(this.getAttackDamage());
+                h.takeDamage(this.getAttackDamage(), this);
             }
 
         } else {
-            h.takeDamage(this.getAttackDamage());
+            h.takeDamage(this.getAttackDamage(), this);
         }
     }
 

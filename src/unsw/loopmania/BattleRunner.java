@@ -183,9 +183,10 @@ public class BattleRunner {
             Enemy e = enemies.get(i);
             if (!allies.isEmpty()) {
                 AlliedSoldier a = allies.get(0);
-                if (e instanceof Zombie) {
+                if (e instanceof Zombie || e instanceof Doggie) {
                     e.attack(a, this);
-                } else {
+                } 
+                else {
                     e.attack(a);
                 }
                 if (a.isDead()) {
@@ -222,8 +223,13 @@ public class BattleRunner {
         }
         if (!enemies.isEmpty()) {
             Enemy e = enemies.get(0);
-            character.attack(e, this);
-            postFight(e);
+            if (!character.isStunned()) {
+                character.attack(e, this);
+                postFight(e);
+            } else {
+                character.setStunned(false);
+            }
+            
         }
     
     }
@@ -257,5 +263,17 @@ public class BattleRunner {
      */
     private void killAlly(AlliedSoldier ally) {
         allies.remove(ally);
+    }
+
+    public void stunCharacter() {
+        character.setStunned(true);
+    }
+
+    public void healenemies() {
+        for (Enemy e: enemies) {
+            if (!(e instanceof ElanMuske)) {
+                e.heal();
+            }
+        }
     }
 }

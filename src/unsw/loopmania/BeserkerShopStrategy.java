@@ -1,7 +1,5 @@
 package unsw.loopmania;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public class BeserkerShopStrategy implements ShopStrategy{
     private boolean available;

@@ -17,13 +17,13 @@ public class VampireNormal implements VampireAttackStrategy{
             if ((randomInt < 20 && Objects.isNull(c.getShield())) || randomInt < 8) {
                 critAttack(h, v);
             } else {
-                h.takeDamage(v.getAttackDamage());
+                h.takeDamage(v.getAttackDamage(), v);
             }
         } else {
             if (randomInt < 20) {
                 critAttack(h, v);
             } else {
-                h.takeDamage(v.getAttackDamage());
+                h.takeDamage(v.getAttackDamage(), v);
             }
         }
     }
@@ -34,7 +34,7 @@ public class VampireNormal implements VampireAttackStrategy{
      */
     private void critAttack(Hero h, Vampire v) {
         int randomInt = LoopManiaWorld.getRandNum() % 10;
-        h.takeDamage(v.getAttackDamage()*2 + randomInt + 1);
+        h.takeDamage(v.getAttackDamage()*2 + randomInt + 1, v);
         v.setStrategy(new VampireCritical());
     }
 }

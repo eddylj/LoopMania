@@ -9,7 +9,6 @@ public class NormalState implements BonusDamageStrategy{
      */
     @Override
     public double ApplyBonusDamge(double damage) {
-        // TODO Auto-generated method stub
         return damage;
     }
     
