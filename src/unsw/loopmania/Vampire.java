@@ -81,7 +81,7 @@ public class Vampire extends Enemy {
                 return character.addUnequippedItem(itemType, level);
             }
         }
-        else if (num < 45) {
+        else if (num < 50) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
             return character.loadCard(cardType, width);
         }

@@ -88,7 +88,7 @@ public class Zombie extends Enemy {
                 return character.addUnequippedItem(itemType, level);
             }
         }
-        else if (num < 25) {
+        else if (num < 35) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
             return character.loadCard(cardType, width);
         }
