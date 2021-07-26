@@ -69,16 +69,13 @@ public class Vampire extends Enemy {
         int num = LoopManiaWorld.getRandNum();
         if (num < 30) {
             String itemType;
-            if (num < 30 && !rareItems.isEmpty()) { // num < 5
-                System.out.println("boutta get rare item");
+            if (num < 5 && !rareItems.isEmpty()) {
                 itemType = rareItems.get(LoopManiaWorld.getRandNum() % rareItems.size());
-                System.out.println(String.format("[Rare Item] %s", itemType));
             }
             else {
                 itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
             }
             if (character.getNonLevelItems().contains(itemType)) {
-                System.out.println(String.format("[ITEM] %s", itemType));
                 return character.addUnequippedItem(itemType, 0);
             }
             else if (num < 20) {
@@ -86,21 +83,17 @@ public class Vampire extends Enemy {
                 if (level > 10) {
                     level = 10;
                 }
-                System.out.println(String.format("[ITEM] %s", itemType));
                 return character.addUnequippedItem(itemType, level);
             }
             else {
                 int level = character.getHighestLevel(itemType);
-                System.out.println(String.format("[ITEM] %s", itemType));
                 return character.addUnequippedItem(itemType, level);
             }
         }
         else if (num < 50) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            System.out.println(String.format("[ITEM] %s", cardType));
             return character.loadCard(cardType, width);
         }
-        System.out.println("Enemy didnt drop any loot");
         return null;
     }
     

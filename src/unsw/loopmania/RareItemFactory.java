@@ -19,14 +19,7 @@ public class RareItemFactory {
     }
 
     public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
-        Item i =  createStrategy.create(x, y, type);
-        if (i == null) {
-            System.out.println("Its all rareitemfactory's fault");
-        }
-        else {
-            System.out.println(String.format("RareItemFactory is returning a %s", ((StaticEntity)i).getType()));
-        }
-        return i;
+        return createStrategy.create(x, y, type);
     }
 
     public Item createConfusing(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
@@ -45,7 +38,6 @@ public class RareItemFactory {
     }
     
     public Item createStandard(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
-        System.out.println(";print ps");
         if (type.equals("theonering")) {
             return createTheOneRing(x, y);
         }
@@ -56,13 +48,11 @@ public class RareItemFactory {
             return createTreeStump(x, y);
         }
         else {
-            System.out.println("That rare item doesn't exist rip");
             return null;
         }
     }
 
     private Item create(String type) {
-        System.out.println("This shouldnt prit");
         if (type.equals("theonering")) {
             return createTheOneRing();
         }
@@ -78,15 +68,12 @@ public class RareItemFactory {
     }
 
     private Item createTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        System.out.println("created TheOneRing");
         return new TheOneRing(x, y);
     }
     private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        System.out.println("Created Anduril");
         return new Anduril(x, y, 1);
     }
     private Item createTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        System.out.println("Created treestump");
         return new TreeStump(x, y, 1);
     }
     private Item createTheOneRing() {

@@ -29,7 +29,7 @@ public class Inventory {
         cardEntities = new ArrayList<>();
         nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump"));
         // this.rareItems = character.getRareItems();
-        this.rF = new RareItemFactory(rareItems);
+        // this.rF = new RareItemFactory(rareItems);
     }
 
     public void setConfusingMode() {
@@ -38,6 +38,7 @@ public class Inventory {
 
     public void setRareItems(List<String> rareItems) {
         this.rareItems = rareItems;
+        this.rF = new RareItemFactory(rareItems);
     }
 
     /**
@@ -164,9 +165,7 @@ public class Inventory {
         // RareItemFactory rF = new RareItemFactory(rareItems);
         Item item = null;
         if (rareItems.contains(type)) {
-            System.out.println("That was rare!");
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
-            if (item == null) System.out.println("Uhh yea that didnt work very well");
         }
         else if (nonLevelItems.contains(type)) {
             item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);

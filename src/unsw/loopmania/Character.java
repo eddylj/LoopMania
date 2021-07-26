@@ -110,7 +110,12 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Staff)equippedWeapon).getDamage();
         }
         else if (equippedWeapon.isWeapon()) {
-            newDamage = ((Sword)equippedWeapon).getDamage(enemy);
+            if (equippedWeapon instanceof Sword) {
+                newDamage = ((Sword)equippedWeapon).getDamage(enemy);
+            }
+            else {
+                newDamage = ((ConfusedRareItem)equippedWeapon).getDamage(enemy);
+            }
         }
 
         if (!Objects.isNull(equippedHelmet)) {

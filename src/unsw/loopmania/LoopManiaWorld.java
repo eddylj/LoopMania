@@ -108,7 +108,6 @@ public class LoopManiaWorld {
         for (int i = 0; i < rareItemList.length(); i++) {
             rareItems.add(rareItemList.getString(i));
         }
-        System.out.println(rareItems.size());
     }
 
     /**
@@ -268,15 +267,7 @@ public class LoopManiaWorld {
      * @return Loot
      */
     public StaticEntity processEnemyLoot(Enemy deadEnemy) {
-        StaticEntity item = deadEnemy.getLoot(character, width, rareItems);
-        // return deadEnemy.getLoot(character, width, rareItems);
-        if (item == null) {
-            System.out.println("Line 274 irt is null ffs");
-        }
-        else {
-            System.out.println(item.getType());
-        }
-        return item;
+        return deadEnemy.getLoot(character, width, rareItems);
     }
     /**
      * add a generic entity (without it's own dedicated method for adding to the world)
