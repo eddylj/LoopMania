@@ -40,6 +40,11 @@ public class LoopManiaWorld {
     private List<Coin> gold;
     private Shop shop;
     
+
+    public static final int DOGGIESPAWNCYCLE = 20;
+    public static final int ELANMUSKESPAWNCYCLE = 40;
+    public static final int ELANMUSKESPAWNXP = 10000;
+
     /**
      * 
      * @param width
@@ -343,6 +348,21 @@ public class LoopManiaWorld {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnSlug(position, emptyTiles));
         }
+        if (character.getCycles() == DOGGIESPAWNCYCLE) {
+            int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
+            newEnemies.add(spawnBoss(position, emptyTiles, "doggie"));
+        }
+        if (character.getCycles() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP) {
+            int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
+            newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
+        }
+    }
+
+    private void spawnBoss(int i, List<Pair<Integer, Integer>> orderedPath, String bossString) {
+        EnemyFactory e = new EnemyFactory();
+        Enemy boss  =  e.create(new PathPosition(i, orderedPath), bossString);
+        enemies.add(boss);
+        return boss;
     }
 
     public void spawnCoinsOnCycle() {
