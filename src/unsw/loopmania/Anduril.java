@@ -7,6 +7,7 @@ public class Anduril extends Weapon implements RareItem{
     private static final double DAMAGE = 50.0;
     private static final int SELLPRICE = 1500;
     private static final int REPLACECOST = 375;
+    private static final int BOSSDAMAGEMULTIPLIER = 3;
 
     /**
      * 
@@ -42,10 +43,11 @@ public class Anduril extends Weapon implements RareItem{
      * @return damage applicable for enemy
      */
     public double getDamage(Enemy e) {
+        double damage = super.getDamage();
         if (e instanceof Boss){
-            return DAMAGE * 3;
+            return damage * BOSSDAMAGEMULTIPLIER;
         } else {
-            return DAMAGE;
+            return damage;
         }
     }
 }

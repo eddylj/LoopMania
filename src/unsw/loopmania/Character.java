@@ -99,17 +99,18 @@ public class Character extends MovingEntity implements Hero {
      */
     public void attack(Enemy enemy, BattleRunner b) {
         double newDamage = 5;
-        if (equippedWeapon instanceof Sword) {
-            newDamage = ((Weapon)equippedWeapon).getDamage();
-        }
+        
         if (equippedWeapon instanceof Stake) {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
         }
-        if (equippedWeapon instanceof Staff) {
+        else if (equippedWeapon instanceof Staff) {
             if (((Staff)equippedWeapon).castSpell(enemy, b)) {
                 return;
             }
             newDamage = ((Staff)equippedWeapon).getDamage();
+        }
+        else if (equippedWeapon.isWeapon()) {
+            newDamage = ((Weapon)equippedWeapon).getDamage(Enemy e);
         }
 
         if (!Objects.isNull(equippedHelmet)) {
@@ -533,6 +534,7 @@ public class Character extends MovingEntity implements Hero {
     public void setStunned(boolean b) {
         isStunned = b;
     }
+
     public boolean isStunned() {
         return isStunned;
     }
