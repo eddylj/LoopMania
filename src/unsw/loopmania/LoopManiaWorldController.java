@@ -607,10 +607,11 @@ public class LoopManiaWorldController {
                     //If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
-                    if (node.getId() == null) {
-                        node.toBack();
-                        node = event.getPickResult().getIntersectedNode();
-                    }
+                    node.toFront();
+                    // if (node.getId() == null) {
+                    //     node.toBack();
+                    //     node = event.getPickResult().getIntersectedNode();
+                    // }
                     if(node != targetGridPane && db.hasImage()){
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
@@ -631,6 +632,11 @@ public class LoopManiaWorldController {
                                     onLoad(newBuilding);
                                 }
                                 else {
+                                    for (Node n : targetGridPane.getChildren()) {
+                                        if (currentlyDraggedType == draggableType) {
+                                            n.setOpacity(1);
+                                        }
+                                    }
                                     return;
                                 }
                                 break;
@@ -674,17 +680,22 @@ public class LoopManiaWorldController {
                                     System.out.println("Successfully dropped");
                                 }
                                 else {
-                                    node.getLayoutX();
-                                    node.getLayoutY();
-                                    // squares.add(arg0, arg1, arg2);
-                                    System.out.println("New position is not valid");
+                                    for (Node n : targetGridPane.getChildren()) {
+                                        if (currentlyDraggedType == draggableType) {
+                                            n.setOpacity(1);
+                                        }
+                                    }
                                     return;
                                 }
                                 break;
                             default:
                                 break;
                         }
-                        
+                        // for (Node n : targetGridPane.getChildren()) {
+                        //     if (currentlyDraggedType == draggableType) {
+                        //         n.setOpacity(1);
+                        //     }
+                        // }
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
                         // remove drag event handlers before setting currently dragged image to null
@@ -932,8 +943,10 @@ public class LoopManiaWorldController {
                 }
             }
         });
+        name = new TextField();
+        name.setPromptText("Enter name of world");
         GridPane gridpane = new GridPane();
-        gridpane.add(label, 0, 0);
+        gridpane.add(name, 0, 0);
         gridpane.add(save,0, 1);
         anchorPaneRoot.getChildren().add(gridpane);
         AnchorPane.setTopAnchor(gridpane, anchorPaneRoot.getHeight()/2);
