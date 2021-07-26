@@ -2,8 +2,8 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class DoggieCoin extends StaticEntity implements Item{
-     
-    CoinStrategy  strategy;
+    public static final int NOPRICE = 0;
+    private CoinStrategy  strategy;
 
     public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
@@ -13,19 +13,16 @@ public class DoggieCoin extends StaticEntity implements Item{
 
     @Override
     public int getPrice() {
-        // TODO Auto-generated method stub
-        return 0;
+        return NOPRICE;
     }
 
     @Override
     public int getSellPrice() {
-        // TODO Auto-generated method stub
         return strategy.getSellPrice();
     }
 
     @Override
     public int getReplaceCost() {
-        // TODO Auto-generated method stub
         return (int) (getSellPrice() * 0.4);
     }
     

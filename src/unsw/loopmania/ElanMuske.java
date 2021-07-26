@@ -11,7 +11,7 @@ public class ElanMuske extends Enemy implements Boss{
     public static final int HEALTH = 700;
     public static final int XP = 1700;
     private String[] cardDrops;
-
+    private boolean canMove = true;
     /**
      * 
      * @param position
@@ -67,5 +67,16 @@ public class ElanMuske extends Enemy implements Boss{
     public void attack (Hero h, BattleRunner b) {
         h.takeDamage(this.getAttackDamage(), this);
         b.healenemies();
+    }
+
+    @Override
+    public void move() {
+        if (canMove) {
+            super.moveDownPath();
+            canMove = false;
+        }
+        else {
+            canMove = true;
+        }
     }
 }

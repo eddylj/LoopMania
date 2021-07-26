@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class HealthPotion extends StaticEntity implements Item{
     public static final int SELLPRICE = 40;
     public static final int REPLACECOST = 20;
+    public static final int BASECOST = 50;
     private int cost;
     /**
      * The class of health potion
@@ -45,6 +46,6 @@ public class HealthPotion extends StaticEntity implements Item{
     }
 
     public void increaseCost(int timesBought) {
-        cost += (50 * timesBought);
+        cost += (BASECOST * timesBought);
     }
 }
