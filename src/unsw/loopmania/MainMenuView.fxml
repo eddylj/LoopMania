@@ -9,17 +9,17 @@
 <!-- TODO = modify and expand the range of menus available from the menu menu, and develop game modes you can select when starting a new game -->
 <!-- vertically stacked label and button -->
 
-<VBox alignment="CENTER" prefHeight="512.0" prefWidth="406.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="638.0" prefWidth="406.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Loop Mania">
          <font>
-            <Font size="51.0" />
+            <Font name="Ani" size="51.0" />
          </font></Label>
       <Pane onMouseClicked="#switchToGame" prefHeight="124.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;">
          <children>
-            <Label layoutX="103.0" text="Standard" textFill="#0d900f">
+            <Label layoutX="112.0" text="Standard" textFill="#0d900f">
                <font>
-                  <Font size="35.0" />
+                  <Font name="Jet" size="35.0" />
                </font>
             </Label>
             <Label layoutX="5.0" layoutY="51.0" text="- No effects">
@@ -31,9 +31,9 @@
       </Pane>
       <Pane onMouseClicked="#switchToSurvival" prefHeight="124.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;">
          <children>
-            <Label layoutX="112.0" text="Survival" textFill="#ee7e1d">
+            <Label layoutX="121.0" text="Survival" textFill="#ee7e1d">
                <font>
-                  <Font size="35.0" />
+                  <Font name="Jet" size="35.0" />
                </font>
             </Label>
             <Label layoutX="5.0" layoutY="51.0" text="- Only 1 health potion purchase&#10; per shop">
@@ -43,14 +43,28 @@
             </Label>
          </children>
       </Pane>
-      <Pane prefHeight="124.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;">
+      <Pane onMouseClicked="#switchToBerserker" prefHeight="124.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;">
          <children>
             <Label layoutX="98.0" text="Berserker" textFill="#ab0601">
                <font>
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label layoutX="5.0" layoutY="51.0" onMouseClicked="#switchToBerserker" text="- Only 1 protective gear purchase&#10; per shop">
+            <Label layoutX="5.0" layoutY="51.0" text="- Only 1 protective gear purchase&#10; per shop">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane onMouseClicked="#switchToConfusing" prefHeight="124.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;">
+         <children>
+            <Label layoutX="104.0" text="Confusing" textFill="#2cccf8">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="5.0" layoutY="51.0" prefWidth="354.0" text="- Rare items are confusing">
                <font>
                   <Font size="21.0" />
                </font>
