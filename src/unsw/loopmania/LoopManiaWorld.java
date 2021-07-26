@@ -266,7 +266,7 @@ public class LoopManiaWorld {
      * @param deadEnemy
      * @return Loot
      */
-    public StaticEntity processEnemyLoot(Enemy deadEnemy) {
+    public List<StaticEntity> processEnemyLoot(Enemy deadEnemy) {
         return deadEnemy.getLoot(character, width, rareItems);
     }
     /**

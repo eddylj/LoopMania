@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.javatuples.Pair;
 
@@ -65,8 +66,9 @@ public class Vampire extends Enemy {
      * @param rareItems
      * @return StaticEntity loot
      */
-    public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
+    public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
+        List <StaticEntity> loot = new ArrayList<StaticEntity>();
         if (num < 30) {
             String itemType;
             if (num < 5 && !rareItems.isEmpty()) {
@@ -76,23 +78,23 @@ public class Vampire extends Enemy {
                 itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
             }
             if (character.getNonLevelItems().contains(itemType)) {
-                return character.addUnequippedItem(itemType, 0);
+                loot.add(character.addUnequippedItem(itemType, 0));
             }
             else if (num < 20) {
                 int level = character.getHighestLevel(itemType) + 1;
                 if (level > 10) {
                     level = 10;
                 }
-                return character.addUnequippedItem(itemType, level);
+                loot.add(character.addUnequippedItem(itemType, level));
             }
             else {
                 int level = character.getHighestLevel(itemType);
-                return character.addUnequippedItem(itemType, level);
+                loot.add(character.addUnequippedItem(itemType, level));
             }
         }
         else if (num < 50) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            return character.loadCard(cardType, width);
+            loot.add(character.loadCard(cardType, width));
         }
         return null;
     }

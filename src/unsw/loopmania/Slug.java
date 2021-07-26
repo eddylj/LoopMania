@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Slug extends Enemy{
@@ -34,8 +35,9 @@ public class Slug extends Enemy{
      * @return StaticEntity loot
      */
     @Override
-    public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
+    public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
+        List<StaticEntity> loot = new ArrayList<StaticEntity>();
         // slug drops item better than current
         if (num < 15) {
             String itemType;
@@ -46,24 +48,24 @@ public class Slug extends Enemy{
                 itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
             }
             if (character.getNonLevelItems().contains(itemType)) {
-                return character.addUnequippedItem(itemType, 0);
+                loot.add(character.addUnequippedItem(itemType, 0));
             }
             else if (num < 5) {
                 int level = character.getHighestLevel(itemType) + 1;
                 if (level > 10) {
                     level = 10;
                 }
-                return character.addUnequippedItem(itemType, level);
+                loot.add(character.addUnequippedItem(itemType, level));
             }
             else {
                 int level = character.getHighestLevel(itemType);
-                return character.addUnequippedItem(itemType, level);
+                loot.add(character.addUnequippedItem(itemType, level));
             }
         }
         else if (num < 25) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
-            return character.loadCard(cardType, width);
+            loot.add(character.loadCard(cardType, width));
         }
-        return null;
+        return loot;
     }
 }

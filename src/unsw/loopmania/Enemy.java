@@ -64,7 +64,7 @@ public abstract class Enemy extends MovingEntity {
      * @param rareItems
      * @return StaticEntity loot
      */
-    public abstract StaticEntity getLoot(Character character, int width, List<String> rareItems);
+    public abstract List<StaticEntity> getLoot(Character character, int width, List<String> rareItems);
 
     // Getters and Setters
     

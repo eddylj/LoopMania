@@ -30,7 +30,7 @@ public class DropsTest {
     
     private void checkWeapon(int seed, String weapon, int level, Enemy enemy, Character c) {
         LoopManiaWorld.setSeed(seed);
-        StaticEntity item = enemy.getLoot(c, 8, rare);
+        StaticEntity item = enemy.getLoot(c, 8, rare).get(0);
         System.out.println(item.getType());
         assertEquals(item.getType(), weapon);
         assertEquals(((Weapon)item).getLevel(), level);
@@ -38,7 +38,7 @@ public class DropsTest {
 
     private void checkProtection(int seed, String protector, int level, Enemy enemy, Character c) {
         LoopManiaWorld.setSeed(seed);
-        StaticEntity item = enemy.getLoot(c, 8, rare);
+        StaticEntity item = enemy.getLoot(c, 8, rare).get(0);
         System.out.println(item.getType());
         assertEquals(item.getType(), protector);
         assertEquals(((Protection)item).getLevel(), level);
@@ -46,14 +46,14 @@ public class DropsTest {
 
     private void checkOther(int seed, String itemString, Enemy enemy, Character c) {
         LoopManiaWorld.setSeed(seed);
-        StaticEntity item = enemy.getLoot(c, 8, rare);
+        StaticEntity item = enemy.getLoot(c, 8, rare).get(0);
         System.out.println(item.getType());
         assertEquals(item.getType(), itemString);
     }
 
     private void checkCard(int seed, String itemString, Enemy enemy, Character c) {
         LoopManiaWorld.setSeed(seed);
-        StaticEntity item = enemy.getLoot(c, 20, rare);
+        StaticEntity item = enemy.getLoot(c, 20, rare).get(0);
         System.out.println(item.getType());
         assertEquals(item.getType(), itemString);
     }

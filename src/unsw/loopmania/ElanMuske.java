@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ElanMuske extends Enemy implements Boss{
     public static final int BATTLERADIUS = 1;
@@ -29,8 +30,37 @@ public class ElanMuske extends Enemy implements Boss{
     }
 
     @Override
-    public StaticEntity getLoot(Character character, int width, List<String> rareItems) {
-        return null;
+    public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
+        
+        int num = LoopManiaWorld.getRandNum();
+        List <StaticEntity> loot = new ArrayList<StaticEntity>();
+        if (num >= 50) {
+            String rareType = rareItems.get(LoopManiaWorld.getRandNum() % rareItems.size());
+            loot.add(character.addUnequippedItem(rareType, 0));
+        }
+        String itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
+        if (character.getNonLevelItems().contains(itemType)) {
+            loot.add(character.addUnequippedItem(itemType, 0));
+        } else {
+            int level;
+            if (num < 80 && num > 10) {
+                level = character.getHighestLevel(itemType) + 2;
+                if (level > 10) {
+                    level = 10;
+                }
+            } else {
+                level = character.getHighestLevel(itemType) + 1;
+                if (level > 10) {
+                    level = 10;
+                }
+            }
+            loot.add(character.addUnequippedItem(itemType, level));
+        }
+        if (num < 60) {
+            String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
+            loot.add(character.loadCard(cardType, width));
+        }
+        return loot;
     }
 
     @Override
