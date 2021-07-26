@@ -561,7 +561,7 @@ public class LoopManiaWorldController {
     private boolean newPositionValid(Item item, Node node) {
         System.out.println(node.getLayoutX());
         System.out.println(node.getLayoutY());
-        if (item instanceof Weapon && node.getLayoutX() == 0) {
+        if (item.isWeapon() && node.getLayoutX() == 0) {
             return true;
         }
         if (item instanceof Helmet && node.getLayoutX() == 32) {

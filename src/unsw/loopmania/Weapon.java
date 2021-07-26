@@ -51,4 +51,19 @@ public abstract class Weapon extends StaticEntity implements Item{
     public int getReplaceCost() {
         return (int)(price * 0.2);
     }
+
+    @Override
+	public boolean isWeapon() {
+		return true;
+	}
+
+    @Override
+    public boolean isShield() {
+        return false;
+    }
+
+    @Override
+    public boolean isRing() {
+        return false;
+    }
 }

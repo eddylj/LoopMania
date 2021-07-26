@@ -27,6 +27,7 @@ public class Character extends MovingEntity implements Hero {
     private List<AlliedSoldier> soldiers;
     private Inventory inventory;
     private boolean isStunned = false;
+    private List<String> rareItems;
 
     /**
      * Constructor for the character Class
@@ -171,9 +172,9 @@ public class Character extends MovingEntity implements Hero {
     public void equip(Item i) {
         inventory.removeUnequippedItem(i);
         stats.updateHighestLevel(i);
-        if (i instanceof Weapon) {
+        if (i.isWeapon()) {
             equippedWeapon = i;
-        } else if (i instanceof Shield) {
+        } else if (i.isShield()) {
             equippedShield = i;
         } else if (i instanceof Armour) {
             equippedArmour = i;
@@ -240,6 +241,18 @@ public class Character extends MovingEntity implements Hero {
         for (int i = 0; i < num; i++) {
             addAlliedSoldier((AlliedSoldier)hF.create());
         }
+    }
+
+    public List<String> getRareItems() {
+        return rareItems;
+    }
+
+    public void setRareItems(List<String> items) {
+        rareItems = items;
+    }
+
+    public void setConfusingMode() {
+        inventory.setConfusingMode();
     }
 
     /**

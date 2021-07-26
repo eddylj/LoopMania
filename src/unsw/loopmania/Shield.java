@@ -45,4 +45,9 @@ public class Shield extends Protection {
     public void setBlockChance(int blockChance){
         this.blockChance = blockChance;
     }
+
+    @Override
+    public boolean isShield() {
+        return true;
+    }
 }

@@ -13,6 +13,11 @@ public class TheOneRing extends StaticEntity implements RareItem, Item{
         super(x,y);
         super.setType("theonering");
     }
+
+    public TheOneRing() {
+        super();
+        super.setType("theonering");
+    }
     /**
      * @return cost of selling item
      */
@@ -31,6 +36,22 @@ public class TheOneRing extends StaticEntity implements RareItem, Item{
     public int getPrice() {
         return NOPRICE;
     }
+
+	@Override
+	public boolean isWeapon() {
+		return false;
+	}
+
+	@Override
+	public boolean isShield() {
+		return false;
+	}
+
+	@Override
+	public boolean isRing() {
+		return true;
+	}
+
 
     
 }

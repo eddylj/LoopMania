@@ -16,6 +16,12 @@ public class TreeStump extends Shield implements RareItem{
         super.setType("treestump");
         super.setBlockChance(50);
     }
+
+    public TreeStump(int level) {
+        super(level);
+        super.setType("treestump");
+        super.setBlockChance(50);
+    }
     @Override
     public double protect(double damage, Enemy e) {
         //Will implement the chance to fully block the damag

@@ -16,6 +16,8 @@ public class Inventory {
     public static final int UNEQUIPPEDINVENTORYHEIGHT = 4;
     private List<Card> cardEntities;
     private List<String> nonLevelItems;
+    private List<String> rareItems;
+    private RareItemFactory rF;
 
     /**
      * 
@@ -26,6 +28,12 @@ public class Inventory {
         this.character = character;
         cardEntities = new ArrayList<>();
         nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering"));
+        this.rareItems = character.getRareItems();
+        this.rF = new RareItemFactory(rareItems);
+    }
+
+    public void setConfusingMode() {
+        rF.setConfusing();
     }
 
     /**
@@ -148,13 +156,17 @@ public class Inventory {
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         // now we insert the new sword, as we know we have at least made a slot available...
-        ItemFactory f = new ItemFactory();
+        ItemFactory iF = new ItemFactory();
+        // RareItemFactory rF = new RareItemFactory(rareItems);
         Item item = null;
+        if (rareItems.contains(type)) {
+            item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+        }
         if (nonLevelItems.contains(type)) {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+            item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }
         else {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
+            item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
         }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
