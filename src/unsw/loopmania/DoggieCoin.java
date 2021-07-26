@@ -3,7 +3,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class DoggieCoin extends StaticEntity implements Item{
     public static final int NOPRICE = 0;
-    private CoinStrategy  strategy;
+    private CoinStrategy strategy;
 
     public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);

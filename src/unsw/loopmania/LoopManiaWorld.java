@@ -348,17 +348,17 @@ public class LoopManiaWorld {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnSlug(position, emptyTiles));
         }
-        if (character.getCycles() == DOGGIESPAWNCYCLE) {
+        if (character.getCycles().get() == DOGGIESPAWNCYCLE) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "doggie"));
         }
-        if (character.getCycles() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP) {
+        if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
         }
     }
 
-    private void spawnBoss(int i, List<Pair<Integer, Integer>> orderedPath, String bossString) {
+    private Enemy spawnBoss(int i, List<Pair<Integer, Integer>> orderedPath, String bossString) {
         EnemyFactory e = new EnemyFactory();
         Enemy boss  =  e.create(new PathPosition(i, orderedPath), bossString);
         enemies.add(boss);

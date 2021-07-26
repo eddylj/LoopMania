@@ -96,7 +96,7 @@ public class Vampire extends Enemy {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
             loot.add(character.loadCard(cardType, width));
         }
-        return null;
+        return loot;
     }
     
     public void setStrategy(VampireAttackStrategy Strategy) {

@@ -13,6 +13,7 @@ public class BeserkerShopStrategy implements ShopStrategy{
     @Override
     public void buyItem(Item purchasedItem) {
         if (purchasedItem instanceof Protection) {
+            System.out.println("protection bougt");
             available = false;
         }
     }

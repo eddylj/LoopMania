@@ -2,7 +2,10 @@ package unsw.loopmania;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.javatuples.Pair;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -42,11 +45,14 @@ public class ShopBuyController {
 
     private Shop shop;
 
+    private List<Pair<Button, String>> buyButtons;
+
     public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
         itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
         this.shop = shop;
+        buyButtons = new ArrayList<Pair<Button, String>>();
     }
 
     @FXML
@@ -96,6 +102,7 @@ public class ShopBuyController {
             ImageView goldImageView = makeGoldImageView();
 
             Button itemButton = makeItemButton(itemName, view);
+            buyButtons.add(new Pair<Button, String>(itemButton, itemName));
 
             GridPane gridPane = new GridPane();
             gridPane.add(goldImageView, 0, 0);
@@ -137,6 +144,7 @@ public class ShopBuyController {
     public Button makeItemButton(String itemName, ImageView view) {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
+        // buyButton.set
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
         buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
@@ -147,6 +155,9 @@ public class ShopBuyController {
                 buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
                 view.setImage(makeItemImage(itemName));
+                for (Pair<Button, String> b : buyButtons) {
+                    b.getValue0().disableProperty().bind(shop.canBuy(b.getValue1()).not());
+                }
             }
         });
         buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));

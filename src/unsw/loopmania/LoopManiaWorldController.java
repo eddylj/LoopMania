@@ -455,12 +455,14 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         world.KillEnemy(enemy);
-        StaticEntity loot = world.processEnemyLoot(enemy);
-        if (loot instanceof Card) {
-            loadCard((Card)loot);
-        }
-        else if (loot instanceof Item) {
-            loadItem((Item)loot);
+        List<StaticEntity> loot = world.processEnemyLoot(enemy);
+        for (StaticEntity drop : loot) {
+            if (drop instanceof Card) {
+                loadCard((Card)drop);
+            }
+            else if (drop instanceof Item) {
+                loadItem((Item)drop);
+            }
         }
     }
 
