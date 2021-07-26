@@ -27,13 +27,17 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering"));
-        this.rareItems = character.getRareItems();
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump"));
+        // this.rareItems = character.getRareItems();
         this.rF = new RareItemFactory(rareItems);
     }
 
     public void setConfusingMode() {
         rF.setConfusing();
+    }
+
+    public void setRareItems(List<String> rareItems) {
+        this.rareItems = rareItems;
     }
 
     /**
@@ -160,9 +164,11 @@ public class Inventory {
         // RareItemFactory rF = new RareItemFactory(rareItems);
         Item item = null;
         if (rareItems.contains(type)) {
+            System.out.println("That was rare!");
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+            if (item == null) System.out.println("Uhh yea that didnt work very well");
         }
-        if (nonLevelItems.contains(type)) {
+        else if (nonLevelItems.contains(type)) {
             item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }
         else {
@@ -170,7 +176,9 @@ public class Inventory {
         }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
-        character.updateHighest(item);
+        if (!rareItems.contains(type)) {
+            character.updateHighest(item);
+        }
         return (StaticEntity)item;
     }
 

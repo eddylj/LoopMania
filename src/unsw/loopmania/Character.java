@@ -110,7 +110,7 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Staff)equippedWeapon).getDamage();
         }
         else if (equippedWeapon.isWeapon()) {
-            newDamage = ((Weapon)equippedWeapon).getDamage(Enemy e);
+            newDamage = ((Sword)equippedWeapon).getDamage(enemy);
         }
 
         if (!Objects.isNull(equippedHelmet)) {
@@ -250,6 +250,7 @@ public class Character extends MovingEntity implements Hero {
 
     public void setRareItems(List<String> items) {
         rareItems = items;
+        inventory.setRareItems(rareItems);
     }
 
     public void setConfusingMode() {

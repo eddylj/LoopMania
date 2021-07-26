@@ -39,13 +39,17 @@ public class Slug extends Enemy{
         // slug drops item better than current
         if (num < 15) {
             String itemType;
-            if (num < 1 && !rareItems.isEmpty()) {
+            if (num < 15 && !rareItems.isEmpty()) { // num < 1
+                System.out.println("boutta get rare item");
                 itemType = rareItems.get(LoopManiaWorld.getRandNum() % rareItems.size());
+                System.out.println(String.format("[RARE ITEM] %s", itemType));
+                System.out.println(String.format("\n\n\n\n\n\n%s\n\n\nhmm\nplslss\nshow\nup", itemType));
             }
             else {
                 itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
             }
             if (character.getNonLevelItems().contains(itemType)) {
+                System.out.println(String.format("[ITEM] %s\n\n\n\nnn\n\n\n\nnnn\n\n\nnnn\nn\n\n", itemType));
                 return character.addUnequippedItem(itemType, 0);
             }
             else if (num < 5) {
@@ -53,17 +57,21 @@ public class Slug extends Enemy{
                 if (level > 10) {
                     level = 10;
                 }
+                System.out.println(String.format("[ITEM] %s", itemType));
                 return character.addUnequippedItem(itemType, level);
             }
             else {
                 int level = character.getHighestLevel(itemType);
+                System.out.println(String.format("[ITEM] %s", itemType));
                 return character.addUnequippedItem(itemType, level);
             }
         }
         else if (num < 25) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
+            System.out.println(String.format("[ITEM] %s", cardType));
             return character.loadCard(cardType, width);
         }
+        System.out.println("Enemy didnt drop any loot");
         return null;
     }
 }

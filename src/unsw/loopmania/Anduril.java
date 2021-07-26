@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Anduril extends Weapon implements RareItem{
+public class Anduril extends Sword implements RareItem{
     private static final double NOPRICE = 0;
     private static final double DAMAGE = 50.0;
     private static final int SELLPRICE = 1500;
@@ -16,12 +16,14 @@ public class Anduril extends Weapon implements RareItem{
      * @param level
      */
     public Anduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        super(x, y, level, NOPRICE, DAMAGE);
+        // super(x, y, level, NOPRICE, DAMAGE);
+        super(x, y, level);
         super.setType("anduril");
     }
 
     public Anduril(int level) {
-        super(level, NOPRICE , DAMAGE);
+        super(level);
+        // super(level, NOPRICE , DAMAGE);
         super.setType("anduril");
     }
 
@@ -42,12 +44,13 @@ public class Anduril extends Weapon implements RareItem{
      * @param e
      * @return damage applicable for enemy
      */
+    @Override
     public double getDamage(Enemy e) {
-        double damage = super.getDamage();
+        // double damage = super.getDamage();
         if (e instanceof Boss){
-            return damage * BOSSDAMAGEMULTIPLIER;
+            return DAMAGE * BOSSDAMAGEMULTIPLIER;
         } else {
-            return damage;
+            return DAMAGE;
         }
     }
 }
