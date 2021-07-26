@@ -41,7 +41,7 @@ public class CharacterStats {
             return armour;
         }
         else {
-            return 0;
+            return 1;
         }
     }
     /**

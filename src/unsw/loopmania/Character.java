@@ -27,6 +27,7 @@ public class Character extends MovingEntity implements Hero {
     private List<AlliedSoldier> soldiers;
     private Inventory inventory;
     private boolean isStunned = false;
+    private List<String> rareItems;
 
     /**
      * Constructor for the character Class
@@ -98,17 +99,23 @@ public class Character extends MovingEntity implements Hero {
      */
     public void attack(Enemy enemy, BattleRunner b) {
         double newDamage = 5;
-        if (equippedWeapon instanceof Sword) {
-            newDamage = ((Weapon)equippedWeapon).getDamage();
-        }
+        
         if (equippedWeapon instanceof Stake) {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
         }
-        if (equippedWeapon instanceof Staff) {
+        else if (equippedWeapon instanceof Staff) {
             if (((Staff)equippedWeapon).castSpell(enemy, b)) {
                 return;
             }
             newDamage = ((Staff)equippedWeapon).getDamage();
+        }
+        else if (equippedWeapon.isWeapon()) {
+            if (equippedWeapon instanceof Sword) {
+                newDamage = ((Sword)equippedWeapon).getDamage(enemy);
+            }
+            else {
+                newDamage = ((ConfusedRareItem)equippedWeapon).getDamage(enemy);
+            }
         }
 
         if (!Objects.isNull(equippedHelmet)) {
@@ -171,9 +178,9 @@ public class Character extends MovingEntity implements Hero {
     public void equip(Item i) {
         inventory.removeUnequippedItem(i);
         stats.updateHighestLevel(i);
-        if (i instanceof Weapon) {
+        if (i.isWeapon()) {
             equippedWeapon = i;
-        } else if (i instanceof Shield) {
+        } else if (i.isShield()) {
             equippedShield = i;
         } else if (i instanceof Armour) {
             equippedArmour = i;
@@ -240,6 +247,19 @@ public class Character extends MovingEntity implements Hero {
         for (int i = 0; i < num; i++) {
             addAlliedSoldier((AlliedSoldier)hF.create());
         }
+    }
+
+    public List<String> getRareItems() {
+        return rareItems;
+    }
+
+    public void setRareItems(List<String> items) {
+        rareItems = items;
+        inventory.setRareItems(rareItems);
+    }
+
+    public void setConfusingMode() {
+        inventory.setConfusingMode();
     }
 
     /**
@@ -520,6 +540,7 @@ public class Character extends MovingEntity implements Hero {
     public void setStunned(boolean b) {
         isStunned = b;
     }
+
     public boolean isStunned() {
         return isStunned;
     }

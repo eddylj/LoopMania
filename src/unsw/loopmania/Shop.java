@@ -1,19 +1,20 @@
 package unsw.loopmania;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
+
+import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import test.HealthPotionTest;
 
 public class Shop {
     private CharacterStats stats;
     private Character character;
-    private ItemFactory i;
+    private ItemFactory iF;
     private ShopStrategy available;
     private int boughtHealthPotions;
-    Inventory inventory;
+    private Inventory inventory;
+    private List<String> rareItems;
 
     /**
      * 
@@ -25,8 +26,9 @@ public class Shop {
         this.character = character;
         this.available = new NormalShopStrategy(character);
         this.boughtHealthPotions = 0;
+        this.rareItems = character.getRareItems();
         // this.available = new SurvivalShopStrategy(character);
-        i = new ItemFactory();
+        iF = new ItemFactory();
     }
     /**
      * Gets purchase cost of item
@@ -35,23 +37,17 @@ public class Shop {
      */
     public int getBuyPrice(String item) {
         return previewItem(item).getPrice();
-        // if (item.equals("healthpotion")) {
-        //     return previewItem(item).getPrice() + 50 * boughtHealthPotions;
-        // }
-        // else {
-        //     return previewItem(item).getPrice();
-        // }
     }
 
     private Item previewItem(String itemType) {
         Item item = null;
         if (itemType.equals("healthpotion")) {
-            item = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
+            item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
             ((HealthPotion)item).increaseCost(boughtHealthPotions);
         }
         else {
             int level = stats.getHighestLevel(itemType);
-            item = i.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType, level + 1);
+            item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType, level + 1);
         }
         return item;
     }

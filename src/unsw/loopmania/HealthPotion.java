@@ -48,4 +48,22 @@ public class HealthPotion extends StaticEntity implements Item{
     public void increaseCost(int timesBought) {
         cost += (BASECOST * timesBought);
     }
+
+	@Override
+	public boolean isWeapon() {
+		return false;
+	}
+
+	@Override
+	public boolean isShield() {
+		return false;
+	}
+
+	@Override
+	public boolean isRing() {
+		return false;
+	}
+
+	
+
 }

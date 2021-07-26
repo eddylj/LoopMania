@@ -34,4 +34,19 @@ public class DoggieCoin extends StaticEntity implements Item{
         this.strategy = new DeflatedCoinStrategy();
     }
 
+	@Override
+	public boolean isWeapon() {
+		return false;
+	}
+
+	@Override
+	public boolean isShield() {
+		return false;
+	}
+
+	@Override
+	public boolean isRing() {
+		return false;
+	}
+
 }

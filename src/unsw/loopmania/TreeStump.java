@@ -3,7 +3,8 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class TreeStump extends Shield implements RareItem{
-    
+    private static final int SELLPRICE = 1500;
+    private static final int REPLACECOST = 375;
 
     /**
      * Main constructor for Armour class
@@ -15,6 +16,23 @@ public class TreeStump extends Shield implements RareItem{
         super(x, y, level);
         super.setType("treestump");
     }
+
+    public TreeStump(int level) {
+        super(level);
+        super.setType("treestump");
+        super.setBlockChance(50);
+    }
+
+    @Override
+    public int getSellPrice() {
+        return SELLPRICE;
+    }
+
+    @Override
+    public int getReplaceCost() {
+        return REPLACECOST;
+    }
+
     @Override
     public double protect(double damage, Enemy e) {
         //Will implement the chance to fully block the damag

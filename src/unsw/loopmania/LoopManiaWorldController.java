@@ -462,8 +462,6 @@ public class LoopManiaWorldController {
         else if (loot instanceof Item) {
             loadItem((Item)loot);
         }
-        // loadSword();
-        // loadVampireCard();
     }
 
     /**
@@ -561,13 +559,13 @@ public class LoopManiaWorldController {
     private boolean newPositionValid(Item item, Node node) {
         System.out.println(node.getLayoutX());
         System.out.println(node.getLayoutY());
-        if (item instanceof Weapon && node.getLayoutX() == 0) {
+        if (item.isWeapon() && node.getLayoutX() == 0) {
             return true;
         }
         if (item instanceof Helmet && node.getLayoutX() == 32) {
             return true;
         }
-        if (item instanceof Shield && node.getLayoutX() == 64) {
+        if (item.isShield() && node.getLayoutX() == 64) {
             return true;
         }
         if (item instanceof Armour && node.getLayoutX() == 96) {
@@ -641,11 +639,24 @@ public class LoopManiaWorldController {
                                     // Put previously equipped item back in inventory (then overwrite it)
                                     if (olditem != null) {
                                         StaticEntity newItem = null;
-                                        if (olditem instanceof Weapon) {
-                                            newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                        if (((Item)olditem).isWeapon()) {
+                                            if (olditem instanceof ConfusedRareItem) {
+                                                newItem = world.addUnequippedItem(olditem.getType(), 0);
+                                            }
+                                            else if (olditem instanceof Weapon) {
+                                                newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+                                            }
+                                            // else {
+                                            //     newItem = world.addUnequippedItem(olditem.getType(), ((RareItem)olditem).getLevel());
+                                            // }
                                         }
-                                        else if (olditem instanceof Protection) {
-                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+                                        else if (((Item)olditem).isShield() || olditem instanceof Protection) {
+                                            if (olditem instanceof ConfusedRareItem) {
+                                                newItem = world.addUnequippedItem(olditem.getType(), 0);
+                                            }
+                                            else {
+                                                newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+                                            }
                                         }
                                         else {
                                             System.out.println("nope. thats bad.");

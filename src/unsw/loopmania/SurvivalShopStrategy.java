@@ -13,7 +13,6 @@ public class SurvivalShopStrategy implements ShopStrategy{
     public void buyItem(Item purchasedItem) {
         if (purchasedItem instanceof HealthPotion) {
             available = false;
-            System.out.println("YOOOhooo\n\nuh oh");
         }
     }
 
@@ -25,9 +24,7 @@ public class SurvivalShopStrategy implements ShopStrategy{
 
     @Override
     public Boolean getAvailable(Item item) {
-        System.out.println(String.format("COSTS: %s : %s", character.getGold(), item.getPrice()));
         if (item instanceof HealthPotion) {
-            System.out.println(available);
             return available && character.getGold() >= item.getPrice();
         }
         else {

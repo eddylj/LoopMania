@@ -16,6 +16,8 @@ public class Inventory {
     public static final int UNEQUIPPEDINVENTORYHEIGHT = 4;
     private List<Card> cardEntities;
     private List<String> nonLevelItems;
+    private List<String> rareItems;
+    private RareItemFactory rF;
 
     /**
      * 
@@ -25,7 +27,18 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering"));
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump"));
+        // this.rareItems = character.getRareItems();
+        // this.rF = new RareItemFactory(rareItems);
+    }
+
+    public void setConfusingMode() {
+        rF.setConfusing();
+    }
+
+    public void setRareItems(List<String> rareItems) {
+        this.rareItems = rareItems;
+        this.rF = new RareItemFactory(rareItems);
     }
 
     /**
@@ -92,7 +105,7 @@ public class Inventory {
     public Boolean hasRing() {
         for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
             Item item = unequippedInventoryItems.get(i);
-            if (item instanceof TheOneRing) {
+            if (item.isRing()) {
                 ((StaticEntity)item).destroy();
                 unequippedInventoryItems.remove(i);
                 return true;
@@ -148,17 +161,23 @@ public class Inventory {
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         // now we insert the new sword, as we know we have at least made a slot available...
-        ItemFactory f = new ItemFactory();
+        ItemFactory iF = new ItemFactory();
+        // RareItemFactory rF = new RareItemFactory(rareItems);
         Item item = null;
-        if (nonLevelItems.contains(type)) {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+        if (rareItems.contains(type)) {
+            item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+        }
+        else if (nonLevelItems.contains(type)) {
+            item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }
         else {
-            item = f.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
+            item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
         }
         // Item item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), level);
         unequippedInventoryItems.add(item);
-        character.updateHighest(item);
+        if (!rareItems.contains(type)) {
+            character.updateHighest(item);
+        }
         return (StaticEntity)item;
     }
 

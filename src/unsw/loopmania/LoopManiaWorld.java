@@ -670,12 +670,14 @@ public class LoopManiaWorld {
     public void setCharacter(Character character) {
         ItemFactory iF = new ItemFactory();
         this.character = character;
+        character.setRareItems(rareItems);
         heroCastlePosition = new Pair<Integer, Integer>(character.getX(), character.getY());
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         shop = new Shop(character);
+        character.setRareItems(rareItems);
     }
 
     public void setMode(String mode) {
@@ -684,6 +686,9 @@ public class LoopManiaWorld {
         }
         if (mode.equals("beserker")) {
             shop.setBeserker();
+        }
+        if (mode.equals("confusing")) {
+            character.setConfusingMode();
         }
     }
 
