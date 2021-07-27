@@ -64,8 +64,10 @@ public class BattleRunner {
             }
         }
         List<TowerBuilding> towers = getInRangeTowers(moveBuildings);
-        
-        return runBattle(attacking, character.getAlliedSoldiers(), towers);
+        if (!attacking.isEmpty()) {
+            return runBattle(attacking, character.getAlliedSoldiers(), towers);
+        }
+            else return attacking;
     }
 
 
@@ -104,6 +106,7 @@ public class BattleRunner {
             checkTrancedEnemies();
         }
         killConvertedEnemies();
+        character.removeBuff();
         return defeatedEnemies;
     }
 

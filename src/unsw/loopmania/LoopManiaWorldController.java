@@ -901,7 +901,9 @@ public class LoopManiaWorldController {
             }
             break;
         case D:
-            world.drinkPotion();
+            world.drinkHealthPotion();
+        case S:
+            world.drinkStrengthPotion();
         default:
             break;
         }

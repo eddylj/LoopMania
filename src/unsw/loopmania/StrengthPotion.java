@@ -2,25 +2,26 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class HealthPotion extends StaticEntity implements Item, Potion{
-    public static final int SELLPRICE = 40;
-    public static final int REPLACECOST = 20;
+public class StrengthPotion extends StaticEntity implements Item, Potion{
+    public static final int SELLPRICE = 60;
+    public static final int REPLACECOST = 30;
     public static final int BASECOST = 50;
+    public static final double BUFFDMG = 15.0;
     private int cost;
     /**
      * The class of health potion
      * @param x
      * @param y
      */
-    public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public StrengthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
-        super.setType("healthpotion");
-        cost = 100;
+        super.setType("strengthpotion");
+        cost = 150;
     }
 
-    public HealthPotion() {
+    public StrengthPotion() {
         super();
-        super.setType("healthpotion");
+        super.setType("strengthpotion");
     }
 
     /**
@@ -28,7 +29,7 @@ public class HealthPotion extends StaticEntity implements Item, Potion{
      * @param character
      */
     public void use(Character character) {
-        character.restoreHealth(40);
+        character.setBuff(BUFFDMG);
     }
     @Override
     public int getPrice() {
@@ -64,6 +65,5 @@ public class HealthPotion extends StaticEntity implements Item, Potion{
 		return false;
 	}
 
-	
 
 }

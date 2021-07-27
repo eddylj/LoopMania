@@ -27,7 +27,7 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump", "doggiecoin"));
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "strengthpotion", "theonering", "anduril", "treestump", "doggiecoin"));
         // this.rareItems = character.getRareItems();
         // this.rF = new RareItemFactory(rareItems);
     }
@@ -280,5 +280,17 @@ public class Inventory {
     }
     private StaticEntity convertItemToStaticEntity(Item item) {
         return (StaticEntity)item;
+    }
+
+    public StrengthPotion getStrengthPotion() {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
+            Item item = unequippedInventoryItems.get(i);
+            if (item instanceof StrengthPotion) {
+                ((Entity)item).destroy();
+                unequippedInventoryItems.remove(i);
+                return ((StrengthPotion)item);
+            }
+        }
+        return null;
     }
 }

@@ -52,6 +52,9 @@ public class ItemFactory {
         else if (type.equals("doggiecoin")) {
             return createDoggieCoin(x, y);
         }
+        else if (type.equals("strengthpotion")) {
+            return createStrengthPotion(x,y);
+        }
         else {
             return null;
         }
@@ -72,6 +75,10 @@ public class ItemFactory {
     //     }
     // }
     
+    private Item createStrengthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new StrengthPotion(x,y);
+    }
+
     private Item createDoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new DoggieCoin(x, y);
     }

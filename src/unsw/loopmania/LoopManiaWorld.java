@@ -355,6 +355,7 @@ public class LoopManiaWorld {
         if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP && !muskeSpawned) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
+            character.setHealth(0);
         }
     }
 
@@ -362,7 +363,6 @@ public class LoopManiaWorld {
         EnemyFactory e = new EnemyFactory();
         Enemy boss  =  e.create(new PathPosition(i, orderedPath), bossString);
         enemies.add(boss);
-        character.setHealth(0);
         return boss;
     }
 
@@ -507,8 +507,11 @@ public class LoopManiaWorld {
     /**
      * Makes character drink potion (if possible)
      */
-    public void drinkPotion() {
-        character.drinkPotion();
+    public void drinkHealthPotion() {
+        character.drinkHealthPotion();
+    }
+    public void drinkStrengthPotion() {
+        character.drinkStrengthPotion();
     }
 
     //Getters and Setters

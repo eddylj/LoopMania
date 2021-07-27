@@ -13,6 +13,7 @@ public class Shop {
     private ItemFactory iF;
     private ShopStrategy available;
     private int boughtHealthPotions;
+    private int boughtStrengthPotions;
     private Inventory inventory;
     private List<String> rareItems;
 
@@ -41,9 +42,9 @@ public class Shop {
 
     private Item previewItem(String itemType) {
         Item item = null;
-        if (itemType.equals("healthpotion")) {
+        if (itemType.equals("healthpotion") || itemType.equals("strengthpotion")) {
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
-            ((HealthPotion)item).increaseCost(boughtHealthPotions);
+            ((Potion)item).increaseCost(boughtHealthPotions);
         }
         else {
             int level = stats.getHighestLevel(itemType);

@@ -28,6 +28,7 @@ public class Character extends MovingEntity implements Hero {
     private Inventory inventory;
     private boolean isStunned = false;
     private List<String> rareItems;
+    private double strengthPotionBuff;
 
     /**
      * Constructor for the character Class
@@ -121,6 +122,7 @@ public class Character extends MovingEntity implements Hero {
         if (!Objects.isNull(equippedHelmet)) {
             newDamage = ((Helmet) equippedHelmet).calcAttackDamage(newDamage);
         }
+        newDamage += strengthPotionBuff;
         newDamage = appliedBuff.ApplyBonusDamge(newDamage);
         enemy.takeDamage(newDamage);
     }
@@ -130,11 +132,18 @@ public class Character extends MovingEntity implements Hero {
      * Checks whether the character has a potion in their inventory and
      * if so, drinks it (to heal)
      */
-    public void drinkPotion() {
+    public void drinkHealthPotion() {
         
         HealthPotion potion = inventory.getHealthPotion();
         if (!Objects.isNull(potion)) {
-            potion.heal(this);
+            potion.use(this);
+        }
+    }
+    public void drinkStrengthPotion() {
+        
+        StrengthPotion potion = inventory.getStrengthPotion();
+        if (!Objects.isNull(potion)) {
+            potion.use(this);
         }
     }
 
@@ -543,5 +552,12 @@ public class Character extends MovingEntity implements Hero {
 
     public boolean isStunned() {
         return isStunned;
+    }
+
+    public void setBuff(double buffdmg) {
+        this.strengthPotionBuff = buffdmg;
+    }
+    public void removeBuff() {
+        strengthPotionBuff = 0;
     }
 }
