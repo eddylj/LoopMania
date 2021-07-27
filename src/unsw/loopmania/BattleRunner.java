@@ -30,8 +30,8 @@ public class BattleRunner {
      * Setter to set the character once the fight happens
      * @param c Character: The character
      */
-    public void setCharacter(Character c) {
-        this.character = c;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
     /**
@@ -53,14 +53,14 @@ public class BattleRunner {
      */
     public List<Enemy> checkForFight(List<Enemy> enemies, List<BuildingOnMove> moveBuildings) {
         List<Enemy> attacking = new ArrayList<Enemy>();
-        for (Enemy e : enemies) {
-            int battleRadius = e.getBattleRadius();
-            int supportRadius = e.getSupportRadius();
-            double distance = Math.sqrt(Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2));
+        for (Enemy enemy : enemies) {
+            int battleRadius = enemy.getBattleRadius();
+            int supportRadius = enemy.getSupportRadius();
+            double distance = Math.sqrt(Math.pow((character.getX()-enemy.getX()), 2) +  Math.pow((character.getY()-enemy.getY()), 2));
             if (distance <= battleRadius) {
-                attacking.add(e);
+                attacking.add(enemy);
             } else if (distance <= supportRadius) {
-                attacking.add(e);
+                attacking.add(enemy);
             }
         }
         List<TowerBuilding> towers = getInRangeTowers(moveBuildings);
@@ -78,9 +78,9 @@ public class BattleRunner {
      */
     private List<TowerBuilding> getInRangeTowers(List<BuildingOnMove> moveBuildings) {
         List<TowerBuilding> towers = new ArrayList<TowerBuilding>();
-        for (BuildingOnMove b : moveBuildings) {
-            if (b.getType().equals("tower")) {
-                TowerBuilding tower = (TowerBuilding) b;
+        for (BuildingOnMove building : moveBuildings) {
+            if (building.getType().equals("tower")) {
+                TowerBuilding tower = (TowerBuilding) building;
                 if (tower.isInRange(character)) {
                     towers.add(tower);
                 }
@@ -117,12 +117,12 @@ public class BattleRunner {
      */
     public void checkTrancedEnemies() {
         for (int i = allies.size() - 1; i >= 0; i--) {
-            AlliedSoldier a = allies.get(i);
-            if (a instanceof ConvertedEnemy) {
-                if (((ConvertedEnemy)a).canExitTrance()) {
-                    Enemy original = ((ConvertedEnemy)a).getEnemy();
+            AlliedSoldier ally = allies.get(i);
+            if (ally instanceof ConvertedEnemy) {
+                if (((ConvertedEnemy)ally).canExitTrance()) {
+                    Enemy original = ((ConvertedEnemy)ally).getEnemy();
                     enemies.add(original);
-                    killAlly(a);
+                    killAlly(ally);
                 }
             }
         }
@@ -135,9 +135,9 @@ public class BattleRunner {
     private void killConvertedEnemies() {
         // for (AlliedSoldier a : allies) {
         for (int i = allies.size() - 1; i >= 0; i--) {
-            AlliedSoldier a = allies.get(i);
-            if (a instanceof ConvertedEnemy) {
-                killAlly(a);
+            AlliedSoldier ally = allies.get(i);
+            if (ally instanceof ConvertedEnemy) {
+                killAlly(ally);
             }
         }
     }
@@ -158,9 +158,9 @@ public class BattleRunner {
      * @param a AlliedSoldier that has been bitten
      */
     public void convertAllyToZombie(AlliedSoldier a) {
-        EnemyFactory f = new EnemyFactory();
-        Enemy z =  f.create("zombie");
-        enemies.add(z);
+        EnemyFactory factory = new EnemyFactory();
+        Enemy zombie =  factory.create("zombie");
+        enemies.add(zombie);
     }
 
     /**
@@ -170,9 +170,9 @@ public class BattleRunner {
      */
     public void convertEnemyToAlly(Enemy enemy) {
         enemies.remove(enemy);
-        HeroFactory a = new HeroFactory();
-        ConvertedEnemy c = (ConvertedEnemy) a.create(enemy);
-        character.addAlliedSoldier((AlliedSoldier)c);
+        HeroFactory factory = new HeroFactory();
+        ConvertedEnemy converted = (ConvertedEnemy) factory.create(enemy);
+        character.addAlliedSoldier((AlliedSoldier)converted);
         
     }
 
@@ -183,21 +183,21 @@ public class BattleRunner {
      */
     private void runEnemyAttacks() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
-            Enemy e = enemies.get(i);
+            Enemy enemy = enemies.get(i);
             if (!allies.isEmpty()) {
-                AlliedSoldier a = allies.get(0);
-                if (e instanceof Zombie || e instanceof Doggie) {
-                    e.attack(a, this);
+                AlliedSoldier ally = allies.get(0);
+                if (enemy instanceof Zombie || enemy instanceof Doggie) {
+                    enemy.attack(ally, this);
                 } 
                 else {
-                    e.attack(a);
+                    enemy.attack(ally);
                 }
-                if (a.isDead()) {
-                    killAlly(a);
+                if (ally.isDead()) {
+                    killAlly(ally);
                 }
             } 
             else {
-                e.attack(character, this);
+                enemy.attack(character, this);
                 if (character.isDead() && character.hasRing()) {
                     revivecharacter(character);
                 }
@@ -210,25 +210,25 @@ public class BattleRunner {
      * and then the character attacks. Heros attack the oldest enemy first.
      */
     private void runHeroAttacks() {
-        for (TowerBuilding t : towers) {
+        for (TowerBuilding tower : towers) {
             if (!enemies.isEmpty()) {
-                Enemy e = enemies.get(0);
-                t.attack(e);
-                postFight(e);
+                Enemy enemy = enemies.get(0);
+                tower.attack(enemy);
+                postFight(enemy);
             }
         }
-        for (AlliedSoldier a : allies) {
+        for (AlliedSoldier ally : allies) {
             if (!enemies.isEmpty()) {
-                Enemy e = enemies.get(0);
-                a.attack(e);
-                postFight(e);
+                Enemy enemy = enemies.get(0);
+                ally.attack(enemy);
+                postFight(enemy);
             }
         }
         if (!enemies.isEmpty()) {
-            Enemy e = enemies.get(0);
+            Enemy enemy = enemies.get(0);
             if (!character.isStunned()) {
-                character.attack(e, this);
-                postFight(e);
+                character.attack(enemy, this);
+                postFight(enemy);
             } else {
                 character.setStunned(false);
             }
@@ -240,12 +240,12 @@ public class BattleRunner {
     /**
      * Deals with any potential enemy deaths. BattleRunnner saves a list of all
      * enemies that have died and updates it with every death.
-     * @param e Enemy: enemy that has potentially died
+     * @param enemy Enemy: enemy that has potentially died
      */
-    private void postFight(Enemy e){
-        if (e.isDead()){
-            killEnemy(e);
-            defeatedEnemies.add(e);
+    private void postFight(Enemy enemy){
+        if (enemy.isDead()){
+            killEnemy(enemy);
+            defeatedEnemies.add(enemy);
         }
     }
 
@@ -273,9 +273,9 @@ public class BattleRunner {
     }
 
     public void healenemies() {
-        for (Enemy e: enemies) {
-            if (!(e instanceof ElanMuske)) {
-                e.heal();
+        for (Enemy enemy: enemies) {
+            if (!(enemy instanceof ElanMuske)) {
+                enemy.heal();
             }
         }
     }
