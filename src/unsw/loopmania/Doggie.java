@@ -11,6 +11,7 @@ public class Doggie extends Enemy implements Boss{
     public static final int HEALTH = 500;
     public static final int XP = 700;
     public static final int STUNCHANCE = 20;
+    public static final int NOLEVEL = 0;
     private String[] cardDrops;
 
     /**
@@ -36,11 +37,11 @@ public class Doggie extends Enemy implements Boss{
         List <StaticEntity> loot = new ArrayList<StaticEntity>();
         if (num >= 50) {
             String rareType = rareItems.get(LoopManiaWorld.getRandNum() % rareItems.size());
-            loot.add(character.addUnequippedItem(rareType, 0));
+            loot.add(character.addUnequippedItem(rareType, NOLEVEL));
         }
         String itemType = itemList[LoopManiaWorld.getRandNum() % itemList.length];
         if (character.getNonLevelItems().contains(itemType)) {
-            loot.add(character.addUnequippedItem(itemType, 0));
+            loot.add(character.addUnequippedItem(itemType, NOLEVEL));
         } else {
             int level;
             if (num < 80 && num > 10) {
@@ -58,7 +59,7 @@ public class Doggie extends Enemy implements Boss{
         }
         String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
         loot.add(character.loadCard(cardType, width));
-        loot.add(character.addUnequippedItem("doggiecoin", 0));
+        loot.add(character.addUnequippedItem("doggiecoin", NOLEVEL));
         return loot;
     }
 

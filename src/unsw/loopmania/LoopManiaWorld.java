@@ -362,6 +362,7 @@ public class LoopManiaWorld {
         EnemyFactory e = new EnemyFactory();
         Enemy boss  =  e.create(new PathPosition(i, orderedPath), bossString);
         enemies.add(boss);
+        character.setHealth(0);
         return boss;
     }
 
