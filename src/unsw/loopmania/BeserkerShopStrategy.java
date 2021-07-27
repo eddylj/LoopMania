@@ -25,7 +25,7 @@ public class BeserkerShopStrategy implements ShopStrategy{
 
     @Override
     public Boolean getAvailable(Item item) {
-        if (item instanceof Protection) {
+        if (item.isProtection()) {
             return available && (character.getGold() >= item.getPrice());
         }
         else {

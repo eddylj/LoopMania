@@ -2,12 +2,14 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class ConfusingNuke extends Nuke implements ConfusedRareItem{
+public class ConfusingInvinciblePotion extends InvinciblePotion implements ConfusedRareItem{
     private Item additional;
-	public ConfusingNuke(SimpleIntegerProperty x, SimpleIntegerProperty y, Item additional) {
-		super(x, y);
+
+    public ConfusingInvinciblePotion(SimpleIntegerProperty x, SimpleIntegerProperty y, Item additional) {
+        super(x, y);
+        super.setType("invinciblepotion");
         this.additional = additional;
-	}
+    }
 
     @Override
     public Item getAdditional() {
@@ -22,10 +24,5 @@ public class ConfusingNuke extends Nuke implements ConfusedRareItem{
 	@Override
 	public double getDamage(Enemy e) {
 		return ((Anduril)additional).getDamage(e);
-	}
-    
-    @Override
-    public void use(Character character) {
-        ((InvinciblePotion)additional).use(character);
-    }
+	}    
 }

@@ -11,23 +11,17 @@ public class ConfusingAnduril extends Anduril implements ConfusedRareItem{
 	}
 
     @Override
-    public boolean isShield() {
-        return additional instanceof Shield;
-    }
-    
-    @Override
-    public boolean isRing() {
-        return additional instanceof TheOneRing;
-    }
-
-    @Override
-    public boolean isNuke() {
-        return additional instanceof Nuke;
+    public Item getAdditional() {
+        return additional;
     }
 
 	@Override
 	public double protect(double damage, Enemy e) {
 		return ((TreeStump)additional).protect(damage, e);
 	}
-    
+
+    @Override
+    public void use(Character character) {
+        ((InvinciblePotion)additional).use(character);
+    }
 }

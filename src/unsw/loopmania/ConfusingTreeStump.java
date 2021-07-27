@@ -10,23 +10,17 @@ public class ConfusingTreeStump extends Shield implements ConfusedRareItem{
 	}
 
     @Override
-    public boolean isWeapon() {
-        return additional instanceof Weapon;
-    }
-
-    @Override
-    public boolean isRing() {
-        return additional instanceof TheOneRing;
-    }
-
-    @Override
-    public boolean isNuke() {
-        return true;
+    public Item getAdditional() {
+        return additional;
     }
 
 	@Override
 	public double getDamage(Enemy e) {
 		return ((Anduril)additional).getDamage(e);
 	}
-    
+
+    @Override
+    public void use(Character character) {
+        ((InvinciblePotion)additional).use(character);
+    }
 }

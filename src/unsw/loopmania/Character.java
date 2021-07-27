@@ -29,6 +29,7 @@ public class Character extends MovingEntity implements Hero {
     private boolean isStunned = false;
     private List<String> rareItems;
     private double strengthPotionBuff;
+    private boolean canTakeDamage;
 
     /**
      * Constructor for the character Class
@@ -74,9 +75,10 @@ public class Character extends MovingEntity implements Hero {
      * @param damage double: The incoming damage
      */
     public void takeDamage(double damage, Enemy e){
+        if (!canTakeDamage) return;
         double newDamage = damage;
         if (!Objects.isNull(equippedShield)) {
-            if (equippedShield instanceof TreeStump) {
+            if (equippedShield.isTreeStump()) {
                 newDamage = ((Protection) equippedShield).protect(damage, e);
             }
             newDamage = ((Protection) equippedShield).protect(damage);
@@ -115,6 +117,7 @@ public class Character extends MovingEntity implements Hero {
                 newDamage = ((Sword)equippedWeapon).getDamage(enemy);
             }
             else {
+                // Item is a confused rare item that thinks its an Anduril
                 newDamage = ((ConfusedRareItem)equippedWeapon).getDamage(enemy);
             }
         }
@@ -144,6 +147,21 @@ public class Character extends MovingEntity implements Hero {
         StrengthPotion potion = inventory.getStrengthPotion();
         if (!Objects.isNull(potion)) {
             potion.use(this);
+        }
+    }
+
+    public void drinkInvincibilityPotion() {
+        Item potion = inventory.getInvinciblePotion();
+        if (!Objects.isNull(potion)) {
+            // instanceof is only used for typecasting.
+            // e.g. Can't typecast a confusing TheOneRing into a potion
+            if (potion instanceof InvinciblePotion) {
+                ((InvinciblePotion)potion).use(this);
+            }
+            else {
+                // Item is a confused rare item that thinks its an InvinciblePotion
+                ((ConfusedRareItem)potion).use(this);
+            }
         }
     }
 
@@ -274,6 +292,14 @@ public class Character extends MovingEntity implements Hero {
 
     public void setConfusingMode() {
         inventory.setConfusingMode();
+    }
+
+    public void makeInvincible() {
+        canTakeDamage = false;
+    }
+
+    public void makeVincible() {
+        canTakeDamage = true;
     }
 
     /**

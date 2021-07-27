@@ -35,6 +35,9 @@ public class RareItemFactory {
         else if (type.equals("nuke")) {
             return createConfusingNuke(x, y);
         }
+        else if (type.equals("invinciblepotion")) {
+            return createConfusingInvinciblePotion(x, y);
+        }
         else {
             return null;
         }
@@ -52,6 +55,9 @@ public class RareItemFactory {
         }
         else if (type.equals("nuke")) {
             return createNuke(x, y);
+        }
+        else if (type.equals("invinciblepotion")) {
+            return createInvinciblePotion(x, y);
         }
         else {
             return null;
@@ -71,6 +77,9 @@ public class RareItemFactory {
         else if (type.equals("nuke")) {
             return createNuke();
         }
+        else if (type.equals("invinciblepotion")) {
+            return createInvinciblePotion();
+        }
         else {
             return null;
         }
@@ -81,6 +90,9 @@ public class RareItemFactory {
     }
     private Item createNuke(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new Nuke(x, y);
+    }
+    private Item createInvinciblePotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new InvinciblePotion(x, y);
     }
     private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new Anduril(x, y, 1);
@@ -93,6 +105,9 @@ public class RareItemFactory {
     }
     private Item createNuke() {
         return new Nuke();
+    }
+    private Item createInvinciblePotion() {
+        return new InvinciblePotion();
     }
     private Item createAnduril() {
         return new Anduril(1);
@@ -107,6 +122,10 @@ public class RareItemFactory {
     private Item createConfusingNuke(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item additional = create(generateRandomRareItem("nuke"));
         return new ConfusingNuke(x, y, additional);
+    }
+    private Item createConfusingInvinciblePotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        Item additional = create(generateRandomRareItem("invinciblepotion"));
+        return new ConfusingInvinciblePotion(x, y, additional);
     }
     private Item createConfusingAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item additional = create(generateRandomRareItem("anduril"));

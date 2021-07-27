@@ -510,10 +510,11 @@ public class LoopManiaWorldController {
     private void onLoad(Item item) {
         // ImageView view = new ImageView(swordImage);
         ImageView view = null;
+        System.out.println(item.getType());
         if (world.getNonLevelItems().contains(((StaticEntity)item).getType())) {
             view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
         }
-        else if (item instanceof Weapon) {
+        else if (item.isWeapon()) {
             view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Weapon)item).getLevel()))).toURI().toString()));
         }
         else {
@@ -608,10 +609,6 @@ public class LoopManiaWorldController {
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
                     node.toFront();
-                    // if (node.getId() == null) {
-                    //     node.toBack();
-                    //     node = event.getPickResult().getIntersectedNode();
-                    // }
                     if(node != targetGridPane && db.hasImage()){
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
@@ -651,12 +648,9 @@ public class LoopManiaWorldController {
                                             if (olditem instanceof ConfusedRareItem) {
                                                 newItem = world.addUnequippedItem(olditem.getType(), 0);
                                             }
-                                            else if (olditem instanceof Weapon) {
+                                            else {
                                                 newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
                                             }
-                                            // else {
-                                            //     newItem = world.addUnequippedItem(olditem.getType(), ((RareItem)olditem).getLevel());
-                                            // }
                                         }
                                         else if (((Item)olditem).isShield() || olditem instanceof Protection) {
                                             if (olditem instanceof ConfusedRareItem) {
@@ -913,6 +907,8 @@ public class LoopManiaWorldController {
             world.drinkStrengthPotion();
         case N:
             activateNuke();
+        case I:
+            world.drinkInvincibilityPotion();
         default:
             break;
         }

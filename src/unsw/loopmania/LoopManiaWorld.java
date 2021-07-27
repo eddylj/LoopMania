@@ -236,6 +236,7 @@ public class LoopManiaWorld {
             SpawnEnemiesOnCycle(newEnemies);
             character.gainCycle();
             spawnCoinsOnCycle();
+            character.makeVincible();
         }
     }
     /**
@@ -515,6 +516,9 @@ public class LoopManiaWorld {
     public void drinkStrengthPotion() {
         character.drinkStrengthPotion();
     }
+    public void drinkInvincibilityPotion() {
+        character.drinkInvincibilityPotion();
+    }
 
     public List<Enemy> useNuke() {
         if (character.hasNuke()) {
@@ -692,6 +696,7 @@ public class LoopManiaWorld {
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         shop = new Shop(character);
         character.setRareItems(rareItems);
+        character.addUnequippedItem("invinciblepotion", 0);
     }
 
     public void setMode(String mode) {

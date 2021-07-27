@@ -48,5 +48,10 @@ public class TreeStump extends Shield implements RareItem{
             return damage;
         }
     }
+
+    @Override
+    public boolean isTreeStump() {
+        return true;
+    }
     
 }

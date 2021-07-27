@@ -11,13 +11,8 @@ public class ConfusingTheOneRing extends TheOneRing implements ConfusedRareItem{
     }
 
     @Override
-    public boolean isWeapon() {
-        return additional instanceof Weapon;
-    }
-
-    @Override 
-    public boolean isShield() {
-        return additional instanceof Shield;
+    public Item getAdditional() {
+        return additional;
     }
 
 	@Override
@@ -29,4 +24,9 @@ public class ConfusingTheOneRing extends TheOneRing implements ConfusedRareItem{
 	public double getDamage(Enemy e) {
 		return ((Anduril)additional).getDamage(e);
 	}
+
+    @Override
+    public void use(Character character) {
+        ((InvinciblePotion)additional).use(character);
+    }
 }

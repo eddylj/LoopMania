@@ -27,7 +27,7 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "strengthpotion", "theonering", "anduril", "treestump", "doggiecoin", "nuke"));
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "strengthpotion", "invinciblepotion", "theonering", "anduril", "treestump", "doggiecoin", "nuke"));
         // this.rareItems = character.getRareItems();
         // this.rF = new RareItemFactory(rareItems);
     }
@@ -183,6 +183,7 @@ public class Inventory {
         Item item = null;
         if (rareItems.contains(type)) {
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
+            System.out.println(item.getType());
         }
         else if (nonLevelItems.contains(type)) {
             item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
@@ -306,6 +307,18 @@ public class Inventory {
                 ((Entity)item).destroy();
                 unequippedInventoryItems.remove(i);
                 return ((StrengthPotion)item);
+            }
+        }
+        return null;
+    }
+
+    public Item getInvinciblePotion() {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
+            Item item = unequippedInventoryItems.get(i);
+            if (item.isInvinciblePotion()) {
+                ((Entity)item).destroy();
+                unequippedInventoryItems.remove(i);
+                return item;
             }
         }
         return null;
