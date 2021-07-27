@@ -1,7 +1,7 @@
 package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class DoggieCoin extends StaticEntity implements Item{
+public class DoggieCoin extends Item{
     public static final int NOPRICE = 0;
     private CoinStrategy strategy;
 
@@ -32,26 +32,6 @@ public class DoggieCoin extends StaticEntity implements Item{
 
     public void setDeflatedCoin() {
         this.strategy = new DeflatedCoinStrategy();
-    }
-
-	@Override
-	public boolean isWeapon() {
-		return false;
-	}
-
-	@Override
-	public boolean isShield() {
-		return false;
-	}
-
-	@Override
-	public boolean isRing() {
-		return false;
-	}
-
-    @Override 
-    public boolean isNuke() {
-        return false;
     }
 
 }

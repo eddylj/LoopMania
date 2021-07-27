@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Base class for all weapons
  */
-public abstract class Weapon extends StaticEntity implements Item{
+public abstract class Weapon extends Item{
     public int level;
     public double damage;
     public double price;
@@ -56,19 +56,4 @@ public abstract class Weapon extends StaticEntity implements Item{
 	public boolean isWeapon() {
 		return true;
 	}
-
-    @Override
-    public boolean isShield() {
-        return false;
-    }
-
-    @Override
-    public boolean isRing() {
-        return false;
-    }
-
-    @Override
-    public boolean isNuke() {
-        return false;
-    }
 }

@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Nuke extends StaticEntity implements Item, RareItem {
+public class Nuke extends Item implements RareItem {
     public static final int NOPRICE = 0;
     public static final int NUKESELLPRICE = 1000;
     public static final double NUKEREPLACEPERCENTAGE = 0.4;
@@ -31,21 +31,6 @@ public class Nuke extends StaticEntity implements Item, RareItem {
 	@Override
 	public int getReplaceCost() {
 		return (int)(NUKESELLPRICE * NUKEREPLACEPERCENTAGE);
-	}
-
-	@Override
-	public boolean isWeapon() {
-		return false;
-	}
-
-	@Override
-	public boolean isShield() {
-		return false;
-	}
-
-	@Override
-	public boolean isRing() {
-		return false;
 	}
 
     @Override

@@ -19,6 +19,11 @@ public class ConfusingTreeStump extends Shield implements ConfusedRareItem{
         return additional instanceof TheOneRing;
     }
 
+    @Override
+    public boolean isNuke() {
+        return true;
+    }
+
 	@Override
 	public double getDamage(Enemy e) {
 		return ((Anduril)additional).getDamage(e);

@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public abstract class Protection extends StaticEntity implements Item{
+public abstract class Protection extends Item{
     private int level;
     private double price;
     /**
@@ -53,25 +53,5 @@ public abstract class Protection extends StaticEntity implements Item{
     @Override
     public int getReplaceCost() {
         return (int) (price * 0.2);
-    }
-
-    @Override
-	public boolean isWeapon() {
-		return false;
-	}
-
-    @Override
-    public boolean isShield() {
-        return false;
-    }
-
-    @Override
-    public boolean isRing() {
-        return false;
-    }
-
-    @Override
-    public boolean isNuke() {
-        return false;
     }
 }

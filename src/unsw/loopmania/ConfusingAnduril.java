@@ -20,6 +20,11 @@ public class ConfusingAnduril extends Anduril implements ConfusedRareItem{
         return additional instanceof TheOneRing;
     }
 
+    @Override
+    public boolean isNuke() {
+        return additional instanceof Nuke;
+    }
+
 	@Override
 	public double protect(double damage, Enemy e) {
 		return ((TreeStump)additional).protect(damage, e);

@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class TheOneRing extends StaticEntity implements RareItem, Item{
+public class TheOneRing extends Item implements RareItem{
     public static final int NOPRICE = 0;
     /**
      * The class of health potion
@@ -38,23 +38,7 @@ public class TheOneRing extends StaticEntity implements RareItem, Item{
     }
 
 	@Override
-	public boolean isWeapon() {
-		return false;
-	}
-
-	@Override
-	public boolean isShield() {
-		return false;
-	}
-
-	@Override
 	public boolean isRing() {
 		return true;
 	}
-
-    @Override
-    public boolean isNuke() {
-        return false; 
-    }
-    
 }
