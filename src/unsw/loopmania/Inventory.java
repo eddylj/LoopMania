@@ -27,7 +27,7 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump"));
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "theonering", "anduril", "treestump", "doggiecoin"));
         // this.rareItems = character.getRareItems();
         // this.rF = new RareItemFactory(rareItems);
     }
