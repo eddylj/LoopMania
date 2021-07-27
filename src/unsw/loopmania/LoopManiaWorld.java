@@ -1,4 +1,3 @@
-
 package unsw.loopmania;
 
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private List<Coin> gold;
     private Shop shop;
+    private Boolean muskeSpawned = false; 
     
 
     public static final int DOGGIESPAWNCYCLE = 20;
@@ -352,7 +352,7 @@ public class LoopManiaWorld {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "doggie"));
         }
-        if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP) {
+        if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP && !muskeSpawned) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
         }
