@@ -27,7 +27,7 @@ public class Inventory {
         unequippedInventoryItems = new ArrayList<>();
         this.character = character;
         cardEntities = new ArrayList<>();
-        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "strengthpotion", "theonering", "anduril", "treestump", "doggiecoin"));
+        nonLevelItems = new ArrayList<String>(Arrays.asList("healthpotion", "strengthpotion", "theonering", "anduril", "treestump", "doggiecoin", "nuke"));
         // this.rareItems = character.getRareItems();
         // this.rF = new RareItemFactory(rareItems);
     }
@@ -113,6 +113,23 @@ public class Inventory {
         }
         return false;
     }
+    
+    /**
+     * Checks if Nuke is in inventory
+     * @return Boolean
+     */
+    public Boolean hasNuke() {
+        for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
+            Item item = unequippedInventoryItems.get(i);
+            if (item.isNuke()) {
+                ((StaticEntity)item).destroy();
+                unequippedInventoryItems.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Removes item from inventory
      * @param removeItem

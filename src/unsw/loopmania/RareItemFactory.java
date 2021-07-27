@@ -32,6 +32,9 @@ public class RareItemFactory {
         else if (type.equals("treestump")) {
             return createConfusingTreeStump(x, y);
         }
+        else if (type.equals("nuke")) {
+            return createConfusingNuke(x, y);
+        }
         else {
             return null;
         }
@@ -46,6 +49,9 @@ public class RareItemFactory {
         }
         else if (type.equals("treestump")) {
             return createTreeStump(x, y);
+        }
+        else if (type.equals("nuke")) {
+            return createNuke(x, y);
         }
         else {
             return null;
@@ -62,6 +68,9 @@ public class RareItemFactory {
         else if (type.equals("treestump")) {
             return createTreeStump();
         }
+        else if (type.equals("nuke")) {
+            return createNuke();
+        }
         else {
             return null;
         }
@@ -69,6 +78,9 @@ public class RareItemFactory {
 
     private Item createTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new TheOneRing(x, y);
+    }
+    private Item createNuke(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new Nuke(x, y);
     }
     private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new Anduril(x, y, 1);
@@ -79,6 +91,9 @@ public class RareItemFactory {
     private Item createTheOneRing() {
         return new TheOneRing();
     }
+    private Item createNuke() {
+        return new Nuke();
+    }
     private Item createAnduril() {
         return new Anduril(1);
     }
@@ -88,6 +103,10 @@ public class RareItemFactory {
     private Item createConfusingTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item additional = create(generateRandomRareItem("theonering"));
         return new ConfusingTheOneRing(x, y, additional);
+    }
+    private Item createConfusingNuke(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        Item additional = create(generateRandomRareItem("nuke"));
+        return new ConfusingNuke(x, y, additional);
     }
     private Item createConfusingAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item additional = create(generateRandomRareItem("anduril"));

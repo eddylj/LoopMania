@@ -66,4 +66,9 @@ public abstract class Weapon extends StaticEntity implements Item{
     public boolean isRing() {
         return false;
     }
+
+    @Override
+    public boolean isNuke() {
+        return false;
+    }
 }

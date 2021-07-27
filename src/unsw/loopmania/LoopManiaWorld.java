@@ -147,6 +147,7 @@ public class LoopManiaWorld {
      * Simulates one tick in game
      */
     public void tick() {
+        updateEnemyList();
         moveEntities();
         List<Enemy> deadEnemies = fight();
         for (Enemy e : deadEnemies) {
@@ -223,6 +224,7 @@ public class LoopManiaWorld {
      * @param e
      */
     public void KillEnemy(Enemy e) {
+        e.shouldExist().set(false);
         enemies.remove(e);
     }
     /**
@@ -512,6 +514,14 @@ public class LoopManiaWorld {
     }
     public void drinkStrengthPotion() {
         character.drinkStrengthPotion();
+    }
+
+    public List<Enemy> useNuke() {
+        if (character.hasNuke()) {
+            return enemies;
+        }
+        // return empty array list if no nuke
+        return new ArrayList<Enemy>();
     }
 
     //Getters and Setters

@@ -7,4 +7,5 @@ public interface Item {
     public boolean isWeapon();
     public boolean isShield();
     public boolean isRing();
+    public boolean isNuke();
 }

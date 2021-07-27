@@ -49,4 +49,9 @@ public class DoggieCoin extends StaticEntity implements Item{
 		return false;
 	}
 
+    @Override 
+    public boolean isNuke() {
+        return false;
+    }
+
 }

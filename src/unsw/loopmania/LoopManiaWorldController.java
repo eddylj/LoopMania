@@ -879,6 +879,13 @@ public class LoopManiaWorldController {
         }
     }
 
+    private void activateNuke() {
+        List<Enemy> killedEnemies = world.useNuke();
+        for (int i = killedEnemies.size() - 1; i >= 0; i--) {
+            reactToEnemyDefeat(killedEnemies.get(i));
+        }
+    }
+
     /**
      * handle the pressing of keyboard keys.
      * Specifically, we should pause when pressing SPACE
@@ -904,6 +911,8 @@ public class LoopManiaWorldController {
             world.drinkHealthPotion();
         case S:
             world.drinkStrengthPotion();
+        case N:
+            activateNuke();
         default:
             break;
         }

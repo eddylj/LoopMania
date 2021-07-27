@@ -139,13 +139,14 @@ public class Character extends MovingEntity implements Hero {
             potion.use(this);
         }
     }
+
     public void drinkStrengthPotion() {
-        
         StrengthPotion potion = inventory.getStrengthPotion();
         if (!Objects.isNull(potion)) {
             potion.use(this);
         }
     }
+
 
     /**
      * Checks whether player has The One Ring in their inventory
@@ -153,6 +154,10 @@ public class Character extends MovingEntity implements Hero {
      */
     public boolean hasRing() {
         return inventory.hasRing();
+    }
+
+    public boolean hasNuke() {
+        return inventory.hasNuke();
     }
     
     /**

@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class HealthPotion extends StaticEntity implements Item, Potion{
+public class HealthPotion extends Potion{
     public static final int SELLPRICE = 40;
     public static final int REPLACECOST = 20;
     public static final int BASECOST = 50;
@@ -48,21 +48,6 @@ public class HealthPotion extends StaticEntity implements Item, Potion{
     public void increaseCost(int timesBought) {
         cost += (BASECOST * timesBought);
     }
-
-	@Override
-	public boolean isWeapon() {
-		return false;
-	}
-
-	@Override
-	public boolean isShield() {
-		return false;
-	}
-
-	@Override
-	public boolean isRing() {
-		return false;
-	}
 
 	
 

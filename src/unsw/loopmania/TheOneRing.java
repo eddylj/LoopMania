@@ -52,6 +52,9 @@ public class TheOneRing extends StaticEntity implements RareItem, Item{
 		return true;
 	}
 
-
+    @Override
+    public boolean isNuke() {
+        return false; 
+    }
     
 }
