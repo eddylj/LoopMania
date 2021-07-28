@@ -9,7 +9,7 @@
 <!-- TODO = modify and expand the range of menus available from the menu menu, and develop game modes you can select when starting a new game -->
 <!-- vertically stacked label and button -->
 
-<VBox alignment="CENTER" prefHeight="638.0" prefWidth="406.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="rootBox" alignment="CENTER" prefHeight="638.0" prefWidth="406.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Loop Mania">
          <font>
