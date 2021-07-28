@@ -32,14 +32,14 @@ public class StaffTest {
         assertEquals(3, c.getHighestLevel(staff));
     }
 
-    @Test
-    public void StaffSaleTest() {
-        Character c = new Character();
-        Item staff = new Staff(1);
+    // @Test
+    // public void StaffSaleTest() {
+    //     Character c = new Character();
+    //     Item staff = new Staff(1);
 
-        c.sellItem(staff);
-        //assertEquals(280, c.getGold());
-    }
+    //     c.sellItem(staff);
+    //     //assertEquals(280, c.getGold());
+    // }
 
     @Test
     public void StaffTranceTest() {
