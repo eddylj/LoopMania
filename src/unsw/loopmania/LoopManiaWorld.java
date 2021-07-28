@@ -696,7 +696,6 @@ public class LoopManiaWorld {
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
         shop = new Shop(character);
         character.setRareItems(rareItems);
-        character.addUnequippedItem("invinciblepotion", 0);
     }
 
     public void setMode(String mode) {
