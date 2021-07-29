@@ -50,7 +50,7 @@ public class ShopBuyController {
     public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
-        itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion", "strengthpotion"};
+        itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion", "strengthpotion", "thornmail"};
         this.shop = shop;
         buyButtons = new ArrayList<Pair<Button, String>>();
     }
