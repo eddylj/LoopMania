@@ -37,7 +37,7 @@ public class Poop extends StaticEntity{
      * @param character
      */
     public void activate(Character character) {
-        character.takeRawDamage(damage)
+        character.takeRawDamage(damage);
         this.destroy();
     }
 

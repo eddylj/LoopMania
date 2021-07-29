@@ -37,6 +37,7 @@ public class LoopManiaWorld {
     private BattleRunner battleRunner;
     private List<Pair<Integer, Integer>> orderedPath;
     private List<Coin> gold;
+    private List<Poop> poop;
     private Shop shop;
     private Boolean muskeSpawned = false; 
     private String selectedGamemode;
@@ -238,6 +239,7 @@ public class LoopManiaWorld {
             SpawnEnemiesOnCycle(newEnemies);
             character.gainCycle();
             spawnCoinsOnCycle();
+            spawnPoopOnCycle();
             character.makeVincible();
         }
     }
@@ -380,6 +382,16 @@ public class LoopManiaWorld {
         
 
     }
+    
+    public void spawnPoopOnCycle() {
+        List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
+
+        int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
+        PathPosition position = new PathPosition(pos, emptyTiles);
+        poop.add(new Poop(position.getX(), position.getY()));
+        
+
+    }
 
     public StaticEntity loadCard(String type, int width) {
         return character.loadCard(type, width);
@@ -449,7 +461,10 @@ public class LoopManiaWorld {
             b.updateOnMove(e);
         }
     }
-
+    /**
+     * Updates all gold on path that update on move
+     * @param e
+     */
     public void checkGoldActions(Character character) {
         for (Coin c : gold) {
             c.updateOnMove(character);
@@ -463,7 +478,23 @@ public class LoopManiaWorld {
         }
 
     }
+        /**
+     * Updates Poop on path that update on move
+     * @param e
+     */
+    public void checkPoopActions(Character character) {
+        for (Poop poop : poop) {
+            poop.updateOnMove(character);
+        }
 
+        for (int i = poop.size() - 1; i >= 0; i--) {
+            Poop p = poop.get(i);
+            if (!p.shouldExist().get()) {
+                poop.remove(i);
+            }
+        }   
+
+    }
     /**
      * Adds building to list of buildings
      * @param b
@@ -581,6 +612,9 @@ public class LoopManiaWorld {
      */
     public List<Coin> getCoin() {
         return gold;
+    }
+    public List<Poop> getPoop() {
+        return poop;
     }
 
     /**

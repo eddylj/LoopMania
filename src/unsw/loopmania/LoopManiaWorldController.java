@@ -354,9 +354,13 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             List<Enemy> newEnemies = world.moveEntities();
             List <Coin> newCoins = world.getCoin();
+            List <Poop> newPoop = world.getPoop();
             
             for (Coin c : newCoins) {
                 onLoad(c);
+            }
+            for (Poop p : newPoop) {
+                onLoad(p);
             }
 
             for (BuildingOnMove b : world.getMoveBuildings()) {
@@ -552,6 +556,11 @@ public class LoopManiaWorldController {
     private void onLoad(Coin coin) {
         ImageView view = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
         addEntity(coin, view);
+        squares.getChildren().add(view);
+    }
+    private void onLoad(Poop poop) {
+        ImageView view = new ImageView(new Image((new File("src/images/poop.png")).toURI().toString()));
+        addEntity(poop, view);
         squares.getChildren().add(view);
     }
 
