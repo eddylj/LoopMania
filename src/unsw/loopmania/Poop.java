@@ -18,6 +18,7 @@ public class Poop extends StaticEntity{
         super();
         damage = 5;
     }
+    
 
     /**
      * Checks if character has stepped on Poop. If so activate Poop

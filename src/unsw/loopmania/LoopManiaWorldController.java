@@ -359,8 +359,10 @@ public class LoopManiaWorldController {
             for (Coin c : newCoins) {
                 onLoad(c);
             }
-            for (Poop p : newPoop) {
-                onLoad(p);
+            if (!newPoop.isEmpty()) {
+                for (Poop p : newPoop) {
+                    onLoad(p);
+                }
             }
 
             for (BuildingOnMove b : world.getMoveBuildings()) {

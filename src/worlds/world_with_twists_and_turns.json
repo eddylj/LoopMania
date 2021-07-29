@@ -6,6 +6,7 @@
   "entities": [
     {"x": 0, "y": 0, "type": "hero_castle"},
     {"x": 1, "y": 1, "type": "zombiepit"}
+
   ],
   "path": {
     "type": "path_tile",

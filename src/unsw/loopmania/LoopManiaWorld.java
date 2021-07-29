@@ -69,6 +69,7 @@ public class LoopManiaWorld {
         this.json = json;
         rareItems = new ArrayList<String>();
         gold = new ArrayList<Coin>();
+        poop = new ArrayList<Poop>();
         spawnCoin();
         if (!json.has("saveWorld")) {
             spawn2slugs();
@@ -167,6 +168,7 @@ public class LoopManiaWorld {
         character.moveDownPath();
         checkBuildingActions(character);
         checkGoldActions(character);
+        checkPoopActions(character);
         moveEnemies();
         triggerCycleActions(newEnemies);
         updateEnemyList();
@@ -483,10 +485,10 @@ public class LoopManiaWorld {
      * @param e
      */
     public void checkPoopActions(Character character) {
-        for (Poop poop : poop) {
-            poop.updateOnMove(character);
+        for (Poop p : poop) {
+            p.updateOnMove(character);
         }
-
+        System.out.println("DONE");
         for (int i = poop.size() - 1; i >= 0; i--) {
             Poop p = poop.get(i);
             if (!p.shouldExist().get()) {

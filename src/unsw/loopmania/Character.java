@@ -631,4 +631,8 @@ public class Character extends MovingEntity implements Hero {
     public void removeBuff() {
         strengthPotionBuff = 0;
     }
+
+    public void getInterest() {
+        gold.set((int) (gold.get() * 1.5));
+    }
 }
