@@ -32,6 +32,7 @@ public class Character extends MovingEntity implements Hero {
     private boolean canTakeDamage;
     private IntegerProperty bossKills;
 
+
     /**
      * Constructor for the character Class
      * @param position PathPosition: The starting position for the character
@@ -107,9 +108,16 @@ public class Character extends MovingEntity implements Hero {
      */
     public void attack(Enemy enemy, BattleRunner b) {
         double newDamage = 5;
-        
+
         if (equippedWeapon instanceof Stake) {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
+        }
+        else if (equippedWeapon instanceof Axe) {
+
+            newDamage = ((Axe)equippedWeapon).getDamage();
+            if (newDamage == 0.0) {
+                return;
+            }
         }
         else if (equippedWeapon instanceof Staff) {
             if (((Staff)equippedWeapon).castSpell(enemy, b)) {
@@ -637,4 +645,5 @@ public class Character extends MovingEntity implements Hero {
     public void getInterest() {
         gold.set((int) (gold.get() * 1.5));
     }
+
 }

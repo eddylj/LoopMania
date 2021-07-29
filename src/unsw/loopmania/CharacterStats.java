@@ -8,6 +8,7 @@ public class CharacterStats {
     private int helmet;
     private int armour;
     private int thornmail;
+    private int axe;
 
     public CharacterStats() {
         sword = 1;
@@ -17,6 +18,7 @@ public class CharacterStats {
         helmet = 1;
         armour = 1;
         thornmail = 1;
+        axe = 1;
     }
     /**
      * Gets highest level of respective item
@@ -45,6 +47,9 @@ public class CharacterStats {
         else if (type.equals("thornmail")) {
             return thornmail;
         }
+        else if (type.equals("axe")) {
+            return axe;
+        }
         else {
             return 1;
         }
@@ -60,6 +65,9 @@ public class CharacterStats {
         }
         else if (type.equals("stake") && stake <= ((Weapon)item).getLevel()) {
             stake = ((Weapon)item).getLevel();
+        }
+        else if (type.equals("axe") && axe <= ((Weapon)item).getLevel()) {
+            axe = ((Weapon)item).getLevel();
         }
         else if (type.equals("staff") && staff <= ((Weapon)item).getLevel()) {
             staff = ((Weapon)item).getLevel();
@@ -99,6 +107,9 @@ public class CharacterStats {
         }
         else if (type.equals("thornmail")) {
             thornmail = level;
+        }
+        else if (type.equals("axe")) {
+            axe = level;
         }
     }
 }

@@ -22,6 +22,9 @@ public class ItemFactory {
         else if (type.equals("armour")) {
             return createArmour(x, y, level);
         }
+        else if (type.equals("axe")) {
+            return createAxe(x, y, level);
+        }
         else if (type.equals("shield")) {
             return createShield(x, y, level);
         }
@@ -38,6 +41,8 @@ public class ItemFactory {
             return null;
         }
     }
+
+
 
     public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type) {
         if (type.equals("healthpotion")) {
@@ -62,6 +67,16 @@ public class ItemFactory {
         return new DoggieCoin(x, y);
     }
 
+    // private Item createTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    //     return new TreeStump(x,y,level);
+    // }
+
+    // private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+    //     return new Anduril(x, y, level);
+    // }
+    private Item createAxe(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
+        return new Axe(x, y, level);
+    }
     public Sword createSword(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return new Sword(x, y, level);
     }

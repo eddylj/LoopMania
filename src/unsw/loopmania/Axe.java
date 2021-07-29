@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Axe extends Weapon{
     public static final double PRICE = 500.0;
     public static final double DAMAGE = 50.0;
+    private boolean inAxeRestingPeriod = false;
     /**
      * 
      * @param x
@@ -24,7 +25,14 @@ public class Axe extends Weapon{
      * @param e
      * @return damage applicable for enemy
      */
-    public double getDamage(Enemy e) {
-        return super.getDamage();
+    @Override
+    public double getDamage() {
+        if (inAxeRestingPeriod) {
+            inAxeRestingPeriod = false;
+            return 0.0;
+        } else {
+            inAxeRestingPeriod = true;
+            return super.getDamage();
+        }
     }
 }
