@@ -63,7 +63,7 @@ public class LoopManiaApplication extends Application {
         primaryStage.setResizable(false);
 
         // load the map selector menu
-        FXMLLoader mapSelectLoader = new FXMLLoader(getClass().getResource("MapSelectorMenu.fxml"));
+        FXMLLoader mapSelectLoader = new FXMLLoader(getClass().getResource("MapSelectorView.fxml"));
         Parent mapSelectRoot = mapSelectLoader.load();
 
         // create new scene with the map selector menu (so we start with this menu)

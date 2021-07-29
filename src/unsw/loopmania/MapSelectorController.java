@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class DemoController {
+public class MapSelectorController {
 
     @FXML
     private FileSelector fileSelector;

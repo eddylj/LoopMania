@@ -58,8 +58,8 @@ public class ShopBuyController {
     @FXML
     public void initialize() {
         addItems(itemList);
-        addDoneButton();
-        addSellButton();
+        // addDoneButton();
+        // addSellButton();
     }
 
     public void addDoneButton() {
@@ -136,8 +136,8 @@ public class ShopBuyController {
 
     public ImageView makeGoldImageView() {
         ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
-        goldView.setFitHeight(40);
-        goldView.setFitWidth(40);
+        goldView.setFitHeight(25);
+        goldView.setFitWidth(25);
         return goldView;
     }
 
@@ -145,7 +145,7 @@ public class ShopBuyController {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
         // buyButton.set
-        buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
+        buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 15));
         buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -199,22 +199,14 @@ public class ShopBuyController {
     }
 
     public double getTopAnchor(int i) {
-        if (i < 3) {
-            return 170;
-        }
-        else if (i > 2 && i < 6) {
-            return 187*2;
-        }
-        else {
-            return 189*3;
-        }
+        return ((i / 3) + 1) * 150;
     }
 
     public double getLeftAnchor(int i) {
         if (i % 3 == 0) {
             return 10;
         }
-        else if (i == 1 || i == 4) {
+        else if (i == 1 || i == 4 || i == 7) {
             return 160;
         }
         else {
