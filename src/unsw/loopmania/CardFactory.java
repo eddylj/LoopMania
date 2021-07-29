@@ -40,9 +40,21 @@ public class CardFactory {
         else if (type.equals("village")) {
             return createVillage(x, y);
         }
+        else if (type.equals("bank")) {
+            return createBank(x,y);
+        }
         else {
             return null;
         }
+    }
+    /**
+     * Creates a BankCard
+     * @param x SimpleIntegerProperty: Column coordinate of building on map
+     * @param x SimpleIntegerProperty: Row coordinate of building on map
+     * @return CampfireCard: Building that is created.
+     */
+    private Card createBank(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new BankCard(x, y);
     }
 
     /**

@@ -384,8 +384,8 @@ public class Character extends MovingEntity implements Hero {
     public void setHealth(int health) {
         this.health.set(health);
     } 
-    public void takeRawDamage(int damage) {
-        takeDamage((double)damage);
+    public void takeRawDamage(double damage) {
+        super.takeDamage(damage);
     } 
 
     /**
@@ -630,5 +630,9 @@ public class Character extends MovingEntity implements Hero {
     }
     public void removeBuff() {
         strengthPotionBuff = 0;
+    }
+
+    public void getInterest() {
+        gold.set((int) (gold.get() * 1.5));
     }
 }

@@ -19,7 +19,7 @@ public class ElanMuske extends Enemy implements Boss{
     public ElanMuske(PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("elanmuske");
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "bank", "trap", "village", "vampirecastle", "zombiepit"};
         
     }
     public ElanMuske() {

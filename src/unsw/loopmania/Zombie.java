@@ -21,14 +21,14 @@ public class Zombie extends Enemy {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("zombie");
         canMove = false;
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "bank", "village", "vampirecastle"};
     }
 
     public Zombie() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("zombie");
         canMove = false;
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "bank", "village", "vampirecastle"};
     }
 
     /**

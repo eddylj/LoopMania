@@ -42,9 +42,16 @@ public class BuildingFactory {
         else if (type.equals("heros_castle")) {
             return createHeroCastle(x, y);
         }
+        else if (type.equals("bank")) {
+            return createBank(x, y);
+        }
         else {
             return null;
         }
+    }
+
+    private Building createBank(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new BankBuilding(x, y);
     }
 
     /**
