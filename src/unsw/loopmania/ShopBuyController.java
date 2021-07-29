@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.graalvm.compiler.nodeinfo.StructuralInput.Anchor;
 import org.javatuples.Pair;
 
 import javafx.beans.binding.Bindings;
