@@ -124,7 +124,7 @@ public class ShopBuyController {
     public Image makeItemImage(String itemName) {
         String itemString;
         int itemLevel = shop.getItemBuyLevel(itemName);
-        if (itemName.equals("healthpotion")) {
+        if (itemName.equals("healthpotion") || itemName.equals("strengthpotion")) {
             itemString = itemName;
         }
         else {

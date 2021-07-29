@@ -19,7 +19,7 @@ public class Slug extends Enemy{
     public Slug (PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("slug");
-        cardDrops = new String[]{"bank"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit", "bank"};
     }
 
     public Slug() {

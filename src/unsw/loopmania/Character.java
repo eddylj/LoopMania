@@ -643,7 +643,7 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void getInterest() {
-        gold.set((int) (gold.get() * 1.5));
+        gold.set((int) (gold.get() * 1.05));
     }
 
 }
