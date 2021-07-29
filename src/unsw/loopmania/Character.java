@@ -30,7 +30,7 @@ public class Character extends MovingEntity implements Hero {
     private List<String> rareItems;
     private double strengthPotionBuff;
     private boolean canTakeDamage;
-    private int bossKills;
+    private IntegerProperty bossKills;
 
     /**
      * Constructor for the character Class
@@ -41,6 +41,7 @@ public class Character extends MovingEntity implements Hero {
         experience = new SimpleIntegerProperty(0);
         gold = new SimpleIntegerProperty(0);
         cycles = new SimpleIntegerProperty(0);
+        bossKills = new SimpleIntegerProperty(0);
         equippedWeapon = null;
         equippedHelmet = null;
         equippedShield = null;
@@ -271,10 +272,18 @@ public class Character extends MovingEntity implements Hero {
     }
 
     public void increaseBossKills() {
-        this.bossKills += 1;
+        bossKills.set(bossKills.get() + 1);
+    }
+
+    public void setBossKills(int num) {
+        bossKills.set(num);
     }
 
     public int getBossKills() {
+        return bossKills.get();
+    }
+
+    public IntegerProperty bossKills() {
         return bossKills;
     }
 
@@ -301,6 +310,10 @@ public class Character extends MovingEntity implements Hero {
 
     public void setConfusingMode() {
         inventory.setConfusingMode();
+    }
+
+    public boolean canTakeDamage() {
+        return canTakeDamage;
     }
 
     public void makeInvincible() {
@@ -341,6 +354,10 @@ public class Character extends MovingEntity implements Hero {
      */
     public BonusDamageStrategy getBonusDamageStrategy() {
         return appliedBuff;
+    }
+
+    public double getStrengthPotionBuff() {
+        return strengthPotionBuff;
     }
 
     /**
@@ -503,6 +520,16 @@ public class Character extends MovingEntity implements Hero {
      */
     public StaticEntity addUnequippedItem(String type, int level) {
         return inventory.addUnequippedItem(type, level);
+    }
+
+    /**
+     * Used when loading ConfusedRareItems
+     * @param type
+     * @param additional
+     * @return
+     */
+    public StaticEntity addUnequippedConfusedItem(String type, String additional) {
+        return inventory.addUnequippedConfusedItem(type, additional);
     }
 
     /**

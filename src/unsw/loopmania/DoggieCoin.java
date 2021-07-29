@@ -34,4 +34,15 @@ public class DoggieCoin extends Item{
         this.strategy = new DeflatedCoinStrategy();
     }
 
+    public String getStrategy() {
+        if (strategy instanceof InflatedCoinStrategy) {
+            return "inflated";
+        }
+        else if (strategy instanceof DeflatedCoinStrategy) {
+            return "deflated";
+        }
+        else {
+            return "normal";
+        }
+    }
 }

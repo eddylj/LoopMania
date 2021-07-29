@@ -1,6 +1,9 @@
 package unsw.loopmania;
 
 import org.json.JSONObject;
+
+import java.util.List;
+
 import org.json.JSONArray;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,19 +25,24 @@ public class LoadGame {
 
     public void loadWorld() {
         JSONObject json = save.getJSONObject("saveWorld");
-        loadCharacter(json.getJSONObject("character"));
+        loadCharacter(json.getJSONObject("character"), json);
         loadBuildings(json.getJSONArray("moveBuildings"));
         loadBuildings(json.getJSONArray("cycleBuildings"));
         loadEnemies(json.getJSONArray("enemies"));
+        loadShop(json);
     }
 
-    private void loadCharacter(JSONObject c) {
+    private void loadCharacter(JSONObject c, JSONObject json) {
         Character character = world.getCharacter();
 
         // Deal with character stats
         character.setHealth(c.getInt("health"));
         character.gainXP(c.getInt("experience"));
         character.setCycle(c.getInt("cycles"));
+        character.gainGold(c.getInt("gold"));
+        character.setBossKills(c.getInt("bossKills"));
+        character.setBuff(c.getDouble("strengthpotionbuff"));
+        if (c.getBoolean("canTakeDamage")) character.makeInvincible();
         loadCharacterLevelStats(c.getJSONObject("stats"));
         
         // Deal with character's items
@@ -42,6 +50,9 @@ public class LoadGame {
         equipItem(c.getJSONObject("equippedHelmet"));
         equipItem(c.getJSONObject("equippedShield"));
         equipItem(c.getJSONObject("equippedArmour"));
+
+        world.setMode(json.getString("gameMode"));
+
         loadUnequippedItems(c.getJSONArray("unequippedItems"));
 
         // Deal with character's cards
@@ -59,8 +70,23 @@ public class LoadGame {
         String type = item.getString("type");
         SimpleIntegerProperty x = new SimpleIntegerProperty(item.getInt("x"));
         SimpleIntegerProperty y = new SimpleIntegerProperty(item.getInt("y"));
-        int level = item.getInt("level");
-        character.equip(iF.create(x, y, type, level));
+        List<String> rareItems = world.getRareItemsList();
+        Item equipped = null;
+        if (rareItems.contains(type)) {
+            RareItemFactory rF = new RareItemFactory(rareItems);
+            if (item instanceof ConfusedRareItem) {
+                String additional = item.getString("addtional");
+                equipped = rF.create(x, y, type, additional);
+            }
+            else {
+                equipped = rF.create(x, y, type);
+            }
+        }
+        else {
+            int level = item.getInt("level");
+            equipped = iF.create(x, y, type, level);
+        }
+        character.equip(equipped);
     }
 
     private void loadUnequippedItems(JSONArray items) {
@@ -72,13 +98,19 @@ public class LoadGame {
             JSONObject item = items.getJSONObject(i);
             String type = item.getString("type");
             int level;
-            if (item.has("level")) {
-                level = item.getInt("level");
+            if (item.has("additional")) {
+                String additional = item.getString("additional");
+                character.addUnequippedConfusedItem(type, additional);
             }
             else {
-                level = 0;
+                if (item.has("level")) {
+                    level = item.getInt("level");
+                }
+                else {
+                    level = 0;
+                }
+                character.addUnequippedItem(type, level);
             }
-            character.addUnequippedItem(type, level);
         }
     }
 
@@ -97,17 +129,19 @@ public class LoadGame {
             return;
         }
         Character character = world.getCharacter();
+        int width = world.getWidth();
         for (int i = 0; i < cards.length(); i++) {
             JSONObject card = cards.getJSONObject(i);
             String type = card.getString("type");
-            int x = card.getInt("x");
-            character.loadCard(type, x);
+            character.loadCard(type, width);
         }
     }
 
     private void loadBuildings(JSONArray buildings) {
         for (int i = 0; i < buildings.length(); i++) {
             JSONObject building = buildings.getJSONObject(i);
+            // Some buildings are already loaded into the gam
+            // via the JSON entities object
             if (alreadyExists(building)) {
                 continue;
             }
@@ -138,5 +172,11 @@ public class LoadGame {
             Enemy e = eF.create(new PathPosition(position, world.getOrderedPath()), type);
             world.addEnemy(e);
         }
+    }
+
+    private void loadShop(JSONObject json) {
+        Shop shop = world.getShop();
+        shop.setHealthPotionsBought(json.getInt("healthPotionsBought"));
+        shop.setStrengthPotionsBought(json.getInt("strengthPotionsBought"));
     }
 }

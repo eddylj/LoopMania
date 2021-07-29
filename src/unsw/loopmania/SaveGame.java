@@ -20,20 +20,22 @@ public class SaveGame {
     public void SaveWorld(String name) {
         saveCharacter();
         saveNonSpecifiedEntities();
-        // saveHerosCastlePosition();
         saveEnemies();
         saveCycleBuildings();
         saveMoveBuildings();
         save.put("seed", world.getSeed());
+        save.put("healthPotionsBought", world.getHealthPotionsBought());
+        save.put("strengthPotionsBought", world.getStrengthPotionsBought());
+        save.put("gameMode", world.getSelectedGamemode());
+
         JSONObject json = world.getJSON();
         json.put("saveWorld", save);
+
         try {
             FileWriter file = new FileWriter(String.format("backup/%s.json", name));
             file.write(json.toString());
             file.close();
         } catch (IOException e) {
-            System.out.println("oopsies");
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -45,11 +47,14 @@ public class SaveGame {
         c.put("gold", character.getGold());
         c.put("cycles", character.getCycles().get());
         c.put("health", character.getHealth());
+        c.put("bossKills", character.getBossKills());
+        c.put("strengthpotionbuff", character.getStrengthPotionBuff());
+        c.put("canTakeDamage", character.canTakeDamage());
         addEquippedWeapon(c);
         addEquippedArmour(c);
         addEquippedHelmet(c);
         addEquippedShield(c);
-        addCharacterState(c, character);
+        addCharacterStats(c, character);
         c.put("aliveSoldiers", character.getAlliedSoldierCount());
         addUnequippedInventory(c, character.getInventory());
         save.put("character", c);
@@ -57,6 +62,10 @@ public class SaveGame {
 
     private void saveNonSpecifiedEntities() {
         JSONArray nonSpecifiedEntities = new JSONArray();
+        List<Entity> nonSpecifiedEntitiyList = world.getNonSpecifiedEntities();
+        if (nonSpecifiedEntities.isEmpty()) {
+            return;
+        }
         for (Entity e : world.getNonSpecifiedEntities()) {
             JSONObject entity = new JSONObject();
             entity.put("type", e.getType());
@@ -67,99 +76,97 @@ public class SaveGame {
         save.put("nonSpecifiedEntities", nonSpecifiedEntities);
     }
 
-    // private void saveHerosCastlePosition() {
-    //     Pair<Integer, Integer> pos = world.getHerosCastlePosition();
-    //     JSONObject heroscastle = new JSONObject();
-    //     heroscastle.put("X", pos.getValue0());
-    //     heroscastle.put("Y", pos.getValue1());
-    //     save.put("herosCastlePosition", heroscastle);
-    // }
-
     private void saveEnemies() {
-        List<Enemy> l = world.getEnemies();
+        List<Enemy> list = world.getEnemies();
         JSONArray enemies = new JSONArray();
-        for (Enemy e : l) {
-            JSONObject enemy = new JSONObject();
-            enemy.put("type", e.getType());
-            enemy.put("index", e.getIndexOfPosition());
-            enemies.put(enemy);
+        for (Enemy enemy : list) {
+            JSONObject enemyObject = new JSONObject();
+            enemyObject.put("type", enemy.getType());
+            enemyObject.put("index", enemy.getIndexOfPosition());
+            enemies.put(enemyObject);
         }
         save.put("enemies", enemies);
     }
 
     private void saveCycleBuildings() {
         JSONArray buildings = new JSONArray();
-        List<BuildingOnCycle> l = world.getCycleBuildings();
-        for (BuildingOnCycle b : l) {
-            JSONObject building = new JSONObject();
-            building.put("type", ((StaticEntity)b).getType());
-            building.put("X", ((StaticEntity)b).getX());
-            building.put("Y", ((StaticEntity)b).getY());
-            buildings.put(building);
+        List<BuildingOnCycle> list = world.getCycleBuildings();
+        for (BuildingOnCycle building : list) {
+            JSONObject buildingObject = new JSONObject();
+            buildingObject.put("type", ((StaticEntity)building).getType());
+            buildingObject.put("X", ((StaticEntity)building).getX());
+            buildingObject.put("Y", ((StaticEntity)building).getY());
+            buildings.put(buildingObject);
         }
         save.put("cycleBuildings", buildings);
     }
 
     private void saveMoveBuildings() {
         JSONArray buildings = new JSONArray();
-        List<BuildingOnMove> l = world.getMoveBuildings();
-        for (BuildingOnMove b : l) {
-            JSONObject building = new JSONObject();
-            building.put("type", ((StaticEntity)b).getType());
-            building.put("X", ((StaticEntity)b).getX());
-            building.put("Y", ((StaticEntity)b).getY());
-            buildings.put(building);
+        List<BuildingOnMove> list = world.getMoveBuildings();
+        for (BuildingOnMove building : list) {
+            JSONObject buildingObject = new JSONObject();
+            buildingObject.put("type", ((StaticEntity)building).getType());
+            buildingObject.put("X", ((StaticEntity)building).getX());
+            buildingObject.put("Y", ((StaticEntity)building).getY());
+            buildings.put(buildingObject);
         }
         save.put("moveBuildings", buildings);
     }
 
     private void addEquippedWeapon(JSONObject c) {
         JSONObject equippedWeapon = new JSONObject();
-        Item i = world.getEquippedItemByCoordinates(0);
-        equippedWeapon.put("type", ((StaticEntity)i).getType());
-        equippedWeapon.put("level", ((Weapon)i).getLevel());
-        equippedWeapon.put("x", ((StaticEntity)i).getX());
-        equippedWeapon.put("y", ((StaticEntity)i).getY());
+        Item item = world.getEquippedItemByCoordinates(0);
+        equippedWeapon.put("type", item.getType());
+        equippedWeapon.put("level", ((Weapon)item).getLevel());
+        equippedWeapon.put("x", item.getX());
+        equippedWeapon.put("y", item.getY());
+        if (item instanceof ConfusedRareItem) {
+            equippedWeapon.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
+        }
         c.put("equippedWeapon", equippedWeapon);
     }
 
     private void addEquippedHelmet(JSONObject c) {
         JSONObject equippedHelmet = new JSONObject();
-        Item i = world.getEquippedItemByCoordinates(1);
-        if (i != null) {
-            equippedHelmet.put("type", ((StaticEntity)i).getType());
-            equippedHelmet.put("level", ((Protection)i).getLevel());
-            equippedHelmet.put("x", ((StaticEntity)i).getX());
-            equippedHelmet.put("y", ((StaticEntity)i).getY());
+        Item item = world.getEquippedItemByCoordinates(1);
+        if (item != null) {
+            equippedHelmet.put("type", ((StaticEntity)item).getType());
+            equippedHelmet.put("level", ((Protection)item).getLevel());
+            equippedHelmet.put("x", ((StaticEntity)item).getX());
+            equippedHelmet.put("y", ((StaticEntity)item).getY());
         }
         c.put("equippedHelmet", equippedHelmet);
     }
 
     private void addEquippedShield(JSONObject c) {
         JSONObject equippedShield = new JSONObject();
-        Item i = world.getEquippedItemByCoordinates(2);
-        if (i != null) {
-            equippedShield.put("type", ((StaticEntity)i).getType());
-            equippedShield.put("level", ((Protection)i).getLevel());
-            equippedShield.put("x", ((StaticEntity)i).getX());
-            equippedShield.put("y", ((StaticEntity)i).getY());
+        Item item = world.getEquippedItemByCoordinates(2);
+        if (item != null) {
+            equippedShield.put("type", ((StaticEntity)item).getType());
+            equippedShield.put("level", ((Protection)item).getLevel());
+            equippedShield.put("x", ((StaticEntity)item).getX());
+            equippedShield.put("y", ((StaticEntity)item).getY());
+            if (item instanceof ConfusedRareItem) {
+                equippedShield.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
+            }
         }
         c.put("equippedShield", equippedShield);
     }
     
     private void addEquippedArmour(JSONObject c) {
         JSONObject equippedArmour = new JSONObject();
-        Item i = world.getEquippedItemByCoordinates(3);
-        if (i != null) {
-            equippedArmour.put("type", ((StaticEntity)i).getType());
-            equippedArmour.put("level", ((Protection)i).getLevel());
-            equippedArmour.put("x", ((StaticEntity)i).getX());
-            equippedArmour.put("y", ((StaticEntity)i).getY());
+        Item item = world.getEquippedItemByCoordinates(3);
+        if (item != null) {
+            equippedArmour.put("type", ((StaticEntity)item).getType());
+            equippedArmour.put("level", ((Protection)item).getLevel());
+            equippedArmour.put("x", ((StaticEntity)item).getX());
+            equippedArmour.put("y", ((StaticEntity)item).getY());
         }
         c.put("equippedArmour", equippedArmour);
     }
 
-    private void addCharacterState(JSONObject c, Character character) {
+    private void addCharacterStats(JSONObject c, Character character) {
         CharacterStats cs = character.getStats();
         JSONObject stats = new JSONObject();
         stats.put("sword", cs.getHighestLevel("sword"));
@@ -173,23 +180,28 @@ public class SaveGame {
 
     private void addUnequippedInventory(JSONObject character, Inventory inventory) {
         JSONArray items = new JSONArray();
-        for (Item i : inventory.getunequippedInventoryItems()) {
-            JSONObject item = new JSONObject();
-            item.put("type", ((StaticEntity)i).getType());
-            if (i instanceof Protection) {
-                item.put("level", ((Protection)i).getLevel());
+        for (Item item : inventory.getunequippedInventoryItems()) {
+            JSONObject itemObject = new JSONObject();
+            itemObject.put("type", item.getType());
+            if (item instanceof DoggieCoin) {
+                itemObject.put("strategy", ((DoggieCoin)item).getStrategy());
             }
-            else if (i instanceof Weapon) {
-                item.put("level", ((Weapon)i).getLevel());
+            else if (item instanceof ConfusedRareItem) {
+                itemObject.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
             }
-            items.put(item);
+            else if (item instanceof Protection) {
+                itemObject.put("level", ((Protection)item).getLevel());
+            }
+            else if (item instanceof Weapon) {
+                itemObject.put("level", ((Weapon)item).getLevel());
+            }
+            items.put(itemObject);
         }
 
         JSONArray cards = new JSONArray();
         for (Card c : inventory.getCards()) {
             JSONObject card = new JSONObject();
             card.put("type", ((StaticEntity)c).getType());
-            card.put("x", ((StaticEntity)c).getX());
             cards.put(card);
         }
 

@@ -31,7 +31,7 @@ public class LoopManiaWorld {
     private List<Entity> nonSpecifiedEntities;
     private Character character;
     private Pair<Integer, Integer> heroCastlePosition;
-    private static List<Enemy> enemies;
+    private List<Enemy> enemies;
     private List<BuildingOnCycle> cycleBuildings;
     private List<BuildingOnMove> moveBuildings;
     private BattleRunner battleRunner;
@@ -39,6 +39,7 @@ public class LoopManiaWorld {
     private List<Coin> gold;
     private Shop shop;
     private Boolean muskeSpawned = false; 
+    private String selectedGamemode;
     
 
     public static final int DOGGIESPAWNCYCLE = 20;
@@ -56,6 +57,7 @@ public class LoopManiaWorld {
         this.width = width;
         this.height = height;
         bF = new BuildingFactory();
+        selectedGamemode = "standard";
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
         enemies = new ArrayList<>();
@@ -345,9 +347,9 @@ public class LoopManiaWorld {
                 newEnemies.add(e);
             }
         }
-        // Spawn 2 slugs every cycle
+        // Spawn 1-4 slugs every cycle
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < (LoopManiaWorld.getRandNum() % 4) + 1; i++) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnSlug(position, emptyTiles));
         }
@@ -701,12 +703,15 @@ public class LoopManiaWorld {
     public void setMode(String mode) {
         if (mode.equals("survival")) {
             shop.setSurvival();
+            selectedGamemode = "survival";
         }
         if (mode.equals("beserker")) {
             shop.setBeserker();
+            selectedGamemode = "beserker";
         }
         if (mode.equals("confusing")) {
             character.setConfusingMode();
+            selectedGamemode = "confusing";
         }
     }
 
@@ -828,6 +833,22 @@ public class LoopManiaWorld {
 
     public void addEnemy(Enemy e) {
         enemies.add(e);
+    }
+
+    public List<String> getRareItemsList() {
+        return rareItems;
+    }
+
+    public int getHealthPotionsBought() {
+        return shop.getHealthPotionsBought();
+    }
+
+    public int getStrengthPotionsBought() {
+        return shop.getStrengthPotionsBought();
+    }
+
+    public String getSelectedGamemode() {
+        return selectedGamemode;
     }
 
     public void saveGame(String name) {

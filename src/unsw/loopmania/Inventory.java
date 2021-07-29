@@ -200,6 +200,22 @@ public class Inventory {
     }
 
     /**
+     * Only used for loading confused rare items in loadGame
+     * @param type
+     * @param additional
+     * @return
+     */
+    public StaticEntity addUnequippedConfusedItem(String type, String additional) {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items 
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        return (StaticEntity)rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, additional);
+    }
+
+    /**
      * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
      * @return x,y coordinate pair
      */

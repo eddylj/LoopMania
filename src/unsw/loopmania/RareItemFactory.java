@@ -64,6 +64,27 @@ public class RareItemFactory {
         }
     }
 
+    public Item create(SimpleIntegerProperty x, SimpleIntegerProperty y, String type, String additional) {
+        if (type.equals("theonering")) {
+            return createLoadedTheOneRing(x, y, additional);
+        }
+        else if (type.equals("anduril")) {
+            return createLoadedAnduril(x, y, additional);
+        }
+        else if (type.equals("treestump")) {
+            return createLoadedTreeStump(x, y, additional);
+        }
+        else if (type.equals("nuke")) {
+            return createLoadedNuke(x, y, additional);
+        }
+        else if (type.equals("invinciblepotion")) {
+            return createLoadedInvinciblePotion(x, y, additional);
+        }
+        else {
+            return null;
+        }
+    }
+
     private Item create(String type) {
         if (type.equals("theonering")) {
             return createTheOneRing();
@@ -134,6 +155,26 @@ public class RareItemFactory {
     private Item createConfusingTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         Item additional = create(generateRandomRareItem("treestump"));
         return new ConfusingTreeStump(x, y, 1, additional);
+    }
+    private Item createLoadedTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y, String additional) {
+        Item additionalItem = create(additional);
+        return new ConfusingTheOneRing(x, y, additionalItem);
+    }
+    private Item createLoadedAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y, String additional) {
+        Item additionalItem = create(additional);
+        return new ConfusingAnduril(x, y, 0, additionalItem);
+    }
+    private Item createLoadedTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y, String additional) {
+        Item additionalItem = create(additional);
+        return new ConfusingTreeStump(x, y, 0, additionalItem);
+    }
+    private Item createLoadedNuke(SimpleIntegerProperty x, SimpleIntegerProperty y, String additional) {
+        Item additionalItem = create(additional);
+        return new ConfusingNuke(x, y, additionalItem);
+    }
+    private Item createLoadedInvinciblePotion(SimpleIntegerProperty x, SimpleIntegerProperty y, String additional) {
+        Item additionalItem = create(additional);
+        return new ConfusingInvinciblePotion(x, y, additionalItem);
     }
     private String generateRandomRareItem(String original) {
         List<String> copy = new ArrayList<String>();
