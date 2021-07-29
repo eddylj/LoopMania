@@ -32,7 +32,7 @@ public class Doggie extends Enemy implements Boss{
     }
     @Override
     public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
-        
+        character.increaseBossKills();
         int num = LoopManiaWorld.getRandNum();
         List <StaticEntity> loot = new ArrayList<StaticEntity>();
         if (num >= 50) {

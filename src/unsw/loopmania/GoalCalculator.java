@@ -32,6 +32,10 @@ public class GoalCalculator {
             Composite leaf = new CompositeLeaf((int)json.get("quantity"), character, (String)json.get("goal"));
             return leaf;
         }
+        else if (json.getString("goal").equals("bosses")) {
+            Composite boss = new CompositeBoss(character);
+            return boss;
+        }
         else {
             JSONArray subgoals = json.getJSONArray("subgoals");
             JSONObject left = (JSONObject)subgoals.get(0);

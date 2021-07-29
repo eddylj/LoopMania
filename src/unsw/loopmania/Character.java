@@ -30,6 +30,7 @@ public class Character extends MovingEntity implements Hero {
     private List<String> rareItems;
     private double strengthPotionBuff;
     private boolean canTakeDamage;
+    private int bossKills;
 
     /**
      * Constructor for the character Class
@@ -267,6 +268,14 @@ public class Character extends MovingEntity implements Hero {
      */
     public void setCycles(int cycle) {
         this.cycles.set(cycle);
+    }
+
+    public void increaseBossKills() {
+        this.bossKills += 1;
+    }
+
+    public int getBossKills() {
+        return bossKills;
     }
 
     public void setStats(String type, int level) {
