@@ -1,6 +1,5 @@
 package unsw.loopmania;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,9 +22,12 @@ public class MainMenuController {
 
     private String map;
 
-
     @FXML
     private VBox rootBox;
+
+    public MainMenuController(String map) {
+        this.map = map;
+    }
 
     private void loadWorld(String map) throws IOException {
         LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader(map);
@@ -36,6 +38,8 @@ public class MainMenuController {
 
         Scene scene = rootBox.getScene();
         Stage primaryStage = (Stage) scene.getWindow();
+
+        primaryStage.setTitle("Loop Mania");
         // mainController.setMainMenuSwitcher((String mode) -> {switchToRoot(scene, mainMenuRoot, primaryStage);
         //     stop();
         // });
@@ -59,25 +63,25 @@ public class MainMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
-        loadWorld("world_with_twists_and_turns.json");
+        loadWorld(map);
         gameSwitcher.switchMenu("standard");
     }
 
     @FXML
     private void switchToSurvival() throws IOException {
-        loadWorld("one_ring_grind.json");
+        loadWorld(map);
         gameSwitcher.switchMenu("survival");
     }
 
     @FXML
     private void switchToBerserker() throws IOException {
-        loadWorld("world_with_complex_goal.json");
+        loadWorld(map);
         gameSwitcher.switchMenu("beserker");
     }
 
     @FXML
     private void switchToConfusing() throws IOException {
-        loadWorld("three_by_three_world.json");
+        loadWorld(map);
         gameSwitcher.switchMenu("confusing");
     }
 
