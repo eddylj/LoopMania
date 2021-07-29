@@ -73,9 +73,8 @@ public class ShopBuyController {
             }
         });
 
-        itemCosts.getChildren().add(done);
-        AnchorPane.setTopAnchor(done, (double)550);
-        AnchorPane.setLeftAnchor(done, (double)200);
+        shopItems.getChildren().add(done);
+        
     }
 
     public void doneButtonAction(Button done) {
@@ -203,14 +202,7 @@ public class ShopBuyController {
     }
 
     public double getLeftAnchor(int i) {
-        if (i % 3 == 0) {
-            return 10;
-        }
-        else if (i == 1 || i == 4 || i == 7) {
-            return 160;
-        }
-        else {
-            return 315;
-        }
+
+        return ((i % 3) * 150 + 38);
     }
 }
