@@ -7,6 +7,7 @@ public class CharacterStats {
     private int shield;
     private int helmet;
     private int armour;
+    private int thornmail;
 
     public CharacterStats() {
         sword = 1;
@@ -15,6 +16,7 @@ public class CharacterStats {
         shield = 1;
         helmet = 1;
         armour = 1;
+        thornmail = 1;
     }
     /**
      * Gets highest level of respective item
@@ -39,6 +41,9 @@ public class CharacterStats {
         }
         else if (type.equals("armour")) {
             return armour;
+        }
+        else if (type.equals("thornmail")) {
+            return thornmail;
         }
         else {
             return 1;
@@ -68,6 +73,9 @@ public class CharacterStats {
         else if (type.equals("armour") && armour <= ((Protection)item).getLevel()) {
             armour = ((Protection)item).getLevel();
         }
+        else if (type.equals("thornmail") && armour <= ((Protection)item).getLevel()) {
+            thornmail = ((Protection)item).getLevel();
+        }
     }
 
     public void setStats(String type, int level) {
@@ -88,6 +96,9 @@ public class CharacterStats {
         }
         else if (type.equals("armour")) {
             armour = level;
+        }
+        else if (type.equals("thornmail")) {
+            thornmail = level;
         }
     }
 }

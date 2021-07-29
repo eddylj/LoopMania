@@ -732,6 +732,7 @@ public class LoopManiaWorld {
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        addUnequippedItem("thornmail", 1);
         shop = new Shop(character);
         character.setRareItems(rareItems);
     }

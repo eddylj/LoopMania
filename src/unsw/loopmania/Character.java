@@ -91,7 +91,9 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Protection) equippedHelmet).protect(damage);
         }
         if (!Objects.isNull(equippedArmour)) {
-
+            if (equippedArmour instanceof Thornmail) {
+                newDamage = ((Thornmail) equippedArmour).protect(damage, e);
+            }
             newDamage = ((Protection) equippedArmour).protect(damage);
         }
         super.takeDamage(newDamage);
