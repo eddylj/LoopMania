@@ -745,7 +745,7 @@ public class LoopManiaWorld {
             shop.setBeserker();
             selectedGamemode = "beserker";
         }
-        if (mode.equals("confusing")) {
+        if (mode.equals("confusing") && rareItems.size() >= 2) {
             character.setConfusingMode();
             selectedGamemode = "confusing";
         }
