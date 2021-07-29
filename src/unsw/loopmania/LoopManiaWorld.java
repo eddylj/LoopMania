@@ -488,7 +488,6 @@ public class LoopManiaWorld {
         for (Poop p : poop) {
             p.updateOnMove(character);
         }
-        System.out.println("DONE");
         for (int i = poop.size() - 1; i >= 0; i--) {
             Poop p = poop.get(i);
             if (!p.shouldExist().get()) {
