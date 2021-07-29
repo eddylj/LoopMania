@@ -385,7 +385,7 @@ public class Character extends MovingEntity implements Hero {
         this.health.set(health);
     } 
     public void takeRawDamage(int damage) {
-        this.health -= health
+        takeDamage((double)damage);
     } 
 
     /**
