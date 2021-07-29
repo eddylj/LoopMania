@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
@@ -22,13 +21,10 @@ import javafx.scene.text.FontWeight;
 public class ShopSellController {
 
     @FXML
-    private StackPane stackPaneRoot;
+    private GridPane imageGrid;
 
     @FXML
-    private GridPane shopItems;
-
-    @FXML
-    private AnchorPane itemCosts;
+    private AnchorPane overPane;
 
     private LoopManiaWorld world;
 
@@ -44,10 +40,10 @@ public class ShopSellController {
 
     @FXML
     public void initialize() {
-        for (ColumnConstraints columnConstraint: shopItems.getColumnConstraints()) {
+        for (ColumnConstraints columnConstraint: imageGrid.getColumnConstraints()) {
             columnConstraint.setPercentWidth(25);
         }
-        for (RowConstraints rowConstraint: shopItems.getRowConstraints()) {
+        for (RowConstraints rowConstraint: imageGrid.getRowConstraints()) {
             rowConstraint.setPercentHeight(25);
         }
         addItems();
@@ -65,7 +61,7 @@ public class ShopSellController {
             }
         });
 
-        itemCosts.getChildren().add(done);
+        overPane.getChildren().add(done);
         AnchorPane.setTopAnchor(done, (double)580);
         AnchorPane.setLeftAnchor(done, (double)180);
     }
@@ -89,7 +85,7 @@ public class ShopSellController {
             }
             String itemName = item.getType();
             String itemString;
-            // if (item instanceof HealthPotion || item instanceof TheOneRing) {
+
             if (world.getNonLevelItems().contains(itemName)) {
                 itemString = itemName;
             }
@@ -101,7 +97,7 @@ public class ShopSellController {
             int col = i % 4;
             view.setFitHeight(70);
             view.setFitWidth(70);
-            shopItems.add(view, col, row);
+            imageGrid.add(view, col, row);
             GridPane.setHalignment(view, HPos.CENTER);
             GridPane.setValignment(view, VPos.CENTER);
             
@@ -114,7 +110,7 @@ public class ShopSellController {
             GridPane gridPane = new GridPane();
             gridPane.add(goldView, 0, 0);
             gridPane.add(itemButton, 1, 0);
-            itemCosts.getChildren().add(gridPane);
+            overPane.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));

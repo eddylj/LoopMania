@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.graalvm.compiler.nodeinfo.StructuralInput.Anchor;
 import org.javatuples.Pair;
 
 import javafx.beans.binding.Bindings;
@@ -20,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
@@ -29,13 +29,10 @@ import javafx.scene.text.FontWeight;
 public class ShopBuyController {
 
     @FXML
-    private StackPane stackPaneRoot;
+    private GridPane imageGrid;
 
     @FXML
-    private GridPane shopItems;
-
-    @FXML
-    private AnchorPane itemCosts;
+    private AnchorPane overPane;
 
     private LoopManiaWorldController worldController;
 
@@ -58,13 +55,13 @@ public class ShopBuyController {
     @FXML
     public void initialize() {
         addItems(itemList);
-        // addDoneButton();
-        // addSellButton();
+        addDoneButton();
+        addSellButton();
     }
 
     public void addDoneButton() {
         Button done = new Button("Done");
-        done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,40));
+        done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,30));
         done.setTextFill(Color.GREEN);
         done.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -73,8 +70,9 @@ public class ShopBuyController {
             }
         });
 
-        shopItems.getChildren().add(done);
-        
+        overPane.getChildren().add(done);
+        AnchorPane.setTopAnchor(done, 530.00);
+        AnchorPane.setLeftAnchor(done, 175.00);
     }
 
     public void doneButtonAction(Button done) {
@@ -94,7 +92,7 @@ public class ShopBuyController {
             view.setFitHeight(100);
             view.setFitWidth(100);
 
-            shopItems.add(view, colNum, rowNum);
+            imageGrid.add(view, colNum, rowNum);
             GridPane.setHalignment(view, HPos.CENTER);
             GridPane.setValignment(view, VPos.CENTER);
             
@@ -106,7 +104,7 @@ public class ShopBuyController {
             GridPane gridPane = new GridPane();
             gridPane.add(goldImageView, 0, 0);
             gridPane.add(itemButton, 1, 0);
-            itemCosts.getChildren().add(gridPane);
+            overPane.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
@@ -159,13 +157,13 @@ public class ShopBuyController {
                 }
             }
         });
-        buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         return buyButton;
     }
 
     public void addSellButton() {
         Button sellButton = new Button("Sell");
-        sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,40));
+        sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,30));
         sellButton.setTextFill(Color.ORANGE);
         sellButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -192,9 +190,9 @@ public class ShopBuyController {
                 }
             }
         });
-        itemCosts.getChildren().add(sellButton);
-        AnchorPane.setTopAnchor(sellButton, (double)450);
-        AnchorPane.setLeftAnchor(sellButton, (double)200);
+        overPane.getChildren().add(sellButton);
+        AnchorPane.setTopAnchor(sellButton, 530.00);
+        AnchorPane.setLeftAnchor(sellButton, getLeftAnchor(11));
     }
 
     public double getTopAnchor(int i) {
@@ -202,7 +200,6 @@ public class ShopBuyController {
     }
 
     public double getLeftAnchor(int i) {
-
         return ((i % 3) * 150 + 38);
     }
 }
