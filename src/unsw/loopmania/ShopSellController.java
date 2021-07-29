@@ -87,7 +87,7 @@ public class ShopSellController {
             else if (item instanceof Protection) {
                 itemLevel = ((Protection)item).getLevel();
             }
-            String itemName = ((StaticEntity) item).getType();
+            String itemName = item.getType();
             String itemString;
             // if (item instanceof HealthPotion || item instanceof TheOneRing) {
             if (world.getNonLevelItems().contains(itemName)) {

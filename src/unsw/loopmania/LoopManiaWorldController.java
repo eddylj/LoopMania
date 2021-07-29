@@ -261,7 +261,7 @@ public class LoopManiaWorldController {
 
         // Equip weapon
         Item weapon = world.getEquippedItemByCoordinates(0);
-        String type = ((StaticEntity)weapon).getType();
+        String type = weapon.getType();
         int level = ((Weapon)weapon).getLevel();
         ImageView viewWeapon = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
         equippedItems.add(viewWeapon, 0, 0);
@@ -269,7 +269,7 @@ public class LoopManiaWorldController {
         // Equip helmet
         Item helmet = world.getEquippedItemByCoordinates(1);
         if (helmet != null) {
-            type = ((StaticEntity)helmet).getType();
+            type = helmet.getType();
             level = ((Protection)helmet).getLevel();
             ImageView viewHelmet = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
             equippedItems.add(viewHelmet, 1, 0);
@@ -278,7 +278,7 @@ public class LoopManiaWorldController {
         // Equip shield
         Item shield = world.getEquippedItemByCoordinates(2);
         if (shield != null) {
-            type = ((StaticEntity)shield).getType();
+            type = shield.getType();
             level = ((Protection)shield).getLevel();
             ImageView viewShield = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
             equippedItems.add(viewShield, 2, 0);
@@ -287,7 +287,7 @@ public class LoopManiaWorldController {
         // Equip armour
         Item armour = world.getEquippedItemByCoordinates(3);
         if (armour != null) {
-            type = ((StaticEntity)armour).getType();
+            type = armour.getType();
             level = ((Protection)armour).getLevel();
             ImageView viewArmour = new ImageView(new File(String.format("src/images/%s%d.png", type, level)).toURI().toString());
             equippedItems.add(viewArmour, 3, 0);
@@ -511,14 +511,14 @@ public class LoopManiaWorldController {
         // ImageView view = new ImageView(swordImage);
         ImageView view = null;
         System.out.println(item.getType());
-        if (world.getNonLevelItems().contains(((StaticEntity)item).getType())) {
-            view = new ImageView(new Image((new File(String.format("src/images/%s.png", ((StaticEntity)item).getType()))).toURI().toString()));
+        if (world.getNonLevelItems().contains(item.getType())) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s.png", item.getType()))).toURI().toString()));
         }
         else if (item.isWeapon()) {
-            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Weapon)item).getLevel()))).toURI().toString()));
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", item.getType(), ((Weapon)item).getLevel()))).toURI().toString()));
         }
         else {
-            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", ((StaticEntity)item).getType(), ((Protection)item).getLevel()))).toURI().toString()));
+            view = new ImageView(new Image((new File(String.format("src/images/%s%d.png", item.getType(), ((Protection)item).getLevel()))).toURI().toString()));
         }
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity((Entity)item, view);

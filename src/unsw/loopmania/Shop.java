@@ -108,7 +108,7 @@ public class Shop {
      */
     public void sell(Item item) {
         int price = item.getSellPrice();
-        ((Entity)item).destroy();
+        item.destroy();
         character.getunequippedInventoryItems().remove(item);
         character.gainGold(price);
     }

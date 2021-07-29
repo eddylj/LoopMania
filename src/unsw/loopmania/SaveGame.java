@@ -63,10 +63,10 @@ public class SaveGame {
     private void saveNonSpecifiedEntities() {
         JSONArray nonSpecifiedEntities = new JSONArray();
         List<Entity> nonSpecifiedEntitiyList = world.getNonSpecifiedEntities();
-        if (nonSpecifiedEntities.isEmpty()) {
+        if (nonSpecifiedEntitiyList.isEmpty()) {
             return;
         }
-        for (Entity e : world.getNonSpecifiedEntities()) {
+        for (Entity e : nonSpecifiedEntitiyList) {
             JSONObject entity = new JSONObject();
             entity.put("type", e.getType());
             entity.put("x", e.getX());
@@ -131,10 +131,10 @@ public class SaveGame {
         JSONObject equippedHelmet = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(1);
         if (item != null) {
-            equippedHelmet.put("type", ((StaticEntity)item).getType());
+            equippedHelmet.put("type", item.getType());
             equippedHelmet.put("level", ((Protection)item).getLevel());
-            equippedHelmet.put("x", ((StaticEntity)item).getX());
-            equippedHelmet.put("y", ((StaticEntity)item).getY());
+            equippedHelmet.put("x", item.getX());
+            equippedHelmet.put("y", item.getY());
         }
         c.put("equippedHelmet", equippedHelmet);
     }
@@ -143,10 +143,10 @@ public class SaveGame {
         JSONObject equippedShield = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(2);
         if (item != null) {
-            equippedShield.put("type", ((StaticEntity)item).getType());
+            equippedShield.put("type", item.getType());
             equippedShield.put("level", ((Protection)item).getLevel());
-            equippedShield.put("x", ((StaticEntity)item).getX());
-            equippedShield.put("y", ((StaticEntity)item).getY());
+            equippedShield.put("x", item.getX());
+            equippedShield.put("y", item.getY());
             if (item instanceof ConfusedRareItem) {
                 equippedShield.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
             }
@@ -158,10 +158,10 @@ public class SaveGame {
         JSONObject equippedArmour = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(3);
         if (item != null) {
-            equippedArmour.put("type", ((StaticEntity)item).getType());
+            equippedArmour.put("type", item.getType());
             equippedArmour.put("level", ((Protection)item).getLevel());
-            equippedArmour.put("x", ((StaticEntity)item).getX());
-            equippedArmour.put("y", ((StaticEntity)item).getY());
+            equippedArmour.put("x", item.getX());
+            equippedArmour.put("y", item.getY());
         }
         c.put("equippedArmour", equippedArmour);
     }

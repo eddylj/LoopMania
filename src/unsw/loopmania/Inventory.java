@@ -106,7 +106,7 @@ public class Inventory {
         for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
             Item item = unequippedInventoryItems.get(i);
             if (item.isRing()) {
-                ((StaticEntity)item).destroy();
+                item.destroy();
                 unequippedInventoryItems.remove(i);
                 return true;
             }
@@ -122,7 +122,7 @@ public class Inventory {
         for (int i = unequippedInventoryItems.size() - 1; i >= 0; i--) {
             Item item = unequippedInventoryItems.get(i);
             if (item.isNuke()) {
-                ((StaticEntity)item).destroy();
+                item.destroy();
                 unequippedInventoryItems.remove(i);
                 return true;
             }
@@ -237,7 +237,7 @@ public class Inventory {
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index){
         Item item = unequippedInventoryItems.get(index);
-        ((StaticEntity)item).destroy();
+        item.destroy();
         // int goldAmount = item.getReplaceCost();
         character.gainGold(item.getReplaceCost());
         unequippedInventoryItems.remove(index);

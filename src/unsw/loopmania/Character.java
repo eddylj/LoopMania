@@ -50,6 +50,7 @@ public class Character extends MovingEntity implements Hero {
         soldiers = new ArrayList<AlliedSoldier>();
         aliveSoldiers = new SimpleIntegerProperty(0);
         inventory = new Inventory(this);
+        canTakeDamage = true;
     }
 
     /**
@@ -442,7 +443,7 @@ public class Character extends MovingEntity implements Hero {
      * @return int: Highest level for item
      */
     public int getHighestLevel(Item item) {
-        return stats.getHighestLevel(((StaticEntity)item).getType());
+        return stats.getHighestLevel(item.getType());
     }
 
     /**

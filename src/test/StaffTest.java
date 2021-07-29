@@ -12,6 +12,7 @@ import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Shop;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Weapon;
 import unsw.loopmania.Enemy;
@@ -38,6 +39,7 @@ public class StaffTest {
         Item staff = new Staff(1);
 
         c.sellItem(staff);
+        
         //assertEquals(280, c.getGold());
     }
 

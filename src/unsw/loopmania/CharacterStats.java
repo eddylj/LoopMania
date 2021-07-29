@@ -49,7 +49,7 @@ public class CharacterStats {
      * @param item
      */
     public void updateHighestLevel(Item item) {
-        String type = ((StaticEntity)item).getType();
+        String type = item.getType();
         if (type.equals("sword") &&  sword <= ((Weapon)item).getLevel()) {
             sword = ((Weapon)item).getLevel();
         }
