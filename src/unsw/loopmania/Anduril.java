@@ -3,7 +3,6 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Anduril extends Sword implements RareItem{
-    private static final double NOPRICE = 0;
     private static final double DAMAGE = 50.0;
     private static final int SELLPRICE = 1500;
     private static final int REPLACECOST = 375;

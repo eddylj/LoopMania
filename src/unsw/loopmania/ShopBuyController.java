@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
-
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

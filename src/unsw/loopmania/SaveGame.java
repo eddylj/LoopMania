@@ -2,9 +2,6 @@ package unsw.loopmania;
 import java.util.List;
 import java.io.FileWriter;
 import java.io.IOException;
-
-
-import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
