@@ -308,7 +308,7 @@ public class Character extends MovingEntity implements Hero {
         bossKills.set(num);
     }
 
-    public IntegerProperty bossKills() {
+    public IntegerProperty getBossKills() {
         return bossKills;
     }
 

@@ -142,6 +142,9 @@ public class LoopManiaWorldController {
     private Label cyclesGoal;
 
     @FXML
+    private Label bossGoal;
+
+    @FXML
     private Label alliedSoldierAmount;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
@@ -328,7 +331,7 @@ public class LoopManiaWorldController {
         xpAmount.textProperty().bind(world.getXP().asString());
         alliedSoldierAmount.textProperty().bind(world.getCharacter().getAlliedSoldierProperty().asString());
 
-        // initialises healt hbar
+        // initialises healthbar
         healthBar.toFront();
         healthBar.setFill(Color.RED);
         // binds character health as a percentage to the health bar rectangle
@@ -338,6 +341,7 @@ public class LoopManiaWorldController {
         goldGoal.setText(Integer.toString(world.getMaxGoal("gold")));
         xpGoal.setText(Integer.toString(world.getMaxGoal("experience")));
         cyclesGoal.setText(Integer.toString(world.getMaxGoal("cycles")));
+        bossGoal.textProperty().bind(world.getBossKills().asString()); 
 
         
         // create the draggable icon

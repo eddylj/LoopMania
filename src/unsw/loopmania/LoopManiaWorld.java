@@ -854,6 +854,14 @@ public class LoopManiaWorld {
         return character.getXP();
     }
 
+    /**
+     * Gets the character's goal for boss kills
+     * @return int: The character's goal for boss kills
+     */
+    public IntegerProperty getBossKills() {
+        return character.getBossKills();
+    }
+
     public Shop getShop() {
         return shop;
     }
