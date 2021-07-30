@@ -551,9 +551,6 @@ public class Character extends MovingEntity implements Hero {
         return inventory.getMatchingCard(cardNodeX, cardNodeY);
     }
 
-    public int getBossKills() {
-        return bossKills.get();
-    }
     /**
      * Removes a card from the character's card inventory
      * @param card Card: Card to remove
