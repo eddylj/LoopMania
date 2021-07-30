@@ -10,7 +10,7 @@ public class CompositeBoss implements Composite{
     }
     @Override
     public boolean getValue() {
-        return character.getBossKills() == MAXBOSSKILLS;
+        return character.getBossKills().get() == MAXBOSSKILLS;
     }
 
     @Override

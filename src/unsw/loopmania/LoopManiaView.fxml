@@ -21,7 +21,7 @@
 
 <AnchorPane fx:id="anchorPaneRoot" onKeyPressed="#handleKeyPress" prefHeight="86.0" prefWidth="135.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <!-- HBox is used to stack items horizontally left to right -->
-   <HBox>
+   <HBox prefHeight="379.0" prefWidth="141.0">
       <!-- VBox is used to stack items vertically top to bottom -->
       <VBox>
          <children>
@@ -57,7 +57,7 @@
             </BorderPane>
          </children>
       </VBox>
-      <VBox prefHeight="88.0" prefWidth="135.0">
+      <VBox prefHeight="368.0" prefWidth="147.0">
          <children>
             <!-- equippedItems contains the equipment equipped by the character in special slots -->
             <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
@@ -246,8 +246,22 @@
                   </Label>
                </children>
             </Pane>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="147.0">
+               <children>
+                  <Label layoutY="5.0" text="Bosses" textFill="#3b9702">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="bossGoal" layoutX="53.0" layoutY="1.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#3b9702">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          
-                     <!-- clicking this button returns the human player to the main menu -->
+                                                   <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" prefHeight="13.0" prefWidth="135.0" text="Exit to Main Menu" />
          </children>
       </VBox>
