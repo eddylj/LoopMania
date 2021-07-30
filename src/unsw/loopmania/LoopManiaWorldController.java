@@ -949,8 +949,13 @@ public class LoopManiaWorldController {
 
         Label label = new Label("Enter name of world");
         label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 20));
-        label.setTextFill(Color.VIOLET);        
+        label.setTextFill(Color.VIOLET); 
         save = new Button("Save");
+        name = new TextField();
+        name.setPromptText("Enter name of world");
+        GridPane gridpane = new GridPane();
+        gridpane.add(name, 0, 0);
+        gridpane.add(save, 1, 0);
         save.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e) {
@@ -961,14 +966,9 @@ public class LoopManiaWorldController {
                 }
             }
         });
-        name = new TextField();
-        name.setPromptText("Enter name of world");
-        GridPane gridpane = new GridPane();
-        gridpane.add(name, 0, 0);
-        gridpane.add(save,0, 1);
         anchorPaneRoot.getChildren().add(gridpane);
         AnchorPane.setTopAnchor(gridpane, anchorPaneRoot.getHeight()/2);
-
+        AnchorPane.setLeftAnchor(gridpane, anchorPaneRoot.getWidth()/3);
     }
 
     public void shopCycles(int cycles) throws IOException {

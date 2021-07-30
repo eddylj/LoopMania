@@ -30,9 +30,9 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
     private Image characterImage;
     private Image pathTilesImage;
 
-    public LoopManiaWorldControllerLoader(String filename)
+    public LoopManiaWorldControllerLoader(String folder, String filename)
             throws FileNotFoundException {
-        super(filename);
+        super(folder, filename);
         entities = new ArrayList<>();
         characterImage = new Image((new File("src/images/human_new.png")).toURI().toString());
         pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
