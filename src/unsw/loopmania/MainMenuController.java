@@ -20,17 +20,20 @@ public class MainMenuController {
 
     private LoopManiaWorldController mainController;
 
+    private String folder;
+
     private String map;
 
     @FXML
     private VBox rootBox;
 
-    public MainMenuController(String map) {
+    public MainMenuController(String folder, String map) {
+        this.folder = folder;
         this.map = map;
     }
 
     private void loadWorld(String map) throws IOException {
-        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader(map);
+        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader(folder, map);
         mainController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
         gameLoader.setController(mainController);

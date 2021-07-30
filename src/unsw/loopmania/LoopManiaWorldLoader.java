@@ -26,9 +26,9 @@ import java.util.List;
 public abstract class LoopManiaWorldLoader {
     private JSONObject json;
 
-    public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
+    public LoopManiaWorldLoader(String folder, String filename) throws FileNotFoundException {
         System.err.println(filename);
-        json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
+        json = new JSONObject(new JSONTokener(new FileReader(folder + "/" + filename)));
     }
 
     /**

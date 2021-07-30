@@ -49,15 +49,15 @@ public class MapSelectorController {
 
     @FXML
     private void submit(ActionEvent event) throws IOException {
-        if (folder == "worlds") {
-            if (selectedProperty.get() == null) {
-                errorLabel.setText("Please choose a map");
-                errorLabel.setTextFill(Color.RED);
-                errorLabel.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 20));
-            }
-            else {
-            // load the main menu
-                MainMenuController mainMenuController = new MainMenuController(selectedProperty.get());
+        if (selectedProperty.get() == null) {
+            errorLabel.setText("Please choose a map");
+            errorLabel.setTextFill(Color.RED);
+            errorLabel.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 20));
+        }
+        else {
+            if (folder == "worlds") {
+                // load the main menu
+                MainMenuController mainMenuController = new MainMenuController(folder, selectedProperty.get());
                 FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
                 menuLoader.setController(mainMenuController);
                 Parent mainMenuRoot = menuLoader.load();
@@ -74,9 +74,32 @@ public class MapSelectorController {
                 primaryStage.sizeToScene();
                 primaryStage.show();
             }
-        }
-        else if (folder == "backup") {
+        
+            else if (folder == "backup") {
+                LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader(folder, selectedProperty.get());
+                LoopManiaWorldController mainController = loopManiaLoader.loadController();
+                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
+                gameLoader.setController(mainController);
+                Parent gameRoot = gameLoader.load();
 
+                Scene scene = this.errorLabel.getScene();
+                Stage primaryStage = (Stage) scene.getWindow();
+
+                primaryStage.setTitle("Loop Mania");
+                // mainController.setMainMenuSwitcher((String mode) -> {switchToRoot(scene, mainMenuRoot, primaryStage);
+                //     stop();
+                // });
+                scene.setRoot(gameRoot);
+                gameRoot.requestFocus();
+                primaryStage.setScene(scene);
+                primaryStage.sizeToScene();
+                primaryStage.show();
+                mainController.startTimer();
+                // mainController.setMode(mode);
+                mainController.play();
+
+                gameRoot.requestFocus();
+            }
         }
     }
 }
