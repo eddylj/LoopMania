@@ -7,7 +7,7 @@
         { "goal": "OR", "subgoals":
           [ {"goal": "experience", "quantity": 123456 },
             {"goal" : "AND", "subgoals" : [
-              {"goal": "bosses" },
+              {"goal": "bosses"},
               {"goal" : "gold", "quantity" : 100000}
             ]}
           ]
