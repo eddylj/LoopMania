@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import unsw.loopmania.CharacterStats;
-import unsw.loopmania.Shield;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Thornmail;
+import unsw.loopmania.Heroes.CharacterStats;
+import unsw.loopmania.Items.Shield;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Thornmail;
 import unsw.loopmania.Items.Armour;
 import unsw.loopmania.Items.Axe;
 import unsw.loopmania.Items.Helmet;

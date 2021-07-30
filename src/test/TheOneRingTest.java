@@ -22,8 +22,8 @@ import unsw.loopmania.Factories.RareItemFactory;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Shop.Shop;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
-import unsw.loopmania.AlliedSoldier;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.AlliedSoldier;
 
 public class TheOneRingTest {
 
@@ -66,7 +66,7 @@ public class TheOneRingTest {
         enemies.add(eF.create("vampire"));
         enemies.add(eF.create("vampire"));
         Character character = new Character();
-        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        character.equip(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1), "weapon");
         character.setRareItems(rareItems);
         // Character uses 2 TheOneRings to combat 2 vampires
         character.addUnequippedItem("theonering", 0);

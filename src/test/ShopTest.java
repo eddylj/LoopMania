@@ -1,9 +1,9 @@
 
 package test;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Weapon;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Weapon;
 import unsw.loopmania.Items.HealthPotion;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Shop.Shop;

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Buildings.CampfireState;
 import unsw.loopmania.Buildings.NormalState;
 import unsw.loopmania.Enemies.Enemy;

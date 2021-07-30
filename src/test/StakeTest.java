@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
-import unsw.loopmania.Weapon;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.Weapon;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
 import unsw.loopmania.Enemies.Vampire;
@@ -22,7 +22,7 @@ public class StakeTest {
         Item stake = new Stake(3);
 
         assertEquals(1, c.getHighestLevel(stake));
-        c.equip(stake);
+        c.equip(stake, "weapon");
         assertEquals(3, c.getHighestLevel(stake));
     }
 
@@ -31,7 +31,7 @@ public class StakeTest {
         Character c = new Character();
         Item stake = new Stake(1);
 
-        c.equip(stake);
+        c.equip(stake, "weapon");
         Enemy slug = new Slug();
         assertEquals(slug.getHealth(), 50);
         c.attack(slug, b);

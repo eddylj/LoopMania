@@ -7,14 +7,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
 import unsw.loopmania.Enemies.Vampire;
 import unsw.loopmania.Enemies.Zombie;
 import unsw.loopmania.Entities.StaticEntity;
-import unsw.loopmania.Weapon;
-import unsw.loopmania.Protection;
+import unsw.loopmania.Items.Weapon;
+import unsw.loopmania.Items.Protection;
 import unsw.loopmania.LoopManiaWorld;
 
 public class DropsTest {

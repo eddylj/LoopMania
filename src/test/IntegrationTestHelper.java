@@ -13,7 +13,7 @@ import org.json.JSONTokener;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Entities.Entity;
 import unsw.loopmania.Entities.PathTile;
 

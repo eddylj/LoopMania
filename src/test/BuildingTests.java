@@ -1,5 +1,5 @@
 package test;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Buildings.BarracksBuilding;
 import unsw.loopmania.Buildings.BonusDamageStrategy;
 import unsw.loopmania.Buildings.CampfireBuilding;

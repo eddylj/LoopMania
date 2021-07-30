@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.AlliedSoldier;
+import unsw.loopmania.Heroes.AlliedSoldier;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.BarracksBuilding;
