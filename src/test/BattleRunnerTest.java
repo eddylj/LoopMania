@@ -11,11 +11,11 @@ import org.junit.Test;
 
 import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.BuildingFactory;
 import unsw.loopmania.Character;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
-import unsw.loopmania.TowerBuilding;
+import unsw.loopmania.Buildings.TowerBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Factories.BuildingFactory;
 
 public class BattleRunnerTest {
 

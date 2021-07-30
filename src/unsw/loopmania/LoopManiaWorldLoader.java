@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Entities.Entity;
+import unsw.loopmania.Entities.PathTile;
 
 import java.util.List;
 

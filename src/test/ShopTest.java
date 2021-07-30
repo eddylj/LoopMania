@@ -2,11 +2,11 @@
 package test;
 
 import unsw.loopmania.Character;
-import unsw.loopmania.Shop;
-import unsw.loopmania.Item;
 import unsw.loopmania.Sword;
-import unsw.loopmania.HealthPotion;
 import unsw.loopmania.Weapon;
+import unsw.loopmania.Items.HealthPotion;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.Shop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

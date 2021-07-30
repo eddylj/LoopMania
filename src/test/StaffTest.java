@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Shop;
-import unsw.loopmania.Staff;
 import unsw.loopmania.Weapon;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Shop.Shop;
 
 
 public class StaffTest {

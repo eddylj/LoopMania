@@ -10,12 +10,12 @@ import java.util.List;
 import org.javatuples.Pair;
 import org.junit.Test;
 
-import unsw.loopmania.Enemy;
-import unsw.loopmania.EnemyFactory;
-import unsw.loopmania.HeroFactory;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.TowerBuilding;
+import unsw.loopmania.Buildings.TowerBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Factories.EnemyFactory;
+import unsw.loopmania.Factories.HeroFactory;
 import unsw.loopmania.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;

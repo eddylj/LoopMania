@@ -10,6 +10,27 @@ import org.json.JSONObject;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Buildings.Building;
+import unsw.loopmania.Buildings.BuildingOnCycle;
+import unsw.loopmania.Buildings.BuildingOnMove;
+import unsw.loopmania.Buildings.CampfireBuilding;
+import unsw.loopmania.Buildings.VampireCastleBuilding;
+import unsw.loopmania.Cards.Card;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Entities.Coin;
+import unsw.loopmania.Entities.Entity;
+import unsw.loopmania.Entities.MovingEntity;
+import unsw.loopmania.Entities.Poop;
+import unsw.loopmania.Entities.StaticEntity;
+import unsw.loopmania.Factories.BuildingFactory;
+import unsw.loopmania.Factories.EnemyFactory;
+import unsw.loopmania.Factories.ItemFactory;
+import unsw.loopmania.GoalCalculator.GoalCalculator;
+import unsw.loopmania.GoalCalculator.GoalCalculator.Composite;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.Shop;
 
 /**
  * A backend world.

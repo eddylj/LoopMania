@@ -5,16 +5,16 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.BankCard;
-import unsw.loopmania.BarracksCard;
-import unsw.loopmania.CampfireCard;
 import unsw.loopmania.TowerCard;
 import unsw.loopmania.TrapCard;
-import unsw.loopmania.VampireCastleCard;
-import unsw.loopmania.ZombiePitCard;
+import unsw.loopmania.Cards.BankCard;
+import unsw.loopmania.Cards.BarracksCard;
+import unsw.loopmania.Cards.CampfireCard;
+import unsw.loopmania.Cards.Card;
+import unsw.loopmania.Cards.VampireCastleCard;
+import unsw.loopmania.Enemies.ZombiePitCard;
+import unsw.loopmania.Factories.CardFactory;
 import unsw.loopmania.VillageCard;
-import unsw.loopmania.Card;
-import unsw.loopmania.CardFactory;
 
 
 public class CardFactoryTest {

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Armour;
+import unsw.loopmania.Items.Armour;
 
 public class ArmourTest {
     private JSONObject goals;

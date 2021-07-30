@@ -13,16 +13,16 @@ import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.RareItemFactory;
-import unsw.loopmania.Shop;
-import unsw.loopmania.TowerBuilding;
+import unsw.loopmania.Buildings.BuildingOnMove;
+import unsw.loopmania.Buildings.TowerBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Factories.EnemyFactory;
+import unsw.loopmania.Factories.ItemFactory;
+import unsw.loopmania.Factories.RareItemFactory;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.Shop;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.BuildingOnMove;
 import unsw.loopmania.Character;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.EnemyFactory;
-import unsw.loopmania.Item;
-import unsw.loopmania.ItemFactory;
 import unsw.loopmania.AlliedSoldier;
 
 public class TheOneRingTest {

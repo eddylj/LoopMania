@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
-import unsw.loopmania.HealthPotion;
+import unsw.loopmania.Items.HealthPotion;
+import unsw.loopmania.Items.Item;
 
 public class HealthPotionTest {
 

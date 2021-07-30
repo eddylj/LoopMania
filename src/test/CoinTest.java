@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-import unsw.loopmania.Coin;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Entities.Coin;
 import unsw.loopmania.Character;
 
 public class CoinTest {

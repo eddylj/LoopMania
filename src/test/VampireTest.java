@@ -9,13 +9,13 @@ import org.javatuples.Pair;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.BuildingFactory;
-import unsw.loopmania.CampfireBuilding;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.EnemyFactory;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.Building;
-import unsw.loopmania.Vampire;
+import unsw.loopmania.Buildings.Building;
+import unsw.loopmania.Buildings.CampfireBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Factories.BuildingFactory;
+import unsw.loopmania.Factories.EnemyFactory;
 
 public class VampireTest {
     private List<Pair<Integer, Integer>> createPath() {
