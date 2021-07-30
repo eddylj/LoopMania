@@ -98,7 +98,6 @@ public class Character extends MovingEntity implements Hero {
             }
             newDamage = ((Protection) equippedArmour).protect(damage);
         }
-        System.out.println(newDamage);
         super.takeDamage(newDamage);
     }
 
