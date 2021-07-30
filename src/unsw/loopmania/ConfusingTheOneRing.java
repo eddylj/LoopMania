@@ -16,13 +16,13 @@ public class ConfusingTheOneRing extends TheOneRing implements ConfusedRareItem{
     }
 
 	@Override
-	public double protect(double damage, Enemy e) {
-		return ((TreeStump)additional).protect(damage, e);
+	public double protect(double damage, Enemy enemy) {
+		return ((TreeStump)additional).protect(damage, enemy);
 	}
 
 	@Override
-	public double getDamage(Enemy e) {
-		return ((Anduril)additional).getDamage(e);
+	public double getDamage(Enemy enemy) {
+		return ((Anduril)additional).getDamage(enemy);
 	}
 
     @Override

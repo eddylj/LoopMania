@@ -50,7 +50,7 @@ public class AlliedSoldier implements Hero{
      * @param attackDamage attack damage given to the ally
      * @return returns true if the ally died
      */
-    public void takeDamage(double attackDamage, Enemy e) {
+    public void takeDamage(double attackDamage, Enemy enemy) {
         health -= attackDamage;
     }
 

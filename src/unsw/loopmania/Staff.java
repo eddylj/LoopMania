@@ -33,11 +33,11 @@ public class Staff extends Weapon{
      * @param b
      * @return true if enemy tranced, false otherwise
      */
-    public boolean castSpell(Enemy enemy, BattleRunner b) {
+    public boolean castSpell(Enemy enemy, BattleRunner bR) {
         int randNum = LoopManiaWorld.getRandNum();
         if (randNum <  tranceChance) {
             enemy.takeDamage(super.getDamage());
-            b.convertEnemyToAlly(enemy);
+            bR.convertEnemyToAlly(enemy);
             return true;
         }
         return false;

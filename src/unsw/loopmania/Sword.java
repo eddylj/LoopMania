@@ -24,7 +24,7 @@ public class Sword extends Weapon {
         super.setType("sword");
     }
 
-    public double getDamage(Enemy e) {
+    public double getDamage(Enemy enemy) {
         return super.getDamage();
     }
     

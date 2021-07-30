@@ -12,12 +12,12 @@ public class VampireCritical implements VampireAttackStrategy{
      * @param v
      */
     @Override
-    public void attack(Hero h, Vampire v) {
+    public void attack(Hero hero, Vampire vampire) {
         int randomInt = LoopManiaWorld.getRandNum() % 10;
-        h.takeDamage(v.getAttackDamage() + randomInt + 1, v);
+        hero.takeDamage(vampire.getAttackDamage() + randomInt + 1, vampire);
         critTurns--;
         if (critTurns == 0) {
-            v.setStrategy(new VampireNormal());
+            vampire.setStrategy(new VampireNormal());
         }
     }
 }

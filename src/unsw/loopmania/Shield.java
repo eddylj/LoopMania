@@ -32,7 +32,6 @@ public class Shield extends Protection {
      */
     @Override
     public double protect(double damage) {
-        //Will implement the chance to fully block the damag
         int randomInt = LoopManiaWorld.getRandNum();
         if (randomInt < blockChance) {
             return 0;

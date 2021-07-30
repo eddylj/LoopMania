@@ -36,19 +36,19 @@ public class Zombie extends Enemy {
      * @param h
      * @param b
      */
-    public void attack(Hero h, BattleRunner b) {
+    public void attack(Hero hero, BattleRunner bR) {
         // Accounts for zombie critical bite against AS
-        if (h instanceof AlliedSoldier) {
+        if (hero instanceof AlliedSoldier) {
             int randomInt = LoopManiaWorld.getRandNum();
             if (randomInt >= 0 && randomInt <= 9) {
-                h.setHealth(0);
-                b.convertAllyToZombie((AlliedSoldier)h);
+                hero.setHealth(0);
+                bR.convertAllyToZombie((AlliedSoldier)hero);
             } else {
-                h.takeDamage(this.getAttackDamage(), this);
+                hero.takeDamage(this.getAttackDamage(), this);
             }
 
         } else {
-            h.takeDamage(this.getAttackDamage(), this);
+            hero.takeDamage(this.getAttackDamage(), this);
         }
     }
 

@@ -133,7 +133,6 @@ public class BattleRunner {
      * tranced/converted by the staff die.
      */
     private void killConvertedEnemies() {
-        // for (AlliedSoldier a : allies) {
         for (int i = allies.size() - 1; i >= 0; i--) {
             AlliedSoldier ally = allies.get(i);
             if (ally instanceof ConvertedEnemy) {
@@ -147,8 +146,8 @@ public class BattleRunner {
      * When the player is revived, the battle continues without stopping.
      * @param c Character: The character
      */
-    private void revivecharacter(Character c) {
-        c.setHealth(100);
+    private void revivecharacter(Character character) {
+        character.setHealth(100);
     }
 
     /**
@@ -157,7 +156,7 @@ public class BattleRunner {
      * adds it to the enemies list. The new zombie won't attack this round.
      * @param a AlliedSoldier that has been bitten
      */
-    public void convertAllyToZombie(AlliedSoldier a) {
+    public void convertAllyToZombie(AlliedSoldier alliedSoldier) {
         EnemyFactory factory = new EnemyFactory();
         Enemy zombie =  factory.create("zombie");
         enemies.add(zombie);

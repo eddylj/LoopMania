@@ -33,7 +33,7 @@ public abstract class Protection extends Item{
     public double protect(double damage) {
         return damage;
     }
-    public double protect(double damage, Enemy e) {
+    public double protect(double damage, Enemy enemy) {
         return damage;
     }
     

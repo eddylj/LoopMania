@@ -18,7 +18,7 @@ public class BankCard extends StaticEntity implements Card{
         super.setType("bank");
     }
 
-     /**
+    /**
      * checks whether card can be placed on path
      * @param x
      * @param y

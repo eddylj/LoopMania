@@ -11,20 +11,20 @@ public class VampireNormal implements VampireAttackStrategy{
      * @param v
      */
     @Override
-    public void attack(Hero h, Vampire v) {
+    public void attack(Hero hero, Vampire vampire) {
         int randomInt = LoopManiaWorld.getRandNum();
-        if (h instanceof Character) {
-            Character c = (Character) h;
+        if (hero instanceof Character) {
+            Character c = (Character) hero;
             if ((randomInt < 20 && Objects.isNull(c.getShield())) || randomInt < 8) {
-                critAttack(h, v);
+                critAttack(hero, vampire);
             } else {
-                h.takeDamage(v.getAttackDamage(), v);
+                hero.takeDamage(vampire.getAttackDamage(), vampire);
             }
         } else {
             if (randomInt < 20) {
-                critAttack(h, v);
+                critAttack(hero, vampire);
             } else {
-                h.takeDamage(v.getAttackDamage(), v);
+                hero.takeDamage(vampire.getAttackDamage(), vampire);
             }
         }
     }
@@ -33,9 +33,9 @@ public class VampireNormal implements VampireAttackStrategy{
      * @param h
      * @param v
      */
-    private void critAttack(Hero h, Vampire v) {
+    private void critAttack(Hero hero, Vampire vampire) {
         int randomInt = LoopManiaWorld.getRandNum() % 10;
-        h.takeDamage(v.getAttackDamage()*2 + randomInt + 1, v);
-        v.setStrategy(new VampireCritical());
+        hero.takeDamage(vampire.getAttackDamage()*2 + randomInt + 1, vampire);
+        vampire.setStrategy(new VampireCritical());
     }
 }

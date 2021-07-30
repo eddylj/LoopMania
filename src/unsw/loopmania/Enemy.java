@@ -37,12 +37,12 @@ public abstract class Enemy extends MovingEntity {
      * @return boolean if the character was killed returns true
      */
 
-    public void attack (Hero h) {
-        h.takeDamage(attackDamage, this);
+    public void attack (Hero hero) {
+        hero.takeDamage(attackDamage, this);
     }
 
-    public void attack(Hero h, BattleRunner b) {
-        h.takeDamage(attackDamage, this);
+    public void attack(Hero hero, BattleRunner bR) {
+        hero.takeDamage(attackDamage, this);
 
     }
     /**
