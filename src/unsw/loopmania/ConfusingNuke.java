@@ -6,6 +6,7 @@ public class ConfusingNuke extends Nuke implements ConfusedRareItem{
     private Item additional;
 	public ConfusingNuke(SimpleIntegerProperty x, SimpleIntegerProperty y, Item additional) {
 		super(x, y);
+		super.setType("nuke");
         this.additional = additional;
 	}
 

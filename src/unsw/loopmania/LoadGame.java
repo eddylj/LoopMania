@@ -46,10 +46,10 @@ public class LoadGame {
         loadCharacterLevelStats(characterJSON.getJSONObject("stats"));
         
         // Deal with character's items
-        equipItem(characterJSON.getJSONObject("equippedWeapon"));
-        equipItem(characterJSON.getJSONObject("equippedHelmet"));
-        equipItem(characterJSON.getJSONObject("equippedShield"));
-        equipItem(characterJSON.getJSONObject("equippedArmour"));
+        equipItem(characterJSON.getJSONObject("equippedWeapon"), "weapon");
+        equipItem(characterJSON.getJSONObject("equippedHelmet"), "helmet");
+        equipItem(characterJSON.getJSONObject("equippedShield"), "shield");
+        equipItem(characterJSON.getJSONObject("equippedArmour"), "armour");
 
         world.setMode(json.getString("gameMode"));
 
@@ -62,7 +62,7 @@ public class LoadGame {
         character.setAliveSoldiers(characterJSON.getInt("aliveSoldiers"));
     }
 
-    private void equipItem(JSONObject item) {
+    private void equipItem(JSONObject item, String slot) {
         if (item.isEmpty()) {
             return;
         }
@@ -86,7 +86,7 @@ public class LoadGame {
             int level = item.getInt("level");
             equipped = iF.create(x, y, type, level);
         }
-        character.equip(equipped);
+        character.equip(equipped, slot);
     }
 
     private void loadUnequippedItems(JSONArray items) {

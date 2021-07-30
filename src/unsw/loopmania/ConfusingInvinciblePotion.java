@@ -24,5 +24,6 @@ public class ConfusingInvinciblePotion extends InvinciblePotion implements Confu
 	@Override
 	public double getDamage(Enemy enemy) {
 		return ((Anduril)additional).getDamage(enemy);
-	}    
+	}
+
 }

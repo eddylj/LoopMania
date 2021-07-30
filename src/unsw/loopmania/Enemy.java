@@ -18,7 +18,7 @@ public abstract class Enemy extends MovingEntity {
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
         this.xpAmount = xp;
-        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "strengthpotion"};
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "strengthpotion", "thornmail", "axe"};
     }
 
     public Enemy (int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health, int xp) {
@@ -28,7 +28,7 @@ public abstract class Enemy extends MovingEntity {
         this.attackDamage  = attackDamage;
         this.goldAmount = goldAmount;
         this.xpAmount = xp;
-        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "strengthpotion"};
+        itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "strengthpotion", "thornmail", "axe"};
     }
 
     /**

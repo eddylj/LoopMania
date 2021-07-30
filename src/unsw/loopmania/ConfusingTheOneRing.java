@@ -7,6 +7,7 @@ public class ConfusingTheOneRing extends TheOneRing implements ConfusedRareItem{
     
     public ConfusingTheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y, Item additional) {
         super(x, y);
+        super.setType("theonering");
         this.additional = additional;
     }
 

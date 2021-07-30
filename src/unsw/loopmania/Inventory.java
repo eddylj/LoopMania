@@ -172,7 +172,6 @@ public class Inventory {
     public StaticEntity addUnequippedItem (String type, int level){
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
-            System.out.println("gotta replace");
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items 
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
@@ -183,7 +182,6 @@ public class Inventory {
         Item item = null;
         if (rareItems.contains(type)) {
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
-            System.out.println(item.getType());
         }
         else if (nonLevelItems.contains(type)) {
             item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
@@ -212,7 +210,10 @@ public class Inventory {
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
-        return (StaticEntity)rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, additional);
+        Item item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, additional);
+        unequippedInventoryItems.add(item);
+        return item;
+        // return (StaticEntity)rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, additional);
     }
 
     /**

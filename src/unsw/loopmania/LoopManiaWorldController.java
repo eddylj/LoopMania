@@ -200,6 +200,11 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
 
+    public static final int WEAPONSLOT = 0;
+    public static final int HELMETSLOT = 32;
+    public static final int SHIELDSLOT = 64;
+    public static final int ARMOURSLOT = 96;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -345,7 +350,8 @@ public class LoopManiaWorldController {
     /**
      * create and run the timer
      */
-    public void startTimer(){        System.out.println("starting timer");
+    public void startTimer(){        
+        System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
@@ -361,6 +367,10 @@ public class LoopManiaWorldController {
                     onLoad(p);
                 }
             }
+
+            // for (Item item : world.getUnequippedInventory()) {
+            //     onLoad(item);
+            // }
 
             for (BuildingOnMove b : world.getMoveBuildings()) {
                 onLoad((Building)b);
@@ -499,8 +509,10 @@ public class LoopManiaWorldController {
     private void onLoad(Item item) {
         // ImageView view = new ImageView(swordImage);
         ImageView view = null;
-        System.out.println(item.getType());
         if (world.getNonLevelItems().contains(item.getType())) {
+            view = new ImageView(new Image((new File(String.format("src/images/%s.png", item.getType()))).toURI().toString()));
+        }
+        else if (item instanceof RareItem) {
             view = new ImageView(new Image((new File(String.format("src/images/%s.png", item.getType()))).toURI().toString()));
         }
         else if (item.isWeapon()) {
@@ -554,21 +566,27 @@ public class LoopManiaWorldController {
     }
 
     private boolean newPositionValid(Item item, Node node) {
-        System.out.println(node.getLayoutX());
-        System.out.println(node.getLayoutY());
-        if (item.isWeapon() && node.getLayoutX() == 0) {
+        if (item.isWeapon() && node.getLayoutX() == WEAPONSLOT) {
             return true;
         }
-        if (item instanceof Helmet && node.getLayoutX() == 32) {
+        if (item instanceof Helmet && node.getLayoutX() == HELMETSLOT) {
             return true;
         }
-        if (item.isShield() && node.getLayoutX() == 64) {
+        if (item.isShield() && node.getLayoutX() == SHIELDSLOT) {
             return true;
         }
-        if (item instanceof Armour && node.getLayoutX() == 96) {
+        if (item instanceof Armour && node.getLayoutX() == ARMOURSLOT) {
             return true;
         }
         return false;
+    }
+
+    private String slotToString(double slot) {
+        if (slot == WEAPONSLOT) return "weapon";
+        if (slot == HELMETSLOT) return "helmet";
+        if (slot == SHIELDSLOT) return "shield";
+        if (slot == ARMOURSLOT) return "armour";
+        else return null;
     }
 
     private boolean validPlacement(Card card, int x, int y) {
@@ -631,37 +649,41 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
                                 if (item != null && newPositionValid(item, node)) {
-                                    StaticEntity olditem = (StaticEntity)world.getEquippedItemByCoordinates(x);
+                                    Item olditem = world.getEquippedItemByCoordinates(x);
                                     // Put previously equipped item back in inventory (then overwrite it)
                                     if (olditem != null) {
-                                        StaticEntity newItem = null;
-                                        if (((Item)olditem).isWeapon()) {
+                                        Item newItem = null;
+                                        double slot = node.getLayoutX();
+                                        if (slot == WEAPONSLOT) {
                                             if (olditem instanceof ConfusedRareItem) {
-                                                newItem = world.addUnequippedItem(olditem.getType(), 0);
+                                                newItem = world.addUnequippedConfusedItem(olditem.getType(), ((ConfusedRareItem)olditem).getAdditional().getType());
                                             }
                                             else {
                                                 newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
                                             }
                                         }
-                                        else if (((Item)olditem).isShield() || olditem instanceof Protection) {
+                                        else if (slot == HELMETSLOT) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+                                        }
+                                        else if (slot == SHIELDSLOT) {
                                             if (olditem instanceof ConfusedRareItem) {
-                                                newItem = world.addUnequippedItem(olditem.getType(), 0);
+                                                newItem = world.addUnequippedConfusedItem(olditem.getType(), ((ConfusedRareItem)olditem).getAdditional().getType());
                                             }
                                             else {
                                                 newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
                                             }
                                         }
-                                        else {
-                                            System.out.println("nope. thats bad.");
+                                        else if (slot == ARMOURSLOT) {
+                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
                                         }
                                         // put previously equipped weapon back in the unequipped inventory
-                                        onLoad((Item)newItem);
+                                        onLoad(newItem);
                                         olditem.destroy();
                                     }
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
                                     targetGridPane.add(image, x, y, 1, 1);
-                                    world.equipItem(item);
+                                    world.equipItem(item, slotToString(node.getLayoutX()));
                                     System.out.println("Successfully dropped");
                                 }
                                 else {
@@ -877,12 +899,16 @@ public class LoopManiaWorldController {
             break;
         case D:
             world.drinkHealthPotion();
+            break;
         case S:
             world.drinkStrengthPotion();
+            break;
         case N:
             activateNuke();
+            break;
         case I:
             world.drinkInvincibilityPotion();
+            break;
         default:
             break;
         }

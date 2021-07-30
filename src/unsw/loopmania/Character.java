@@ -220,18 +220,22 @@ public class Character extends MovingEntity implements Hero {
      * Equips a given item. Assumes item is valid to be equipped
      * (e.g. Item is not a HealthPotion)
      * @param i Item: item to be equipped.
+     * @param type String: Type of weapon to be equipped (determine which weapon slot)
      */
-    public void equip(Item item) {
+    public void equip(Item item, String type) {
         inventory.removeUnequippedItem(item);
         stats.updateHighestLevel(item);
-        if (item.isWeapon()) {
+        if (type.equals("weapon")) {
             equippedWeapon = item;
-        } else if (item.isShield()) {
-            equippedShield = item;
-        } else if (item instanceof Armour) {
-            equippedArmour = item;
-        } else {
+        }
+        else if (type.equals("helmet")) {
             equippedHelmet = item;
+        }
+        else if (type.equals("shield")) {
+            equippedShield = item;
+        }
+        else if (type.equals("armour")) {
+            equippedArmour = item;
         }
     }
 

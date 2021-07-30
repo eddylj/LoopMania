@@ -364,7 +364,6 @@ public class LoopManiaWorld {
         if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP && !muskeSpawned) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
-            character.setHealth(0);
         }
     }
 
@@ -415,8 +414,8 @@ public class LoopManiaWorld {
      * Equips character with item
      * @param i
      */
-    public void equipItem(Item item) {
-        character.equip(item);
+    public void equipItem(Item item, String type) {
+        character.equip(item, type);
     }
     /**
      * Gets closest campfire from Vampire
@@ -730,7 +729,7 @@ public class LoopManiaWorld {
         GoalCalculator goals = new GoalCalculator(json.getJSONObject("goal-condition"), character);
         winChecker = goals.getChecker();
         battleRunner.setCharacter(character);
-        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1));
+        equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1), "weapon");
         shop = new Shop(character);
         character.setRareItems(rareItems);
     }
@@ -776,14 +775,22 @@ public class LoopManiaWorld {
         return character.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
     }
 
+    public List<Item> getUnequippedInventory() {
+        return character.getunequippedInventoryItems();
+    }
+
     /**
      * Adds an unequipped item to the character's inventory
      * @param type String: The type of item to add
      * @param i int: The level of the item
      * @return StaticEntity: The item added
      */
-    public StaticEntity addUnequippedItem(String type, int level) {
-        return character.addUnequippedItem(type, level);
+    public Item addUnequippedItem(String type, int level) {
+        return (Item)character.addUnequippedItem(type, level);
+    }
+
+    public Item addUnequippedConfusedItem(String type, String additional) {
+        return (Item)character.addUnequippedConfusedItem(type, additional);
     }
 
     /**

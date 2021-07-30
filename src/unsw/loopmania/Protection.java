@@ -54,9 +54,4 @@ public abstract class Protection extends Item{
     public int getReplaceCost() {
         return (int) (price * 0.2);
     }
-
-    @Override
-    public boolean isProtection() {
-        return true;
-    }
 }

@@ -17,10 +17,6 @@ public class InvinciblePotion extends Potion implements RareItem{
         super.setType("invinciblepotion");
     }
 
-    @Override
-    public boolean isInvinciblePotion() {
-        return true;
-    }
 
 
 	@Override

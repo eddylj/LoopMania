@@ -51,9 +51,4 @@ public abstract class Weapon extends Item{
     public int getReplaceCost() {
         return (int)(price * 0.2);
     }
-
-    @Override
-	public boolean isWeapon() {
-		return true;
-	}
 }

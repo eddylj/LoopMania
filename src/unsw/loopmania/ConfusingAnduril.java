@@ -7,6 +7,7 @@ public class ConfusingAnduril extends Anduril implements ConfusedRareItem{
 
 	public ConfusingAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level, Item additional) {
 		super(x, y, level);
+        super.setType("anduril");
         this.additional = additional;
 	}
 

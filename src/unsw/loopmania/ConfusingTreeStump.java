@@ -6,7 +6,8 @@ public class ConfusingTreeStump extends Shield implements ConfusedRareItem{
     private Item additional;
 	public ConfusingTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y, int level, Item additional) {
 		super(x, y, level);
-        this.additional =additional;
+        super.setType("treestump");
+        this.additional = additional;
 	}
 
     @Override
