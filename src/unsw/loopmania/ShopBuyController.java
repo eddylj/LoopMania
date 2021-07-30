@@ -1,4 +1,4 @@
-package unsw.loopmania.Shop;
+package unsw.loopmania;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.LoopManiaWorldController;
 import unsw.loopmania.Entities.StaticEntity;
 import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
