@@ -38,7 +38,7 @@ public abstract class Entity {
     public String getType(){
         return type;
     }
-     /**
+    /**
       * specify that this entity should destroy itself
       * this method will trigger any ChangeListeners attached to shouldExist
       */

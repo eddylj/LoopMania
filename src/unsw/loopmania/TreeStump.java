@@ -34,12 +34,12 @@ public class TreeStump extends Shield implements RareItem{
     }
 
     @Override
-    public double protect(double damage, Enemy e) {
+    public double protect(double damage, Enemy enemy) {
         //Will implement the chance to fully block the damag
         int blockChance = 25;
 
         int randomInt = LoopManiaWorld.getRandNum();
-        if (e instanceof Boss) {
+        if (enemy instanceof Boss) {
             blockChance += 50;            
         }
         if (randomInt < blockChance) {

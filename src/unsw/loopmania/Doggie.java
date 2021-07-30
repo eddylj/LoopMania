@@ -67,13 +67,13 @@ public class Doggie extends Enemy implements Boss{
      * Deals damage to Hero
      */
     @Override
-    public void attack (Hero h, BattleRunner b) {
-        if (h instanceof Character) {
+    public void attack (Hero hero, BattleRunner bR) {
+        if (hero instanceof Character) {
             int randomInt = LoopManiaWorld.getRandNum();
             if (randomInt < STUNCHANCE) {
-                b.stunCharacter();
+                bR.stunCharacter();
             }
         }
-        h.takeDamage(this.getAttackDamage(), this);
+        hero.takeDamage(this.getAttackDamage(), this);
     }
 }

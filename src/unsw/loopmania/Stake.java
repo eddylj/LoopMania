@@ -30,8 +30,8 @@ public class Stake extends Weapon{
      * @param e
      * @return damage applicable for enemy
      */
-    public double getDamage(Enemy e) {
-        if (e instanceof Vampire){
+    public double getDamage(Enemy enemy) {
+        if (enemy instanceof Vampire){
             return critAttack;
         }
         return super.getDamage();

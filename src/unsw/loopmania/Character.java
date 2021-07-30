@@ -79,22 +79,21 @@ public class Character extends MovingEntity implements Hero {
      * protective items
      * @param damage double: The incoming damage
      */
-    public void takeDamage(double damage, Enemy e){
+    public void takeDamage(double damage, Enemy enemy){
         if (!canTakeDamage) return;
         double newDamage = damage;
         if (!Objects.isNull(equippedShield)) {
             if (equippedShield.isTreeStump()) {
-                newDamage = ((Protection) equippedShield).protect(damage, e);
+                newDamage = ((Protection) equippedShield).protect(damage, enemy);
             }
             newDamage = ((Protection) equippedShield).protect(damage);
         }
         if (!Objects.isNull(equippedHelmet)) {
-
             newDamage = ((Protection) equippedHelmet).protect(damage);
         }
         if (!Objects.isNull(equippedArmour)) {
             if (equippedArmour instanceof Thornmail) {
-                newDamage = ((Thornmail) equippedArmour).protect(damage, e);
+                newDamage = ((Thornmail) equippedArmour).protect(damage, enemy);
             }
             newDamage = ((Protection) equippedArmour).protect(damage);
         }
@@ -107,7 +106,7 @@ public class Character extends MovingEntity implements Hero {
      * @param enemy Enemy: The enemy being attacked
      * @param b BattleRunner: BattleRunner class running the current battle
      */
-    public void attack(Enemy enemy, BattleRunner b) {
+    public void attack(Enemy enemy, BattleRunner bR) {
         double newDamage = 0;
         if (equippedWeapon == null) {
             newDamage = 5;
@@ -116,14 +115,13 @@ public class Character extends MovingEntity implements Hero {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
         }
         else if (equippedWeapon instanceof Axe) {
-
             newDamage = ((Axe)equippedWeapon).getDamage();
             if (newDamage == 0.0) {
                 return;
             }
         }
         else if (equippedWeapon instanceof Staff) {
-            if (((Staff)equippedWeapon).castSpell(enemy, b)) {
+            if (((Staff)equippedWeapon).castSpell(enemy, bR)) {
                 return;
             }
             newDamage = ((Staff)equippedWeapon).getDamage();
@@ -154,21 +152,21 @@ public class Character extends MovingEntity implements Hero {
     public void drinkHealthPotion() {
         
         HealthPotion potion = inventory.getHealthPotion();
-        if (!Objects.isNull(potion)) {
+        if (potion != null) {
             potion.use(this);
         }
     }
 
     public void drinkStrengthPotion() {
         StrengthPotion potion = inventory.getStrengthPotion();
-        if (!Objects.isNull(potion)) {
+        if (potion != null) {
             potion.use(this);
         }
     }
 
     public void drinkInvincibilityPotion() {
         Item potion = inventory.getInvinciblePotion();
-        if (!Objects.isNull(potion)) {
+        if (potion != null) {
             // instanceof is only used for typecasting.
             // e.g. Can't typecast a confusing TheOneRing into a potion
             if (potion instanceof InvinciblePotion) {
@@ -199,9 +197,9 @@ public class Character extends MovingEntity implements Hero {
      * This is called after the battle has been done
      */
     public void updateAlliedSoldierAmount() {
-        for (AlliedSoldier s : soldiers) {
-            if (s.getHealth() <= 0) {
-                soldiers.remove(s);
+        for (AlliedSoldier soldier : soldiers) {
+            if (soldier.getHealth() <= 0) {
+                soldiers.remove(soldier);
             }
         }
         aliveSoldiers.set(soldiers.size());
@@ -223,17 +221,17 @@ public class Character extends MovingEntity implements Hero {
      * (e.g. Item is not a HealthPotion)
      * @param i Item: item to be equipped.
      */
-    public void equip(Item i) {
-        inventory.removeUnequippedItem(i);
-        stats.updateHighestLevel(i);
-        if (i.isWeapon()) {
-            equippedWeapon = i;
-        } else if (i.isShield()) {
-            equippedShield = i;
-        } else if (i instanceof Armour) {
-            equippedArmour = i;
+    public void equip(Item item) {
+        inventory.removeUnequippedItem(item);
+        stats.updateHighestLevel(item);
+        if (item.isWeapon()) {
+            equippedWeapon = item;
+        } else if (item.isShield()) {
+            equippedShield = item;
+        } else if (item instanceof Armour) {
+            equippedArmour = item;
         } else {
-            equippedHelmet = i;
+            equippedHelmet = item;
         }
     }
 
@@ -630,8 +628,8 @@ public class Character extends MovingEntity implements Hero {
         return inventory.getCardsNum();
     }
 
-    public void setStunned(boolean b) {
-        isStunned = b;
+    public void setStunned(boolean stunned) {
+        isStunned = stunned;
     }
 
     public boolean isStunned() {

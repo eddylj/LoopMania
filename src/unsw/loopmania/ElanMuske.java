@@ -64,9 +64,9 @@ public class ElanMuske extends Enemy implements Boss{
     }
 
     @Override
-    public void attack (Hero h, BattleRunner b) {
-        h.takeDamage(this.getAttackDamage(), this);
-        b.healenemies();
+    public void attack (Hero hero, BattleRunner bR) {
+        hero.takeDamage(this.getAttackDamage(), this);
+        bR.healenemies();
     }
 
     @Override

@@ -22,7 +22,6 @@ public class Axe extends Weapon{
     }
     /**
      * returns damage weapon deals
-     * @param e
      * @return damage applicable for enemy
      */
     @Override

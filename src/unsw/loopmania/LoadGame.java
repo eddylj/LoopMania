@@ -32,34 +32,34 @@ public class LoadGame {
         loadShop(json);
     }
 
-    private void loadCharacter(JSONObject c, JSONObject json) {
+    private void loadCharacter(JSONObject characterJSON, JSONObject json) {
         Character character = world.getCharacter();
 
         // Deal with character stats
-        character.setHealth(c.getInt("health"));
-        character.gainXP(c.getInt("experience"));
-        character.setCycle(c.getInt("cycles"));
-        character.gainGold(c.getInt("gold"));
-        character.setBossKills(c.getInt("bossKills"));
-        character.setBuff(c.getDouble("strengthpotionbuff"));
-        if (c.getBoolean("canTakeDamage")) character.makeInvincible();
-        loadCharacterLevelStats(c.getJSONObject("stats"));
+        character.setHealth(characterJSON.getInt("health"));
+        character.gainXP(characterJSON.getInt("experience"));
+        character.setCycle(characterJSON.getInt("cycles"));
+        character.gainGold(characterJSON.getInt("gold"));
+        character.setBossKills(characterJSON.getInt("bossKills"));
+        character.setBuff(characterJSON.getDouble("strengthpotionbuff"));
+        if (characterJSON.getBoolean("canTakeDamage")) character.makeInvincible();
+        loadCharacterLevelStats(characterJSON.getJSONObject("stats"));
         
         // Deal with character's items
-        equipItem(c.getJSONObject("equippedWeapon"));
-        equipItem(c.getJSONObject("equippedHelmet"));
-        equipItem(c.getJSONObject("equippedShield"));
-        equipItem(c.getJSONObject("equippedArmour"));
+        equipItem(characterJSON.getJSONObject("equippedWeapon"));
+        equipItem(characterJSON.getJSONObject("equippedHelmet"));
+        equipItem(characterJSON.getJSONObject("equippedShield"));
+        equipItem(characterJSON.getJSONObject("equippedArmour"));
 
         world.setMode(json.getString("gameMode"));
 
-        loadUnequippedItems(c.getJSONArray("unequippedItems"));
+        loadUnequippedItems(characterJSON.getJSONArray("unequippedItems"));
 
         // Deal with character's cards
-        loadCards(c.getJSONArray("cards"));
+        loadCards(characterJSON.getJSONArray("cards"));
 
         // Deal with allied soldiers
-        character.setAliveSoldiers(c.getInt("aliveSoldiers"));
+        character.setAliveSoldiers(characterJSON.getInt("aliveSoldiers"));
     }
 
     private void equipItem(JSONObject item) {

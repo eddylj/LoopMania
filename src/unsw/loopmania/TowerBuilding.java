@@ -28,9 +28,9 @@ public class TowerBuilding extends StaticEntity implements Building{
      * Attacks enemy
      * @param e
      */
-    public void attack(Enemy e) {
-        int maxHealth = e.getHealth();
-        e.takeDamage(maxHealth * 0.08);
+    public void attack(Enemy enemy) {
+        int maxHealth = enemy.getHealth();
+        enemy.takeDamage(maxHealth * 0.08);
     }
     
 }

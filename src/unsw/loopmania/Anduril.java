@@ -16,14 +16,12 @@ public class Anduril extends Sword implements RareItem{
      * @param level
      */
     public Anduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-        // super(x, y, level, NOPRICE, DAMAGE);
         super(x, y, level);
         super.setType("anduril");
     }
 
     public Anduril(int level) {
         super(level);
-        // super(level, NOPRICE , DAMAGE);
         super.setType("anduril");
     }
 
@@ -45,9 +43,9 @@ public class Anduril extends Sword implements RareItem{
      * @return damage applicable for enemy
      */
     @Override
-    public double getDamage(Enemy e) {
+    public double getDamage(Enemy enemy) {
         // double damage = super.getDamage();
-        if (e instanceof Boss){
+        if (enemy instanceof Boss){
             return DAMAGE * BOSSDAMAGEMULTIPLIER;
         } else {
             return DAMAGE;

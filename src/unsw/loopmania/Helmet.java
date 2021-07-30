@@ -27,7 +27,7 @@ public class Helmet extends Protection {
         super.setType("helmet");
     }
 
-     /**
+    /**
      * Given the damage being inflicted on the character and will return the amount
      * of damage that will be inflicted after the reduction from the protection
      * @param damage the total damage being given

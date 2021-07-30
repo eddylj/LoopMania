@@ -85,7 +85,7 @@ public class RareItemFactory {
         }
     }
 
-    private Item create(String type) {
+    public Item create(String type) {
         if (type.equals("theonering")) {
             return createTheOneRing();
         }

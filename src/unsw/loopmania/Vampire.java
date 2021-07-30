@@ -38,8 +38,8 @@ public class Vampire extends Enemy {
      * Deals damage to Hero
      */
     @Override
-    public void attack (Hero h) {
-        Strategy.attack(h, this);
+    public void attack (Hero hero) {
+        Strategy.attack(hero, this);
     }
 
     /**

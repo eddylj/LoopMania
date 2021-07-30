@@ -42,22 +42,22 @@ public class SaveGame {
 
     private void saveCharacter() {
         Character character = world.getCharacter();
-        JSONObject c = new JSONObject();
-        c.put("experience", character.getXP().get());
-        c.put("gold", character.getGold());
-        c.put("cycles", character.getCycles().get());
-        c.put("health", character.getHealth());
-        c.put("bossKills", character.getBossKills());
-        c.put("strengthpotionbuff", character.getStrengthPotionBuff());
-        c.put("canTakeDamage", character.canTakeDamage());
-        addEquippedWeapon(c);
-        addEquippedArmour(c);
-        addEquippedHelmet(c);
-        addEquippedShield(c);
-        addCharacterStats(c, character);
-        c.put("aliveSoldiers", character.getAlliedSoldierCount());
-        addUnequippedInventory(c, character.getInventory());
-        save.put("character", c);
+        JSONObject characterJSON = new JSONObject();
+        characterJSON.put("experience", character.getXP().get());
+        characterJSON.put("gold", character.getGold());
+        characterJSON.put("cycles", character.getCycles().get());
+        characterJSON.put("health", character.getHealth());
+        characterJSON.put("bossKills", character.getBossKills());
+        characterJSON.put("strengthpotionbuff", character.getStrengthPotionBuff());
+        characterJSON.put("canTakeDamage", character.canTakeDamage());
+        addEquippedWeapon(characterJSON);
+        addEquippedArmour(characterJSON);
+        addEquippedHelmet(characterJSON);
+        addEquippedShield(characterJSON);
+        addCharacterStats(characterJSON, character);
+        characterJSON.put("aliveSoldiers", character.getAlliedSoldierCount());
+        addUnequippedInventory(characterJSON, character.getInventory());
+        save.put("character", characterJSON);
     }
 
     private void saveNonSpecifiedEntities() {
@@ -66,12 +66,12 @@ public class SaveGame {
         if (nonSpecifiedEntitiyList.isEmpty()) {
             return;
         }
-        for (Entity e : nonSpecifiedEntitiyList) {
-            JSONObject entity = new JSONObject();
-            entity.put("type", e.getType());
-            entity.put("x", e.getX());
-            entity.put("y", e.getY());
-            nonSpecifiedEntities.put(entity);
+        for (Entity entity : nonSpecifiedEntitiyList) {
+            JSONObject entityJSON = new JSONObject();
+            entityJSON.put("type", entity.getType());
+            entityJSON.put("x", entity.getX());
+            entityJSON.put("y", entity.getY());
+            nonSpecifiedEntities.put(entityJSON);
         }
         save.put("nonSpecifiedEntities", nonSpecifiedEntities);
     }
@@ -114,7 +114,7 @@ public class SaveGame {
         save.put("moveBuildings", buildings);
     }
 
-    private void addEquippedWeapon(JSONObject c) {
+    private void addEquippedWeapon(JSONObject character) {
         JSONObject equippedWeapon = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(0);
         equippedWeapon.put("type", item.getType());
@@ -124,10 +124,10 @@ public class SaveGame {
         if (item instanceof ConfusedRareItem) {
             equippedWeapon.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
         }
-        c.put("equippedWeapon", equippedWeapon);
+        character.put("equippedWeapon", equippedWeapon);
     }
 
-    private void addEquippedHelmet(JSONObject c) {
+    private void addEquippedHelmet(JSONObject character) {
         JSONObject equippedHelmet = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(1);
         if (item != null) {
@@ -136,10 +136,10 @@ public class SaveGame {
             equippedHelmet.put("x", item.getX());
             equippedHelmet.put("y", item.getY());
         }
-        c.put("equippedHelmet", equippedHelmet);
+        character.put("equippedHelmet", equippedHelmet);
     }
 
-    private void addEquippedShield(JSONObject c) {
+    private void addEquippedShield(JSONObject character) {
         JSONObject equippedShield = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(2);
         if (item != null) {
@@ -151,10 +151,10 @@ public class SaveGame {
                 equippedShield.put("additional", ((ConfusedRareItem)item).getAdditional().getType());
             }
         }
-        c.put("equippedShield", equippedShield);
+        character.put("equippedShield", equippedShield);
     }
     
-    private void addEquippedArmour(JSONObject c) {
+    private void addEquippedArmour(JSONObject character) {
         JSONObject equippedArmour = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(3);
         if (item != null) {
@@ -163,10 +163,10 @@ public class SaveGame {
             equippedArmour.put("x", item.getX());
             equippedArmour.put("y", item.getY());
         }
-        c.put("equippedArmour", equippedArmour);
+        character.put("equippedArmour", equippedArmour);
     }
 
-    private void addCharacterStats(JSONObject c, Character character) {
+    private void addCharacterStats(JSONObject characterJSON, Character character) {
         CharacterStats cs = character.getStats();
         JSONObject stats = new JSONObject();
         stats.put("sword", cs.getHighestLevel("sword"));
@@ -175,7 +175,7 @@ public class SaveGame {
         stats.put("shield", cs.getHighestLevel("shield"));
         stats.put("armour", cs.getHighestLevel("armour"));
         stats.put("helmet", cs.getHighestLevel("helmet"));
-        c.put("stats", stats);
+        characterJSON.put("stats", stats);
     }
 
     private void addUnequippedInventory(JSONObject character, Inventory inventory) {
@@ -199,10 +199,10 @@ public class SaveGame {
         }
 
         JSONArray cards = new JSONArray();
-        for (Card c : inventory.getCards()) {
-            JSONObject card = new JSONObject();
-            card.put("type", ((StaticEntity)c).getType());
-            cards.put(card);
+        for (Card card : inventory.getCards()) {
+            JSONObject cardJSON = new JSONObject();
+            cardJSON.put("type", ((StaticEntity)card).getType());
+            cards.put(cardJSON);
         }
 
         character.put("unequippedItems", items);

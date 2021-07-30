@@ -15,8 +15,8 @@ public class ConvertedEnemy extends AlliedSoldier{
      * Attacks enemy
      */
     @Override
-    public void attack(Enemy e) {
-        super.attack(e);
+    public void attack(Enemy enemy) {
+        super.attack(enemy);
         remainingTranceTime--;
     }
     /**
