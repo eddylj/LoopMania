@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Sword;
-import unsw.loopmania.Stake;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Staff;
-import unsw.loopmania.Vampire;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Items.Stake;
 public class WeaponTests {
     private LoopManiaWorld world;
     public WeaponTests() {

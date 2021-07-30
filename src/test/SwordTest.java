@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Weapon;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Items.Item;
 
 
 public class SwordTest {

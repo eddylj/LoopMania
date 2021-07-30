@@ -10,6 +10,17 @@ import org.json.JSONObject;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Factories.*;
+import unsw.loopmania.GoalCalculator.*;
+import unsw.loopmania.Entities.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Shop.*;
+import unsw.loopmania.Cards.*;
+
 
 /**
  * A backend world.

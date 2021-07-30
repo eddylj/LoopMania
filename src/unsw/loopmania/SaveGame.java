@@ -5,6 +5,15 @@ import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Entities.*;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Cards.*;
+
+
 public class SaveGame {
     private LoopManiaWorld world;
     private JSONObject save;

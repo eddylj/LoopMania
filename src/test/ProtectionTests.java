@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import unsw.loopmania.Armour;
 import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Shield;
-import unsw.loopmania.Helmet;
-import unsw.loopmania.Vampire;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Items.Armour;
+import unsw.loopmania.Items.Helmet;
 import unsw.loopmania.Hero;
 
 public class ProtectionTests {

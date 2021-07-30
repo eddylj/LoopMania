@@ -10,8 +10,8 @@ import org.javatuples.Pair;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.CardFactory;
-import unsw.loopmania.Card;
+import unsw.loopmania.Cards.Card;
+import unsw.loopmania.Factories.CardFactory;
 
 
 public class BuildingPlacementTest {

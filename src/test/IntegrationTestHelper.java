@@ -11,11 +11,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Entity;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Character;
-import unsw.loopmania.PathTile;
+import unsw.loopmania.Entities.Entity;
+import unsw.loopmania.Entities.PathTile;
 
 public class IntegrationTestHelper {
 
@@ -59,7 +59,7 @@ public class IntegrationTestHelper {
         // assert indexInPath != -1;
 
         Entity entity = null;
-        // TODO = load more entity types from the file
+
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
@@ -71,7 +71,7 @@ public class IntegrationTestHelper {
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         default:
             world.placeBuildingAtStart(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), type);
-        // TODO Handle other possible entities
+
         }
         world.addEntity(entity);
     }

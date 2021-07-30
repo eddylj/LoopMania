@@ -4,15 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import unsw.loopmania.Armour;
-import unsw.loopmania.Axe;
 import unsw.loopmania.CharacterStats;
-import unsw.loopmania.Helmet;
 import unsw.loopmania.Shield;
-import unsw.loopmania.Staff;
-import unsw.loopmania.Stake;
 import unsw.loopmania.Sword;
 import unsw.loopmania.Thornmail;
+import unsw.loopmania.Items.Armour;
+import unsw.loopmania.Items.Axe;
+import unsw.loopmania.Items.Helmet;
+import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Items.Stake;
 
 public class CharacterStatsTest {
     CharacterStats c = new CharacterStats();

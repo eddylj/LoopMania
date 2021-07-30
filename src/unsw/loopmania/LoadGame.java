@@ -7,6 +7,12 @@ import java.util.List;
 import org.json.JSONArray;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Factories.*;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Shop.*;
+import unsw.loopmania.Enemies.*;
 
 public class LoadGame {
     private LoopManiaWorld world;

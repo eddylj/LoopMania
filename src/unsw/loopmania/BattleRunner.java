@@ -1,7 +1,13 @@
 package unsw.loopmania;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Factories.*;
 
 
 /**
@@ -52,19 +58,25 @@ public class BattleRunner {
      * @return List<Enemy>: List of enemies that died in the fight (Empty if no battle takes place)
      */
     public List<Enemy> checkForFight(List<Enemy> enemies, List<BuildingOnMove> moveBuildings) {
+        // List of enemies participating in battle
         List<Enemy> attacking = new ArrayList<Enemy>();
+        // Loop through all enemies on map
         for (Enemy enemy : enemies) {
             int battleRadius = enemy.getBattleRadius();
             int supportRadius = enemy.getSupportRadius();
             double distance = Math.sqrt(Math.pow((character.getX()-enemy.getX()), 2) +  Math.pow((character.getY()-enemy.getY()), 2));
+            // If enemy is in battle radius, add them to battle
             if (distance <= battleRadius) {
                 attacking.add(enemy);
+                // If enemy is in support radius, add them to battle
             } else if (distance <= supportRadius) {
                 attacking.add(enemy);
             }
         }
         List<TowerBuilding> towers = getInRangeTowers(moveBuildings);
         if (!attacking.isEmpty()) {
+            // Reverse list so that enemies in battle radius are attacked first
+            Collections.reverse(attacking);
             return runBattle(attacking, character.getAlliedSoldiers(), towers);
         }
             else return attacking;
@@ -93,10 +105,12 @@ public class BattleRunner {
 
     /**
      * run the expected battles in the world, based on current world state
-     * @return boolean if battle is won or lost
+     * @return List of defeated enemies
      */
     public ArrayList<Enemy> runBattle(List<Enemy> enemies, List<AlliedSoldier> allies, List<TowerBuilding> towers) {
+        // List of to be defeated enemies
         defeatedEnemies = new ArrayList<Enemy>();
+        // Put these in class variables so we don't have to keep calling them in helper functions
         this.enemies = enemies;
         this.allies = allies;
         this.towers = towers;
@@ -105,7 +119,9 @@ public class BattleRunner {
             runEnemyAttacks();
             checkTrancedEnemies();
         }
+        // Kill any tranced enemies
         killConvertedEnemies();
+        // Remove strength potion effect
         character.removeBuff();
         return defeatedEnemies;
     }
@@ -183,8 +199,11 @@ public class BattleRunner {
     private void runEnemyAttacks() {
         for (int i = enemies.size() - 1; i >= 0; i--) {
             Enemy enemy = enemies.get(i);
+            // Enemy attacks allies first
             if (!allies.isEmpty()) {
                 AlliedSoldier ally = allies.get(0);
+                // If enemy is an instance of a zombie or doggie, battle runner
+                // needs to passed to use of its functions (i.e convert ally zombie)
                 if (enemy instanceof Zombie || enemy instanceof Doggie) {
                     enemy.attack(ally, this);
                 } 
@@ -196,6 +215,7 @@ public class BattleRunner {
                 }
             } 
             else {
+                // If no allies, attack character
                 enemy.attack(character, this);
                 if (character.isDead() && character.hasRing()) {
                     revivecharacter(character);
@@ -209,6 +229,7 @@ public class BattleRunner {
      * and then the character attacks. Heros attack the oldest enemy first.
      */
     private void runHeroAttacks() {
+        // Towers attack first
         for (TowerBuilding tower : towers) {
             if (!enemies.isEmpty()) {
                 Enemy enemy = enemies.get(0);
@@ -216,6 +237,7 @@ public class BattleRunner {
                 postFight(enemy);
             }
         }
+        // Then allies
         for (AlliedSoldier ally : allies) {
             if (!enemies.isEmpty()) {
                 Enemy enemy = enemies.get(0);
@@ -223,6 +245,7 @@ public class BattleRunner {
                 postFight(enemy);
             }
         }
+        // Finally character attacks
         if (!enemies.isEmpty()) {
             Enemy enemy = enemies.get(0);
             if (!character.isStunned()) {
@@ -266,11 +289,16 @@ public class BattleRunner {
     private void killAlly(AlliedSoldier ally) {
         allies.remove(ally);
     }
-
+    /**
+     * stuns the character
+     */
     public void stunCharacter() {
         character.setStunned(true);
     }
 
+    /** 
+     * Elan Musk heal ability, heals all enemies
+     */
     public void healenemies() {
         for (Enemy enemy: enemies) {
             if (!(enemy instanceof ElanMuske)) {

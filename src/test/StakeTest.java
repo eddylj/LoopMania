@@ -6,12 +6,12 @@ import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
-import unsw.loopmania.Item;
-import unsw.loopmania.Stake;
 import unsw.loopmania.Weapon;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Vampire;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.Stake;
 
 
 public class StakeTest {

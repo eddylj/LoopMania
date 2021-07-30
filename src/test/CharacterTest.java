@@ -1,20 +1,20 @@
 package test;
 
-import unsw.loopmania.Armour;
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Character;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Helmet;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Items.Armour;
+import unsw.loopmania.Items.Helmet;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Items.Stake;
 import unsw.loopmania.Hero;
-import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Protection;
 import unsw.loopmania.Shield;
-import unsw.loopmania.Slug;
 import unsw.loopmania.Sword;
-import unsw.loopmania.Staff;
-import unsw.loopmania.Stake;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
