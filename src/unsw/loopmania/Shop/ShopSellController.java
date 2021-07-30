@@ -15,9 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldController;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.*;
+import unsw.loopmania.Items.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 

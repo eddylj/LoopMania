@@ -3,12 +3,8 @@ package unsw.loopmania.GoalCalculator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.GoalCalculator.GoalCalculator.Composite;
-import unsw.loopmania.GoalCalculator.GoalCalculator.CompositeAnd;
-import unsw.loopmania.GoalCalculator.GoalCalculator.CompositeBoss;
-import unsw.loopmania.GoalCalculator.GoalCalculator.CompositeLeaf;
-import unsw.loopmania.GoalCalculator.GoalCalculator.CompositeOr;
+import unsw.loopmania.Heroes.Character;
+
 
 public class GoalCalculator {
     //private JSONObject json;

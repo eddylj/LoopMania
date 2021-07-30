@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class DoggieCoin extends Item{

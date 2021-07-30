@@ -1,7 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Items.Armour;
+import unsw.loopmania.Enemies.*;
 
 public class Thornmail extends Armour {
     public static final int PRICE = 350;

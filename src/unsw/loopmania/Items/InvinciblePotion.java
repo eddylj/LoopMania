@@ -1,6 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Heroes.Character;
 
 public class InvinciblePotion extends Potion implements RareItem{
     public static final int NOCOST = 0;

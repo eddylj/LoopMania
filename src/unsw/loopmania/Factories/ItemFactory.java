@@ -9,6 +9,9 @@ import unsw.loopmania.Items.Helmet;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Items.Staff;
 import unsw.loopmania.Items.Stake;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Thornmail;
+import unsw.loopmania.Items.Shield;
 import unsw.loopmania.Items.StrengthPotion;
 
 public class ItemFactory {

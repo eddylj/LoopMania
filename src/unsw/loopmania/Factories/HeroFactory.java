@@ -1,7 +1,7 @@
 package unsw.loopmania.Factories;
 
-import unsw.loopmania.AlliedSoldier;
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.AlliedSoldier;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Heroes.ConvertedEnemy;
 

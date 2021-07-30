@@ -1,6 +1,6 @@
 package unsw.loopmania.GoalCalculator;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 
 public class CompositeLeaf implements Composite{
     private int amount;

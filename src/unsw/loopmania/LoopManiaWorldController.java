@@ -40,22 +40,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import unsw.loopmania.Buildings.Building;
-import unsw.loopmania.Buildings.BuildingOnCycle;
-import unsw.loopmania.Buildings.BuildingOnMove;
-import unsw.loopmania.Cards.Card;
-import unsw.loopmania.Enemies.Enemy;
-import unsw.loopmania.Entities.Coin;
-import unsw.loopmania.Entities.Entity;
-import unsw.loopmania.Entities.MovingEntity;
-import unsw.loopmania.Entities.Poop;
-import unsw.loopmania.Entities.StaticEntity;
-import unsw.loopmania.Items.Armour;
-import unsw.loopmania.Items.Helmet;
-import unsw.loopmania.Items.Item;
-import unsw.loopmania.Shop.Shop;
-import unsw.loopmania.Shop.ShopBuyController;
-
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Entities.*;
+import unsw.loopmania.Shop.*;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Cards.*;
 import java.util.EnumMap;
 
 

@@ -1,7 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Heroes.Character;
 
 public abstract class Potion extends Item{
 

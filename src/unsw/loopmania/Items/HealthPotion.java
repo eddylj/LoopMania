@@ -1,8 +1,7 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Character;
-import unsw.loopmania.Potion;
+import unsw.loopmania.Heroes.Character;
 
 public class HealthPotion extends Potion{
     public static final int SELLPRICE = 40;

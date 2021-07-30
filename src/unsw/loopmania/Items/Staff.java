@@ -3,7 +3,6 @@ package unsw.loopmania.Items;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Weapon;
 import unsw.loopmania.Enemies.Enemy;
 
 public class Staff extends Weapon{

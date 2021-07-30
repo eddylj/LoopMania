@@ -3,15 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import unsw.loopmania.Buildings.BuildingOnMove;
-import unsw.loopmania.Buildings.TowerBuilding;
-import unsw.loopmania.Enemies.Doggie;
-import unsw.loopmania.Enemies.ElanMuske;
-import unsw.loopmania.Enemies.Enemy;
-import unsw.loopmania.Enemies.Zombie;
-import unsw.loopmania.Factories.EnemyFactory;
-import unsw.loopmania.Factories.HeroFactory;
-import unsw.loopmania.Heroes.ConvertedEnemy;
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Factories.*;
 
 
 /**

@@ -1,7 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Enemies.*;
 
 public abstract class Protection extends Item{
     private int level;

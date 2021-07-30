@@ -3,7 +3,7 @@ package unsw.loopmania.Enemies;
 import java.util.ArrayList;
 import java.util.List;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Entities.StaticEntity;

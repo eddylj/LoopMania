@@ -1,6 +1,6 @@
 package unsw.loopmania.Shop;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Items.Item;
 
 public class SurvivalShopStrategy implements ShopStrategy{

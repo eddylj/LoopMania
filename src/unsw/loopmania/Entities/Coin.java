@@ -2,6 +2,7 @@ package unsw.loopmania.Entities;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Heroes.Character;
 
 public class Coin extends StaticEntity{
     private int amount;

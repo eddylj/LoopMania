@@ -1,15 +1,6 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.ConfusedRareItem;
-import unsw.loopmania.InvinciblePotion;
-import unsw.loopmania.Nuke;
-import unsw.loopmania.Potion;
-import unsw.loopmania.Protection;
-import unsw.loopmania.Shield;
-import unsw.loopmania.TheOneRing;
-import unsw.loopmania.TreeStump;
-import unsw.loopmania.Weapon;
 import unsw.loopmania.Entities.StaticEntity;
 
 public abstract class Item extends StaticEntity{

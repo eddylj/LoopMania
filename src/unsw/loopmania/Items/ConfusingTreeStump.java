@@ -1,10 +1,7 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Character;
-import unsw.loopmania.ConfusedRareItem;
-import unsw.loopmania.InvinciblePotion;
-import unsw.loopmania.Shield;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Enemies.Enemy;
 
 public class ConfusingTreeStump extends Shield implements ConfusedRareItem{

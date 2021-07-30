@@ -12,7 +12,7 @@ import org.json.JSONTokener;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Entities.Entity;
 import unsw.loopmania.Entities.PathTile;
-
+import unsw.loopmania.Heroes.Character;
 import java.util.List;
 
 /**
@@ -76,7 +76,6 @@ public abstract class LoopManiaWorldLoader {
         // assert indexInPath != -1;
 
         Entity entity = null;
-        // TODO = load more entity types from the file
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));

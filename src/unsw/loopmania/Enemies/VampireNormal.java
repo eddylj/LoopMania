@@ -2,8 +2,8 @@ package unsw.loopmania.Enemies;
 
 import java.util.Objects;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 
 

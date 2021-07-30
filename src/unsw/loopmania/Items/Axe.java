@@ -1,7 +1,6 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Weapon;
 
 /**
  * Axe is a powerful weapon limited but slow

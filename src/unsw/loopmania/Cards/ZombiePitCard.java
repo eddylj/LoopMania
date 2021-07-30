@@ -1,11 +1,11 @@
-package unsw.loopmania;
+package unsw.loopmania.Cards;
 
 import java.util.List;
 
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Cards.Card;
+import unsw.loopmania.Entities.StaticEntity;
 
 public class ZombiePitCard extends StaticEntity implements Card {
     /**

@@ -1,6 +1,6 @@
-package unsw.loopmania.Heroes;;
+package unsw.loopmania.Heroes;
 
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.*;
 
 public class CharacterStats {
     private int sword;

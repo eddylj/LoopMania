@@ -11,6 +11,10 @@ import unsw.loopmania.Items.ConfusingInvinciblePotion;
 import unsw.loopmania.Items.ConfusingNuke;
 import unsw.loopmania.Items.ConfusingTheOneRing;
 import unsw.loopmania.Items.ConfusingTreeStump;
+import unsw.loopmania.Items.TheOneRing;
+import unsw.loopmania.Items.Nuke;
+import unsw.loopmania.Items.TreeStump;
+import unsw.loopmania.Items.InvinciblePotion;
 import unsw.loopmania.Items.Item;
 
 public class RareItemFactory {

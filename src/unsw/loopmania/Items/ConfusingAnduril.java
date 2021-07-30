@@ -1,11 +1,9 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Character;
-import unsw.loopmania.ConfusedRareItem;
-import unsw.loopmania.InvinciblePotion;
-import unsw.loopmania.TreeStump;
-import unsw.loopmania.Enemies.Enemy;
+
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Heroes.Character;
 
 public class ConfusingAnduril extends Anduril implements ConfusedRareItem{
     private Item additional;

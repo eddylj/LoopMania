@@ -1,15 +1,15 @@
 package unsw.loopmania.Factories;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.TowerCard;
-import unsw.loopmania.TrapCard;
-import unsw.loopmania.VillageCard;
+import unsw.loopmania.Cards.TowerCard;
+import unsw.loopmania.Cards.TrapCard;
+import unsw.loopmania.Cards.VillageCard;
 import unsw.loopmania.Cards.BankCard;
 import unsw.loopmania.Cards.BarracksCard;
 import unsw.loopmania.Cards.CampfireCard;
 import unsw.loopmania.Cards.Card;
 import unsw.loopmania.Cards.VampireCastleCard;
-import unsw.loopmania.Enemies.ZombiePitCard;
+import unsw.loopmania.Cards.ZombiePitCard;
 
 /**
  * CardFactory is a factory pattern that is used to create Card classes.

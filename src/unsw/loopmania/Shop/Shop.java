@@ -6,14 +6,11 @@ import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Character;
-import unsw.loopmania.CharacterStats;
-import unsw.loopmania.Inventory;
-import unsw.loopmania.SurvivalShopStrategy;
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Factories.ItemFactory;
-import unsw.loopmania.Items.Item;
-import unsw.loopmania.Shop.Shop.BeserkerShopStrategy;
-import unsw.loopmania.Shop.Shop.NormalShopStrategy;
+import unsw.loopmania.Items.*;
+
 
 public class Shop {
     private CharacterStats stats;

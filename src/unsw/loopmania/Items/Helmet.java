@@ -1,7 +1,6 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Protection;
 
 public class Helmet extends Protection {
     public static final int PRICE = 400;

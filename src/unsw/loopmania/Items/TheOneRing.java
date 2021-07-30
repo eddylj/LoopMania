@@ -1,7 +1,6 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Items.Item;
 
 public class TheOneRing extends Item implements RareItem{
     public static final int NOPRICE = 0;

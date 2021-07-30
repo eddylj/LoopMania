@@ -1,7 +1,6 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Protection;
 
 /**
  * Armour provides protection for the character during battles.

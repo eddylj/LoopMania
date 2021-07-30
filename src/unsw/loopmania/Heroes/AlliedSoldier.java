@@ -1,4 +1,4 @@
-package unsw.loopmania.Heroes;;
+package unsw.loopmania.Heroes;
 
 import unsw.loopmania.Enemies.Enemy;
 

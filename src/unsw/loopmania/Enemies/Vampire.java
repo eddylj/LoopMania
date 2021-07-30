@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import org.javatuples.Pair;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.CampfireBuilding;

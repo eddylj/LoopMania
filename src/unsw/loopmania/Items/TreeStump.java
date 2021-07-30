@@ -1,7 +1,8 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Items.RareItem;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.*;
 
 public class TreeStump extends Shield implements RareItem{
     private static final int SELLPRICE = 1500;

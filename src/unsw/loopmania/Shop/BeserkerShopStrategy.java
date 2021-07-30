@@ -1,7 +1,7 @@
 package unsw.loopmania.Shop;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.*;
 
 /**
  * Strategy pattern that runs the shop in berserker game mode.

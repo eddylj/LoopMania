@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.Heroes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,13 +7,14 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Cards.Card;
 import unsw.loopmania.Entities.Entity;
 import unsw.loopmania.Entities.StaticEntity;
 import unsw.loopmania.Factories.CardFactory;
 import unsw.loopmania.Factories.ItemFactory;
 import unsw.loopmania.Factories.RareItemFactory;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.*;
 
 
 public class Inventory {

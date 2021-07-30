@@ -1,7 +1,7 @@
 package unsw.loopmania.Buildings;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Entities.MovingEntity;
 import unsw.loopmania.Entities.StaticEntity;
 

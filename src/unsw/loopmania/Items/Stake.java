@@ -1,7 +1,6 @@
 package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Weapon;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Vampire;
 

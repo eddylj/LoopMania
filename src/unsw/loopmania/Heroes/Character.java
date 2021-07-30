@@ -1,26 +1,17 @@
 package unsw.loopmania.Heroes;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Buildings.BonusDamageStrategy;
-import unsw.loopmania.Buildings.NormalState;
-import unsw.loopmania.Cards.Card;
-import unsw.loopmania.Enemies.Enemy;
-import unsw.loopmania.Entities.MovingEntity;
-import unsw.loopmania.Factories.HeroFactory;
-import unsw.loopmania.Items.Armour;
-import unsw.loopmania.Items.Axe;
-import unsw.loopmania.Items.HealthPotion;
-import unsw.loopmania.Items.Helmet;
-import unsw.loopmania.Items.Item;
-import unsw.loopmania.Items.Staff;
-import unsw.loopmania.Items.Stake;
-import unsw.loopmania.Items.StrengthPotion;
-
+import unsw.loopmania.Buildings.*;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Entities.*;
+import unsw.loopmania.*;
+import unsw.loopmania.Cards.*;
+import unsw.loopmania.Factories.*;
 /**
  * Character contains the character that moves around the map.
  * It contains all the stats and fields for the character object,

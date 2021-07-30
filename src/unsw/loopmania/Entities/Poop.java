@@ -1,6 +1,7 @@
 package unsw.loopmania.Entities;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Heroes.Character;
 
 public class Poop extends StaticEntity{
     private int damage;

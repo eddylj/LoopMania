@@ -2,10 +2,10 @@ package unsw.loopmania.Enemies;
 
 import java.util.List;
 
-import unsw.loopmania.AlliedSoldier;
+import unsw.loopmania.Heroes.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Entities.StaticEntity;

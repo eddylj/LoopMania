@@ -1,6 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.Items;
 
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Heroes.Character;
 
 public interface ConfusedRareItem {
     public double protect(double damage, Enemy e);

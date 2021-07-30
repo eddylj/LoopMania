@@ -1,6 +1,6 @@
 package unsw.loopmania.Enemies;
 
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 
 public class VampireCritical implements VampireAttackStrategy{
