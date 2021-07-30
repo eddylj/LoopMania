@@ -44,7 +44,7 @@ public class SwordTest {
         for (int i = 2; i <= 10; i++) {
             Weapon nextSword = new Sword(i);
             System.out.println(damage*1.1);
-            assertEquals(nextSword.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            assertEquals(nextSword.getDamage(), initialDamage * Math.pow(1.1, i - 1));
             damage = nextSword.getDamage();
         }
     }

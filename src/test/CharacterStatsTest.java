@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import unsw.loopmania.Armour;
+import unsw.loopmania.Axe;
 import unsw.loopmania.CharacterStats;
 import unsw.loopmania.Helmet;
 import unsw.loopmania.Shield;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Stake;
 import unsw.loopmania.Sword;
+import unsw.loopmania.Thornmail;
 
 public class CharacterStatsTest {
     CharacterStats c = new CharacterStats();
@@ -23,6 +25,8 @@ public class CharacterStatsTest {
         Helmet helmet = new Helmet(1);
         Shield shield = new Shield(1);
         Armour armour = new Armour(3);
+        Thornmail thornmail = new Thornmail(6);
+        Axe axe = new Axe(6);
         c.updateHighestLevel(sword);
         assertEquals(2, c.getHighestLevel("sword"));
         c.updateHighestLevel(stake);
@@ -35,5 +39,9 @@ public class CharacterStatsTest {
         assertEquals(1, c.getHighestLevel("shield"));
         c.updateHighestLevel(armour);
         assertEquals(3, c.getHighestLevel("armour"));
+        c.updateHighestLevel(thornmail);
+        assertEquals(6, c.getHighestLevel("thornmail"));
+        c.updateHighestLevel(axe);
+        assertEquals(6, c.getHighestLevel("axe"));
     }
 }

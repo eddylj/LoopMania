@@ -6,6 +6,7 @@ import unsw.loopmania.Character;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Enemy;
 import unsw.loopmania.Helmet;
+import unsw.loopmania.Hero;
 import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Protection;
@@ -63,7 +64,7 @@ public class CharacterTest {
         Item stakeItem = (Item) s;
         c.equip(stakeItem);
         c.attack(e1, b);
-        assertEquals(100, e1.getHealth());
+        assertEquals(95, e1.getHealth());
         Enemy e2 = new Slug();
         c.attack(e2, b);
         assertEquals(30, e2.getHealth());
@@ -99,10 +100,11 @@ public class CharacterTest {
     public void takeDamageShieldTest() {
         Character c = new Character();
         Shield shield = new Shield(1);
-        LoopManiaWorld.setSeed(22);
+        Enemy slug = new Slug();
+        LoopManiaWorld world = new LoopManiaWorld(2);
         Item shieldItem = (Item) shield;
         c.equip(shieldItem);
-        c.takeDamage(10);
+        slug.attack((Hero)c);
         assertEquals(c.getHealth(), 100);
         c.takeDamage(10);
         assertEquals(c.getHealth(), 90);
@@ -112,9 +114,11 @@ public class CharacterTest {
     public void takeDamageArmourTest() {
         Character c = new Character();
         Armour armour = new Armour(1);
+        Enemy slug = new Slug();
         Item armItem = (Item) armour;
         c.equip(armItem);
-        c.takeDamage(10);
+        // c.takeDamage(10);
+        slug.attack((Hero)c);
         assertEquals(c.getHealth(), 94);
     }
 
@@ -122,9 +126,11 @@ public class CharacterTest {
     public void takeDamageHelmetTest() {
         Character c = new Character();
         Protection helmet = new Helmet(1);
+        Enemy slug = new Slug();
         Item helmetItem = (Item) helmet;
         c.equip(helmetItem);
-        c.takeDamage(10);
+        // c.takeDamage(10);
+        slug.attack((Hero)c);
         assertEquals(c.getHealth(), 93);
     }
 /*

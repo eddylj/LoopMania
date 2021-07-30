@@ -71,6 +71,7 @@ public class Character extends MovingEntity implements Hero {
         soldiers = new ArrayList<AlliedSoldier>();
         inventory = new Inventory(this);
         aliveSoldiers = new SimpleIntegerProperty(0);
+        canTakeDamage = true;
     }
 
     /**
@@ -97,6 +98,7 @@ public class Character extends MovingEntity implements Hero {
             }
             newDamage = ((Protection) equippedArmour).protect(damage);
         }
+        System.out.println(newDamage);
         super.takeDamage(newDamage);
     }
 
@@ -107,9 +109,11 @@ public class Character extends MovingEntity implements Hero {
      * @param b BattleRunner: BattleRunner class running the current battle
      */
     public void attack(Enemy enemy, BattleRunner b) {
-        double newDamage = 5;
-
-        if (equippedWeapon instanceof Stake) {
+        double newDamage = 0;
+        if (equippedWeapon == null) {
+            newDamage = 5;
+        }
+        else if (equippedWeapon instanceof Stake) {
             newDamage = ((Stake)equippedWeapon).getDamage(enemy);
         }
         else if (equippedWeapon instanceof Axe) {

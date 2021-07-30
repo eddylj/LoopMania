@@ -181,7 +181,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 3);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
@@ -229,7 +229,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 8);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
@@ -256,7 +256,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 1);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);

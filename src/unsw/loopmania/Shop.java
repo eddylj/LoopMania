@@ -73,10 +73,10 @@ public class Shop {
     public Item buy(String item) {
         int level = stats.getHighestLevel(item);
         Item purchasedItem = (Item)inventory.addUnequippedItem(item, level+1);
-        stats.updateHighestLevel(purchasedItem);
-        int price = getBuyPrice(item);
+        int price = purchasedItem.getPrice();
         character.loseGold(price);
         available.buyItem(purchasedItem);
+        stats.updateHighestLevel(purchasedItem);
         if (item.equals("healthpotion")) {
             boughtHealthPotions++;
         }

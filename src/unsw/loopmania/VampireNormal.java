@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.Objects;
 
+
 public class VampireNormal implements VampireAttackStrategy{
 
     /**

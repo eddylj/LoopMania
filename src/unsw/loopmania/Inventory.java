@@ -170,9 +170,9 @@ public class Inventory {
      * @return
      */
     public StaticEntity addUnequippedItem (String type, int level){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
+            System.out.println("gotta replace");
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items 
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();

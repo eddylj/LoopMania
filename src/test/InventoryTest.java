@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
@@ -12,6 +14,7 @@ public class InventoryTest {
     @Test
     public void PickUpDifferentItemsTest() {
         Character c = new Character();
+        c.setRareItems(new ArrayList<String>());
         assertEquals(0, c.getUnequippedInventoryItemsNum());
 
         c.addUnequippedItem("sword", 1);
@@ -36,6 +39,7 @@ public class InventoryTest {
     @Test
     public void PickUpMaxItemsTest() {
         Character c = new Character();
+        c.setRareItems(new ArrayList<String>());
         for (int i = 0; i < 16; i++) {
             c.addUnequippedItem("sword", 1);
         }
@@ -49,6 +53,7 @@ public class InventoryTest {
     @Test
     public void PickUpDifferentCardsTest() {
         Character c = new Character();
+        c.setRareItems(new ArrayList<String>());
         LoopManiaWorld.setSeed(5);
         int width = 16;
         assertEquals(0, c.getCardsNum());

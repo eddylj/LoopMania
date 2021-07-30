@@ -37,10 +37,10 @@ public class StaffTest {
     public void StaffSaleTest() {
         Character c = new Character();
         Item staff = new Staff(1);
-
-        c.sellItem(staff);
+        Shop shop = new Shop(c);
+        shop.sell(staff);
         
-        //assertEquals(280, c.getGold());
+        assertEquals(280, c.getGold());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class StaffTest {
         Double initialDamage = damage;
         for (int i = 2; i <= 10; i++) {
             Weapon nextStaff= new Staff(i);
-            assertEquals(nextStaff.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            assertEquals(nextStaff.getDamage(), initialDamage*Math.pow(1.1, i - 1));
             damage = nextStaff.getDamage();
         }
     }

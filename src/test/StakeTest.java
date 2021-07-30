@@ -39,7 +39,7 @@ public class StakeTest {
         Enemy vampire = new Vampire();
         assertEquals(150, vampire.getHealth());
         c.attack(vampire, b);
-        assertEquals(100, vampire.getHealth());
+        assertEquals(95, vampire.getHealth());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class StakeTest {
         Double initialDamage = damage;
         for (int i = 2; i <= 10; i++) {
             Weapon nextStake= new Stake(i);
-            assertEquals(nextStake.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            assertEquals(nextStake.getDamage(), initialDamage * Math.pow(1.1, i - 1));
             damage = nextStake.getDamage();
         }
     }

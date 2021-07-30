@@ -83,7 +83,9 @@ public class GoldTest {
     @Test
     public void getGoldFromItemReplaceTest() {
         Item shield = new Shield(3);
+        character = new Character();
         Inventory inven = new Inventory(character);
+        inven.setRareItems(new ArrayList<String>());
         inven.addUnequippedItem("shield", 3);
         for (int i = 0; i < 15; i++) {
             inven.addUnequippedItem("stake", 7);

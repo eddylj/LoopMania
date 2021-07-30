@@ -11,6 +11,11 @@ import unsw.loopmania.Slug;
 import unsw.loopmania.Staff;
 import unsw.loopmania.Vampire;
 public class WeaponTests {
+    private LoopManiaWorld world;
+    public WeaponTests() {
+        world = new LoopManiaWorld(1);
+    }
+
     @Test
     public void testSword() {
         Sword s = new Sword(1);
@@ -26,7 +31,7 @@ public class WeaponTests {
         Enemy p = new Slug();
         Enemy v = new Vampire();
         assertEquals(20, s.getDamage(p));
-        assertEquals(50, s.getDamage(v));
+        assertEquals(55, (int)s.getDamage(v));
         assertEquals(350, s.getPrice());
         assertEquals(140, s.getSellPrice());
         assertEquals(1, s.getLevel());
