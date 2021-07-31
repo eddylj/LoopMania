@@ -57,10 +57,10 @@ public class MapSelectorController {
         else {
             if (folder == "worlds") {
                 // load the main menu
-                MainMenuController mainMenuController = new MainMenuController(folder, selectedProperty.get());
-                FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
-                menuLoader.setController(mainMenuController);
-                Parent mainMenuRoot = menuLoader.load();
+                ModeController modeController = new ModeController(folder, selectedProperty.get());
+                FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("ModeView.fxml"));
+                menuLoader.setController(modeController);
+                Parent modeRoot = menuLoader.load();
 
                 Scene scene = this.errorLabel.getScene();
                 Stage primaryStage = (Stage) scene.getWindow();
@@ -68,8 +68,8 @@ public class MapSelectorController {
                 primaryStage.setTitle("Loop Mania - Select Mode");
                 
                 // deploy the main onto the stage
-                scene.setRoot(mainMenuRoot);
-                mainMenuRoot.requestFocus();
+                scene.setRoot(modeRoot);
+                modeRoot.requestFocus();
                 primaryStage.setScene(scene);
                 primaryStage.sizeToScene();
                 primaryStage.show();
@@ -86,9 +86,7 @@ public class MapSelectorController {
                 Stage primaryStage = (Stage) scene.getWindow();
 
                 primaryStage.setTitle("Loop Mania");
-                // mainController.setMainMenuSwitcher((String mode) -> {switchToRoot(scene, mainMenuRoot, primaryStage);
-                //     stop();
-                // });
+
                 scene.setRoot(gameRoot);
                 gameRoot.requestFocus();
                 primaryStage.setScene(scene);

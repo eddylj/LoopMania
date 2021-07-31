@@ -133,6 +133,9 @@ public class LoopManiaWorldController {
     private Label cyclesAmount;
 
     @FXML
+    private Label bossAmount;
+
+    @FXML
     private Label goldGoal;
 
     @FXML
@@ -329,6 +332,7 @@ public class LoopManiaWorldController {
         goldAmount.textProperty().bind(world.getGold().asString());
         cyclesAmount.textProperty().bind(world.getCycles().asString());
         xpAmount.textProperty().bind(world.getXP().asString());
+        bossAmount.textProperty().bind(world.getBossKills().asString());
         alliedSoldierAmount.textProperty().bind(world.getCharacter().getAlliedSoldierProperty().asString());
 
         // initialises healthbar
@@ -341,7 +345,7 @@ public class LoopManiaWorldController {
         goldGoal.setText(Integer.toString(world.getMaxGoal("gold")));
         xpGoal.setText(Integer.toString(world.getMaxGoal("experience")));
         cyclesGoal.setText(Integer.toString(world.getMaxGoal("cycles")));
-        bossGoal.textProperty().bind(world.getBossKills().asString()); 
+        bossGoal.setText(Integer.toString(world.getMaxGoal("bosses")));
 
         
         // create the draggable icon
@@ -570,7 +574,7 @@ public class LoopManiaWorldController {
         squares.getChildren().add(view);
     }
 
-    public void setMode(String mode) {
+    public void setMode(ArrayList<String> mode) {
         world.setMode(mode);
     }
 

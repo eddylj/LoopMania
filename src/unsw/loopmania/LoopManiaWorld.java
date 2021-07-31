@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -51,7 +52,7 @@ public class LoopManiaWorld {
     private List<Poop> poop;
     private Shop shop;
     private Boolean muskeSpawned = false; 
-    private String selectedGamemode;
+    private ArrayList<String> selectedGamemode;
     
 
     public static final int DOGGIESPAWNCYCLE = 20;
@@ -69,7 +70,7 @@ public class LoopManiaWorld {
         this.width = width;
         this.height = height;
         bF = new BuildingFactory();
-        selectedGamemode = "standard";
+        selectedGamemode = new ArrayList<String>(Arrays.asList("standard"));
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
         enemies = new ArrayList<>();
@@ -749,18 +750,24 @@ public class LoopManiaWorld {
         character.addUnequippedItem("shield", 2);
     }
 
-    public void setMode(String mode) {
-        if (mode.equals("survival")) {
+    public void setMode(ArrayList<String> mode) {
+        if (mode.contains("survival") && mode.contains("berserker")) {
+            shop.setSurvivalAndBeserker();
+            selectedGamemode.add("survival");
+            selectedGamemode.add("berserker");
+        }
+        else if (mode.contains("survival")) {
             shop.setSurvival();
-            selectedGamemode = "survival";
+            selectedGamemode.add("survival");
         }
-        if (mode.equals("beserker")) {
+        else if (mode.contains("berserker")) {
             shop.setBeserker();
-            selectedGamemode = "beserker";
+            selectedGamemode.add("berserker");
         }
-        if (mode.equals("confusing") && rareItems.size() >= 2) {
+
+        if (mode.contains("confusing") && rareItems.size() >= 2) {
             character.setConfusingMode();
-            selectedGamemode = "confusing";
+            selectedGamemode.add("confusing");
         }
     }
 
@@ -912,7 +919,7 @@ public class LoopManiaWorld {
         return shop.getStrengthPotionsBought();
     }
 
-    public String getSelectedGamemode() {
+    public ArrayList<String> getSelectedGamemode() {
         return selectedGamemode;
     }
 

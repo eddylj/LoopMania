@@ -3,6 +3,7 @@ package unsw.loopmania.Shop;
 
 import java.util.List;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -118,12 +119,16 @@ public class Shop {
         character.gainGold(price);
     }
 
-    public BooleanProperty canBuy(String item) {
-        return new SimpleBooleanProperty(available.getAvailable(previewItem(item)));
+    public BooleanBinding canBuy(String item) {
+        return available.getAvailable(previewItem(item));
     }
 
     public void restock() {
         available.restock();
+    }
+
+    public void setSurvivalAndBeserker() {
+        available = new SurvivalAndBeserkerShopStrategy(character);
     }
 
     public void setSurvival() {

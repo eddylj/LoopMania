@@ -27,6 +27,7 @@ import unsw.loopmania.Items.Item;
 import unsw.loopmania.Shop.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.beans.binding.Bindings;
 
 public class ShopBuyController {
 
@@ -56,6 +57,7 @@ public class ShopBuyController {
 
     @FXML
     public void initialize() {
+        shop.restock();
         addItems(itemList);
         addDoneButton();
         addSellButton();
@@ -145,6 +147,8 @@ public class ShopBuyController {
         Button buyButton = new Button(Integer.toString(price));
         // buyButton.set
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 15));
+        // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
+        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -154,9 +158,10 @@ public class ShopBuyController {
                 buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
                 view.setImage(makeItemImage(itemName));
-                for (Pair<Button, String> b : buyButtons) {
-                    b.getValue0().disableProperty().bind(shop.canBuy(b.getValue1()).not());
-                }
+                // for (Pair<Button, String> b : buyButtons) {
+                //     b.getValue0().disableProperty().bind(shop.canBuy(itemName));
+                //     // b.getValue0().disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+                // }
             }
         });
         // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
@@ -180,7 +185,7 @@ public class ShopBuyController {
                     Stage stage = new Stage();
                     stage.setTitle("Shop-Sell");
                     worldController.setSellShopOpen(true);
-                    shop.restock();
+                    // shop.restock();
                     stage.setOnCloseRequest(closeEvent -> {
                         worldController.setSellShopOpen(false);
                         worldController.tryToPlay();
