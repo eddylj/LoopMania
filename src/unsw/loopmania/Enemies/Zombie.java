@@ -102,10 +102,13 @@ public class Zombie extends Enemy {
                     level = 10;
                 }
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("up one level");
             }
             else {
                 int level = character.getHighestLevel(itemType);
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("same level");
+
             }
         }
         else if (num < 35) {
