@@ -49,11 +49,11 @@ public class Shop {
         Item item = null;
         if (itemType.equals("healthpotion")) {
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
-            ((Potion)item).increaseCost(boughtHealthPotions);
+            // ((Potion)item).increaseCost(boughtHealthPotions);
         }
         else if (itemType.equals("strengthpotion")) {
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
-            ((Potion)item).increaseCost(boughtStrengthPotions);
+            // ((Potion)item).increaseCost(boughtStrengthPotions);
         }
         else {
             int level = stats.getHighestLevel(itemType);
@@ -78,6 +78,12 @@ public class Shop {
     public Item buy(String item) {
         int level = stats.getHighestLevel(item);
         Item purchasedItem = (Item)inventory.addUnequippedItem(item, level+1);
+        if (purchasedItem instanceof HealthPotion) {
+            ((Potion)purchasedItem).increaseCost(boughtHealthPotions);
+        }
+        else if (purchasedItem instanceof StrengthPotion) {
+            ((Potion)purchasedItem).increaseCost(boughtStrengthPotions);
+        }
         int price = purchasedItem.getPrice();
         character.loseGold(price);
         available.buyItem(purchasedItem);

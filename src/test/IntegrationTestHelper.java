@@ -28,9 +28,9 @@ public class IntegrationTestHelper {
             json = new JSONObject(new JSONTokener(new FileReader("worlds/" + fileName)));
         }
         // JSONObject goals = json.getJSONObject("goal-condition");
-        List<Pair<Integer, Integer>> orderedPath = IntegrationTestHelper.loadPathTiles(json.getJSONObject("path"), 8, 14);
         int width = json.getInt("width");
         int height = json.getInt("height");
+        List<Pair<Integer, Integer>> orderedPath = IntegrationTestHelper.loadPathTiles(json.getJSONObject("path"), width, height);
 
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json, seed);
 
@@ -117,6 +117,7 @@ public class IntegrationTestHelper {
             orderedPath.add(Pair.with(x, y));
             
             if (y >= height || y < 0 || x >= width || x < 0) {
+                System.out.println(String.format("(%d, %d)\n Width: %d\nHeight: %d", x, y, width, height));
                 throw new IllegalArgumentException("Path goes out of bounds at direction index " + (i - 1) + " (" + connections.get(i - 1) + ")");
             }
             

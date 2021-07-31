@@ -743,10 +743,6 @@ public class LoopManiaWorld {
         equipItem(iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "sword", 1), "weapon");
         shop = new Shop(character);
         character.setRareItems(rareItems);
-        character.addUnequippedItem("shield", 2);
-        character.addUnequippedItem("shield", 2);
-        character.addUnequippedItem("shield", 2);
-        character.addUnequippedItem("shield", 2);
     }
 
     public void setMode(String mode) {
