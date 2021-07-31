@@ -42,24 +42,33 @@ public class Shop {
      * @return cost to buy item
      */
     public int getBuyPrice(String item) {
-        return previewItem(item).getPrice();
+        Item preview = previewItem(item);
+        int cost = preview.getPrice();
+        reset_price(preview);
+        return cost;
     }
 
     private Item previewItem(String itemType) {
         Item item = null;
         if (itemType.equals("healthpotion")) {
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
-            // ((Potion)item).increaseCost(boughtHealthPotions);
+            ((Potion)item).increaseCost(boughtHealthPotions);
         }
         else if (itemType.equals("strengthpotion")) {
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType);
-            // ((Potion)item).increaseCost(boughtStrengthPotions);
+            ((Potion)item).increaseCost(boughtStrengthPotions);
         }
         else {
             int level = stats.getHighestLevel(itemType);
             item = iF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), itemType, level + 1);
         }
         return item;
+    }
+
+    private void reset_price(Item item) {
+        if (item.isPotion()) {
+            ((Potion)item).reset_cost();
+        }
     }
 
     public int getItemBuyLevel(String item) {

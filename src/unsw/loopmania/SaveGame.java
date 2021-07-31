@@ -13,16 +13,27 @@ import unsw.loopmania.Buildings.*;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Cards.*;
 
-
+/**
+ * SaveGame class saves the game state as a JSON file and creates a file in
+ * backups which can then be loaded.
+ */
 public class SaveGame {
     private LoopManiaWorld world;
     private JSONObject save;
 
+    /**
+     * Constructor for SaveGame class
+     * @param world LoopManiaWorld : world state to be saved
+     */
     public SaveGame(LoopManiaWorld world) {
         this.world = world;
         save = new JSONObject();
     }
 
+    /**
+     * Saves the world state into a JSONfile
+     * @param name String : name of saved world
+     */
     public void SaveWorld(String name) {
         saveCharacter();
         saveNonSpecifiedEntities();
@@ -46,6 +57,10 @@ public class SaveGame {
         }
     }
 
+    /**
+     * Saves all character attributes (including inventory)
+     * in the json save
+     */
     private void saveCharacter() {
         Character character = world.getCharacter();
         JSONObject characterJSON = new JSONObject();
@@ -66,6 +81,9 @@ public class SaveGame {
         save.put("character", characterJSON);
     }
 
+    /**
+     * Saves all nonspecified entities in the JSON
+     */
     private void saveNonSpecifiedEntities() {
         JSONArray nonSpecifiedEntities = new JSONArray();
         List<Entity> nonSpecifiedEntitiyList = world.getNonSpecifiedEntities();
@@ -82,6 +100,9 @@ public class SaveGame {
         save.put("nonSpecifiedEntities", nonSpecifiedEntities);
     }
 
+    /**
+     * Saves all currently alive enemies in the JSON
+     */
     private void saveEnemies() {
         List<Enemy> list = world.getEnemies();
         JSONArray enemies = new JSONArray();
@@ -94,6 +115,9 @@ public class SaveGame {
         save.put("enemies", enemies);
     }
 
+    /**
+     * Saves all CycleBuildings in the JSON
+     */
     private void saveCycleBuildings() {
         JSONArray buildings = new JSONArray();
         List<BuildingOnCycle> list = world.getCycleBuildings();
@@ -107,6 +131,9 @@ public class SaveGame {
         save.put("cycleBuildings", buildings);
     }
 
+    /**
+     * Saves all MoveBuildings in the JSON
+     */
     private void saveMoveBuildings() {
         JSONArray buildings = new JSONArray();
         List<BuildingOnMove> list = world.getMoveBuildings();
@@ -120,6 +147,12 @@ public class SaveGame {
         save.put("moveBuildings", buildings);
     }
 
+    /**
+     * Saves the character's equipped weapon in the json.
+     * The character always has an equipped weapon, which could be a
+     * confused rare item.
+     * @param character Character : character in question
+     */
     private void addEquippedWeapon(JSONObject character) {
         JSONObject equippedWeapon = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(0);
@@ -133,6 +166,10 @@ public class SaveGame {
         character.put("equippedWeapon", equippedWeapon);
     }
 
+    /**
+     * Adds character's equipped helmet (if there is one) to the json
+     * @param character Character : character in question
+     */
     private void addEquippedHelmet(JSONObject character) {
         JSONObject equippedHelmet = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(1);
@@ -145,6 +182,11 @@ public class SaveGame {
         character.put("equippedHelmet", equippedHelmet);
     }
 
+    /**
+     * Saves the character's equipped shield (if there is one) in the json.
+     * The shield could be a confused rare item.
+     * @param character Character : character in question
+     */
     private void addEquippedShield(JSONObject character) {
         JSONObject equippedShield = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(2);
@@ -160,6 +202,10 @@ public class SaveGame {
         character.put("equippedShield", equippedShield);
     }
     
+    /**
+     * Adds character's equipped helmet (if there is one) to the json
+     * @param character Character : character in question
+     */
     private void addEquippedArmour(JSONObject character) {
         JSONObject equippedArmour = new JSONObject();
         Item item = world.getEquippedItemByCoordinates(3);
@@ -172,6 +218,11 @@ public class SaveGame {
         character.put("equippedArmour", equippedArmour);
     }
 
+    /**
+     * Adds character's highest level stats to the JSON
+     * @param characterJSON JSONObject : Character JSON object
+     * @param character Character : The character in question
+     */
     private void addCharacterStats(JSONObject characterJSON, Character character) {
         CharacterStats cs = character.getStats();
         JSONObject stats = new JSONObject();
@@ -184,6 +235,13 @@ public class SaveGame {
         characterJSON.put("stats", stats);
     }
 
+    /**
+     * Adds all unequipped items and unused cards into the JSON
+     * Some items can be confused rare items which require additional work.
+     * The doggie coin has a strategy that needs to be saved.
+     * @param character JSONObject : Character JSON object
+     * @param inventory Inventory : Character's inventory.
+     */
     private void addUnequippedInventory(JSONObject character, Inventory inventory) {
         JSONArray items = new JSONArray();
         for (Item item : inventory.getunequippedInventoryItems()) {

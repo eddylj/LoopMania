@@ -8,7 +8,7 @@ public class StrengthPotion extends Potion{
     public static final int REPLACECOST = 30;
     public static final int BASECOST = 50;
     public static final double BUFFDMG = 15.0;
-    private int cost;
+    public int cost;
     /**
      * The class of health potion
      * @param x
@@ -17,7 +17,7 @@ public class StrengthPotion extends Potion{
     public StrengthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
         super.setType("strengthpotion");
-        cost = 150;
+        cost = BASECOST;
     }
 
     public StrengthPotion() {
@@ -32,6 +32,7 @@ public class StrengthPotion extends Potion{
     public void use(Character character) {
         character.setBuff(BUFFDMG);
     }
+    
     @Override
     public int getPrice() {
         return cost;
@@ -49,6 +50,11 @@ public class StrengthPotion extends Potion{
 
     public void increaseCost(int timesBought) {
         cost += (BASECOST * timesBought);
+    }
+
+    @Override
+    public void reset_cost() {
+        cost = BASECOST;        
     }
 
 

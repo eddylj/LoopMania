@@ -44,5 +44,10 @@ public class InvinciblePotion extends Potion implements RareItem{
 	public int getReplaceCost() {
 		return (int)(SELLPRICE * REPLACEPERCENTAGE);
 	}
+
+	@Override
+	public void reset_cost() {
+		// rare items can't be bought
+	}
     
 }

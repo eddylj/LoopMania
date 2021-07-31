@@ -6,7 +6,8 @@ import unsw.loopmania.Heroes.Character;
 public class HealthPotion extends Potion{
     public static final int SELLPRICE = 40;
     public static final int REPLACECOST = 20;
-    public static final int BASECOST = 50;
+    public static final int BASECOST = 100;
+    public static final int INCREMENTCOST = 50;
     private int cost;
     /**
      * The class of health potion
@@ -16,7 +17,7 @@ public class HealthPotion extends Potion{
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x,y);
         super.setType("healthpotion");
-        cost = 100;
+        cost = BASECOST;
     }
 
     public HealthPotion() {
@@ -47,7 +48,12 @@ public class HealthPotion extends Potion{
     }
 
     public void increaseCost(int timesBought) {
-        cost += (BASECOST * timesBought);
+        cost += (INCREMENTCOST * timesBought);
+    }
+
+    @Override
+    public void reset_cost() {
+        cost = BASECOST;
     }
 
 	
