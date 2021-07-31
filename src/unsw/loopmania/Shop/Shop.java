@@ -11,7 +11,9 @@ import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Factories.ItemFactory;
 import unsw.loopmania.Items.*;
 
-
+/**
+ * Shop class. Contains statistics about how many
+ */
 public class Shop {
     private CharacterStats stats;
     private Character character;
