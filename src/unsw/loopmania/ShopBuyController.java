@@ -164,7 +164,6 @@ public class ShopBuyController {
                 // }
             }
         });
-        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         return buyButton;
     }
 
@@ -176,8 +175,8 @@ public class ShopBuyController {
             @Override
             public void handle(ActionEvent event) {
 
-                ShopSellController shopSellController = new ShopSellController(world, worldController);
-                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+                ShopSellController shopSellController = new ShopSellController(world, worldController, shop);
+                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopSellView.fxml"));
                 shopLoader.setController(shopSellController);
                 
                 try {
@@ -185,7 +184,6 @@ public class ShopBuyController {
                     Stage stage = new Stage();
                     stage.setTitle("Shop-Sell");
                     worldController.setSellShopOpen(true);
-                    // shop.restock();
                     stage.setOnCloseRequest(closeEvent -> {
                         worldController.setSellShopOpen(false);
                         worldController.tryToPlay();

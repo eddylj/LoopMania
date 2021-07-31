@@ -995,7 +995,7 @@ public class LoopManiaWorldController {
         buyShopOpen = true;
 
         ShopBuyController shopBuyController = new ShopBuyController(this, world, shop);
-        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+        FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopBuyView.fxml"));
         shopLoader.setController(shopBuyController);
         
         Scene scene = new Scene(shopLoader.load());
