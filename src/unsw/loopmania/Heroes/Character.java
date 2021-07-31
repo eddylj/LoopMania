@@ -225,7 +225,15 @@ public class Character extends MovingEntity implements Hero {
             aliveSoldiers.set(soldiers.size());
         }
     }
-        /**
+
+    /**
+     * Loses a random item for the unequipped item inventory of the character
+     * 
+     */
+    public void loseRandomItem() {
+        inventory.loseRandomItem();
+    }
+         /**
      * Equips a given item. Assumes item is valid to be equipped
      * (e.g. Item is not a HealthPotion)
      * @param i Item: item to be equipped.

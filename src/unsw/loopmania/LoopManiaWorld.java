@@ -55,6 +55,7 @@ public class LoopManiaWorld {
     
 
     public static final int DOGGIESPAWNCYCLE = 20;
+    public static final int THIEFSPAWNCYCLE = 4;
     public static final int ELANMUSKESPAWNCYCLE = 40;
     public static final int ELANMUSKESPAWNXP = 10000;
 
@@ -237,7 +238,7 @@ public class LoopManiaWorld {
     }
     /**
      * Kills an enemy
-     * @param e
+     * @param enemy
      */
     public void KillEnemy(Enemy enemy) {
         enemy.shouldExist().set(false);
@@ -368,6 +369,10 @@ public class LoopManiaWorld {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnSlug(position, emptyTiles));
         }
+        if (character.getCycles().get()%THIEFSPAWNCYCLE == 0) {
+            int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
+            newEnemies.add(spawnBoss(position, emptyTiles, "thief"));
+        }
         if (character.getCycles().get() == DOGGIESPAWNCYCLE) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "doggie"));
@@ -456,6 +461,9 @@ public class LoopManiaWorld {
         for (Enemy enemy: enemies){
             if (enemy instanceof Vampire) {
                 ((Vampire)enemy).move(getClosestCampfire(enemy.getX(), enemy.getY()));
+            }
+            else if (enemies instanceof Thief) {
+                ((Thief)enemy).move(character);
             }
             else {
                 enemy.move();
@@ -550,6 +558,7 @@ public class LoopManiaWorld {
         enemies.add(slug);
         return (Slug)slug;
     }
+    
 
     /**
      * Makes character drink potion (if possible)
