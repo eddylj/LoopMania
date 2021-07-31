@@ -6,6 +6,7 @@ import unsw.loopmania.Buildings.BarracksBuilding;
 import unsw.loopmania.Buildings.Building;
 import unsw.loopmania.Buildings.CampfireBuilding;
 import unsw.loopmania.Buildings.HerosCastleBuilding;
+import unsw.loopmania.Buildings.Totem;
 import unsw.loopmania.Buildings.TowerBuilding;
 import unsw.loopmania.Buildings.TrapBuilding;
 import unsw.loopmania.Buildings.VampireCastleBuilding;
@@ -34,6 +35,9 @@ public class BuildingFactory {
         else if (type.equals("barracks")) {
             return createBarracks(x, y);
         }
+        else if (type.equals("totem")) {
+            return createTotem(x, y);
+        }
         else if (type.equals("tower")) {
             return createTower(x, y);
         }
@@ -58,6 +62,10 @@ public class BuildingFactory {
         else {
             return null;
         }
+    }
+
+    private Building createTotem(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        return new Totem(x, y);
     }
 
     private Building createBank(SimpleIntegerProperty x, SimpleIntegerProperty y) {

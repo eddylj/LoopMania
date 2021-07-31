@@ -177,10 +177,10 @@ public class LoopManiaWorld {
     public List<Enemy> moveEntities() {
         List<Enemy> newEnemies = new ArrayList<Enemy>();
         character.moveDownPath();
-        checkBuildingActions(character);
+        checkBuildingActions(character, newEnemies);
         checkGoldActions(character);
         checkPoopActions(character);
-        moveEnemies();
+        moveEnemies(newEnemies);
         triggerCycleActions(newEnemies);
         updateEnemyList();
         updateBuildingList();
@@ -251,11 +251,16 @@ public class LoopManiaWorld {
         if (onHeroCastle()) {
             SpawnEnemiesOnCycle(newEnemies);
             character.gainCycle();
+            // if (character.getCycles().get() % 3 == 0) {               
+            // }
+            spawnTotemOnCycle();
             spawnCoinsOnCycle();
             spawnPoopOnCycle();
             character.makeVincible();
         }
     }
+
+
     /**
      * Checks if character is standing on hero castle
      * @return
@@ -404,6 +409,14 @@ public class LoopManiaWorld {
         
 
     }
+    private void spawnTotemOnCycle() {
+        List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
+
+        int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
+        PathPosition position = new PathPosition(pos, emptyTiles);
+        Building newTotem = bF.create(position.getX(), position.getY(), "totem");
+        moveBuildings.add((BuildingOnMove)newTotem);
+    }
 
     public StaticEntity loadCard(String type, int width) {
         return character.loadCard(type, width);
@@ -452,15 +465,16 @@ public class LoopManiaWorld {
     /**
      * Move all enemies. This method is called every tick.
      */
-    private void moveEnemies() { 
-        for (Enemy enemy: enemies){
+    private void moveEnemies(List<Enemy> newEnemies) { 
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
             if (enemy instanceof Vampire) {
                 ((Vampire)enemy).move(getClosestCampfire(enemy.getX(), enemy.getY()));
             }
             else {
                 enemy.move();
             }
-            checkBuildingActions(enemy);
+            checkBuildingActions(enemy, newEnemies);
         }
     }
 
@@ -468,9 +482,13 @@ public class LoopManiaWorld {
      * Updates all buildings that update on move
      * @param e
      */
-    public void checkBuildingActions(MovingEntity entity) {
+    public void checkBuildingActions(MovingEntity entity, List<Enemy> newEnemies) {
         for (BuildingOnMove building : moveBuildings) {
-            building.updateOnMove(entity);
+            if (building instanceof Totem) {
+                ((Totem) building).updateOnMove(entity, newEnemies, enemies);
+            } else {
+                building.updateOnMove(entity);
+            }
         }
     }
     /**

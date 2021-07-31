@@ -390,6 +390,7 @@ public class LoopManiaWorldController {
             }
 
             for (Enemy newEnemy : newEnemies){
+                System.out.println("DONE!");
                 onLoad(newEnemy);
             }
             List<Enemy> defeatedEnemies = world.fight();
