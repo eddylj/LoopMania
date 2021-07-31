@@ -30,7 +30,7 @@ public class Slug extends Enemy{
     public Slug() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("slug");
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit", "bank"};
     }
     /**
      * Generates random loot for player for zombie
@@ -56,6 +56,7 @@ public class Slug extends Enemy{
                 loot.add(character.addUnequippedItem(itemType, 0));
             }
             else if (num < 5) {
+                System.out.println("up one level");
                 int level = character.getHighestLevel(itemType) + 1;
                 if (level > 10) {
                     level = 10;
@@ -63,6 +64,7 @@ public class Slug extends Enemy{
                 loot.add(character.addUnequippedItem(itemType, level));
             }
             else {
+                System.out.println("same level");
                 int level = character.getHighestLevel(itemType);
                 loot.add(character.addUnequippedItem(itemType, level));
             }

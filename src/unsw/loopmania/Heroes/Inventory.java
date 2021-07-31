@@ -188,6 +188,7 @@ public class Inventory {
         ItemFactory iF = new ItemFactory();
         // RareItemFactory rF = new RareItemFactory(rareItems);
         Item item = null;
+        
         if (rareItems.contains(type)) {
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }

@@ -38,7 +38,7 @@ public class Vampire extends Enemy {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("vampire");
         Strategy = new VampireNormal();
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "bank", "trap", "village", "vampirecastle", "zombiepit"};
     }
 
     /**
@@ -93,10 +93,12 @@ public class Vampire extends Enemy {
                     level = 10;
                 }
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("Up one level");
             }
             else {
                 int level = character.getHighestLevel(itemType);
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("same level");
             }
         }
         else if (num < 50) {
