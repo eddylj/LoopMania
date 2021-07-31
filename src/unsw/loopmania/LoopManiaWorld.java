@@ -387,7 +387,7 @@ public class LoopManiaWorld {
 
     public void spawnCoinsOnCycle() {
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
-
+        if (emptyTiles.isEmpty()) return;
         int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
         PathPosition position = new PathPosition(pos, emptyTiles);
         gold.add(new Coin(position.getX(), position.getY()));
@@ -397,7 +397,7 @@ public class LoopManiaWorld {
     
     public void spawnPoopOnCycle() {
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
-
+        if (emptyTiles.isEmpty()) return;
         int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
         PathPosition position = new PathPosition(pos, emptyTiles);
         poop.add(new Poop(position.getX(), position.getY()));

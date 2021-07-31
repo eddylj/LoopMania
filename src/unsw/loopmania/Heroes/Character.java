@@ -175,6 +175,7 @@ public class Character extends MovingEntity implements Hero {
     public void drinkInvincibilityPotion() {
         Item potion = inventory.getInvinciblePotion();
         if (potion != null) {
+            System.out.println("DRINKING");
             // instanceof is only used for typecasting.
             // e.g. Can't typecast a confusing TheOneRing into a potion
             if (potion instanceof InvinciblePotion) {

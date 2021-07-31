@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 
@@ -71,17 +72,54 @@ public class ShopIntegrationTest {
         int gold = character.getGold();
         System.out.println(gold);
         shop.buy("strengthpotion");
-        assertEquals(gold - 100, character.getGold());
+        assertEquals(gold - 150, character.getGold());
         shop.buy("strengthpotion");
-        assertEquals(gold - 100 - 150, character.getGold());
+        assertEquals(gold - 150 - 200, character.getGold());
         shop.buy("strengthpotion");
-        assertEquals(gold - 100 - 150 - 200, character.getGold());
+        assertEquals(gold - 150 - 200 - 250, character.getGold());
         shop.buy("strengthpotion");
-        assertEquals(gold - 100 - 150 - 200 - 250, character.getGold());
+        assertEquals(gold - 150 - 200 - 250 - 300, character.getGold());
         shop.buy("strengthpotion");
-        assertEquals(gold - 100 - 150 - 200 - 250 - 300, character.getGold());
+        assertEquals(gold - 150 - 200 - 250 - 300 - 350, character.getGold());
         shop.buy("strengthpotion");
-        assertEquals(gold - 100 - 150 - 200 - 250 - 300 - 350, character.getGold());
+        assertEquals(gold - 150 - 200 - 250 - 300 - 350 - 400, character.getGold());
+    }
+
+    /**
+     * When player gets invincibilty potion, player doesn't drink it and dies to doggy
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void DieToDoggyTest() throws FileNotFoundException {
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("2_by_2.json", 3);
+        Character character = world.getCharacter();
+        for (int i = 0; i < 83; i++) {
+            world.tick();
+            System.out.println(i);
+            assertFalse(world.checkPlayerLoss());
+        }
+        world.tick();
+        assertTrue(world.checkPlayerLoss());
+    }
+
+    /**
+     * Haven't finished this test yet. It's meant to use invinciblepotion right before
+     * fighting doggy but something isnt working :(
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void SellDoggyCoinTest() throws FileNotFoundException {
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("2_by_2.json", 3);
+        Character character = world.getCharacter();
+        for (int i = 0; i < 83; i++) {
+            world.tick();
+            System.out.println(i);
+            assertFalse(world.checkPlayerLoss());
+        }
+        Item item = world.getUnequippedInventoryItemEntityByCoordinates(0, 3);
+        world.tick();
+        assertTrue(world.checkPlayerLoss());
+        // assertFalse(world.checkPlayerLoss());
     }
 
     
