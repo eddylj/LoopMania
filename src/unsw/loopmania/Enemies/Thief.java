@@ -74,9 +74,9 @@ public class Thief extends Enemy {
     public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
         int num = LoopManiaWorld.getRandNum();
         List <StaticEntity> loot = new ArrayList<StaticEntity>();
-        if (num < 40) {
+        if (num < 10) {
             String itemType;
-            if (num < 5 && !rareItems.isEmpty()) {
+            if (num < 1 && !rareItems.isEmpty()) {
                 itemType = rareItems.get(LoopManiaWorld.getRandNum() % rareItems.size());
             }
             else {
@@ -85,7 +85,7 @@ public class Thief extends Enemy {
             if (character.getNonLevelItems().contains(itemType)) {
                 loot.add(character.addUnequippedItem(itemType, 0));
             }
-            else if (num < 25) {
+            else if (num < 5) {
                 int level = character.getHighestLevel(itemType) + 1;
                 if (level > 10) {
                     level = 10;
@@ -97,7 +97,7 @@ public class Thief extends Enemy {
                 loot.add(character.addUnequippedItem(itemType, level));
             }
         }
-        else if (num < 60) {
+        else if (num < 20) {
             String cardType = cardDrops[LoopManiaWorld.getRandNum() % cardDrops.length];
             loot.add(character.loadCard(cardType, width));
         }
