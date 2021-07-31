@@ -139,7 +139,7 @@
             </Pane>
             <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="147.0">
                <children>
-                  <Label fx:id="goldAmount" layoutX="53.0" layoutY="3.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#d3c30ae3">
+                  <Label fx:id="goldAmount" layoutX="50.0" layoutY="3.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#d3c30ae3">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -158,7 +158,7 @@
                         <Font size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="50.0" layoutY="3.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#e81fc3" fx:id="xpAmount">
+                  <Label layoutX="50.0" layoutY="1.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#e81fc3" fx:id="xpAmount">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -172,7 +172,21 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cyclesAmount" layoutX="53.0" layoutY="1.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#081ee4">
+                  <Label fx:id="cyclesAmount" layoutX="50.0" layoutY="1.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#081ee4">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="147.0">
+               <children>
+                  <Label layoutY="5.0" text="Bosses" textFill="#79132b">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="bossAmount" layoutX="50.0" layoutY="1.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#79132b">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -206,7 +220,7 @@
             </Pane>
             <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="147.0">
                <children>
-                  <Label fx:id="goldGoal" layoutX="53.0" layoutY="4.0" prefWidth="91.0" text="123" textFill="#d3c30ae3">
+                  <Label fx:id="goldGoal" layoutX="50.0" layoutY="3.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#d3c30ae3">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -225,7 +239,7 @@
                         <Font size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="50.0" layoutY="2.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#e81fc3" fx:id="xpGoal">
+                  <Label layoutX="50.0" layoutY="2.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#e81fc3" fx:id="xpGoal">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -239,7 +253,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cyclesGoal" layoutX="53.0" layoutY="1.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#081ee4">
+                  <Label fx:id="cyclesGoal" layoutX="50.0" layoutY="1.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#081ee4">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -248,12 +262,12 @@
             </Pane>
             <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="147.0">
                <children>
-                  <Label layoutY="5.0" text="Bosses" textFill="#3b9702">
+                  <Label layoutY="5.0" text="Bosses" textFill="#79132b">
                      <font>
-                        <Font size="15.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="bossGoal" layoutX="53.0" layoutY="1.0" prefHeight="26.0" prefWidth="91.0" text="123" textFill="#3b9702">
+                  <Label fx:id="bossGoal" layoutX="50.0" layoutY="1.0" prefHeight="26.0" prefWidth="97.0" text="123" textFill="#79132b">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -261,7 +275,7 @@
                </children>
             </Pane>
          
-                                                   <!-- clicking this button returns the human player to the main menu -->
+                                                            <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" prefHeight="13.0" prefWidth="135.0" text="Exit to Main Menu" />
          </children>
       </VBox>

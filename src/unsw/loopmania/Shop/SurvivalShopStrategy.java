@@ -1,37 +1,40 @@
 package unsw.loopmania.Shop;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Items.Item;
 
 public class SurvivalShopStrategy implements ShopStrategy{
-    private boolean available;
+    private BooleanProperty available;
     private Character character;
 
     public SurvivalShopStrategy(Character character) {
-        available = true;
+        available = new SimpleBooleanProperty(true);
         this.character = character;
     }
 
     @Override
     public void buyItem(Item purchasedItem) {
         if (purchasedItem.isPotion()) {
-            available = false;
+            available.set(false);
         }
     }
 
     @Override
     public void restock() {
-        available = true;
-        
+        available.set(true);
     }
 
     @Override
-    public Boolean getAvailable(Item item) {
+    public BooleanBinding getAvailable(Item item) {
         if (item.isPotion()) {
-            return available && character.getGold() >= item.getPrice();
+            return available.and(character.getGoldProperty().greaterThanOrEqualTo(item.getPrice()));
         }
         else {
-            return character.getGold() >= item.getPrice();
+            return Bindings.greaterThanOrEqual(character.getGoldProperty(), item.getPrice());
         }
     }
 }
