@@ -270,10 +270,9 @@ public class Inventory {
      * @return unequipped inventory item at the input position
      */
     public Item getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Item e: unequippedInventoryItems){
-            StaticEntity entity = convertItemToStaticEntity(e);
-            if ((entity.getX() == x) && (entity.getY() == y)){
-                return e;
+        for (Item item: unequippedInventoryItems){
+            if ((item.getX() == x) && (item.getY() == y)){
+                return item;
             }
         }
         return null;

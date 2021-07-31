@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
@@ -13,6 +14,11 @@ import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Shop.Shop;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Items.Axe;
+import unsw.loopmania.Items.DoggieCoin;
+import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Doggie;
 
 public class ShopIntegrationTest {
     @Test
@@ -103,24 +109,35 @@ public class ShopIntegrationTest {
     }
 
     /**
-     * Haven't finished this test yet. It's meant to use invinciblepotion right before
-     * fighting doggy but something isnt working :(
+     * Player equips staff instead of sword and is able to defeat doggie on cycle 20
      * @throws FileNotFoundException
      */
     @Test
     public void SellDoggyCoinTest() throws FileNotFoundException {
         LoopManiaWorld world = IntegrationTestHelper.createWorld("2_by_2.json", 3);
         Character character = world.getCharacter();
-        for (int i = 0; i < 83; i++) {
-            world.tick();
+        Shop shop = world.getShop();
+        for (int i = 0; i < 63; i++) {
             System.out.println(i);
+            world.tick();
+            assertFalse(world.checkPlayerLoss());            
+        }
+        Item item = world.getUnequippedInventoryItemEntityByCoordinates(0, 0);
+        assertTrue(item instanceof Staff);
+        world.equipItem(item, "weapon");
+        for (int i = 0; i < 30; i++) {
+            world.tick();
             assertFalse(world.checkPlayerLoss());
         }
-        Item item = world.getUnequippedInventoryItemEntityByCoordinates(0, 3);
-        world.tick();
-        assertTrue(world.checkPlayerLoss());
-        // assertFalse(world.checkPlayerLoss());
+        Item doggiecoin = world.getUnequippedInventoryItemEntityByCoordinates(2, 1);
+        assertTrue(doggiecoin instanceof DoggieCoin);
+        assertEquals(6661, character.getGold());
+        shop.sell(doggiecoin);
+        assertEquals(6746, character.getGold());
+        assertFalse(world.checkPlayerLoss());
     }
+
+    
 
     
 }

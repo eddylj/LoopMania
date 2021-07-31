@@ -177,6 +177,7 @@ public class LoopManiaWorld {
     public List<Enemy> moveEntities() {
         List<Enemy> newEnemies = new ArrayList<Enemy>();
         character.moveDownPath();
+        System.out.println(String.format("%d %d", character.getX(), character.getY()));
         checkBuildingActions(character);
         checkGoldActions(character);
         checkPoopActions(character);
