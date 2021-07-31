@@ -50,7 +50,7 @@ public class ShopBuyController {
     public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
-        itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion", "strengthpotion", "axe", "thornmail"};
+        itemList = new String[] {"sword", "stake", "staff", "axe", "healthpotion", "strengthpotion", "armour", "shield", "helmet", "thornmail"};
         this.shop = shop;
         buyButtons = new ArrayList<Pair<Button, String>>();
     }
@@ -145,10 +145,8 @@ public class ShopBuyController {
     public Button makeItemButton(String itemName, ImageView view) {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
-        // buyButton.set
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 15));
-        // buyButton.disableProperty().bind(shop.canBuy(itemName).not());
-        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+
         buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -158,10 +156,6 @@ public class ShopBuyController {
                 buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
                 view.setImage(makeItemImage(itemName));
-                // for (Pair<Button, String> b : buyButtons) {
-                //     b.getValue0().disableProperty().bind(shop.canBuy(itemName));
-                //     // b.getValue0().disableProperty().bind(Bindings.lessThan(world.getGold(), price));
-                // }
             }
         });
         return buyButton;
