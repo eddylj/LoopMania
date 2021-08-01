@@ -3,12 +3,22 @@ package unsw.loopmania.Items;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * Items are anything that can be stored in the character's unequipped inventory
+ */
 public abstract class Item extends StaticEntity{
-
+    /**
+     * Constructor for abstract item class
+     * @param x X coordinate of item in inventory
+     * @param y Y coordinate of item in inventory
+     */
     public Item(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
 
+    /**
+     * Constructor for abstract item class
+     */
     public Item() {
         super();
     }
@@ -16,6 +26,10 @@ public abstract class Item extends StaticEntity{
     public abstract int getSellPrice();
     public abstract int getReplaceCost();
 
+    /**
+     * Determines whether an item is a weapon
+     * @return boolean on whether item is a weapon
+     */
     public boolean isWeapon() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -25,6 +39,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof Weapon;
         }
     }
+
+    /**
+     * Determines whether an item is a protection item
+     * @return boolean on whether item is a protection item
+     */
     public boolean isProtection() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -34,6 +53,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof Protection;
         }
     }
+
+    /**
+     * Determines whether an item is a shield
+     * @return boolean on whether item is a shield
+     */
     public boolean isShield() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -43,6 +67,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof Shield;
         }
     }
+
+    /**
+     * Determines whether an item is a theonering
+     * @return boolean on whether item is a theonering
+     */
     public boolean isRing() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -52,6 +81,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof TheOneRing;
         }
     }
+
+    /**
+     * Determines whether an item is a nuke
+     * @return boolean on whether item is a nuke
+     */
     public boolean isNuke() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -61,6 +95,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof Nuke;
         }
     }
+
+    /**
+     * Determines whether an item is a treestump
+     * @return boolean on whether item is a treestump
+     */
     public boolean isTreeStump() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -70,6 +109,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof TreeStump;
         }
     }
+
+    /**
+     * Determines whether an item is an InvinciblePotion
+     * @return boolean on whether item is an InvinciblePotion
+     */
     public boolean isInvinciblePotion() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -79,6 +123,11 @@ public abstract class Item extends StaticEntity{
             return this instanceof InvinciblePotion;
         }
     }
+
+    /**
+     * Determines whether an item is a potion
+     * @return boolean on whether item is a potion
+     */
     public boolean isPotion() {
         if (this instanceof ConfusedRareItem) {
             Item additional = ((ConfusedRareItem)this).getAdditional();
@@ -88,6 +137,4 @@ public abstract class Item extends StaticEntity{
             return this instanceof Potion;
         }
     }
-
-
 }

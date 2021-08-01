@@ -2,12 +2,15 @@ package unsw.loopmania.Heroes;
 
 import unsw.loopmania.Enemies.Enemy;
 
+/**
+ * Enemies hit by a staff's critical hit are converted to an ConvertedEnemy
+ */
 public class ConvertedEnemy extends AlliedSoldier{
     private Enemy enemy;
     private int remainingTranceTime;
     /**
-     * 
-     * @param enemy
+     * Constructor for ConvertedEnemy
+     * @param enemy enemy that has been whacked
      */
     public ConvertedEnemy(Enemy enemy) {
         super();
@@ -32,6 +35,10 @@ public class ConvertedEnemy extends AlliedSoldier{
         return false;
     }
 
+    /**
+     * Gets the enemy that was turned into a ConvertedEnemy
+     * @return the enemy
+     */
     public Enemy getEnemy() {
         return enemy;
     }
