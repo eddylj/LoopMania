@@ -15,6 +15,7 @@ import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
 import unsw.loopmania.Enemies.Vampire;
 import unsw.loopmania.Enemies.Zombie;
+import unsw.loopmania.Enemies.Thief;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 
@@ -245,10 +246,10 @@ public class BuildingTests {
         List<Enemy> enemies = new ArrayList<Enemy>(); 
         world.SpawnEnemiesOnCycle(enemies);
         zombiePit.spawnEnemy(new PathPosition(0, path));
-        assertEquals(3, enemies.size());
+        assertEquals(4, enemies.size());
         int zombieCount = 0;
         for (Enemy enemy: enemies) {
-            assertTrue(enemy instanceof Zombie || enemy instanceof Slug);
+            assertTrue(enemy instanceof Zombie || enemy instanceof Slug || enemy instanceof Thief);
             if (enemy instanceof Zombie) {
                 zombieCount++;
                 assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
@@ -293,10 +294,10 @@ public class BuildingTests {
         List<Enemy> enemies = new ArrayList<Enemy>(); 
         world.SpawnEnemiesOnCycle(enemies);
         vampireCastle.spawnEnemy(new PathPosition(0, path));
-        assertEquals(2, enemies.size());
+        assertEquals(3, enemies.size());
 
         for (Enemy enemy: enemies) {
-            assertTrue(enemy instanceof Slug);
+            assertTrue(enemy instanceof Slug || enemy instanceof Thief);
         }
     }
 

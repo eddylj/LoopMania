@@ -57,7 +57,7 @@ public class TheOneRingTest {
 
     @Test
     public void RevivalTest() {
-        LoopManiaWorld world = new LoopManiaWorld(1);
+        LoopManiaWorld world = new LoopManiaWorld(15);
         List<Enemy> enemies = new ArrayList<Enemy>();
         EnemyFactory eF = new EnemyFactory();
         ItemFactory iF = new ItemFactory();

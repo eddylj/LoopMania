@@ -50,9 +50,9 @@ public class IntegrationTestTest {
      */
     @Test
     public void checkLossTest() throws FileNotFoundException {
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", "worlds", 4);
-        for (int i = 0; i < 33; i++) {
-            System.out.println(i);
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", "worlds", 150);
+        for (int i = 0; i < 20; i++) {
+            //System.out.println(i);
             world.tick();
             
             assertFalse(world.checkPlayerLoss());

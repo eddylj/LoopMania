@@ -467,7 +467,7 @@ public class LoopManiaWorld {
     }
     private void spawnTotemOnCycle() {
         List<Pair<Integer, Integer>> emptyTiles = getAllEmptyTiles();
-
+        if (emptyTiles.isEmpty()) return;
         int pos = LoopManiaWorld.getRandNum() % emptyTiles.size();
         PathPosition position = new PathPosition(pos, emptyTiles);
         Building newTotem = bF.create(position.getX(), position.getY(), "totem");
