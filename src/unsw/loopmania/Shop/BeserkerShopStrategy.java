@@ -20,6 +20,12 @@ public class BeserkerShopStrategy implements ShopStrategy{
         this.character = character;
     }
 
+    /**
+     * Stops player from buying multiple Protection items.
+     * Don't need to use purchasedItem.isProtection() because Rare
+     * items can never be bough
+     * @param purchasedItem the item being purchased
+     */
     @Override
     public void buyItem(Item purchasedItem) {
         if (purchasedItem.isProtection()) {
@@ -27,11 +33,18 @@ public class BeserkerShopStrategy implements ShopStrategy{
         }
     }
 
+    /**
+     * Makes Protection items available to purchase again
+     */
     @Override
     public void restock() {
         available.set(true);
     }
 
+    /**
+     * Checks whether item is available to buy.
+     * Takes whether item is protection, price and player's gold into account.
+     */
     @Override
     public BooleanBinding getAvailable(Item item) {
         if (item.isProtection()) {

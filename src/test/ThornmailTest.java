@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Thornmail;
+import unsw.loopmania.Items.Thornmail;
 
 public class ThornmailTest {
     private JSONObject goals;

@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Weapon;
+import unsw.loopmania.Items.Item;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
-import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.Weapon;
 import unsw.loopmania.Items.Staff;
 import unsw.loopmania.Shop.Shop;
 
@@ -29,7 +29,7 @@ public class StaffTest {
         Item staff = new Staff(3);
 
         assertEquals(1, c.getHighestLevel(staff));
-        c.equip(staff);
+        c.equip(staff, "weapon");
         assertEquals(3, c.getHighestLevel(staff));
     }
 
@@ -56,7 +56,7 @@ public class StaffTest {
         assertTrue(enemies.isEmpty());
         b.setEnemies(enemies);
         enemies.add(e);
-        c.equip(staff);
+        c.equip(staff, "weapon");
         c.attack(e, b);
 
         assertTrue(c.getAlliedSoldierCount()>0);
@@ -76,7 +76,7 @@ public class StaffTest {
         
         Enemy e = new Slug();
 
-        c.equip(staff);
+        c.equip(staff, "weapon");
         c.attack(e, b);
         assertEquals(e.getHealth(), 32);
     }

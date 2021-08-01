@@ -1,5 +1,5 @@
 package test;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Buildings.BarracksBuilding;
 import unsw.loopmania.Buildings.BonusDamageStrategy;
 import unsw.loopmania.Buildings.CampfireBuilding;
@@ -7,6 +7,7 @@ import unsw.loopmania.Buildings.CampfireState;
 import unsw.loopmania.Buildings.NormalState;
 import unsw.loopmania.Buildings.TowerBuilding;
 import unsw.loopmania.Buildings.TrapBuilding;
+import unsw.loopmania.Buildings.BankBuilding;
 import unsw.loopmania.Buildings.VampireCastleBuilding;
 import unsw.loopmania.Buildings.VillageBuilding;
 import unsw.loopmania.Buildings.ZombiePitBuilding;
@@ -23,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.Position;
 
 import org.javatuples.Pair;
 import org.json.JSONObject;
@@ -134,6 +137,25 @@ public class BuildingTests {
         assertFalse(x);
         assertEquals(20, e.getHealth());
     }
+
+    @Test
+    public void trapKillTest(){
+        Enemy e = new Slug(position);
+        TrapBuilding t1 = new TrapBuilding(x, y);
+        t1.updateOnMove(e);
+        assertEquals(20, e.getHealth());
+        TrapBuilding t2 = new TrapBuilding(x, y);
+        t2.updateOnMove(e);
+        assertTrue(!e.shouldExist().get());
+    }
+
+    @Test
+    public void trapDoesntDamageCharacter(){
+        Character c = new Character(position);
+        TrapBuilding t1 = new TrapBuilding(x, y);
+        t1.updateOnMove(c);
+        assertEquals(100, c.getHealth());
+    }
     //////////////////////////////////
 
     // TowerTests
@@ -166,6 +188,38 @@ public class BuildingTests {
         c.setHealth(50);
         v.updateOnMove(c);
         assertEquals(75, c.getHealth());
+    }
+
+    //////////////////////////////////
+
+    // BankTests
+    //////////////////////////////////
+    @Test
+    public void interestTest(){
+        Character c = new Character(new PathPosition(0, path));
+        BankBuilding t = new BankBuilding(x, y);
+        c.gainGold(100);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 105);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 110);
+    }
+
+    @Test
+    public void notOnBankTest(){
+        Character c = new Character(new PathPosition(1, path));
+        BankBuilding t = new BankBuilding(x, y);
+        c.gainGold(100);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 100);
+    }
+    
+    @Test
+    public void doesnothingtoEnemyTest() {
+        Enemy e = new Slug(position);
+        BankBuilding t = new BankBuilding(x, y);
+        t.updateOnMove(e);
+        assertEquals(e.getHealth(), 50);
     }
     //////////////////////////////////
 

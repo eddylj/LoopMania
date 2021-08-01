@@ -44,13 +44,12 @@ public class Armour extends Protection {
     }
 
     /**
-     * FIgures out how much damage armour prevents
+     * Figures out how much damage armour prevents
      * @param damage double Incoming damage
      * @return double outgoing damage (after armour reduces it)
      */
     @Override
     public double protect(double damage) {
-        //Will implement the percentage reduction
         return damage * (1 - damageReduction);
     }
 }

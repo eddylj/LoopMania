@@ -11,6 +11,10 @@ import unsw.loopmania.Entities.StaticEntity;
 
 import java.util.ArrayList;
 
+/**
+ * Elan Muske is a boss that spawns on round 40 or later (depending on player's XP level)
+ * It messes with the price of the DoggieCoin
+ */
 public class ElanMuske extends Enemy implements Boss{
     public static final int BATTLERADIUS = 1;
     public static final int SUPPORTRADIUS = 1;
@@ -21,8 +25,8 @@ public class ElanMuske extends Enemy implements Boss{
     private String[] cardDrops;
     private boolean canMove = true;
     /**
-     * 
-     * @param position
+     * Constructor for ElanMuske class
+     * @param position where ElanMuske spawns
      */
     public ElanMuske(PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
@@ -30,6 +34,10 @@ public class ElanMuske extends Enemy implements Boss{
         cardDrops = new String[]{"campfire", "barracks", "tower", "bank", "trap", "village", "vampirecastle", "zombiepit"};
         
     }
+
+    /**
+     * Constructor for ElanMuske class
+     */
     public ElanMuske() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("elanmuske");
@@ -37,6 +45,9 @@ public class ElanMuske extends Enemy implements Boss{
         
     }
 
+    /**
+     * Gets the loot dropped by ElanMuske
+     */
     @Override
     public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
         character.increaseBossKills();
@@ -71,12 +82,18 @@ public class ElanMuske extends Enemy implements Boss{
         return loot;
     }
 
+    /**
+     * Elan muske attacks the character and heals enemies around him
+     */
     @Override
     public void attack (Hero hero, BattleRunner bR) {
         hero.takeDamage(this.getAttackDamage(), this);
         bR.healenemies();
     }
 
+    /**
+     * Elan muske moves at half speed
+     */
     @Override
     public void move() {
         if (canMove) {

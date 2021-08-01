@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import unsw.loopmania.AlliedSoldier;
+import unsw.loopmania.Heroes.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Buildings.TowerBuilding;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;

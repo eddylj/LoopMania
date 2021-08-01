@@ -2,6 +2,9 @@ package unsw.loopmania.GoalCalculator;
 
 import unsw.loopmania.Heroes.Character;
 
+/**
+ * Leaf class for all Composite goals.
+ */
 public class CompositeLeaf implements Composite{
     private int amount;
     private Character character;

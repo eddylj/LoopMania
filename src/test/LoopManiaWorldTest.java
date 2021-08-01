@@ -13,7 +13,7 @@ import org.junit.Test;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Enemies.Enemy;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 
 public class LoopManiaWorldTest {
     private List<Pair<Integer, Integer>> createPath() {

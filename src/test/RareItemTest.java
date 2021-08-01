@@ -12,11 +12,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runners.Parameterized.Parameter;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.ConfusedRareItem;
-import unsw.loopmania.Item;
+import unsw.loopmania.Items.ConfusedRareItem;
+import unsw.loopmania.Items.Item;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.RareItem;
-import unsw.loopmania.RareItemFactory;
+import unsw.loopmania.Items.RareItem;
+import unsw.loopmania.Factories.RareItemFactory;
 
 public class RareItemTest {
     RareItemFactory rF;

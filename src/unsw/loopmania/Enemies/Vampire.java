@@ -12,6 +12,10 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.CampfireBuilding;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * Vampires are tough and powerful enemies that are scared of campfires
+ * and take additional damage from the stake weapon
+ */
 public class Vampire extends Enemy {
     public static final int BATTLERADIUS = 2;
     public static final int SUPPORTRADIUS = 3;
@@ -23,8 +27,8 @@ public class Vampire extends Enemy {
     private VampireAttackStrategy Strategy;
 
     /**
-     * 
-     * @param position
+     * Constructor for vampire class
+     * @param position position of vampire on the map
      */
     public Vampire (PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
@@ -34,11 +38,14 @@ public class Vampire extends Enemy {
     
     }
 
+    /**
+     * Constructor for vampire class
+     */
     public Vampire() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("vampire");
         Strategy = new VampireNormal();
-        cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
+        cardDrops = new String[]{"campfire", "barracks", "tower", "bank", "trap", "village", "vampirecastle", "zombiepit"};
     }
 
     /**
@@ -93,10 +100,12 @@ public class Vampire extends Enemy {
                     level = 10;
                 }
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("Up one level");
             }
             else {
                 int level = character.getHighestLevel(itemType);
                 loot.add(character.addUnequippedItem(itemType, level));
+                System.out.println("same level");
             }
         }
         else if (num < 50) {
@@ -106,6 +115,10 @@ public class Vampire extends Enemy {
         return loot;
     }
     
+    /**
+     * Sets the attack strategy for vampire
+     * @param Strategy strategy to use
+     */
     public void setStrategy(VampireAttackStrategy Strategy) {
         this.Strategy = Strategy;
     }

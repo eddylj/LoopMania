@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -14,6 +15,9 @@ import unsw.loopmania.Items.*;
 import unsw.loopmania.Shop.*;
 import unsw.loopmania.Enemies.*;
 
+/**
+ * Class used to load a saved game from a JSON file
+ */
 public class LoadGame {
     private LoopManiaWorld world;
     private JSONObject save;
@@ -21,6 +25,11 @@ public class LoadGame {
     private BuildingFactory bF;
     private EnemyFactory eF;
 
+    /**
+     * Constructor for loadgame
+     * @param world The world state
+     * @param json The JSON that includes all saved game information
+     */
     public LoadGame(LoopManiaWorld world, JSONObject json) {
         this.world = world;
         this.save = json;
@@ -29,6 +38,9 @@ public class LoadGame {
         this.eF = new EnemyFactory();
     }
 
+    /**
+     * Loads the world from the JSON
+     */
     public void loadWorld() {
         JSONObject json = save.getJSONObject("saveWorld");
         loadCharacter(json.getJSONObject("character"), json);
@@ -38,6 +50,11 @@ public class LoadGame {
         loadShop(json);
     }
 
+    /**
+     * Loads the relevant data on character from the JSON
+     * @param characterJSON the JSON object containing all character information
+     * @param json The JSON object containing the entire saved state
+     */
     private void loadCharacter(JSONObject characterJSON, JSONObject json) {
         Character character = world.getCharacter();
 
@@ -57,7 +74,8 @@ public class LoadGame {
         equipItem(characterJSON.getJSONObject("equippedShield"), "shield");
         equipItem(characterJSON.getJSONObject("equippedArmour"), "armour");
 
-        world.setMode(json.getString("gameMode"));
+        // world.setMode(json.getString("gameMode"));
+        loadGameModes(json.getJSONArray("gameMode"));
 
         loadUnequippedItems(characterJSON.getJSONArray("unequippedItems"));
 
@@ -68,6 +86,11 @@ public class LoadGame {
         character.setAliveSoldiers(characterJSON.getInt("aliveSoldiers"));
     }
 
+    /**
+     * Equips an item on the player
+     * @param item Item to be equipped
+     * @param slot Slot to equip item in (Confusing items can be equipped in multiple slots sometimes)
+     */
     private void equipItem(JSONObject item, String slot) {
         if (item.isEmpty()) {
             return;
@@ -95,6 +118,11 @@ public class LoadGame {
         character.equip(equipped, slot);
     }
 
+    /**
+     * Loads the character's unequipped item inventory.
+     * Some items may be confused.
+     * @param items
+     */
     private void loadUnequippedItems(JSONArray items) {
         if (items.length() == 0) {
             return;
@@ -120,6 +148,10 @@ public class LoadGame {
         }
     }
 
+    /**
+     * Loads the character's highest level stats into the game
+     * @param levels JSONObject containing level stats
+     */
     private void loadCharacterLevelStats(JSONObject levels) {
         Character character = world.getCharacter();
         character.setStats("sword", levels.getInt("sword"));
@@ -130,6 +162,10 @@ public class LoadGame {
         character.setStats("shield", levels.getInt("shield"));
     } 
 
+    /**
+     * Loads unused cards into the game
+     * @param cards JSONArray of cards
+     */
     private void loadCards(JSONArray cards) {
         if (cards.length() == 0) {
             return;
@@ -143,6 +179,10 @@ public class LoadGame {
         }
     }
 
+    /**
+     * Loads all previously placed buildings into the game
+     * @param buildings JSONArray of buildings
+     */
     private void loadBuildings(JSONArray buildings) {
         for (int i = 0; i < buildings.length(); i++) {
             JSONObject building = buildings.getJSONObject(i);
@@ -159,6 +199,12 @@ public class LoadGame {
         }
     }
 
+    /**
+     * Checks whether a building has already been placed.
+     * This happens when it was specified in the entity section of the original JSON file
+     * @param newBuilding JSONObject of the building in question
+     * @return boolean depending on whether newBuilding has already been plcaed
+     */
     private boolean alreadyExists(JSONObject newBuilding) {
         JSONArray preloadedBuildings = save.getJSONArray("entities");
         for (int i = 0; i < preloadedBuildings.length(); i++) {
@@ -170,6 +216,10 @@ public class LoadGame {
         return false;
     }
 
+    /**
+     * Loads all enemies in the game from the JSON
+     * @param enemies JSONArray of all enemies
+     */
     private void loadEnemies(JSONArray enemies) {
         for (int i = 0; i < enemies.length(); i++) {
             JSONObject enemy = enemies.getJSONObject(i);
@@ -180,9 +230,21 @@ public class LoadGame {
         }
     }
 
+    /**
+     * Loads the shop into the game
+     * @param json JSONObject of the shop
+     */
     private void loadShop(JSONObject json) {
         Shop shop = world.getShop();
         shop.setHealthPotionsBought(json.getInt("healthPotionsBought"));
         shop.setStrengthPotionsBought(json.getInt("strengthPotionsBought"));
+    }
+
+    private void loadGameModes(JSONArray gamemodes) {
+        ArrayList<String> modes = new ArrayList<String>();
+        for (int i = 0; i < gamemodes.length(); i++) {
+            modes.add(gamemodes.getString(i));
+        }
+        world.setMode(modes);
     }
 }

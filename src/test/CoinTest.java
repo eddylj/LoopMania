@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Entities.Coin;
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 
 public class CoinTest {
 

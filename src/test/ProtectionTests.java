@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Shield;
+import unsw.loopmania.Items.Shield;
 import unsw.loopmania.Enemies.Vampire;
 import unsw.loopmania.Items.Armour;
 import unsw.loopmania.Items.Helmet;
-import unsw.loopmania.Hero;
+import unsw.loopmania.Heroes.Hero;
 
 public class ProtectionTests {
 
@@ -70,7 +70,7 @@ public class ProtectionTests {
         Shield s1 = new Shield(1);
         LoopManiaWorld.setSeed(6);
         Vampire v2 = new Vampire();
-        c.equip(s1);
+        c.equip(s1, "shield");
         v2.attack(h);
         assertEquals(39, c.getHealth());
     }

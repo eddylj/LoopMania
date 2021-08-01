@@ -17,6 +17,9 @@ public class NormalShopStrategy implements ShopStrategy{
         
     }
 
+    /**
+     * Items can be bought regularly
+     */
     @Override
     public void buyItem(Item purchasedItem) {
         // available doesn't change in normal shop    
@@ -26,7 +29,10 @@ public class NormalShopStrategy implements ShopStrategy{
     public void restock() {
         available.set(true);
     }
-
+    
+    /**
+     * Checks whether character has enough gold to purchase item
+     */
     @Override
     public BooleanBinding getAvailable(Item item) {
         return Bindings.greaterThanOrEqual(character.getGoldProperty(), item.getPrice());

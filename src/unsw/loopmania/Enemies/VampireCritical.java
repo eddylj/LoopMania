@@ -3,14 +3,18 @@ package unsw.loopmania.Enemies;
 import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 
+/**
+ * Attack strategy used by vampire after dealing a critical hit which
+ * deals additional damage for the next 3 turns
+ */
 public class VampireCritical implements VampireAttackStrategy{
 
     private int critTurns = 3;
 
     /**
      * Deals damage to Hero
-     * @param h
-     * @param v
+     * @param hero the hero being attacked
+     * @param vampire the vampire attacking
      */
     @Override
     public void attack(Hero hero, Vampire vampire) {

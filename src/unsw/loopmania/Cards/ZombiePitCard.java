@@ -7,12 +7,17 @@ import org.javatuples.Pair;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * ZombiePit card just sits in the character's card inventory until placed.
+ * Assuming it's placed in a valid location, a ZombiePitBuilding will spawn.
+ * @author Group FRIDGE
+ */
 public class ZombiePitCard extends StaticEntity implements Card {
     /**
-     * 
-     * @param x
-     * @param y
-     */
+    * Constructor for ZombiePitCard class
+    * @param x SimpleIntegerProperty: Column Coordinate of Card in card inventoryX
+    * @param y SimpleIntegerProperty: Row Coordinate of Card in card inventoryX
+    */
     public ZombiePitCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("zombiepit");
@@ -24,12 +29,12 @@ public class ZombiePitCard extends StaticEntity implements Card {
     }
 
     /**
-     * Checks if cards are next to each other
-     * @param oldX
-     * @param oldY
-     * @param newX
-     * @param newY
-     * @return  true or false whether old coordinates are next to new ones
+     * Checks if card placement coordinates are next to another coordinate
+     * @param oldX card Placement x coordinate
+     * @param oldY card Placement y coordinate
+     * @param newX new tile x coordinate
+     * @param newY new tile y coordinate
+     * @return true or false whether old coordinates are next to new ones
      */
     private boolean nextTo(int oldX, int oldY, int newX, int newY) {
         if (oldX == newX + 1 && oldY == newY) {
@@ -48,11 +53,12 @@ public class ZombiePitCard extends StaticEntity implements Card {
     }
 
     /**
-     * checks whether card can be placed on path
-     * @param x
-     * @param y
-     * @param orderedPath
-     * @return boolean on whether card can be placed
+     * Placement rules to determine whether to place ZombiePitBuilding at location
+     * card was dragged to. ZombiePits must be placed next to a PathTile.
+     * @param x int: potential destination column coordinate
+     * @param y int: potential destination row coordinate
+     * @param orderedPath List<Pair<Integer, Integer>>: List containing orderedPath that moving entities travel on
+     * @return Boolean depending on whether target location is valid
      */
     @Override
     public boolean canBePlaced(int x, int y, List<Pair<Integer, Integer>> orderedPath) {

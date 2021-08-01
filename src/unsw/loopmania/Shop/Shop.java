@@ -12,7 +12,9 @@ import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Factories.ItemFactory;
 import unsw.loopmania.Items.*;
 
-
+/**
+ * Shop class. Contains statistics about how many
+ */
 public class Shop {
     private CharacterStats stats;
     private Character character;
@@ -43,7 +45,10 @@ public class Shop {
      * @return cost to buy item
      */
     public int getBuyPrice(String item) {
-        return previewItem(item).getPrice();
+        Item preview = previewItem(item);
+        int cost = preview.getPrice();
+        reset_price(preview);
+        return cost;
     }
 
     private Item previewItem(String itemType) {
@@ -63,6 +68,12 @@ public class Shop {
         return item;
     }
 
+    private void reset_price(Item item) {
+        if (item.isPotion()) {
+            ((Potion)item).reset_cost();
+        }
+    }
+
     public int getItemBuyLevel(String item) {
         int level = stats.getHighestLevel(item)+1;
         if (level > 10) {
@@ -77,8 +88,16 @@ public class Shop {
      * @return item purchased
      */
     public Item buy(String item) {
-        int level = getItemBuyLevel(item);
-        Item purchasedItem = (Item)inventory.addUnequippedItem(item, level);
+        // int level = getItemBuyLevel(item);
+        // Item purchasedItem = (Item)inventory.addUnequippedItem(item, level);
+        int level = stats.getHighestLevel(item);
+        Item purchasedItem = (Item)inventory.addUnequippedItem(item, level+1);
+        if (purchasedItem instanceof HealthPotion) {
+            ((Potion)purchasedItem).increaseCost(boughtHealthPotions);
+        }
+        else if (purchasedItem instanceof StrengthPotion) {
+            ((Potion)purchasedItem).increaseCost(boughtStrengthPotions);
+        }
         int price = purchasedItem.getPrice();
         character.loseGold(price);
         available.buyItem(purchasedItem);
