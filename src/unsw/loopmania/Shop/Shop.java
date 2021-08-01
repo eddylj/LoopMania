@@ -4,8 +4,6 @@ package unsw.loopmania.Shop;
 import java.util.List;
 
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Heroes.*;
 import unsw.loopmania.Heroes.Character;

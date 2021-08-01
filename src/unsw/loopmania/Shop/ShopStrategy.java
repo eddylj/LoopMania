@@ -1,7 +1,6 @@
 package unsw.loopmania.Shop;
 
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
 import unsw.loopmania.Items.Item;
 
 /**

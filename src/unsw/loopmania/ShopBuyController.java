@@ -20,14 +20,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldController;
 import unsw.loopmania.Entities.StaticEntity;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Shop.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.beans.binding.Bindings;
 
 public class ShopBuyController {
 

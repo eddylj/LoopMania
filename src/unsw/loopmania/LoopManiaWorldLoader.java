@@ -88,7 +88,6 @@ public abstract class LoopManiaWorldLoader {
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         default:
             world.placeBuildingAtStart(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), type);
-        // TODO Handle other possible entities
         }
         world.addEntity(entity);
     }
@@ -159,6 +158,5 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(Character character);
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
 
-    // TODO Create additional abstract methods for the other entities
 
 }
