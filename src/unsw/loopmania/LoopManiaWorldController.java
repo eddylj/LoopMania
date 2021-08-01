@@ -215,6 +215,7 @@ public class LoopManiaWorldController {
     public static final int HELMETSLOT = 32;
     public static final int SHIELDSLOT = 64;
     public static final int ARMOURSLOT = 96;
+    public static final int LAYOUTTOSLOT = 32;
 
     /**
      * @param world world object loaded from file
@@ -608,27 +609,6 @@ public class LoopManiaWorldController {
         world.setMode(mode);
     }
 
-    /**
-     * Determines whether item has been dragged to a valid slot
-     * @param item Item : dragged item
-     * @param node Node : target slot to add to
-     * @return Boolean : Whether position is valid
-     */
-    private boolean newPositionValid(Item item, Node node) {
-        if (item.isWeapon() && node.getLayoutX() == WEAPONSLOT) {
-            return true;
-        }
-        if (item instanceof Helmet && node.getLayoutX() == HELMETSLOT) {
-            return true;
-        }
-        if (item.isShield() && node.getLayoutX() == SHIELDSLOT) {
-            return true;
-        }
-        if (item instanceof Armour && node.getLayoutX() == ARMOURSLOT) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Converts the coordinate of an equipped slot to a string
@@ -713,42 +693,19 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 // Get item being dragged
                                 Item item = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
-                                if (item != null && newPositionValid(item, node)) {
+                                if (item != null && item.isValidPlacement(node.getLayoutX() / LAYOUTTOSLOT)) {
                                     // Get item being unequipped
                                     Item olditem = world.getEquippedItemByCoordinates(x);
-                                    // Put previously equipped item back in inventory (then overwrite it)
+                                    // If overwriting an item, add the item back into unequipped inventory
                                     if (olditem != null) {
-                                        Item newItem = null;
-                                        double slot = node.getLayoutX();
-                                        // Add currently equipped item back into the unequipped inventory
-                                        if (slot == WEAPONSLOT) {
-                                            if (olditem instanceof ConfusedRareItem) {
-                                                newItem = world.addUnequippedConfusedItem(olditem.getType(), ((ConfusedRareItem)olditem).getAdditional().getType());
-                                            }
-                                            else {
-                                                newItem = world.addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
-                                            }
-                                        }
-                                        else if (slot == HELMETSLOT) {
-                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
-                                        }
-                                        else if (slot == SHIELDSLOT) {
-                                            if (olditem instanceof ConfusedRareItem) {
-                                                newItem = world.addUnequippedConfusedItem(olditem.getType(), ((ConfusedRareItem)olditem).getAdditional().getType());
-                                            }
-                                            else {
-                                                newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
-                                            }
-                                        }
-                                        else if (slot == ARMOURSLOT) {
-                                            newItem = world.addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
-                                        }
-                                        // put previously equipped weapon back in the unequipped inventory
+                                        Item newItem = world.pickupUnequippedItem(olditem, node.getLayoutX() / LAYOUTTOSLOT, nodeX, nodeY);
                                         onLoad(newItem);
                                         olditem.destroy();
                                     }
+                                    else {
+                                        removeItemByCoordinates(nodeX, nodeY);
+                                    }
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
                                     targetGridPane.add(image, x, y, 1, 1);
                                     world.equipItem(item, slotToString(node.getLayoutX()));
                                     System.out.println("Successfully dropped");

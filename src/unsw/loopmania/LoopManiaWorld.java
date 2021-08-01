@@ -32,7 +32,10 @@ import unsw.loopmania.Cards.*;
  */
 
 public class LoopManiaWorld {
-
+    public final int WEAPONSLOT = 0;
+    public final int HELMETSLOT = 1;
+    public final int SHIELDSLOT = 2;
+    public final int ARMOURSLOT = 3;
     public static int seed;
     private static Random rand;
     private BuildingFactory bF;
@@ -491,6 +494,11 @@ public class LoopManiaWorld {
     public void equipItem(Item item, String slot) {
         character.equip(item, slot);
     }
+
+    public void equipItem(Item item, int slot) {
+
+    }
+
     /**
      * Gets closest campfire from Vampire
      * @param x
@@ -888,6 +896,29 @@ public class LoopManiaWorld {
 
     public Item addUnequippedConfusedItem(String type, String additional) {
         return (Item)character.addUnequippedConfusedItem(type, additional);
+    }
+
+    /**
+     * Duplicates a recently unequipped item and puts it back in the unequipped inventory.
+     * The if statements are necessary for typecasting to get the level of each item,
+     * and because not all protection items have 
+     * @param olditem The item being overwritten
+     * @param slot The slot being equipped in
+     * @param x coordinate of now equipped item in unequipped inventory
+     * @param y coordinate of now equipped item in unequipped inventory
+     * @return Item being overwritten
+     */
+    public Item pickupUnequippedItem(Item olditem, double slot, int x, int y) {
+        character.removeUnequippedInventoryItemByCoordinates(x, y);
+        if (olditem instanceof ConfusedRareItem) {
+            return addUnequippedConfusedItem(olditem.getType(), ((ConfusedRareItem)olditem).getAdditional().getType());
+        }
+        else if (slot == WEAPONSLOT) {
+            return addUnequippedItem(olditem.getType(), ((Weapon)olditem).getLevel());
+        }
+        else {
+            return addUnequippedItem(olditem.getType(), ((Protection)olditem).getLevel());
+        }
     }
 
     /**

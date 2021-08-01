@@ -7,6 +7,10 @@ import unsw.loopmania.Entities.StaticEntity;
  * Items are anything that can be stored in the character's unequipped inventory
  */
 public abstract class Item extends StaticEntity{
+    public static final int WEAPONSLOT = 0;
+    public static final int HELMETSLOT = 1;
+    public static final int SHIELDSLOT = 2;
+    public static final int ARMOURSLOT = 3;
     /**
      * Constructor for abstract item class
      * @param x X coordinate of item in inventory
@@ -136,5 +140,26 @@ public abstract class Item extends StaticEntity{
         else {
             return this instanceof Potion;
         }
+    }
+
+    /**
+     * Determines whether an item can be placed in a particular slot in the frontend
+     * @param slot Slot item is being placed in
+     * @return boolean depending on whether item is valid for target slot
+     */
+    public boolean isValidPlacement(double slot) {
+        if (slot == WEAPONSLOT && isWeapon()) {
+            return true;
+        }
+        else if (slot == HELMETSLOT && this instanceof Helmet) {
+            return true;
+        }
+        else if (slot == SHIELDSLOT && isShield()) {
+            return true;
+        }
+        else if (slot == ARMOURSLOT && this instanceof Armour) {
+            return true;
+        }
+        return false;
     }
 }
