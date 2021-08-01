@@ -274,6 +274,7 @@
                   </Label>
                </children>
             </Pane>
+            <Button onAction="#save" prefHeight="26.0" prefWidth="59.0" text="Save" textAlignment="CENTER" />
          
                                                             <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" prefHeight="13.0" prefWidth="135.0" text="Exit to Main Menu" />
