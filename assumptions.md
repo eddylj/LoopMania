@@ -22,6 +22,7 @@
 * Enemies can move one tile at a time in a random direction but can also just stand still
 * Player is only required to handle one character
 * You can place on path buildings on top of existing on path buildings, in terms of activation, the existing one will activate first followed by the newer one
+* When the game is paused, you can place an on path building on top of an enemy/the character. If the entity moves back into it, the effect will trigger
 * Maximum number of enemies character fights is uncapped
 * Buildings can’t be replaced after being put down
 * Buildings can only be placed on unoccupied tiles
