@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import test.EnemyTests;
 import unsw.loopmania.Heroes.*;
 import unsw.loopmania.Items.*;
 import unsw.loopmania.Buildings.*;
@@ -186,15 +187,25 @@ public class LoopManiaWorld {
      * @return
      */
     public List<Enemy> moveEntities() {
+        System.out.println("a");
         List<Enemy> newEnemies = new ArrayList<Enemy>();
+        System.out.println("b");
         character.moveDownPath();
+        System.out.println("c");
         checkBuildingActions(character, newEnemies);
+        System.out.println("d");
         checkGoldActions(character);
+        System.out.println("e");
         checkPoopActions(character);
+        System.out.println("f");
         moveEnemies(newEnemies);
+        System.out.println("g");
         triggerCycleActions(newEnemies);
+        System.out.println("h");
         updateEnemyList();
+        System.out.println("i");
         updateBuildingList();
+        System.out.println("j");
         return newEnemies;
     }
     /**
@@ -515,7 +526,9 @@ public class LoopManiaWorld {
      * Move all enemies. This method is called every tick.
      */
     private void moveEnemies(List<Enemy> newEnemies) { 
-        for (int i = 0; i < enemies.size(); i++) {
+        int num_enemies = enemies.size();
+        for (int i = 0; i < num_enemies; i++) {
+            System.out.println(String.format("%d %d", i, enemies.size()));
             Enemy enemy = enemies.get(i);
             if (enemy instanceof Vampire) {
                 ((Vampire)enemy).move(getClosestCampfire(enemy.getX(), enemy.getY()));
