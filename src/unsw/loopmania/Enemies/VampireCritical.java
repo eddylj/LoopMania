@@ -19,7 +19,7 @@ public class VampireCritical implements VampireAttackStrategy{
     @Override
     public void attack(Hero hero, Vampire vampire) {
         int randomInt = LoopManiaWorld.getRandNum() % 10;
-        hero.takeDamage(vampire.getAttackDamage() + randomInt + 1, vampire);
+        hero.takeDamage(vampire.getAttackDamage()*2 + randomInt + 1, vampire);
         critTurns--;
         if (critTurns == 0) {
             vampire.setStrategy(new VampireNormal());

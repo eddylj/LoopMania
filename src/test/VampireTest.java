@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,12 @@ import org.javatuples.Pair;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.Building;
 import unsw.loopmania.Buildings.CampfireBuilding;
 import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Thief;
 import unsw.loopmania.Enemies.Vampire;
@@ -42,5 +45,17 @@ public class VampireTest {
         ((Vampire)vampire).move((CampfireBuilding)campfire);
         assertEquals(vampire.getX(), 0);
         assertEquals(vampire.getY(), 1);
+    }
+
+    @Test
+    public void vampireCritTest() {
+        Character character = new Character();
+        LoopManiaWorld.setSeed(2);
+        EnemyFactory eF = new EnemyFactory();
+        Enemy vampire = eF.create( "vampire");
+        vampire.attack((Hero)character);
+        assertTrue(character.getHealth() < 66);
+        vampire.attack((Hero)character);
+        assertTrue(character.getHealth() < 30);
     }
 }

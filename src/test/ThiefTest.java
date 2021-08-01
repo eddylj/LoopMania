@@ -107,4 +107,16 @@ public class ThiefTest {
 
 
     }
+
+    @Test
+    public void thiefDoesNothingToAllies() {
+        LoopManiaWorld.setSeed(7);
+        Enemy thief = eF.create( "thief");
+        HeroFactory hF = new HeroFactory();
+        Hero alliedSoldier = hF.create();
+        thief.attack(alliedSoldier);
+        assertEquals(((AlliedSoldier)alliedSoldier).getHealth(), 30);
+
+
+    }
 }
