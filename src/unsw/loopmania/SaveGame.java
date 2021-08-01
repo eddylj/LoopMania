@@ -36,7 +36,7 @@ public class SaveGame {
      */
     public void SaveWorld(String name) {
         saveCharacter();
-        saveNonSpecifiedEntities();
+        // saveNonSpecifiedEntities();
         saveStaticEntities();
         saveEnemies();
         saveCycleBuildings();
@@ -89,21 +89,21 @@ public class SaveGame {
     /**
      * Saves all nonspecified entities in the JSON
      */
-    private void saveNonSpecifiedEntities() {
-        JSONArray nonSpecifiedEntities = new JSONArray();
-        List<Entity> nonSpecifiedEntitiyList = world.getNonSpecifiedEntities();
-        if (nonSpecifiedEntitiyList.isEmpty()) {
-            return;
-        }
-        for (Entity entity : nonSpecifiedEntitiyList) {
-            JSONObject entityJSON = new JSONObject();
-            entityJSON.put("type", entity.getType());
-            entityJSON.put("x", entity.getX());
-            entityJSON.put("y", entity.getY());
-            nonSpecifiedEntities.put(entityJSON);
-        }
-        save.put("nonSpecifiedEntities", nonSpecifiedEntities);
-    }
+    // private void saveNonSpecifiedEntities() {
+    //     JSONArray nonSpecifiedEntities = new JSONArray();
+    //     List<Entity> nonSpecifiedEntitiyList = world.getNonSpecifiedEntities();
+    //     if (nonSpecifiedEntitiyList.isEmpty()) {
+    //         return;
+    //     }
+    //     for (Entity entity : nonSpecifiedEntitiyList) {
+    //         JSONObject entityJSON = new JSONObject();
+    //         entityJSON.put("type", entity.getType());
+    //         entityJSON.put("x", entity.getX());
+    //         entityJSON.put("y", entity.getY());
+    //         nonSpecifiedEntities.put(entityJSON);
+    //     }
+    //     save.put("nonSpecifiedEntities", nonSpecifiedEntities);
+    // }
 
     private void saveStaticEntities() {
         // Save the poop

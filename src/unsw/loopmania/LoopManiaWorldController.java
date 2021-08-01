@@ -373,59 +373,47 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
-            System.out.println("TICK");
             List<Enemy> newEnemies = world.moveEntities();
-            System.out.println("a");
             List <Coin> newCoins = world.getCoin();
-            System.out.println('b');
             List <Poop> newPoop = world.getPoop();
-            System.out.println("1");
             // Load any coins on the map
             for (Coin c : newCoins) {
                 onLoad(c);
             }
-            System.out.println("2");
             // Load any poop on the map
             if (!newPoop.isEmpty()) {
                 for (Poop p : newPoop) {
                     onLoad(p);
                 }
             }
-            System.out.println("3");
             // Load any buildings on the map
             for (BuildingOnMove b : world.getMoveBuildings()) {
                 onLoad((Building)b);
             }
-            System.out.println("4");
             // Load any buildings on the map
             for (BuildingOnCycle b : world.getCycleBuildings()) {
                 onLoad((Building)b);
             }
-            System.out.println("5");
             // Load any new enemies for the first time
             for (Enemy newEnemy : newEnemies){
                 onLoad(newEnemy);
             }
             List<Enemy> defeatedEnemies = world.fight();
             world.cleanUpFight();
-            System.out.println("6");
             // Remove any defeated enemies on the map
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            System.out.println("7");
             // Deal with character death
             if (world.isCharacterDead()) {
                 pause();
                 loadDeathScreen();
             }
-            System.out.println("8");
             // Deal with player win
             if (world.checkPlayerWin()) {
                 pause();
                 loadVictoryScreen();
             }
-            System.out.println("9");
             // Determine whether to open shop
             if (world.onHeroCastle()) {
                 try {
@@ -434,7 +422,6 @@ public class LoopManiaWorldController {
                     e1.printStackTrace();
                 }
             }
-            System.out.println("10");
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);

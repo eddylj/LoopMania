@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.LoadGame;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Heroes.Character;
@@ -39,6 +40,11 @@ public class IntegrationTestHelper {
         // load non-path entities later so that they're shown on-top
         for (int i = 0; i < jsonEntities.length(); i++) {
             IntegrationTestHelper.loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
+        }
+
+        if (json.has("saveWorld")) {
+            LoadGame load = new LoadGame(world, json);
+            load.loadWorld();
         }
 
         return world;
