@@ -3,7 +3,6 @@ package unsw.loopmania.Buildings;
 import java.util.List;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.PathPosition;
 import unsw.loopmania.Enemies.*;
 import unsw.loopmania.Entities.MovingEntity;
 import unsw.loopmania.Entities.StaticEntity;
@@ -27,7 +26,7 @@ public class Totem extends StaticEntity implements Building, BuildingOnMove{
         }
         
     }
-    public void activate(MovingEntity movingEntity, List<Enemy> newEnemies, List<Enemy> enemies) {
+    private void activate(MovingEntity movingEntity, List<Enemy> newEnemies, List<Enemy> enemies) {
         if ((movingEntity instanceof Enemy) && !(movingEntity instanceof Boss)) {
             EnemyFactory factory = new EnemyFactory();
             Enemy enemy = factory.create(movingEntity.clonePosition(), movingEntity.getType());
@@ -36,9 +35,7 @@ public class Totem extends StaticEntity implements Building, BuildingOnMove{
             this.destroy();
         }
     }
-
-
-
+    
     @Override
     public void updateOnMove(MovingEntity movingEntity) {
         
