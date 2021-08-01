@@ -6,13 +6,16 @@ import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Heroes.Hero;
 import unsw.loopmania.LoopManiaWorld;
 
-
+/**
+ * Attack strategy used by vampire before or 3 turns after a critical bite.
+ * Vampire deals normal damage until they critical bite the hero
+ */
 public class VampireNormal implements VampireAttackStrategy{
 
     /**
      * Deals damage to Hero
-     * @param h
-     * @param v
+     * @param hero the hero being attacked
+     * @param vampire the vampire attacking
      */
     @Override
     public void attack(Hero hero, Vampire vampire) {
@@ -32,10 +35,11 @@ public class VampireNormal implements VampireAttackStrategy{
             }
         }
     }
+
     /**
      * Deals critical damage to Hero
-     * @param h
-     * @param v
+     * @param hero the hero being attacked
+     * @param vampire the vampire attacking
      */
     private void critAttack(Hero hero, Vampire vampire) {
         int randomInt = LoopManiaWorld.getRandNum() % 10;

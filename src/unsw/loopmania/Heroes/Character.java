@@ -109,7 +109,7 @@ public class Character extends MovingEntity implements Hero {
      * Character deaals damage to an enemy. This method has access to the
      * battlerunner class so the staff can convert enemies into converted Soldiers.
      * @param enemy Enemy: The enemy being attacked
-     * @param b BattleRunner: BattleRunner class running the current battle
+     * @param bR BattleRunner: BattleRunner class running the current battle
      */
     public void attack(Enemy enemy, BattleRunner bR) {
         double newDamage = 0;
@@ -151,7 +151,7 @@ public class Character extends MovingEntity implements Hero {
 
 
     /**
-     * Checks whether the character has a potion in their inventory and
+     * Checks whether the character has a health potion in their inventory and
      * if so, drinks it (to heal)
      */
     public void drinkHealthPotion() {
@@ -162,7 +162,7 @@ public class Character extends MovingEntity implements Hero {
         }
     }
     /**
-     * Checks whether the character has a potion in their inventory and
+     * Checks whether the character has a strength potion in their inventory and
      * if so, drinks it (to get strong)
      */
     public void drinkStrengthPotion() {
@@ -172,10 +172,13 @@ public class Character extends MovingEntity implements Hero {
         }
     }
 
+    /**
+     * Checks whether the character has a invincibility potion in their inventory and
+     * if so, drinks it (to get invincible)
+     */
     public void drinkInvincibilityPotion() {
         Item potion = inventory.getInvinciblePotion();
         if (potion != null) {
-            System.out.println("DRINKING");
             // instanceof is only used for typecasting.
             // e.g. Can't typecast a confusing TheOneRing into a potion
             if (potion instanceof InvinciblePotion) {
@@ -197,6 +200,10 @@ public class Character extends MovingEntity implements Hero {
         return inventory.hasRing();
     }
 
+    /**
+     * Checks whether player has a nuke in their inventory
+     * @return Boolean depending on whether player has a nuke
+     */
     public boolean hasNuke() {
         return inventory.hasNuke();
     }
@@ -265,13 +272,18 @@ public class Character extends MovingEntity implements Hero {
     public int getHealth() {
         return health.get();
     }
+
+    /**
+     * Gets SimpleIntegerProperty of player's health
+     * @return IntegerProperty representing the health
+     */
     public IntegerProperty getHealthProperty() {
         return health;
     }
 
     /**
      * Gets the character's experience
-     * @return int: The character's experience
+     * @return Integerproperty: The character's experience
      */
     public IntegerProperty getXP() {
         return experience;
@@ -586,10 +598,21 @@ public class Character extends MovingEntity implements Hero {
         return inventory.getUnequippedInventoryItemsNum();
     }
 
+    //////////////////////////////////////////////////////////
+    // Methods used in LoadGame to set the current world state
+    /**
+     * Sets the character's current level stats at the start of the game
+     * @param type Type of item
+     * @param level Level of item
+     */
     public void setStats(String type, int level) {
         stats.setStats(type, level);
     }
 
+    /**
+     * Sets the number of AlliedSoldier the player currently has
+     * @param num the number of soldiers
+     */
     public void setAliveSoldiers(int num) {
         aliveSoldiers.set(num);
         HeroFactory hF = new HeroFactory();
@@ -598,10 +621,18 @@ public class Character extends MovingEntity implements Hero {
         }
     }
 
+    /**
+     * Gets the list of rareItems from the character
+     * @return List of rare items
+     */
     public List<String> getRareItems() {
         return rareItems;
     }
 
+    /**
+     * Sets the list of rareItems in the character
+     * @param items The list of rare items
+     */
     public void setRareItems(List<String> items) {
         rareItems = items;
         inventory.setRareItems(rareItems);
@@ -616,24 +647,55 @@ public class Character extends MovingEntity implements Hero {
     public int getCardsNum() {
         return inventory.getCardsNum();
     }
+
+    /**
+     * Sets whether the player is currently stunned
+     * @param stunned boolean on whether player is stunned
+     */
     public void setStunned(boolean stunned) {
         isStunned = stunned;
     }
+
+    /**
+     * Gets whether the player is currently stunned
+     * @return boolean on whether player is currently stunned
+     */
     public boolean isStunned() {
         return isStunned;
     }
+
+    /**
+     * Sets the StrengthPotion buff
+     * @param buffdmg damage increase
+     */
     public void setBuff(double buffdmg) {
         this.strengthPotionBuff = buffdmg;
     }
+
+    /**
+     * Removes the strength potion buff after the fight
+     */
     public void removeBuff() {
         strengthPotionBuff = 0;
     }
+
+    /**
+     * Gives the player 5% more gold when they walk over the bank 
+     */
     public void getInterest() {
         gold.set((int) (gold.get() * 1.05));
     }
+
+    /**
+     * Makes the character invincible after using InvinciblePotion
+     */
     public void makeInvincible() {
         canTakeDamage = false;
     }
+
+    /**
+     * Removes character's invincilibity
+     */
     public void makeVincible() {
         canTakeDamage = true;
     }

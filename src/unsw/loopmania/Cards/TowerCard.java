@@ -7,29 +7,37 @@ import org.javatuples.Pair;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * Tower card just sit in the character's card inventory until placed.
+ * Assuming it's placed in a valid location, a TowerBuilding will spawn.
+ * @author Group FRIDGE
+ */
 public class TowerCard extends StaticEntity implements Card {
     /**
-     * 
-     * @param x
-     * @param y
+     * Constructor for TowerCard
+     * @param x X coordinate for TowerCard in inventory
+     * @param y Y coordinate for TowerCard in inventory
      */
     public TowerCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         super.setType("tower");
     }
     
+    /**
+     * Constructor for TowerCard
+     */
     public TowerCard() {
         super();
         super.setType("tower");
     }
 
     /**
-     * Checks if cards are next to each other
-     * @param oldX
-     * @param oldY
-     * @param newX
-     * @param newY
-     * @return  true or false whether old coordinates are next to new ones
+     * Checks if card placement coordinates are next to another coordinate
+     * @param oldX card Placement x coordinate
+     * @param oldY card Placement y coordinate
+     * @param newX new tile x coordinate
+     * @param newY new tile y coordinate
+     * @return true or false whether old coordinates are next to new ones
      */
     private boolean nextTo(int oldX, int oldY, int newX, int newY) {
         if (oldX == newX + 1 && oldY == newY) {

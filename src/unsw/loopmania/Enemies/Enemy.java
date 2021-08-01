@@ -10,7 +10,9 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.Entities.MovingEntity;
 import unsw.loopmania.Entities.StaticEntity;
 
-
+/**
+ * Abstract class that provides all enemies with basic actions
+ */
 public abstract class Enemy extends MovingEntity {
     private int battleRadius;
     private int supportRadius;
@@ -19,6 +21,16 @@ public abstract class Enemy extends MovingEntity {
     private int goldAmount;
     private int xpAmount;
 
+    /**
+     * Constructor for enemy class
+     * @param position Position of enemy on map
+     * @param battleRadius support radius of enemy
+     * @param supportRadius battle radius of enemy
+     * @param attackDamage attack damage of enemy
+     * @param goldAmount gold dropped by enemy
+     * @param health health of enemy
+     * @param xp xp dropped by enemy
+     */
     public Enemy (PathPosition position, int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health, int xp) {
         super(position, health);
         this.battleRadius = battleRadius;
@@ -28,7 +40,15 @@ public abstract class Enemy extends MovingEntity {
         this.xpAmount = xp;
         itemList = new String[] {"sword", "stake", "staff", "shield", "helmet", "armour", "healthpotion", "strengthpotion", "thornmail", "axe"};
     }
-
+    /**
+     * Constructor for enemy class
+     * @param battleRadius support radius of enemy
+     * @param supportRadius battle radius of enemy
+     * @param attackDamage attack damage of enemy
+     * @param goldAmount gold dropped by enemy
+     * @param health health of enemy
+     * @param xp xp dropped by enemy
+     */
     public Enemy (int battleRadius, int supportRadius, int attackDamage, int goldAmount, int health, int xp) {
         super(health);
         this.battleRadius = battleRadius;
@@ -40,15 +60,20 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
-     * Enemy attacks the character given
-     * @param character
+     * Enemy attacks the hero given
+     * @param hero hero enemy is attacking
      * @return boolean if the character was killed returns true
      */
-
     public void attack (Hero hero) {
         hero.takeDamage(attackDamage, this);
     }
 
+    /**
+     * Enemy attacks the hero given.
+     * BattleRunner is passed in to allow weapon to interact more with battle
+     * @param hero Hero enemy is attacking
+     * @param bR BattleRunner
+     */
     public void attack(Hero hero, BattleRunner bR) {
         hero.takeDamage(attackDamage, this);
 
@@ -65,13 +90,7 @@ public abstract class Enemy extends MovingEntity {
             moveDownPath();
         }
     }
-    /**
-     * Generates random loot for player for zombie
-     * @param character
-     * @param width
-     * @param rareItems
-     * @return StaticEntity loot
-     */
+    
     public abstract List<StaticEntity> getLoot(Character character, int width, List<String> rareItems);
 
     // Getters and Setters
@@ -98,6 +117,9 @@ public abstract class Enemy extends MovingEntity {
         return this.supportRadius;
     }
 
+    /**
+     * Elan Muske can heal enemies around him
+     */
     public void heal() {
         health.set((int)(health.get() * 1.05));
     }

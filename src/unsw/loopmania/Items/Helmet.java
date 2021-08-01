@@ -2,16 +2,19 @@ package unsw.loopmania.Items;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * The helmet protects the player from damage but also reduces the damage the player can deal
+ */
 public class Helmet extends Protection {
     public static final int PRICE = 400;
     public static final int BASEDEBUFF = 10;
     private int damageReduction = 3;
     private double debuff;
     /**
-     * 
-     * @param x
-     * @param y
-     * @param level
+     * Constructor for helmet class
+     * @param x X coordinate of helmet in the character's inventory
+     * @param y Y coordinate of helmet in the character's inventory
+     * @param level Level of helmet
      */
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(level, PRICE, x, y);
@@ -20,6 +23,10 @@ public class Helmet extends Protection {
         super.setType("helmet");
     }
     
+    /**
+     * Constructor for helmet class
+     * @param level Level of helmet
+     */
     public Helmet(int level) {
         super(level, PRICE);
         debuff = BASEDEBUFF - (level-1);

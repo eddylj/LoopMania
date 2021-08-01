@@ -10,19 +10,25 @@ public class Axe extends Weapon{
     public static final double DAMAGE = 50.0;
     private boolean inAxeRestingPeriod = false;
     /**
-     * 
-     * @param x
-     * @param y
-     * @param level
+     * Constructor for axe class
+     * @param x X coordinate of axe in unequipped inventory
+     * @param y Y coordinate of axe in unequipped inventory
+     * @param level Level of axe
      */
     public Axe(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         super(x, y, level, PRICE, DAMAGE);
         super.setType("axe");
     }
+
+    /**
+     * Constructor for axe class
+     * @param level Level of axe
+     */
     public Axe(int level) {
         super(level, PRICE, DAMAGE);
         super.setType("axe");
     }
+    
     /**
      * returns damage weapon deals
      * @return damage applicable for enemy

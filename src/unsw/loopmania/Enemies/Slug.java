@@ -8,6 +8,9 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * Slugs are basic common enemies
+ */
 public class Slug extends Enemy{
     public static final int BATTLERADIUS = 1;
     public static final int SUPPORTRADIUS = 1;
@@ -15,11 +18,11 @@ public class Slug extends Enemy{
     public static final int GOLDAMOUNT = 100;
     public static final int HEALTH = 50;
     public static final int XP = 100;
-
     private String[] cardDrops;
+
     /**
-     * 
-     * @param position
+     * Constructor for slug class
+     * @param position position of slug on track
      */
     public Slug (PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
@@ -27,6 +30,9 @@ public class Slug extends Enemy{
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "zombiepit", "bank"};
     }
 
+    /**
+     * Constructor for slug class
+     */
     public Slug() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("slug");

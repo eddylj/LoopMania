@@ -17,6 +17,10 @@ import unsw.loopmania.Items.TreeStump;
 import unsw.loopmania.Items.InvinciblePotion;
 import unsw.loopmania.Items.Item;
 
+/**
+ * Creates rare items.
+ * Items returned depends on whether confusing mode is selected or not
+ */
 public class RareItemFactory {
     private List<String> rareItems;
     private RareItemFactoryStrategy createStrategy;
@@ -26,6 +30,9 @@ public class RareItemFactory {
         createStrategy = new StandardRareItemFactory(this);
     }
 
+    /**
+     * Sets the RareItemFactory into confusing mode
+     */
     public void setConfusing() {
         createStrategy = new ConfusingRareItemFactory(this);
     }

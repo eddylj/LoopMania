@@ -13,6 +13,10 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.CampfireBuilding;
 import unsw.loopmania.Entities.StaticEntity;
 
+/**
+ * Vampires are tough and powerful enemies that are scared of campfires
+ * and take additional damage from the stake weapon
+ */
 public class Vampire extends Enemy {
     public static final int BATTLERADIUS = 2;
     public static final int SUPPORTRADIUS = 3;
@@ -24,8 +28,8 @@ public class Vampire extends Enemy {
     private VampireAttackStrategy Strategy;
 
     /**
-     * 
-     * @param position
+     * Constructor for vampire class
+     * @param position position of vampire on the map
      */
     public Vampire (PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
@@ -35,6 +39,9 @@ public class Vampire extends Enemy {
     
     }
 
+    /**
+     * Constructor for vampire class
+     */
     public Vampire() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("vampire");
@@ -121,6 +128,10 @@ public class Vampire extends Enemy {
         return loot;
     }
     
+    /**
+     * Sets the attack strategy for vampire
+     * @param Strategy strategy to use
+     */
     public void setStrategy(VampireAttackStrategy Strategy) {
         this.Strategy = Strategy;
     }

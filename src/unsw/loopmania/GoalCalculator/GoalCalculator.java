@@ -5,14 +5,15 @@ import org.json.JSONObject;
 
 import unsw.loopmania.Heroes.Character;
 
-
+/**
+ * Class that determines whether player has won and how much of each goal
+ * the player needs to attain
+ */
 public class GoalCalculator {
-    //private JSONObject json;
     private Character character;
     private Composite checker;
 
     public GoalCalculator(JSONObject json, Character character) {
-        //this.json = json;
         this.character = character;
         this.checker = winCondition(json);
     }
@@ -55,10 +56,19 @@ public class GoalCalculator {
         }
     }
 
+    /**
+     * Gets the object that can check whether player has won
+     * @return
+     */
     public Composite getChecker() {
         return checker;
     }
 
+    /**
+     * Gets the max of a particular goal needed
+     * @param type
+     * @return
+     */
     public int getMax(String type) {
         return checker.getMax(type);
     }

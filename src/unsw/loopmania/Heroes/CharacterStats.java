@@ -2,6 +2,9 @@ package unsw.loopmania.Heroes;
 
 import unsw.loopmania.Items.*;
 
+/**
+ * Class that keeps track of the current highest level for each item
+ */
 public class CharacterStats {
     private int sword;
     private int stake;
@@ -12,6 +15,9 @@ public class CharacterStats {
     private int thornmail;
     private int axe;
 
+    /**
+     * Constructor for CharacterStats
+     */
     public CharacterStats() {
         sword = 1;
         stake = 1;
@@ -88,6 +94,11 @@ public class CharacterStats {
         }
     }
 
+    /**
+     * Sets the character's highest level of particular items
+     * @param type The item in question
+     * @param level The new highest level
+     */
     public void setStats(String type, int level) {
         if (type.equals("sword")) {
             sword = level;

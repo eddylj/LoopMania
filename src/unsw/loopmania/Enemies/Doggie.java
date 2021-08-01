@@ -11,6 +11,9 @@ import unsw.loopmania.Entities.StaticEntity;
 
 import java.util.ArrayList;
 
+/**
+ * Doggie spawns on round 20 and drops a DoggieCoin
+ */
 public class Doggie extends Enemy implements Boss{
     public static final int BATTLERADIUS = 1;
     public static final int SUPPORTRADIUS = 1;
@@ -23,8 +26,8 @@ public class Doggie extends Enemy implements Boss{
     private String[] cardDrops;
 
     /**
-     * 
-     * @param position
+     * Constructor for Doggie enemy
+     * @param position Doggie's position
      */
     public Doggie(PathPosition position) {
         super(position, BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
@@ -33,11 +36,19 @@ public class Doggie extends Enemy implements Boss{
         
     }
     
+    /**
+     * Constructor for Doggie enemy
+     */
     public Doggie() {
         super(BATTLERADIUS, SUPPORTRADIUS, DAMAGE, GOLDAMOUNT, HEALTH, XP);
         super.setType("doggie");
         cardDrops = new String[]{"campfire", "barracks", "tower", "trap", "village", "vampirecastle", "zombiepit"};
     }
+
+    /**
+     * Gets loot dropped by the Doggie.
+     * The doggie can drop multiple items and always drops a single DoggieCoin
+     */
     @Override
     public List<StaticEntity> getLoot(Character character, int width, List<String> rareItems) {
         character.increaseBossKills();

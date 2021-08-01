@@ -101,4 +101,7 @@ public class PathPosition{
     public int getPositionInPath() {
         return currentPositionInPath;
     }
+    public PathPosition clone() {
+        return new PathPosition(currentPositionInPath, orderedPath);
+    }
 }

@@ -20,8 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.LoopManiaWorldController;
 import unsw.loopmania.Entities.StaticEntity;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Shop.*;
@@ -49,13 +47,14 @@ public class ShopBuyController {
     public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
-        itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion", "strengthpotion", "axe", "thornmail"};
+        itemList = new String[] {"sword", "stake", "staff", "axe", "healthpotion", "strengthpotion", "armour", "shield", "helmet", "thornmail"};
         this.shop = shop;
         buyButtons = new ArrayList<Pair<Button, String>>();
     }
 
     @FXML
     public void initialize() {
+        shop.restock();
         addItems(itemList);
         addDoneButton();
         addSellButton();
@@ -143,8 +142,8 @@ public class ShopBuyController {
     public Button makeItemButton(String itemName, ImageView view) {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
-        // buyButton.set
         buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 15));
+
         buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -154,12 +153,8 @@ public class ShopBuyController {
                 buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
                 view.setImage(makeItemImage(itemName));
-                for (Pair<Button, String> b : buyButtons) {
-                    b.getValue0().disableProperty().bind(shop.canBuy(b.getValue1()).not());
-                }
             }
         });
-        // buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
         return buyButton;
     }
 
@@ -171,8 +166,8 @@ public class ShopBuyController {
             @Override
             public void handle(ActionEvent event) {
 
-                ShopSellController shopSellController = new ShopSellController(world, worldController);
-                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+                ShopSellController shopSellController = new ShopSellController(world, worldController, shop);
+                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopSellView.fxml"));
                 shopLoader.setController(shopSellController);
                 
                 try {
@@ -180,7 +175,6 @@ public class ShopBuyController {
                     Stage stage = new Stage();
                     stage.setTitle("Shop-Sell");
                     worldController.setSellShopOpen(true);
-                    shop.restock();
                     stage.setOnCloseRequest(closeEvent -> {
                         worldController.setSellShopOpen(false);
                         worldController.tryToPlay();

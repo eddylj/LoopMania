@@ -86,4 +86,9 @@ public abstract class MovingEntity extends Entity {
         }
         return false;
     }
+
+    public PathPosition clonePosition() {
+        
+        return position.clone();
+    }
 }

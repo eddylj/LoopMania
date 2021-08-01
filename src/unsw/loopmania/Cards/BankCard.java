@@ -11,9 +11,9 @@ import org.javatuples.Pair;
  */
 public class BankCard extends StaticEntity implements Card{
     /**
-     * 
-     * @param x
-     * @param y
+     * Constructor for bank card
+     * @param x X coordinate of bank card in inventory
+     * @param y Y coordinate of bank card in inventory
      */
     public BankCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
