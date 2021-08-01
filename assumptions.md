@@ -40,3 +40,4 @@
 * You can't place a card on an existing buildings
 * You can't drag an item out of the equipped slot
 * Game unpauses when no shop window is open
+* The value of dogecoin fluctuates everytime the sell window opens, so if you want to spend all your time rolling for high dogecoin in shop you can
