@@ -12,6 +12,7 @@ import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
 import unsw.loopmania.Enemies.Vampire;
 import unsw.loopmania.Enemies.Zombie;
+import unsw.loopmania.Enemies.Thief;
 import unsw.loopmania.Entities.StaticEntity;
 import unsw.loopmania.Items.Weapon;
 import unsw.loopmania.Items.Item;
@@ -23,6 +24,7 @@ public class DropsTest {
     private Slug slug = new Slug();
     private Zombie zombie = new Zombie();
     private Vampire vampire = new Vampire();
+    private Thief thief = new Thief();
     private List<String> rare = new ArrayList<String>();
 
     public DropsTest() {
@@ -202,6 +204,45 @@ public class DropsTest {
         checkCard(70, "tower", vampire, c1);
         checkCard(3, "trap", vampire, c1);
         checkCard(46, "bank", vampire, c1);
+    }
+
+    @Test
+    public void thiefDrop() {
+        Character c1 = new Character();
+        c1.setRareItems(rare);
+
+        checkWeapon(22, "sword", 2, thief, c1);
+        checkWeapon(184, "staff", 2, thief, c1);
+        checkWeapon(311, "stake", 2, thief, c1);
+        checkWeapon(33, "axe", 2, thief, c1);
+
+        checkProtection(203, "shield", 2, thief, c1);
+        checkProtection(26, "helmet", 2, thief, c1);
+        checkProtection(307, "armour", 2, thief, c1);
+        checkProtection(581, "thornmail", 2, thief, c1); 
+
+        checkOther(76, "healthpotion", thief, c1);
+        checkOther(41, "strengthpotion", thief, c1);
+
+        checkOther(61, "theonering", thief, c1);
+        checkOther(271, "anduril", thief, c1);
+        checkOther(18, "invinciblepotion", thief, c1);
+        checkOther(180, "nuke", thief, c1);
+        checkOther(743, "treestump", thief, c1);
+
+        Character c2 = new Character();
+        c2.setRareItems(rare);
+
+        checkWeapon(326, "sword", 1, thief, c2);
+        checkWeapon(2, "staff", 1, thief, c2);
+        checkWeapon(45, "stake", 1, thief, c2);
+        checkProtection(37, "shield", 1, thief, c2);
+        checkProtection(116, "helmet", 1, thief, c2);
+        checkProtection(149, "armour", 1, thief, c2); 
+        checkProtection(30, "thornmail", 1, thief, c2); 
+
+        checkCard(54, "zombiepit", thief, c1);
+        checkCard(6, "vampirecastle", thief, c1);
     }
 }
 
