@@ -1,15 +1,19 @@
 package unsw.loopmania.Shop;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Items.Item;
 
 public class NormalShopStrategy implements ShopStrategy{
     private Character character;
-    private boolean available;
+    private BooleanProperty available;
 
     public NormalShopStrategy(Character character) {
         this.character = character;
-        available = true;
+        available = new SimpleBooleanProperty(true);
         
     }
 
@@ -20,12 +24,12 @@ public class NormalShopStrategy implements ShopStrategy{
 
     @Override
     public void restock() {
-        available = true;
+        available.set(true);
     }
 
     @Override
-    public Boolean getAvailable(Item item) {
-        return character.getGold() >= item.getPrice();
+    public BooleanBinding getAvailable(Item item) {
+        return Bindings.greaterThanOrEqual(character.getGoldProperty(), item.getPrice());
     }
     
 }

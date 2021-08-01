@@ -1,5 +1,9 @@
 package unsw.loopmania.Shop;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Items.*;
 
@@ -8,38 +12,34 @@ import unsw.loopmania.Items.*;
  * @author Group FRIDGE
  */
 public class BeserkerShopStrategy implements ShopStrategy{
-    private boolean available;
+    private BooleanProperty available;
     private Character character;
 
     public BeserkerShopStrategy(Character character) {
-        available = true;
+        available = new SimpleBooleanProperty(true);
         this.character = character;
     }
 
     @Override
     public void buyItem(Item purchasedItem) {
-        if (purchasedItem instanceof Protection) {
-            available = false;
+        if (purchasedItem.isProtection()) {
+            available.set(false);
         }
     }
 
     @Override
     public void restock() {
-        available = true;
+        available.set(true);
     }
 
     @Override
-    public Boolean getAvailable(Item item) {
+    public BooleanBinding getAvailable(Item item) {
         if (item.isProtection()) {
-            return available && (character.getGold() >= item.getPrice());
+            return available.and(character.getGoldProperty().greaterThanOrEqualTo(item.getPrice()));
         }
         else {
-            return character.getGold() >= item.getPrice();
+            return Bindings.greaterThanOrEqual(character.getGoldProperty(), item.getPrice());
         }
     }
-
-    
-
-
 
 }
