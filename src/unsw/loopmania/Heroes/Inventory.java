@@ -209,7 +209,7 @@ public class Inventory {
         ItemFactory iF = new ItemFactory();
         Item item = null;
         
-        if (rareItems.contains(type)) {
+        if (rareItems != null && rareItems.contains(type)) {
             item = rF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type);
         }
         else if (nonLevelItems.contains(type)) {
@@ -219,7 +219,7 @@ public class Inventory {
             item = iF.create(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()), type, level);
         }
         unequippedInventoryItems.add(item);
-        if (!rareItems.contains(type)) {
+        if (rareItems != null && !rareItems.contains(type)) {
             character.updateHighest(item);
         }
         return item;
