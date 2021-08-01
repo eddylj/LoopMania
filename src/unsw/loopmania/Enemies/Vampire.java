@@ -7,6 +7,7 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Heroes.Hero;
+import unsw.loopmania.BattleRunner;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Buildings.CampfireBuilding;
@@ -50,19 +51,31 @@ public class Vampire extends Enemy {
     }
 
     /**
+     * Deals damage to Hero
+     */
+    @Override
+    public void attack (Hero hero, BattleRunner bR) {
+        Strategy.attack(hero, this);
+    }
+
+    /**
      * Moves vampire based on where campfires are
      * @param campfire
      */
     public void move(CampfireBuilding campfire) {
-        Pair<Integer, Integer> forward = position.getClockwisePosition();
-        Pair<Integer, Integer> backward = position.getAntiClockwisePosition();
-        double forwardDistance = Math.sqrt(Math.pow(forward.getValue0() - getX(), 2) + Math.pow(forward.getValue1() - getY(), 2));
-        double backwardDistance = Math.sqrt(Math.pow(backward.getValue0() - getX(), 2) + Math.pow(backward.getValue1() - getY(), 2));
-        if (forwardDistance > backwardDistance) {
-            moveUpPath();
-        }
-        else {
-            moveDownPath();
+        if (campfire != null) {
+            Pair<Integer, Integer> forward = position.getClockwisePosition();
+            Pair<Integer, Integer> backward = position.getAntiClockwisePosition();
+            double forwardDistance = Math.sqrt(Math.pow(forward.getValue0() - campfire.getX(), 2) + Math.pow(forward.getValue1() - campfire.getY(), 2));
+            double backwardDistance = Math.sqrt(Math.pow(backward.getValue0() - campfire.getX(), 2) + Math.pow(backward.getValue1() - campfire.getY(), 2));
+            if (forwardDistance > backwardDistance) {
+                moveUpPath();
+            }
+            else {
+                moveDownPath();
+            }
+        } else {
+            super.move();
         }
     }
 

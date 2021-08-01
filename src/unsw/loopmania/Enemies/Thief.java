@@ -7,13 +7,14 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Heroes.Hero;
+import unsw.loopmania.BattleRunner;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Entities.StaticEntity;
 
 public class Thief extends Enemy {
-    public static final int BATTLERADIUS = 3;
-    public static final int SUPPORTRADIUS = 3;
+    public static final int BATTLERADIUS = 1;
+    public static final int SUPPORTRADIUS = 1;
     public static final int DAMAGE = 0;
     public static final int GOLDAMOUNT = 250;
     public static final int HEALTH = 100;
@@ -46,22 +47,22 @@ public class Thief extends Enemy {
             ((Character) hero).loseRandomItem();
         }
     }
+    /**
+     * Deals damage to Hero
+     */
+    @Override
+    public void attack (Hero hero, BattleRunner bR) {
+        if (hero instanceof Character && LoopManiaWorld.getRandNum() < 50) {
+            ((Character) hero).loseRandomItem();
+        }
+    }
 
     /**
      * Moves thief based on where character is
      * @param character
      */
-    public void move(Character character) {
-        Pair<Integer, Integer> forward = position.getClockwisePosition();
-        Pair<Integer, Integer> backward = position.getAntiClockwisePosition();
-        double forwardDistance = Math.sqrt(Math.pow(forward.getValue0() - getX(), 2) + Math.pow(forward.getValue1() - getY(), 2));
-        double backwardDistance = Math.sqrt(Math.pow(backward.getValue0() - getX(), 2) + Math.pow(backward.getValue1() - getY(), 2));
-        if (forwardDistance < backwardDistance) {
-            moveUpPath();
-        }
-        else {
-            moveDownPath();
-        }
+    public void move() {
+        moveUpPath();
     }
 
     /**

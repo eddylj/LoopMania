@@ -55,7 +55,7 @@ public class LoopManiaWorld {
     
 
     public static final int DOGGIESPAWNCYCLE = 20;
-    public static final int THIEFSPAWNCYCLE = 4;
+    public static final int THIEFSPAWNCYCLE = 1;
     public static final int ELANMUSKESPAWNCYCLE = 40;
     public static final int ELANMUSKESPAWNXP = 10000;
 
@@ -461,9 +461,6 @@ public class LoopManiaWorld {
         for (Enemy enemy: enemies){
             if (enemy instanceof Vampire) {
                 ((Vampire)enemy).move(getClosestCampfire(enemy.getX(), enemy.getY()));
-            }
-            else if (enemies instanceof Thief) {
-                ((Thief)enemy).move(character);
             }
             else {
                 enemy.move();

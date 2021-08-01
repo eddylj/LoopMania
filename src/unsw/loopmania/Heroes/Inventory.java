@@ -150,8 +150,11 @@ public class Inventory {
      * Remove random UnequippedItem
      */
     public void loseRandomItem() {
-        Item item = unequippedInventoryItems.get(LoopManiaWorld.getRandNum()%unequippedInventoryItems.size());
-        unequippedInventoryItems.remove(item);
+        if (unequippedInventoryItems.size() > 0) {
+            Item item = unequippedInventoryItems.get(LoopManiaWorld.getRandNum()%unequippedInventoryItems.size());
+            unequippedInventoryItems.remove(item);
+            ((Entity)item).destroy();
+        }
     }
 
     /**
