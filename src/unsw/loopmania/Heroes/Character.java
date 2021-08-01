@@ -333,6 +333,10 @@ public class Character extends MovingEntity implements Hero {
         return bossKills;
     }
 
+    public void setPositionIndex(int index) {
+        position.setPositionIndex(index);
+    }
+
     /**
      * Checks whether the character is invicible or not
      * @return boolean: is character incible

@@ -19,13 +19,13 @@ import unsw.loopmania.Entities.PathTile;
 
 public class IntegrationTestHelper {
 
-    public static LoopManiaWorld createWorld(String fileName, int seed) throws FileNotFoundException{
+    public static LoopManiaWorld createWorld(String fileName, String folder, int seed) throws FileNotFoundException{
         JSONObject json;
         try {
-            json = new JSONObject(new JSONTokener(new FileReader("bin/worlds/" + fileName)));
+            json = new JSONObject(new JSONTokener(new FileReader("bin/" + folder +  "/" + fileName)));
         }
         catch (FileNotFoundException e) {
-            json = new JSONObject(new JSONTokener(new FileReader("worlds/" + fileName)));
+            json = new JSONObject(new JSONTokener(new FileReader(folder + '/' + fileName)));
         }
         // JSONObject goals = json.getJSONObject("goal-condition");
         int width = json.getInt("width");

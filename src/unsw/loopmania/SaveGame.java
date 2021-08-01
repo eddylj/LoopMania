@@ -37,6 +37,7 @@ public class SaveGame {
     public void SaveWorld(String name) {
         saveCharacter();
         saveNonSpecifiedEntities();
+        saveStaticEntities();
         saveEnemies();
         saveCycleBuildings();
         saveMoveBuildings();
@@ -69,9 +70,12 @@ public class SaveGame {
         characterJSON.put("gold", character.getGold());
         characterJSON.put("cycles", character.getCycles().get());
         characterJSON.put("health", character.getHealth());
-        characterJSON.put("bossKills", character.getBossKills());
+        characterJSON.put("bossKills", character.getBossKills().get());
         characterJSON.put("strengthpotionbuff", character.getStrengthPotionBuff());
         characterJSON.put("canTakeDamage", character.canTakeDamage());
+        characterJSON.put("position", character.getIndexOfPosition());
+        // characterJSON.put("x", character.getX());
+        // characterJSON.put("y", character.getY());
         addEquippedWeapon(characterJSON);
         addEquippedArmour(characterJSON);
         addEquippedHelmet(characterJSON);
@@ -99,6 +103,34 @@ public class SaveGame {
             nonSpecifiedEntities.put(entityJSON);
         }
         save.put("nonSpecifiedEntities", nonSpecifiedEntities);
+    }
+
+    private void saveStaticEntities() {
+        // Save the poop
+        List<Poop> poopList = world.getPoop();
+        JSONArray poopArray = new JSONArray();
+        if (!poopList.isEmpty()) {
+            for (Poop poop : poopList) {
+                JSONObject poopJSON = new JSONObject();
+                poopJSON.put("x", poop.getX());
+                poopJSON.put("y", poop.getY());
+                poopArray.put(poopJSON);
+            }
+        }
+        save.put("poop", poopArray);
+
+        // save the coin
+        List<Coin> coinList = world.getCoin();
+        JSONArray coinArray = new JSONArray();
+        if (!coinList.isEmpty()) {
+            for (Coin coin : coinList) {
+                JSONObject coinJSON = new JSONObject();
+                coinJSON.put("x", coin.getX());
+                coinJSON.put("y", coin.getY());
+                coinArray.put(coinJSON);
+            }
+        }
+        save.put("coin", coinArray);
     }
 
     /**

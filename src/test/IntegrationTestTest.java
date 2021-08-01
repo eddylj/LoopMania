@@ -35,7 +35,7 @@ public class IntegrationTestTest {
     
     @Test
     public void workingTest() throws FileNotFoundException {
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world.json", 1);
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world.json", "worlds", 1);
         for (int i = 0; i < 8; i++) {
             world.tick();
             assertFalse(world.checkPlayerLoss());
@@ -50,7 +50,7 @@ public class IntegrationTestTest {
      */
     @Test
     public void checkLossTest() throws FileNotFoundException {
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", 4);
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("three_by_three_world_cant_win.json", "worlds", 4);
         for (int i = 0; i < 33; i++) {
             System.out.println(i);
             world.tick();
@@ -96,7 +96,7 @@ public class IntegrationTestTest {
 
     @Test
     public void BuyAndUsePotion() throws FileNotFoundException{
-        LoopManiaWorld world = IntegrationTestHelper.createWorld("one_ring_grind.json", 2);
+        LoopManiaWorld world = IntegrationTestHelper.createWorld("one_ring_grind.json", "worlds", 2);
         for (int i = 0; i < 8; i++) {
             world.tick();
         }

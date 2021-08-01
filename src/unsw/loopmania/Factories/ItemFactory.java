@@ -74,18 +74,9 @@ public class ItemFactory {
     private Item createStrengthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new StrengthPotion(x,y);
     }
-
     private Item createDoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         return new DoggieCoin(x, y);
     }
-
-    // private Item createTreeStump(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-    //     return new TreeStump(x,y,level);
-    // }
-
-    // private Item createAnduril(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
-    //     return new Anduril(x, y, level);
-    // }
     private Item createAxe(SimpleIntegerProperty x, SimpleIntegerProperty y, int level) {
         return new Axe(x, y, level);
     }

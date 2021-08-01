@@ -1000,6 +1000,14 @@ public class LoopManiaWorld {
         return selectedGamemode;
     }
 
+    public void loadPoop(int x, int y) {
+        poop.add(new Poop(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y)));
+    }
+
+    public void loadCoin(int x, int y) {
+        gold.add(new Coin(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y)));
+    }
+
     public void saveGame(String name) {
         SaveGame save = new SaveGame(this);
         save.SaveWorld(name);

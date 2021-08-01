@@ -74,4 +74,13 @@ public class DoggieCoin extends Item{
             return "normal";
         }
     }
+
+    public void setStrategy(String strategy) {
+        if (strategy.equals("deflated")) {
+            setDeflatedCoin();
+        }
+        else if (strategy.equals("inflated")) {
+            setInflatedCoin();
+        }
+    }
 }

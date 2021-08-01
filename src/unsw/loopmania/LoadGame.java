@@ -14,6 +14,7 @@ import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Items.*;
 import unsw.loopmania.Shop.*;
 import unsw.loopmania.Enemies.*;
+import unsw.loopmania.Entities.StaticEntity;
 
 /**
  * Class used to load a saved game from a JSON file
@@ -46,6 +47,8 @@ public class LoadGame {
         loadCharacter(json.getJSONObject("character"), json);
         loadBuildings(json.getJSONArray("moveBuildings"));
         loadBuildings(json.getJSONArray("cycleBuildings"));
+        loadPoop(json.getJSONArray("poop"));
+        loadCoin(json.getJSONArray("coin"));
         loadEnemies(json.getJSONArray("enemies"));
         loadShop(json);
     }
@@ -59,6 +62,7 @@ public class LoadGame {
         Character character = world.getCharacter();
 
         // Deal with character stats
+        character.setPositionIndex(characterJSON.getInt("position"));
         character.setHealth(characterJSON.getInt("health"));
         character.gainXP(characterJSON.getInt("experience"));
         character.setCycle(characterJSON.getInt("cycles"));
@@ -135,6 +139,10 @@ public class LoadGame {
             if (item.has("additional")) {
                 String additional = item.getString("additional");
                 character.addUnequippedConfusedItem(type, additional);
+            }
+            else if (type.equals("doggiecoin")) {
+                StaticEntity coin = character.addUnequippedItem("doggiecoin", 0);
+                ((DoggieCoin)coin).setStrategy(item.getString("strategy"));
             }
             else {
                 if (item.has("level")) {
@@ -214,6 +222,22 @@ public class LoadGame {
             }
         }
         return false;
+    }
+
+    private void loadPoop(JSONArray poopArray) {
+        if (poopArray.isEmpty()) return;
+        for (int i = 0; i < poopArray.length(); i++) {
+            JSONObject poopObject = poopArray.getJSONObject(i);
+            world.loadPoop(poopObject.getInt("x"), poopObject.getInt("y"));
+        }
+    }
+
+    private void loadCoin(JSONArray coinArray) {
+        if (coinArray.isEmpty()) return;
+        for (int i = 0; i < coinArray.length(); i++) {
+            JSONObject coinObject = coinArray.getJSONObject(i);
+            world.loadCoin(coinObject.getInt("x"), coinObject.getInt("y"));
+        }
     }
 
     /**
