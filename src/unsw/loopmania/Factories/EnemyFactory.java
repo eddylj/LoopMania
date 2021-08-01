@@ -5,6 +5,7 @@ import unsw.loopmania.Enemies.Doggie;
 import unsw.loopmania.Enemies.ElanMuske;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Thief;
 import unsw.loopmania.Enemies.Vampire;
 import unsw.loopmania.Enemies.Zombie;
 
@@ -24,6 +25,9 @@ public class EnemyFactory {
         }
         else if (type.equals("vampire")) {
             return createVampire(path);
+        }
+        else if (type.equals("thief")) {
+            return createThief(path);
         }
         else if (type.equals("doggie")) {
             return createDoggie(path);
@@ -45,6 +49,9 @@ public class EnemyFactory {
         }
         else if (type.equals("vampire")) {
             return createVampire();
+        }
+        else if (type.equals("thief")) {
+            return createThief();
         }
         else if (type.equals("doggie")) {
             return createDoggie();
@@ -72,6 +79,9 @@ public class EnemyFactory {
     private Vampire createVampire(PathPosition path) {
         return new Vampire(path);
     }
+    private Thief createThief(PathPosition path) {
+        return new Thief(path);
+    }
     private Slug createSlug() {
         return new Slug();
     }
@@ -80,6 +90,9 @@ public class EnemyFactory {
     }
     private Vampire createVampire() {
         return new Vampire();
+    }
+    private Thief createThief() {
+        return new Thief();
     }
     private Enemy createDoggie() {
         return new Doggie();

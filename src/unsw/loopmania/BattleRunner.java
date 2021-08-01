@@ -200,7 +200,7 @@ public class BattleRunner {
         for (int i = enemies.size() - 1; i >= 0; i--) {
             Enemy enemy = enemies.get(i);
             // Enemy attacks allies first
-            if (!allies.isEmpty()) {
+            if (!allies.isEmpty() && !(enemy instanceof Thief)) {
                 AlliedSoldier ally = allies.get(0);
                 // If enemy is an instance of a zombie or doggie, battle runner
                 // needs to passed to use of its functions (i.e convert ally zombie)

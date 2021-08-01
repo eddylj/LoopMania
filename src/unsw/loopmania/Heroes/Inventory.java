@@ -157,6 +157,17 @@ public class Inventory {
     }
 
     /**
+     * Remove random UnequippedItem
+     */
+    public void loseRandomItem() {
+        if (unequippedInventoryItems.size() > 0) {
+            Item item = unequippedInventoryItems.get(LoopManiaWorld.getRandNum()%unequippedInventoryItems.size());
+            unequippedInventoryItems.remove(item);
+            ((Entity)item).destroy();
+        }
+    }
+
+    /**
      * remove card at a particular index of cards (position in gridpane of unplayed cards)
      * @param index the index of the card, from 0 to length-1
      */
