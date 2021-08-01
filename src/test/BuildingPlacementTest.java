@@ -10,8 +10,8 @@ import org.javatuples.Pair;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.CardFactory;
-import unsw.loopmania.Card;
+import unsw.loopmania.Cards.Card;
+import unsw.loopmania.Factories.CardFactory;
 
 
 public class BuildingPlacementTest {
@@ -162,6 +162,17 @@ public class BuildingPlacementTest {
         canPlace = barracks.canBePlaced(2, 2, path);
         assertTrue(canPlace);
         canPlace = barracks.canBePlaced(1, 2, path);
+        assertTrue(canPlace);
+    }
+    @Test
+    public void BankPlacementValidTest() {
+        Card bank = cF.create(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), "bank");
+        List<Pair<Integer, Integer>> path = createPath();
+        Boolean canPlace = bank.canBePlaced(0, 0, path);
+        assertTrue(canPlace);
+        canPlace = bank.canBePlaced(2, 2, path);
+        assertTrue(canPlace);
+        canPlace = bank.canBePlaced(1, 2, path);
         assertTrue(canPlace);
     }
 

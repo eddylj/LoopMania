@@ -8,20 +8,20 @@ import java.util.List;
 
 import org.junit.Test;
 
-import unsw.loopmania.Item;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Stake;
-import unsw.loopmania.Shield;
-import unsw.loopmania.Inventory;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
-import unsw.loopmania.Shop;
-import unsw.loopmania.Character;
-import unsw.loopmania.AlliedSoldier;
-import unsw.loopmania.TowerBuilding;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Shield;
+import unsw.loopmania.Buildings.TowerBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Enemies.Zombie;
+import unsw.loopmania.Heroes.Inventory;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Items.Stake;
+import unsw.loopmania.Shop.Shop;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Heroes.AlliedSoldier;
 import unsw.loopmania.BattleRunner;
 
 
@@ -48,7 +48,7 @@ public class GoldTest {
     public void GetGoldFromVampireTest() {
         b.setCharacter(character);
         Enemy vampire = new Vampire();
-        character.equip(new Stake(2));
+        character.equip(new Stake(2), "weapon");
         enemies.add(vampire);
         assertEquals(0, character.getGold());
         List<Enemy> defeatedEnemies = b.runBattle(enemies, allies, towers);
@@ -61,7 +61,7 @@ public class GoldTest {
 
         b.setCharacter(character);
         Enemy zombie = new Zombie();
-        character.equip(new Sword(2));
+        character.equip(new Sword(2), "weapon");
         enemies.add(zombie);
         assertEquals(0, character.getGold());
         List<Enemy> defeatedEnemies = b.runBattle(enemies, allies, towers);
@@ -83,7 +83,9 @@ public class GoldTest {
     @Test
     public void getGoldFromItemReplaceTest() {
         Item shield = new Shield(3);
+        character = new Character();
         Inventory inven = new Inventory(character);
+        inven.setRareItems(new ArrayList<String>());
         inven.addUnequippedItem("shield", 3);
         for (int i = 0; i < 15; i++) {
             inven.addUnequippedItem("stake", 7);

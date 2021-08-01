@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.GoalCalculator;
-import unsw.loopmania.Composite;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.GoalCalculator.GoalCalculator;
+import unsw.loopmania.GoalCalculator.Composite;
 
 public class EndGoalTest {
     

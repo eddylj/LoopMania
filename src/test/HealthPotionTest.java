@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Item;
-import unsw.loopmania.HealthPotion;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.HealthPotion;
+import unsw.loopmania.Items.Item;
 
 public class HealthPotionTest {
 
@@ -19,7 +19,7 @@ public class HealthPotionTest {
         c.takeDamage(10);
         assertEquals(90, c.getHealth());
         HealthPotion potionType = (HealthPotion)potion;
-        potionType.heal(c);
+        potionType.use(c);
         assertEquals(100, c.getHealth());
     }
 
@@ -33,7 +33,7 @@ public class HealthPotionTest {
         c.takeDamage(20);
         assertEquals(80, c.getHealth());
         HealthPotion potionType = (HealthPotion)potion;
-        potionType.heal(c);
+        potionType.use(c);
         assertEquals(100, c.getHealth());
     }
 

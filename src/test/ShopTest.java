@@ -1,15 +1,16 @@
 
 package test;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Shop;
-import unsw.loopmania.Item;
-import unsw.loopmania.Sword;
-import unsw.loopmania.HealthPotion;
-import unsw.loopmania.Weapon;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Weapon;
+import unsw.loopmania.Items.HealthPotion;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.Shop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -17,18 +18,20 @@ public class ShopTest {
     @Test
     public void buyWeaponTest() {
         Character c = new Character();
+        c.setRareItems(new ArrayList<String>());
         Shop shop = new Shop(c);
         c.gainGold(1000);
         Item weapon = shop.buy("sword");
         Item sword = new Sword(2);
         assertEquals(((Weapon)weapon).getLevel(), ((Weapon)sword).getLevel());
-        assertEquals(((Weapon)weapon).getType(), ((Weapon)sword).getType());
-        assertEquals(c.getGold(), 650);        
+        assertEquals(((Weapon)weapon).getType(), ((Weapon)sword).getType());;
+        assertEquals(c.getGold(), 1000 - weapon.getPrice());        
     }
 
     @Test
     public void buyPotionTest() {
         Character c = new Character();
+        c.setRareItems(new ArrayList<String>());
         Shop shop = new Shop(c);
         c.gainGold(1000);
         Item boughItem = shop.buy("healthpotion");
@@ -41,12 +44,12 @@ public class ShopTest {
     public void checkBuyPriceTest() {
         Character c = new Character();
         Shop shop = new Shop(c);
-        assertEquals(shop.getBuyPrice("sword"), 350);
-        assertEquals(shop.getBuyPrice("staff"), 700);
-        assertEquals(shop.getBuyPrice("stake"), 350);
-        assertEquals(shop.getBuyPrice("helmet"), 400);
-        assertEquals(shop.getBuyPrice("armour"), 400);
-        assertEquals(shop.getBuyPrice("shield"), 400);
+        assertEquals(shop.getBuyPrice("sword"), 402);
+        assertEquals(shop.getBuyPrice("staff"), 804);
+        assertEquals(shop.getBuyPrice("stake"), 402);
+        assertEquals(shop.getBuyPrice("helmet"), 459);
+        assertEquals(shop.getBuyPrice("armour"), 459);
+        assertEquals(shop.getBuyPrice("shield"), 459);
         assertEquals(shop.getBuyPrice("healthpotion"), 100);
     }
 }

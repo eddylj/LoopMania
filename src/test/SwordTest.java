@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import unsw.loopmania.BattleRunner;
-import unsw.loopmania.Character;
-import unsw.loopmania.Item;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Weapon;
-import unsw.loopmania.Enemy;
-import unsw.loopmania.Slug;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.Sword;
+import unsw.loopmania.Items.Weapon;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Items.Item;
 
 
 public class SwordTest {
@@ -20,7 +20,7 @@ public class SwordTest {
         Character c = new Character();
         Item sword = new Sword(10);
         assertEquals(1, c.getHighestLevel(sword));
-        c.equip(sword);
+        c.equip(sword, "weapon");
         assertEquals(10, c.getHighestLevel(sword));
     }
 
@@ -30,9 +30,9 @@ public class SwordTest {
         Item sword1 = new Sword(10);
         Item sword2 = new Sword(3);
         assertEquals(1, c.getHighestLevel(sword1));
-        c.equip(sword1);
+        c.equip(sword1, "weapon");
         assertEquals(10, c.getHighestLevel(sword1));
-        c.equip(sword2);
+        c.equip(sword2, "weapon");
         assertEquals(10, c.getHighestLevel(sword2));
     }
 
@@ -44,7 +44,7 @@ public class SwordTest {
         for (int i = 2; i <= 10; i++) {
             Weapon nextSword = new Sword(i);
             System.out.println(damage*1.1);
-            assertEquals(nextSword.getDamage(), initialDamage*(1+(((i-1)*1.0)/10)));
+            assertEquals(nextSword.getDamage(), initialDamage * Math.pow(1.1, i - 1));
             damage = nextSword.getDamage();
         }
     }
@@ -53,7 +53,7 @@ public class SwordTest {
     public void whackSomethingWithSwordTest() {
         Character c = new Character();
         Item sword = new Sword(1);
-        c.equip(sword);
+        c.equip(sword, "weapon");
         Enemy slug = new Slug();
         assertEquals(slug.getHealth(), 50);
         c.attack(slug, b);

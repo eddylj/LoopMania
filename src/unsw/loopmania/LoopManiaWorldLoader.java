@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
-
+import unsw.loopmania.Entities.Entity;
+import unsw.loopmania.Entities.PathTile;
+import unsw.loopmania.Heroes.Character;
 import java.util.List;
 
 /**
@@ -26,9 +28,9 @@ import java.util.List;
 public abstract class LoopManiaWorldLoader {
     private JSONObject json;
 
-    public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
+    public LoopManiaWorldLoader(String folder, String filename) throws FileNotFoundException {
         System.err.println(filename);
-        json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
+        json = new JSONObject(new JSONTokener(new FileReader(folder + "/" + filename)));
     }
 
     /**
@@ -43,13 +45,18 @@ public abstract class LoopManiaWorldLoader {
 
         // JSONObject j = json.getJSONObject("goal-condition");
 
-        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json);
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json, 2);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
         // load non-path entities later so that they're shown on-top
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
+        }
+
+        if (json.has("saveWorld")) {
+            LoadGame load = new LoadGame(world, json);
+            load.loadWorld();
         }
 
         return world;
@@ -69,7 +76,6 @@ public abstract class LoopManiaWorldLoader {
         // assert indexInPath != -1;
 
         Entity entity = null;
-        // TODO = load more entity types from the file
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
@@ -82,7 +88,6 @@ public abstract class LoopManiaWorldLoader {
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         default:
             world.placeBuildingAtStart(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y), type);
-        // TODO Handle other possible entities
         }
         world.addEntity(entity);
     }
@@ -153,6 +158,5 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(Character character);
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
 
-    // TODO Create additional abstract methods for the other entities
 
 }

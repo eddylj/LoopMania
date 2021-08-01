@@ -10,25 +10,21 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import unsw.loopmania.Items.*;
+import unsw.loopmania.Shop.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class ShopSellController {
 
     @FXML
-    private StackPane stackPaneRoot;
+    private GridPane imageGrid;
 
     @FXML
-    private GridPane shopItems;
-
-    @FXML
-    private AnchorPane itemCosts;
+    private AnchorPane overPane;
 
     private LoopManiaWorld world;
 
@@ -36,20 +32,14 @@ public class ShopSellController {
 
     private Shop shop;
 
-    public ShopSellController(LoopManiaWorld world, LoopManiaWorldController worldController) {
+    public ShopSellController(LoopManiaWorld world, LoopManiaWorldController worldController, Shop shop) {
         this.world = world;
         this.worldController = worldController;
-        shop = new Shop(world.getCharacter());
+        this.shop = shop;
     }
 
     @FXML
     public void initialize() {
-        for (ColumnConstraints columnConstraint: shopItems.getColumnConstraints()) {
-            columnConstraint.setPercentWidth(25);
-        }
-        for (RowConstraints rowConstraint: shopItems.getRowConstraints()) {
-            rowConstraint.setPercentHeight(25);
-        }
         addItems();
         addDoneButton();
     }
@@ -65,9 +55,9 @@ public class ShopSellController {
             }
         });
 
-        itemCosts.getChildren().add(done);
-        AnchorPane.setTopAnchor(done, (double)580);
-        AnchorPane.setLeftAnchor(done, (double)180);
+        overPane.getChildren().add(done);
+        AnchorPane.setTopAnchor(done, 640.0);
+        AnchorPane.setLeftAnchor(done, 180.0);
     }
 
     public void doneButtonAction(Button done) {
@@ -81,15 +71,16 @@ public class ShopSellController {
         int i = 0;
         for (Item item: world.getItems()) {
             int itemLevel = 0;
-            if (item instanceof Weapon) {
+            if (item.isWeapon()) {
                 itemLevel = ((Weapon)item).getLevel();
             }
-            else if (item instanceof Protection) {
+            else if (item.isProtection()) {
                 itemLevel = ((Protection)item).getLevel();
             }
-            String itemName = ((StaticEntity) item).getType();
+            String itemName = item.getType();
             String itemString;
-            if (item instanceof HealthPotion || item instanceof TheOneRing) {
+
+            if (world.getNonLevelItems().contains(itemName)) {
                 itemString = itemName;
             }
             else {
@@ -100,7 +91,7 @@ public class ShopSellController {
             int col = i % 4;
             view.setFitHeight(70);
             view.setFitWidth(70);
-            shopItems.add(view, col, row);
+            imageGrid.add(view, col, row);
             GridPane.setHalignment(view, HPos.CENTER);
             GridPane.setValignment(view, VPos.CENTER);
             
@@ -113,7 +104,7 @@ public class ShopSellController {
             GridPane gridPane = new GridPane();
             gridPane.add(goldView, 0, 0);
             gridPane.add(itemButton, 1, 0);
-            itemCosts.getChildren().add(gridPane);
+            overPane.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
@@ -138,32 +129,10 @@ public class ShopSellController {
     }
 
     public double getTopAnchor(int i) {
-        if (i < 4) {
-            return 133;
-        }
-        if (i < 8) {
-            return 288;
-        }
-        if (i < 12) {
-            return 435;
-        }
-        else {
-            return 540;
-        }
+        return ((i / 4) * 150 + 135);
     }
 
     public double getLeftAnchor(int i) {
-        if (i % 4 == 0) {
-            return 10;
-        }
-        else if (i % 4 == 1) {
-            return 130;
-        }
-        else if (i % 4 == 2) {
-            return 245;
-        }
-        else {
-            return 345;
-        }
+        return ((i % 4) * 115 + 10);
     }
 }

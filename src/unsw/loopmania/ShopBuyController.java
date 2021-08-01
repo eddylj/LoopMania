@@ -2,9 +2,10 @@ package unsw.loopmania;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import javafx.beans.binding.Bindings;
+import org.javatuples.Pair;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,22 +18,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import unsw.loopmania.Entities.StaticEntity;
+import unsw.loopmania.Items.Item;
+import unsw.loopmania.Shop.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class ShopBuyController {
 
     @FXML
-    private StackPane stackPaneRoot;
+    private GridPane imageGrid;
 
     @FXML
-    private GridPane shopItems;
-
-    @FXML
-    private AnchorPane itemCosts;
+    private AnchorPane overPane;
 
     private LoopManiaWorldController worldController;
 
@@ -42,15 +42,19 @@ public class ShopBuyController {
 
     private Shop shop;
 
-    public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world) {
+    private List<Pair<Button, String>> buyButtons;
+
+    public ShopBuyController(LoopManiaWorldController worldController, LoopManiaWorld world, Shop shop) {
         this.world = world;
         this.worldController = worldController;
-        itemList = new String[] {"sword", "stake", "staff", "armour", "shield", "helmet", "healthpotion"};
-        shop = new Shop(world.getCharacter());
+        itemList = new String[] {"sword", "stake", "staff", "axe", "healthpotion", "strengthpotion", "armour", "shield", "helmet", "thornmail"};
+        this.shop = shop;
+        buyButtons = new ArrayList<Pair<Button, String>>();
     }
 
     @FXML
     public void initialize() {
+        shop.restock();
         addItems(itemList);
         addDoneButton();
         addSellButton();
@@ -58,7 +62,7 @@ public class ShopBuyController {
 
     public void addDoneButton() {
         Button done = new Button("Done");
-        done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,40));
+        done.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,30));
         done.setTextFill(Color.GREEN);
         done.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -67,9 +71,9 @@ public class ShopBuyController {
             }
         });
 
-        itemCosts.getChildren().add(done);
-        AnchorPane.setTopAnchor(done, (double)550);
-        AnchorPane.setLeftAnchor(done, (double)200);
+        overPane.getChildren().add(done);
+        AnchorPane.setTopAnchor(done, 530.00);
+        AnchorPane.setLeftAnchor(done, 175.00);
     }
 
     public void doneButtonAction(Button done) {
@@ -80,51 +84,75 @@ public class ShopBuyController {
     }
 
     public void addItems(String[] itemList) {
+        int rowNum = 0;
+        int colNum = 0;
         for (int i = 0; i < itemList.length; i++) {
             String itemName = itemList[i];
-            String itemString;
-            int itemLevel = shop.getItemBuyLevel(itemName);
-            if (itemName.equals("healthpotion")) {
-                itemString = itemName;
-            }
-            else {
-                itemString = itemName + itemLevel;
-            }
-            ImageView view = new ImageView(new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString()));
-            int row = i / 3;
-            int col = i % 3;
+            Image itemImage = makeItemImage(itemName);
+            ImageView view = new ImageView(itemImage);
             view.setFitHeight(100);
             view.setFitWidth(100);
-            shopItems.add(view, col, row);
+
+            imageGrid.add(view, colNum, rowNum);
             GridPane.setHalignment(view, HPos.CENTER);
             GridPane.setValignment(view, VPos.CENTER);
             
-            ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
-            goldView.setFitHeight(40);
-            goldView.setFitWidth(40);
+            ImageView goldImageView = makeGoldImageView();
 
-            Button item = makeItemButton(itemName);
+            Button itemButton = makeItemButton(itemName, view);
+            buyButtons.add(new Pair<Button, String>(itemButton, itemName));
 
             GridPane gridPane = new GridPane();
-            gridPane.add(goldView, 0, 0);
-            gridPane.add(item, 1, 0);
-            itemCosts.getChildren().add(gridPane);
+            gridPane.add(goldImageView, 0, 0);
+            gridPane.add(itemButton, 1, 0);
+            overPane.getChildren().add(gridPane);
 
             AnchorPane.setTopAnchor(gridPane, getTopAnchor(i));
             AnchorPane.setLeftAnchor(gridPane, getLeftAnchor(i));
+            if (colNum < 2) {
+                colNum++;
+            }
+            else {
+                colNum = 0;
+                rowNum++;
+            }
         }
     }
 
-    public Button makeItemButton(String itemName) {
+    public Image makeItemImage(String itemName) {
+        String itemString;
+        int itemLevel = shop.getItemBuyLevel(itemName);
+        if (itemName.equals("healthpotion") || itemName.equals("strengthpotion")) {
+            itemString = itemName;
+        }
+        else {
+            itemString = itemName + itemLevel;
+        }
+        Image view = new Image((new File(String.format("src/images/%s.png", itemString))).toURI().toString());
+        return view;
+    }
+
+    public ImageView makeGoldImageView() {
+        ImageView goldView = new ImageView(new Image((new File("src/images/gold_pile.png")).toURI().toString()));
+        goldView.setFitHeight(25);
+        goldView.setFitWidth(25);
+        return goldView;
+    }
+
+    public Button makeItemButton(String itemName, ImageView view) {
         int price = shop.getBuyPrice(itemName);
         Button buyButton = new Button(Integer.toString(price));
-        buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 25));
-        buyButton.disableProperty().bind(Bindings.lessThan(world.getGold(), price));
+        buyButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD, 15));
+
+        buyButton.disableProperty().bind(shop.canBuy(itemName).not());
         buyButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 StaticEntity item = (StaticEntity) shop.buy(itemName);
+                buyButton.setText(Integer.toString(shop.getBuyPrice(item.getType())));
+                buyButton.disableProperty().bind(shop.canBuy(itemName).not());
                 worldController.loadItem((Item)item);
+                view.setImage(makeItemImage(itemName));
             }
         });
         return buyButton;
@@ -132,14 +160,14 @@ public class ShopBuyController {
 
     public void addSellButton() {
         Button sellButton = new Button("Sell");
-        sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,40));
+        sellButton.setFont(Font.font ("Bauhaus 93", FontWeight.BOLD,30));
         sellButton.setTextFill(Color.ORANGE);
         sellButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
 
-                ShopSellController shopSellController = new ShopSellController(world, worldController);
-                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopView.fxml"));
+                ShopSellController shopSellController = new ShopSellController(world, worldController, shop);
+                FXMLLoader shopLoader = new FXMLLoader(getClass().getResource("ShopSellView.fxml"));
                 shopLoader.setController(shopSellController);
                 
                 try {
@@ -158,32 +186,16 @@ public class ShopBuyController {
                 }
             }
         });
-        itemCosts.getChildren().add(sellButton);
-        AnchorPane.setTopAnchor(sellButton, (double)450);
-        AnchorPane.setLeftAnchor(sellButton, (double)200);
+        overPane.getChildren().add(sellButton);
+        AnchorPane.setTopAnchor(sellButton, 530.00);
+        AnchorPane.setLeftAnchor(sellButton, getLeftAnchor(11));
     }
 
     public double getTopAnchor(int i) {
-        if (i < 3) {
-            return 170;
-        }
-        else if (i > 2 && i < 6) {
-            return 187*2;
-        }
-        else {
-            return 189*3;
-        }
+        return ((i / 3) + 1) * 150;
     }
 
     public double getLeftAnchor(int i) {
-        if (i % 3 == 0) {
-            return 10;
-        }
-        else if (i == 1 || i == 4) {
-            return 160;
-        }
-        else {
-            return 315;
-        }
+        return ((i % 3) * 150 + 38);
     }
 }

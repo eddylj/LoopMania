@@ -4,8 +4,10 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import unsw.loopmania.Slug;
-import unsw.loopmania.AlliedSoldier;
+
+import unsw.loopmania.Heroes.*;
+import unsw.loopmania.Enemies.*;
+
 
 public class AlliedSoldiersTest {
     AlliedSoldier a = new AlliedSoldier();

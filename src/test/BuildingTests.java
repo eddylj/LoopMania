@@ -1,21 +1,23 @@
 package test;
-import unsw.loopmania.BarracksBuilding;
-import unsw.loopmania.BonusDamageStrategy;
-import unsw.loopmania.CampfireBuilding;
-import unsw.loopmania.CampfireState;
-import unsw.loopmania.Character;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.VampireCastleBuilding;
-import unsw.loopmania.VillageBuilding;
-import unsw.loopmania.ZombiePitBuilding;
-import unsw.loopmania.Enemy;
+import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Buildings.BarracksBuilding;
+import unsw.loopmania.Buildings.BonusDamageStrategy;
+import unsw.loopmania.Buildings.CampfireBuilding;
+import unsw.loopmania.Buildings.CampfireState;
+import unsw.loopmania.Buildings.NormalState;
+import unsw.loopmania.Buildings.TowerBuilding;
+import unsw.loopmania.Buildings.TrapBuilding;
+import unsw.loopmania.Buildings.BankBuilding;
+import unsw.loopmania.Buildings.VampireCastleBuilding;
+import unsw.loopmania.Buildings.VillageBuilding;
+import unsw.loopmania.Buildings.ZombiePitBuilding;
+import unsw.loopmania.Enemies.Enemy;
+import unsw.loopmania.Enemies.Slug;
+import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Enemies.Zombie;
+import unsw.loopmania.Enemies.Thief;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.NormalState;
 import unsw.loopmania.PathPosition;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Zombie;
-import unsw.loopmania.TowerBuilding;
-import unsw.loopmania.TrapBuilding;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.Position;
 
 import org.javatuples.Pair;
 import org.json.JSONObject;
@@ -134,6 +138,25 @@ public class BuildingTests {
         assertFalse(x);
         assertEquals(20, e.getHealth());
     }
+
+    @Test
+    public void trapKillTest(){
+        Enemy e = new Slug(position);
+        TrapBuilding t1 = new TrapBuilding(x, y);
+        t1.updateOnMove(e);
+        assertEquals(20, e.getHealth());
+        TrapBuilding t2 = new TrapBuilding(x, y);
+        t2.updateOnMove(e);
+        assertTrue(!e.shouldExist().get());
+    }
+
+    @Test
+    public void trapDoesntDamageCharacter(){
+        Character c = new Character(position);
+        TrapBuilding t1 = new TrapBuilding(x, y);
+        t1.updateOnMove(c);
+        assertEquals(100, c.getHealth());
+    }
     //////////////////////////////////
 
     // TowerTests
@@ -167,6 +190,38 @@ public class BuildingTests {
         v.updateOnMove(c);
         assertEquals(75, c.getHealth());
     }
+
+    //////////////////////////////////
+
+    // BankTests
+    //////////////////////////////////
+    @Test
+    public void interestTest(){
+        Character c = new Character(new PathPosition(0, path));
+        BankBuilding t = new BankBuilding(x, y);
+        c.gainGold(100);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 105);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 110);
+    }
+
+    @Test
+    public void notOnBankTest(){
+        Character c = new Character(new PathPosition(1, path));
+        BankBuilding t = new BankBuilding(x, y);
+        c.gainGold(100);
+        t.updateOnMove(c);
+        assertEquals(c.getGold(), 100);
+    }
+    
+    @Test
+    public void doesnothingtoEnemyTest() {
+        Enemy e = new Slug(position);
+        BankBuilding t = new BankBuilding(x, y);
+        t.updateOnMove(e);
+        assertEquals(e.getHealth(), 50);
+    }
     //////////////////////////////////
 
     // ZombiePitTests
@@ -181,7 +236,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 3);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
@@ -191,10 +246,10 @@ public class BuildingTests {
         List<Enemy> enemies = new ArrayList<Enemy>(); 
         world.SpawnEnemiesOnCycle(enemies);
         zombiePit.spawnEnemy(new PathPosition(0, path));
-        assertEquals(3, enemies.size());
+        assertEquals(4, enemies.size());
         int zombieCount = 0;
         for (Enemy enemy: enemies) {
-            assertTrue(enemy instanceof Zombie || enemy instanceof Slug);
+            assertTrue(enemy instanceof Zombie || enemy instanceof Slug || enemy instanceof Thief);
             if (enemy instanceof Zombie) {
                 zombieCount++;
                 assertTrue(enemy.getX() == x.get() || enemy.getX() - 1 == x.get() || enemy.getX() + 1 == x.get());
@@ -229,7 +284,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 8);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
@@ -239,10 +294,10 @@ public class BuildingTests {
         List<Enemy> enemies = new ArrayList<Enemy>(); 
         world.SpawnEnemiesOnCycle(enemies);
         vampireCastle.spawnEnemy(new PathPosition(0, path));
-        assertEquals(2, enemies.size());
+        assertEquals(3, enemies.size());
 
         for (Enemy enemy: enemies) {
-            assertTrue(enemy instanceof Slug);
+            assertTrue(enemy instanceof Slug || enemy instanceof Thief);
         }
     }
 
@@ -256,7 +311,7 @@ public class BuildingTests {
         JSONArray rareItem = new JSONArray();
         setting.put("rare_items", rareItem);
         setting.put("goal-condition",goals);
-        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 4);
+        LoopManiaWorld world = new LoopManiaWorld(3,3, path, setting, 1);
         Character c = new Character(new PathPosition(0, path));
         world.setCharacter(c);
         SimpleIntegerProperty x = new SimpleIntegerProperty(1);
