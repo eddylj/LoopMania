@@ -32,10 +32,7 @@ public class Poop extends StaticEntity{
      * @param character
      */
     public void updateOnMove(Character character) {
-        if (!(character instanceof Character)) {
-            return;
-        }
-        else if (character.getX() == super.getX() && character.getY() == super.getY()) {
+        if (character.getX() == super.getX() && character.getY() == super.getY()) {
             activate(character);
         }
     }

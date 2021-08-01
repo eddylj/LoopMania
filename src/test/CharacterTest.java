@@ -1,10 +1,14 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.loopmania.BattleRunner;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Enemies.Enemy;
 import unsw.loopmania.Enemies.Slug;
 import unsw.loopmania.Enemies.Vampire;
+import unsw.loopmania.Factories.RareItemFactory;
 import unsw.loopmania.Items.Armour;
 import unsw.loopmania.Items.Helmet;
 import unsw.loopmania.Items.Item;
@@ -132,6 +136,36 @@ public class CharacterTest {
         // c.takeDamage(10);
         slug.attack((Hero)c);
         assertEquals(c.getHealth(), 93);
+    }
+
+    @Test
+    public void invinciblityTest() {
+        Character c = new Character();
+        List<String> rareItems = new ArrayList<String>();
+        rareItems.add("invinciblepotion");
+        c.setRareItems(rareItems);
+        c.addUnequippedItem("invinciblepotion", 0);
+        assertTrue(c.canTakeDamage());
+        c.drinkInvincibilityPotion();
+        assertTrue(!c.canTakeDamage());
+        c.makeVincible();
+        assertTrue(c.canTakeDamage());
+
+    }
+
+    @Test
+    public void strengthTest() {
+        Character c = new Character();
+        c.addUnequippedItem("strengthpotion", 0);
+        Slug slug1 = new Slug();
+        BattleRunner bR = new BattleRunner();
+        c.attack(slug1, bR);
+        assertEquals(slug1.getHealth(), 45);
+        Slug slug2 = new Slug();
+        c.drinkStrengthPotion();
+        c.attack(slug2, bR);
+        assertEquals(slug2.getHealth(), 30);
+
     }
 /*
     @Test
