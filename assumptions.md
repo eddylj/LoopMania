@@ -10,7 +10,8 @@
 * Slugs only drop zombie pits (not vampire castle)
 * Zombies only drop vampire castles (not zombie pits)
 * Shop provides every item 1 level higher than the character’s highest for that respective item
-* It is not reasonable for player to fill up all non tiles with buildings
+* The player cannot fill up all non path tiles with buildings
+* It is impossible for the Path to be covered completely of buildings/ Items
 * Tower cannot initiate fights
 * Enemies can’t initiate fights without the player
 * Order of battle: towe, allies, heros, enemies
