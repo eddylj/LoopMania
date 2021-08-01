@@ -18,8 +18,6 @@ public class Totem extends StaticEntity implements Building, BuildingOnMove{
         super.setType("totem");
     }
 
-    
-
     public void updateOnMove(MovingEntity movingEntity, List<Enemy> newEnemies, List<Enemy> enemies) {
         if (movingEntity.getX() == super.getX() && movingEntity.getY() == super.getY()) {
             activate(movingEntity, newEnemies, enemies);
@@ -37,8 +35,7 @@ public class Totem extends StaticEntity implements Building, BuildingOnMove{
     }
     
     @Override
-    public void updateOnMove(MovingEntity movingEntity) {
-        
+    public void updateOnMove(MovingEntity movingEntity) {    
     }
     
 }

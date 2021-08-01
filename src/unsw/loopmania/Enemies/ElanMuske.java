@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class ElanMuske extends Enemy implements Boss{
     public static final int BATTLERADIUS = 1;
     public static final int SUPPORTRADIUS = 1;
-    public static final int DAMAGE = 35;
+    public static final int DAMAGE = 29;
     public static final int GOLDAMOUNT = 800;
-    public static final int HEALTH = 700;
+    public static final int HEALTH = 600;
     public static final int XP = 1700;
     private String[] cardDrops;
     private boolean canMove = true;

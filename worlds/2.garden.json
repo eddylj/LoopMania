@@ -3,12 +3,12 @@
     "height": 16,
     "rare_items": ["theonering", "anduril", "treestump", "nuke", "invinciblepotion"],
     "goal-condition": { "goal": "AND", "subgoals":
-      [ { "goal": "cycles", "quantity": 100 },
+      [ { "goal": "cycles", "quantity": 50 },
         { "goal": "OR", "subgoals":
           [ {"goal": "experience", "quantity": 10000 },
             {"goal" : "AND", "subgoals" : [
               {"goal": "bosses"},
-              {"goal" : "gold", "quantity" : 100000}
+              {"goal" : "gold", "quantity" : 10000}
             ]}
           ]
         }
