@@ -32,7 +32,7 @@ public class StartGameController {
 
         rootPane.setBackground(new Background(
             new BackgroundImage(
-                    new Image((new File(String.format("src/images/kevin.jpg"))).toURI().toString()),
+                    new Image((new File(String.format("src/images/backgroundImage.jpg"))).toURI().toString()),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
                     new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
                     new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true)
