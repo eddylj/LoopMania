@@ -369,7 +369,7 @@ public class LoopManiaWorldController {
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             List<Enemy> newEnemies = world.moveEntities();
             List <Coin> newCoins = world.getCoin();
             List <Poop> newPoop = world.getPoop();
