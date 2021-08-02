@@ -79,3 +79,59 @@ Also went to a help session to ask questions we had about integrationTests and t
 
 *Note throughout the end of week 7 multiple hour long voice calls occured each day but not many formal meetings 
 occured 
+
+22.7 Thursday
+Discussed what extra features to add
+*map builder
+*music
+*purchase upgrade stats
+Things still to work on
+*Win screen
+*Frontend bugs
+*Fix drops
+*Random gold drops
+*Fix prices to work on level up
+extra features
+*Additional potions, strength
+Todo:
+Hugo -drop rates gold droping
+Eddy fixing bug, gamemodes splash screen and win page
+Elliot working on gamemode backend no confusing, and pricing for potion and items
+Kevin working on Mod 3 planning
+
+26.07 Monday
+1am
+Completed since last meeting
+Hugo drop rates, gold droping
+Eddy fixed visual bugs, and worked on gamemodes and win pages
+Elliot worked on the backend for the confusing mode, and the pricing bug
+Kevin worked on making the mod 3 bosses, and new rare items
+Todo:
+Hugo making tests for new features and add get loot for bosses and spawn conditions
+Eddy new world or continue, main menu frontend
+Elliot working on confusing game mode
+Kevin working on adding tests for new functionality tests
+discussed the extra features
+-maybe swapping music for sound effect
+-adding a thief mob
+-adding a building that compounds the players gold
+-adding addition weapons and chestplate
+-adding the nuke
+-adding a naturally occuring player trap
+
+29.07 Thursday
+Completed since last meeting
+added beserkmode
+added nuke
+added confusion mode
+added additional tests
+added win page
+implemented save
+Todo:
+Hugo implement thief, bank, axe and unit tests
+Elliot story tests, invincibilty potion and thornmail
+Kevin Strength potion, totem, poop updating uml diagram
+Eddy new maps, SaveandLoad, file selector UI, WorldController logic put into backend
+
+
+
