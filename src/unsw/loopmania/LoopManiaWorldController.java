@@ -206,11 +206,6 @@ public class LoopManiaWorldController {
      */
     private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
 
-    /**
-     * object handling switching to the main menu
-     */
-    private MenuSwitcher mainMenuSwitcher;
-
     public static final int WEAPONSLOT = 0;
     public static final int HELMETSLOT = 32;
     public static final int SHIELDSLOT = 64;
@@ -941,10 +936,6 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
-        this.mainMenuSwitcher = mainMenuSwitcher;
-    }
-
     /**
      * this method is triggered when click save button in FXML
      * and provides a textbox to name the save file.
@@ -957,8 +948,8 @@ public class LoopManiaWorldController {
         Label label = new Label("Enter name of world");
         label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 20));
         label.setTextFill(Color.VIOLET); 
-        save = new Button("Save");
-        name = new TextField();
+        Button save = new Button("Save");
+        TextField name = new TextField();
         name.setPromptText("Enter name of world");
         GridPane gridpane = new GridPane();
         gridpane.add(name, 0, 0);
