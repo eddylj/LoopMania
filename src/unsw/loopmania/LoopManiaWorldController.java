@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -165,8 +166,7 @@ public class LoopManiaWorldController {
     private boolean isPaused;
     private LoopManiaWorld world;
 
-    private Button save;
-    private TextField name;
+    private boolean isAlive;
 
     /**
      * runs the periodic game logic - second-by-second moving of character through maze, as well as enemies, and running of battles
@@ -206,11 +206,6 @@ public class LoopManiaWorldController {
      */
     private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
 
-    /**
-     * object handling switching to the main menu
-     */
-    private MenuSwitcher mainMenuSwitcher;
-
     public static final int WEAPONSLOT = 0;
     public static final int HELMETSLOT = 32;
     public static final int SHIELDSLOT = 64;
@@ -228,6 +223,7 @@ public class LoopManiaWorldController {
         entityImages = new ArrayList<>(initialEntities);
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
+        isAlive = true;
         // shop = new Shop(world.getCharacter());
         shop = world.getShop();
 
@@ -407,6 +403,7 @@ public class LoopManiaWorldController {
             }
             // Deal with character death
             if (world.isCharacterDead()) {
+                isAlive = false;
                 pause();
                 loadDeathScreen();
             }
@@ -452,7 +449,7 @@ public class LoopManiaWorldController {
      * Unpause game if shop menu and sell menu is closed
      */
     public void tryToPlay() {
-        if (isPaused && !buyShopOpen && !sellShopOpen){
+        if (isPaused && !buyShopOpen && !sellShopOpen && isAlive){
             play();
         }
     }
@@ -911,7 +908,7 @@ public class LoopManiaWorldController {
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
         case SPACE:
-            if (isPaused && !buyShopOpen && !sellShopOpen){
+            if (isPaused && !buyShopOpen && !sellShopOpen && isAlive){
                 startTimer();
                 play();
             }
@@ -939,36 +936,24 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
-        this.mainMenuSwitcher = mainMenuSwitcher;
-    }
-
     /**
-     * this method is triggered when click button to go to main menu in FXML
+     * this method is triggered when click save button in FXML
+     * and provides a textbox to name the save file.
      * @throws IOException
      */
     @FXML
-    private void switchToMainMenu() throws IOException {
+    private void save() throws IOException {
         pause();
-        // name = new TextField();
-        // name.setPromptText("Enter name of world.");
-        // GridPane.setConstraints(name, 1, 1);
-        // anchorPaneRoot.getChildren().add(name);
-        
-        // GridPane.setConstraints(backup, 3, 3);
-        // GridPane.setColumnIndex(save, 3);
-        // GridPane.setRowIndex(save, 4);
-        // anchorPaneRoot.getChildren().add(save);
 
         Label label = new Label("Enter name of world");
         label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 20));
         label.setTextFill(Color.VIOLET); 
-        save = new Button("Save");
-        name = new TextField();
+        Button save = new Button("Save");
+        TextField name = new TextField();
         name.setPromptText("Enter name of world");
         GridPane gridpane = new GridPane();
         gridpane.add(name, 0, 0);
-        gridpane.add(save, 1, 0);
+        gridpane.add(save, 0, 1);
         save.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e) {
@@ -981,7 +966,36 @@ public class LoopManiaWorldController {
         });
         anchorPaneRoot.getChildren().add(gridpane);
         AnchorPane.setTopAnchor(gridpane, anchorPaneRoot.getHeight()/2);
-        AnchorPane.setLeftAnchor(gridpane, anchorPaneRoot.getWidth()/3);
+        AnchorPane.setLeftAnchor(gridpane, anchorPaneRoot.getWidth()/4);
+    }
+
+    /**
+     * this method is triggered when click button to go to main menu in FXML
+     * and brings the user back to the start game menu.
+     * @throws IOException
+     */
+    @FXML
+    private void switchToMainMenu() throws IOException {
+        pause();
+
+        Scene scene = this.anchorPaneRoot.getScene();
+        Stage primaryStage = (Stage) scene.getWindow();
+
+        primaryStage.setTitle("Loop Mania - Start Menu");
+
+        // prevent human player resizing game window (since otherwise would see white space)
+        primaryStage.setResizable(false);
+
+        // load the start game menu
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartGameView.fxml"));
+        Parent root = loader.load();
+
+        // deploy the menu onto the stage
+        scene.setRoot(root);
+        root.requestFocus();
+        primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
+        primaryStage.show();
     }
 
     public void shopCycles(int cycles) throws IOException {

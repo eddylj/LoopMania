@@ -418,6 +418,7 @@ public class LoopManiaWorld {
         if (character.getCycles().get() >= ELANMUSKESPAWNCYCLE && character.getXP().get() >= ELANMUSKESPAWNXP && !muskeSpawned) {
             int position = LoopManiaWorld.getRandNum() % emptyTiles.size();
             newEnemies.add(spawnBoss(position, emptyTiles, "elanmuske"));
+            muskeSpawned = true;
         }
     }
 
@@ -608,7 +609,6 @@ public class LoopManiaWorld {
         Card card = character.getMatchingCard(cardNodeX, cardNodeY);
         // now spawn building
         Building newBuilding = bF.create(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY), ((StaticEntity)card).getType());
-        // buildingEntities.add(newBuilding);
         addBuilding(newBuilding);
         // destroy the card
         character.destroyCard(card, cardNodeX);

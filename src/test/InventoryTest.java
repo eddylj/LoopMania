@@ -8,8 +8,6 @@ import org.junit.Test;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.LoopManiaWorld;
 
-// import unsw.loopmania.OneRing;
-
 public class InventoryTest {
     @Test
     public void PickUpDifferentItemsTest() {

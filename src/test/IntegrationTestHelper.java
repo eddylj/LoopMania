@@ -14,9 +14,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoadGame;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
+import unsw.loopmania.Cards.Card;
 import unsw.loopmania.Heroes.Character;
+import unsw.loopmania.Items.Item;
 import unsw.loopmania.Entities.Entity;
 import unsw.loopmania.Entities.PathTile;
+import unsw.loopmania.Entities.StaticEntity;
 
 public class IntegrationTestHelper {
 
@@ -142,4 +145,18 @@ public class IntegrationTestHelper {
         }
         return orderedPath;
     }
+
+    public static void printUnequippedInventory(LoopManiaWorld world) {
+        for (Item item : world.getUnequippedInventory()) {
+            System.out.println(String.format("%s %d %d", item.getType(), item.getX(), item.getY()));
+        }
+    }
+
+    public static void printCards(LoopManiaWorld world) {
+        for (int i = 0; i < 9; i++) {
+            Card card = world.getCardByCoordinate(i);
+            if (card == null) break;
+            System.out.println(String.format("%s %d", ((StaticEntity)card).getType(), card.getX()));
+        }
+    } 
 }

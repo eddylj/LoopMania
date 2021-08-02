@@ -45,7 +45,7 @@ public abstract class LoopManiaWorldLoader {
 
         // JSONObject j = json.getJSONObject("goal-condition");
 
-        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json, 2);
+        LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, json, 6666);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 

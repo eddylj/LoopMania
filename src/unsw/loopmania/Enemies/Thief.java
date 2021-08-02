@@ -43,7 +43,7 @@ public class Thief extends Enemy {
      */
     @Override
     public void attack (Hero hero) {
-        if (hero instanceof Character && LoopManiaWorld.getRandNum() < 50) {
+        if (hero instanceof Character && LoopManiaWorld.getRandNum() < 13) {
             ((Character) hero).loseRandomItem();
         }
     }
@@ -52,7 +52,7 @@ public class Thief extends Enemy {
      */
     @Override
     public void attack (Hero hero, BattleRunner bR) {
-        if (hero instanceof Character && LoopManiaWorld.getRandNum() < 50) {
+        if (hero instanceof Character && LoopManiaWorld.getRandNum() < 13) {
             ((Character) hero).loseRandomItem();
         }
     }
