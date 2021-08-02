@@ -1,7 +1,6 @@
 package unsw.loopmania.Shop;
 
 
-import java.util.List;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -21,7 +20,6 @@ public class Shop {
     private int boughtHealthPotions;
     private int boughtStrengthPotions;
     private Inventory inventory;
-    private List<String> rareItems;
 
     /**
      * 
@@ -33,8 +31,6 @@ public class Shop {
         this.character = character;
         this.available = new NormalShopStrategy(character);
         this.boughtHealthPotions = 0;
-        this.rareItems = character.getRareItems();
-        // this.available = new SurvivalShopStrategy(character);
         iF = new ItemFactory();
     }
     /**
