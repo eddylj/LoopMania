@@ -957,8 +957,8 @@ public class LoopManiaWorldController {
         Label label = new Label("Enter name of world");
         label.setFont(Font.font("Bauhaus 93", FontWeight.BOLD, 20));
         label.setTextFill(Color.VIOLET); 
-        save = new Button("Save");
-        name = new TextField();
+        Button save = new Button("Save");
+        TextField name = new TextField();
         name.setPromptText("Enter name of world");
         GridPane gridpane = new GridPane();
         gridpane.add(name, 0, 0);

@@ -15,6 +15,7 @@ import unsw.loopmania.Items.Helmet;
 import unsw.loopmania.Items.Item;
 import unsw.loopmania.Items.Weapon;
 import unsw.loopmania.Items.Staff;
+import unsw.loopmania.Items.StrengthPotion;
 import unsw.loopmania.Heroes.Character;
 import unsw.loopmania.Shop.Shop;
 
@@ -55,18 +56,16 @@ public class LoadWorldIntegrationTest {
         assertTrue(doggiecoin instanceof DoggieCoin);
         assertEquals(world.getGold().get(), 24814);
         shop.sell(doggiecoin);
-        assertTrue(world.getGold().get() > 24814); // therefore we picked up doggiecoin
+        assertTrue(world.getGold().get() > 24814);
         assertEquals(world.getBossKills().get(), 1);
+        Item strengthpotion = world.getUnequippedInventoryItemEntityByCoordinates(0, 2);
+        assertTrue(strengthpotion instanceof StrengthPotion);
+        world.drinkStrengthPotion();
+        assertFalse(strengthpotion.shouldExist().get());
         while (world.getCycles().get() <= 40) {
             world.tick();
             assertFalse(world.checkPlayerLoss());
         }
-
-        for (int i = 0; i < 64; i++) {
-            world.tick();
-            assertFalse(world.checkPlayerLoss());
-        }
-
-        assertTrue(world.checkPlayerWin());
+        assertTrue(world.checkPlayerWin()); // Therefore player has killed ElanMuske
     }
 }
