@@ -206,11 +206,6 @@ public class LoopManiaWorldController {
      */
     private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
 
-    /**
-     * object handling switching to the main menu
-     */
-    private MenuSwitcher mainMenuSwitcher;
-
     public static final int WEAPONSLOT = 0;
     public static final int HELMETSLOT = 32;
     public static final int SHIELDSLOT = 64;
@@ -939,10 +934,6 @@ public class LoopManiaWorldController {
         default:
             break;
         }
-    }
-
-    public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
-        this.mainMenuSwitcher = mainMenuSwitcher;
     }
 
     /**
